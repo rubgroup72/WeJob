@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Insert Distributor</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!--===============================================================================================-->
+
+    <link href="css/myStyle.css" rel="stylesheet" />
+    <script>
+      
+        $(document).ready(){
+            $("#myTopnav").click(function () {
+                var x = document.getElementById("myTopnav");
+                if (x.className === "topnav") {
+                    x.className += " responsive";
+                } else {
+                    x.className = "topnav";
+                }
+            });
+        };
+    </script>
+</head>
+<body>
+    <!--<div class="navbar" dir="rtl">
+        <a  href="#">סטודנטים</a>
+        <a class="active" href="#">מפיצים ומשרות</a>
+        <a href="#">סדנאות</a>
+        <a  href="#">דוחות</a>
+        <a  aria-hidden="true" href="#">הגדרות מערכת</a>
+    </div>-->
+    <div class="topnav" id="myTopnav">
+        <a href="#home" >דאשבורד</a>
+        <a href="#news">סטודנטים</a>
+        <a href="#contact" class="active">מפיצים ומשרות</a>
+        <a href="#about">סדנאות</a>
+        <a href="#about">דוחות</a>
+        <div class="dropdown">
+            <button class="dropbtn" ><i class="fa fa-caret-down"></i>
+                הגדרות מערכת 
+            </button>
+            <div class="dropdown-content">
+                <a href="#">משרות</a>
+                <a href="#">כישורים</a>
+                <a href="#">תחומי עניין</a>
+                <a href="#">שפות</a>
+                <a href="#">מחלקות</a>
+                <a href="#">סטודנט</a>
+                <a href="#">קטגוריות</a>
+                <a href="#">תתי קטגוריות</a>
+            </div>
+        </div>
+    </div>
+
+
+    <br /><br />
+    <div class="container-contact100" dir="rtl">
+        <div class="wrap-contact100">
+            <form class="contact100-form validate-form">
+                <span class="contact100-form-title" style="text-align:center">
+                    הוספת מפיץ חדש 
+                </span>
+
+                <div class="wrap-input100 validate-input" data-validate="Name is required">
+                    <input class="input100" id="namecompany" type="text" name="namecompany" placeholder="שם החברה">
+                    <label class="label-input100" for="name">
+                        <span class="fa fa-building"></span>
+                    </label>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="Name is required">
+                    <input class="input100" id="nameperson" type="text" name="nameperson" placeholder="שם איש קשר">
+                    <label class="label-input100" for="name">
+                        <span class="lnr lnr-user"></span>
+                    </label>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                    <input class="input100" id="email" type="text" name="email" placeholder="דוא'ל">
+                    <label class="label-input100" for="email">
+                        <span class="lnr lnr-envelope"></span>
+                    </label>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Phone is required">
+                    <input class="input100" id="phone" type="text" name="phone" placeholder="טלפון">
+                    <label class="label-input100" for="phone">
+                        <span class="lnr lnr-phone-handset"></span>
+                    </label>
+                </div>
+
+                <div class="container-contact100-form-btn">
+                    <div class="wrap-contact100-form-btn">
+                        <div class="contact100-form-bgbtn"></div>
+                        <button class="contact100-form-btn">
+                            הוסף
+                        </button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+ 
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Insert Distributor</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <link href="../Styles/StyleToInsert.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <form id="pForm" style="text-align:center" dir="rtl">
+            <h2>הוספת מפיץ חדש</h2>
+            <div class="form-group">
+                <label for="name"><span class="red-star">★ </span>שם החברה</label>
+                <input type="text" class="form-control" id="name" placeholder="רשום את שם החברה" required>
+            </div>
+            <div class="form-group">
+                <label for="familyName"><span class="red-star">★ </span>שם איש קשר</label>
+                <input type="text" class="form-control" id="familyName" placeholder="רשום את שם איש הקשר" required>
+            </div>                 
+            <div class="form-group">
+                <label for="Tel">טלפון</label>
+                <input type="tel" class="form-control" id="phone"
+                       placeholder="הקלד טלפון"
+                       pattern="[0]{1}[0-9]{9}"
+                       oninvalid="this.setCustomValidity('0ddddddddd הפורמט צריך להיות ')"
+                       oninput="this.setCustomValidity('')"> 
+            </div>
+            <div class="form-group">
+                <label for="Email"><span class="red-star">★ </span>איימל</label>
+                <input type="email" class="form-control" id="email" />
+            </div>
+           
+            <!--<button class="btn btn-default" id="add">Add</button>-->
+            <input type="submit" value="Submit BTN" />
+        </form>
+    </div>
+
+</body>
+</html>
