@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, TextInput } from 'react-native';
 import styles from './pageStyle';
 import { Button, Dialog, DialogDefaultActions } from 'react-native-material-ui';
 import InlineImage from '../Components/InlineImage.js';
+
 // import { GoogleSignin, GoogleSigninButton,statusCodes } from 'react-native-google-signin';
 // GoogleSignin.configure({
 //     scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
@@ -102,6 +103,8 @@ export default class LoginPage extends React.Component {
     color={GoogleSigninButton.Color.Dark}
     onPress={this._signIn}
     disabled={this.state.isSigninInProgress} /> */}
+  
+
                     <Text style={styles.lblText}>NAME:</Text>
                     <TextInput
                         style={styles.TxtInp}

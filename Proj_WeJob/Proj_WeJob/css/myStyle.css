@@ -21,10 +21,14 @@
             background: #ddd;
             color: black;
         }*/
-
+.continer-contact100 {
+    background-color: aqua;
+    border:dashed;
+}
 
 .wrap-contact100 {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: aqua;
 }
 /* Add a black background color to the top navigation */
 .topnav {

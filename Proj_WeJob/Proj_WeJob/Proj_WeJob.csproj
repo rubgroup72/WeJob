@@ -194,6 +194,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="css\main.css" />
     <Content Include="css\myStyle.css" />
+    <Content Include="css\StyleInsertDisributor.css" />
     <Content Include="css\util.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.css" />

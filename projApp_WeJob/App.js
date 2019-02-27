@@ -7,6 +7,7 @@ import LocationPage from './Pages/LocationPage';
 import CameraPage from './Pages/CameraPage';
 import PushNotPage from './Pages/PushNotPage';
 import { ThemeProvider } from 'react-native-material-ui';
+// import FaceBookPage from  './Pages/FaceBookPage';
 
 
 class App extends React.Component {
@@ -27,7 +28,8 @@ const AppNavigator = createStackNavigator(
     Home: HomePage,
     Location:LocationPage,
     Camera:CameraPage,
-    Push:PushNotPage
+    Push:PushNotPage,
+    // faceBook:faceBookPage
   },
   {
     initialRouteName: 'Login',

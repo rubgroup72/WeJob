@@ -50,15 +50,17 @@ export default class CameraPage extends React.Component {
       method: 'POST',
       body: dataI,
     };
-
+//מקבל לאיזה שרת לעלות ואת הכתובת של התמונה
     fetch(urlAPI, config)
       .then((responseData) => {
         let res = responseData._bodyText;
         debugger;
         let picNameWOExt = picName.substring(0, picName.indexOf("."));
         let imageNameWithGUID = res.substring(res.indexOf(picNameWOExt), res.indexOf(".jpg") + 4);
+     //האם התמונה עלתה בהצלחה או לא
         if (responseData.status == 201) {
           this.setState({
+            //המסלול לתמונה על מנת שנאכל לראות את התמונה מהשרת
             uplodedPicUri: { uri: this.uplodedPicPath +  imageNameWithGUID },
           });
         }
