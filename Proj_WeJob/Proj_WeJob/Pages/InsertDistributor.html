@@ -2,48 +2,130 @@
 <html>
 <head>
     <title>Insert Distributor</title>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!--לאייקונים-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ 
+    <link href="../css/MyStyle.css" rel="stylesheet" />
     <script src="../Scripts/ajaxCalls.js"></script>
-    <link href="../css/StyleInsertDisributor.css" rel="stylesheet" />
+    <script>
+        $(document).ready(function () {
+
+            //כיווץ לתוך רשימה נפתחת
+            //$('ul.navbar-nav').responsiveCollapse({
+            //    breakPoint: 768
+            //});
+            $("#pForm").submit(f1);
+
+            //בעת לחיצה על כפתור הכנס נגיע לפונקצית הוספת מפיץ
+            function AddDistibutor() {
+
+                Distributor = { // Note that the name of the fields must be identical to the names of the properties of the object in the server
+                    NameCompany: $("#namecompany").val(),
+                    NamePerson: $("#name").val(),
+                    Phone: $("#phone").val(),
+                    Email: $("#email").val(),
+                }
+                ajaxCall("POST", "../api/distributor", JSON.stringify(Distributor), success, error);
+            }
+            function f1() {
+                AddDistibutor();
+                return false; // the return false will prevent the form from being submitted
+                // hence the page will not reload
+            }
+            function success(data) {
+                swal("הנתונים הוכנסו בהצלחה!!")
+                //window.location.href = 'ListOfJobDistributors.html';
+            }
+            function error(err) {
+                err = JSON.parse(err.responseText);
+                swal("Error!", err.ExceptionMessage, "error");
+            }
+        });
+    </script>
+
+
+
 </head>
-<body>
+<body>   
+    <!--תפריט-->
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header"> 
+                <a href="#" class="navbar-brand">
+                   <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt=""></a>
+            </div>
+            <div class="navbar-collapse collapse navbar-right">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">הגדרות מערכת <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">מועמדים</a></li>
+                            <li><a href="#">משרות</a></li>
+                            <li><a href="#">מחלקות</a></li>
+                            <li><a href="#">תחומי עניין</a></li>
+                            <li><a href="#">שפות</a></li>
+                            <li><a href="#">כישורים</a></li>
+                            <li><a href="#">קטגוריות</a></li>
+                            <li><a href="#">תתי קטגוריות</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">דוחות</a></li>
+                    <li><a href="#">סדנאות</a></li>
+                    <li><a class="active" href="ListOfJobDistributors.html">מעסיקים ומשרות</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">מועמדים <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">סטודנטים</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">בוגרים</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
     <div class="container">
-        <center>
-            <form id="pForm" dir="rtl">
-                <h2>הוספת מפיץ חדש</h2>
-
-                <div class="form-group">
-                    <label for="name"><span class="red-star"> ★ </span></label>
-                    <input type="text" class="form-control" id="name" placeholder="רשום שם החברה" required>
-                </div>
-                <div class="form-group">
-                    <label for="familyName"><span class="red-star"> ★ </span> </label>
-                    <input type="text" class="form-control" id="familyName" placeholder="רשום שם איש הקשר" required>
-                </div>
-                <div class="form-group">
-                    <label for="Tel"><span class="red-star"> ★ </span></label>
-                    <input type="tel" class="form-control" id="phone"
-                           placeholder="רשום טלפון"
-                           pattern="[0]{1}[0-9]{9}"
-                           oninvalid="this.setCustomValidity('0ddddddddd הפורמט צריך להיות ')"
-                           oninput="this.setCustomValidity('')">
-                </div>
-                <div class="form-group">
-                    <label for="Email"><span class="red-star"> ★ </span></label>
-                    <input type="email" class="form-control" id="email" placeholder="רשום דו'אל" />
-                </div>
-
-                <!--<button class="btn btn-default" id="add">Add</button>-->
-                <input type="submit" value="הוסף" />
-            </form>
+        <a href="ListOfJobDistributors.html" class="btn btn-outline-info btn-lg " style="float:right">
+            <span class="glyphicon glyphicon-remove"></span>
+        </a>
+        <br /><br />
+            <center>
+                <form id="pForm" dir="rtl">
+                    <h2>הוספת מפיץ חדש</h2>
+                    <br>
+                    <div class="form-group">
+                        <i class="fa fa-building icon"></i>
+                        <input type="text" class="form-control" id="namecompany" placeholder="★ שם החברה" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-user icon"></i>
+                        <input type="text" class="form-control" id="name" placeholder="★ שם איש הקשר" >
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-phone icon"></i>
+                        <input type="tel" class="form-control" id="phone"
+                               placeholder="★ טלפון"
+                               pattern="[0]{1}[0-9]{9}"
+                               oninvalid="this.setCustomValidity('0ddddddddd הפורמט צריך להיות ')"
+                               oninput="this.setCustomValidity('')">
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-envelope icon"></i>
+                        <input type="email" class="form-control" id="email" placeholder="★ דו'אל" />
+                    </div>
+                    <input type="submit" value="הוסף" />
+                </form>
             </center>
 
-       
+      
     </div>
 
 </body>
