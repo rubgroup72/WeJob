@@ -23,12 +23,12 @@
 
     <script>
         $(document).ready(function () {
-            // once the document is ready we fetch a list of cars from the server
+            // once the document is ready we fetch a list of distributors from the server
             ajaxCall("GET", "../api/distributors", "", getSuccess, error);
         });
         // this function is activated in case of a success
         function getSuccess(distributorsdata) {
-            distributors = distributorsdata; // keep the cars array in a global variable;
+            distributors = distributorsdata; // keep the distributors array in a global variable;
             try {
                 tbl = $('#distributorTable').DataTable({
                     data: distributorsdata,
