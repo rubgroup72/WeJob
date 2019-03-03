@@ -8,9 +8,9 @@ import {
     StyleSheet,
     KeyboardAvoidingView,
 } from 'react-native';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { ActionCreators } from '../redux/actions';
+//import { connect } from 'react-redux';
+//import { bindActionCreators } from 'redux';
+//import { ActionCreators } from '../redux/actions';
 import colors from '../styles/colors';
 import InputField from '../components/form/InputField'
 import NextArrowButton from '../components/buttons/NextArrowButton'
@@ -92,15 +92,15 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapStateToProps = (state) => {
-    return {
-        loggedInStatus: state.loggedInStatus,
-    }
-};
+// const mapStateToProps = (state) => {
+//     return {
+//         loggedInStatus: state.loggedInStatus,
+//     }
+// };
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators(ActionCreators, dispatch);
-};
+// const mapDispatchToProps = (dispatch) => {
+//     return bindActionCreators(ActionCreators, dispatch);
+// };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(LogIn);
+export default LogIn;
