@@ -8,17 +8,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+    
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
     <!--לאייקונים-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="../css/MyStyle.css" rel="stylesheet" />
-
+    
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
 
     <script>
@@ -32,22 +34,44 @@
             try {
                 tbl = $('#distributorTable').DataTable({
                     data: distributorsdata,
-                    pageLength: 5,
+                    "autoWidth": false,
+                    pageLength: 4,
                     columns: [
-                        { data: "טלפון" },
-                        { data: "דוא'ל" },
-                        { data: "שם איש קשר" },
-                        { data: "שם חברה" },
                         {
+                            data: "Phone",
                             render: function (data, type, row, meta) {
-                                //let dataDis = "data-DisId='" + data.+ "'";
-                                viewBtn = "<span class = 'viewBtn btn btn-info fa fa-eye-slash' > </span>";
-                                editBtn = " <span class='editBtn btn btn-success fa fa-edit'></span> ";
-                                deleteBtn = " <span class=' deleteBtn btn btn-danger fa fa-remove'></span>";
-                                return editBtn + deleteBtn +viewBtn ;
+                                return '<input type="text" class="phone" disabled=false>';
                             }
                         },
-                    ],
+                        {
+                            data: "Email",
+                            render: function (data, type, row, meta) {
+                                return '<input type="text" class="email" disabled=false />';
+                            }
+                        },
+                        {
+                            data: "NamePerson",
+                            render: function (data, type, row, meta) {
+                                return '<input type="text" class="contactName" disabled=false />';
+                            }
+                        },
+                        {
+                            data: "NameCompany",
+                            render: function (data, type, row, meta) {
+                                return '<input type="text" class="NameCompany" disabled=false /> ';
+                            }
+                        },
+                       
+                        {
+                            render: function (data, type, row, meta) {
+                                //let dataDis = "data-DisId='" + row + "'";
+                                viewBtn = "<span class ='viewBtn btn btn-info fa fa-eye-slash' > </span>";
+                                editBtn = " <span class='editBtn btn btn-success fa fa-edit' onclick='edit()'></span> ";
+                                deleteBtn = " <span class='deleteBtn btn btn-danger fa fa-remove'></span>";
+                                return viewBtn + deleteBtn + editBtn  ;
+                            }
+                        }
+                    ]
                 });
                 //buttonEvents();
             }
@@ -117,10 +141,14 @@
                 <table id="distributorTable" class="display nowrap" style="width:100%">
                     <thead>
                         <tr>
-                            <th>טלפון</th>
+                            <!--<th>טלפון</th>
                             <th>דוא'ל</th>
                             <th>שם איש קשר</th>
-                            <th>שם חברה</th>
+                            <th>שם חברה</th>-->
+                            <td>Phone</td>
+                            <td>Email</td>
+                            <td>NamePerson</td>
+                            <td>NameCompany</td>
                             <th></th>
                         </tr>
                     </thead>

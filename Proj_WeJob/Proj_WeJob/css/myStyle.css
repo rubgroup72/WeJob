@@ -25,12 +25,12 @@ input[type=submit] {
     }
 .container {
     width: 50%;
-    margin-top:100px;
+    margin-top: 100px;
     border-radius: 5px;
     background-color: #DCDCDC;
     /*#f2f2f2;*/
     padding: 20px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Gisha,Calibri, 'Trebuchet MS', sans-serif;
 }
 
 #pForm h2 {
@@ -40,11 +40,18 @@ input[type=submit] {
     color:midnightblue;
 }
 body {
+    background-image: url("http://www.yo-yoo.co.il/rekaim/images/uploads/f38641.jpg");
+    /*background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKJ6QFIcSKWfflsvN5OJ2-rTlazef4A1RXTBYRh8zCUpYkrm9Z");*/
     background-color: #696969;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
 }
 
 .container-fluid {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Gisha,Calibri, 'Trebuchet MS', sans-serif;
     font-size: large;
     font-weight: bold;
 }
@@ -60,4 +67,8 @@ body {
     padding: 10px;
     outline: none;
   
+}
+#imgDis{
+    height:100px;
+    width:100px;
 }
