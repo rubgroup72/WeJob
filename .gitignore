@@ -1,0 +1,8 @@
+WeJobReact/android/.gradle/
+WeJobReact/android/.idea/
+WeJobReact/android/app/build/
+WeJobReact/node_modules/
+
+Proj_WeJob/.vs/
+Proj_WeJob/Proj_WeJob/bin/
+Proj_WeJob/Proj_WeJob/obj/
