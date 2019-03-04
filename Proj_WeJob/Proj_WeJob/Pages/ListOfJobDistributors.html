@@ -27,6 +27,7 @@
         $(document).ready(function () {
             // once the document is ready we fetch a list of distributors from the server
             ajaxCall("GET", "../api/distributors", "", getSuccess, error);
+            //buttonEvents();
         });
         // this function is activated in case of a success
         function getSuccess(distributorsdata) {
@@ -37,43 +38,41 @@
                     "autoWidth": false,
                     pageLength: 4,
                     columns: [
+                        {data: "Phone"},
+                        {data: "Email"},
+                        {data: "NamePerson"},
+                        {data: "NameCompany"}, 
                         {
-                            data: "Phone",
+                            "className": 'edit',
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": '',
                             render: function (data, type, row, meta) {
-                                return '<input type="text" class="phone" disabled=false>';
+                                let dataDis = "data-DisId='" + row.CompanyNo + "'";
+                                editBtn = " <span class='editBtn btn btn-success fa fa-edit'" + dataDis +" ></span> ";  
+                                return editBtn  ;
                             }
                         },
                         {
-                            data: "Email",
+                            "className": 'view',
                             render: function (data, type, row, meta) {
-                                return '<input type="text" class="email" disabled=false />';
+                                let dataDis = "data-DisId='" + row.CompanyNo + "'";
+                                viewBtn = "<span class ='viewBtn btn btn-info fa fa-eye-slash'" + dataDis + " > </span>";
+                                return viewBtn;
                             }
                         },
                         {
-                            data: "NamePerson",
+                            "className": 'delete',
                             render: function (data, type, row, meta) {
-                                return '<input type="text" class="contactName" disabled=false />';
-                            }
-                        },
-                        {
-                            data: "NameCompany",
-                            render: function (data, type, row, meta) {
-                                return '<input type="text" class="NameCompany" disabled=false /> ';
-                            }
-                        },
-                       
-                        {
-                            render: function (data, type, row, meta) {
-                                //let dataDis = "data-DisId='" + row + "'";
-                                viewBtn = "<span class ='viewBtn btn btn-info fa fa-eye-slash' > </span>";
-                                editBtn = " <span class='editBtn btn btn-success fa fa-edit' onclick='edit()'></span> ";
-                                deleteBtn = " <span class='deleteBtn btn btn-danger fa fa-remove'></span>";
-                                return viewBtn + deleteBtn + editBtn  ;
+                                let dataDis = "data-DisId='" + row.CompanyNo + "'";
+                                deleteBtn = " <span class='deleteBtn btn btn-danger fa fa-remove'" + dataDis + "></span>";
+                                return deleteBtn;
                             }
                         }
+
                     ]
                 });
-                //buttonEvents();
+                buttonEvents();
             }
 
             catch (err) {
@@ -84,6 +83,40 @@
         // this function is activated in case of a failure
         function error(err) {
             swal("Error: " + err);
+        }
+
+        // wire all the buttons to their functions
+        function buttonEvents() {
+            // Add event listener for opening and closing details
+            $("#distributorTable").on('click', 'td.edit', function () {
+                var tr = $(this).closest('tr');
+                var row = tbl.row(tr);
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
+                    let dataDis = "data-DisId='" + row.CompanyNo + "'";
+                    editBtn = " <span class='editBtn btn btn-success fa fa-check-square-o'" + dataDis + " ></span> ";
+                    document.getElementsByClassName("shown") = editBtn;
+                }
+               
+            });
+        }
+
+        
+        function format(distributor) {
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; text-align:center" dir="rtl" >' +
+                '<tr>' +
+                '<td><input type="text" class="form-control" id="name" placeholder="★ שם איש הקשר" ></td>' +
+                '<td><input type="tel" class="form-control" id="phone" placeholder = "★ טלפון" pattern = "[0]{1}[0-9]{9}" oninvalid ="this.setCustomValidity("0ddddddddd הפורמט צריך להיות")" oninput = "this.setCustomValidity("")></td>' +             
+                '<td><input type="email" class="form-control" id="email" placeholder="★ מייל" /></td>' +
+                '</tr>' + 
+                '</table>';
         }
     </script>
 </head>
