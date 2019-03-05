@@ -1,10 +1,197 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+    <title>Insert job</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!--לאייקונים-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="../css/MyStyle.css" rel="stylesheet" />
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <script>
+        $(document).ready(function () {
+
+         
+            //$("#pForm").submit(f1);
+
+            //בעת לחיצה על כפתור הכנס נגיע לפונקצית הוספת מפיץ
+            function AddJob() {
+
+                Job = { // Note that the name of the fields must be identical to the names of the properties of the object in the server
+                    //NameCompany: $("#namecompany").val(),
+                    //NamePerson: $("#name").val(),
+                    //Phone: $("#phone").val(),
+                    //Email: $("#email").val(),
+                }
+                //ajaxCall("POST", "../api/jobs", JSON.stringify(Distributor), success, error);
+            }
+            function f1() {
+                AddJob();
+                return false; // the return false will prevent the form from being submitted
+                // hence the page will not reload
+            }
+            function success(data) {
+                swal("הנתונים הוכנסו בהצלחה")
+                //window.location.href = 'ListOfJobDistributors.html';
+            }
+            function error(err) {
+                err = JSON.parse(err.responseText);
+                swal("Error!", err.ExceptionMessage, "error");
+            }
+        });
+    </script>
+
+
+
 </head>
 <body>
+    <!--תפריט-->
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="#" class="navbar-brand">
+                    <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt="">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse navbar-right">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">הגדרות מערכת <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">מועמדים</a></li>
+                            <li><a href="#">משרות</a></li>
+                            <li><a href="#">מחלקות</a></li>
+                            <li><a href="#">תחומי עניין</a></li>
+                            <li><a href="#">שפות</a></li>
+                            <li><a href="#">כישורים</a></li>
+                            <li><a href="#">קטגוריות</a></li>
+                            <li><a href="#">תתי קטגוריות</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">דוחות</a></li>
+                    <li><a href="#">סדנאות</a></li>
+                    <li><a class="active" href="ListOfJobDistributors.html">מעסיקים ומשרות</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">מועמדים <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">סטודנטים</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">בוגרים</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <a href="ListOfJobDistributors.html" class="btn btn-outline-info btn-lg " style="float:right">
+            <span class="glyphicon glyphicon-remove"></span>
+        </a>
+        <br /><br />
+        <center>
+            <form id="pForm" dir="rtl">
+                <h2>הוספת משרה חדשה </h2>
+                <br>
+                <!--list of company-->
+                <div class="form-group" id="company">
+
+                </div>
+                <div class="form-group">
+                    <i class="fa fa-building icon"></i>
+                    <input type="text" class="form-control" id="namejob" placeholder="★ שם משרה" required>
+                </div>
+                <div class="form-group">
+                    <i class="fa fa-user icon"></i>
+                    <input type="text" class="form-control" id="discripsion" placeholder="★ תיאור משרה">
+                </div>
+                <div class="form-group">
+                    <i class="fa fa-user icon"></i>
+                    <input type="text" class="form-control" id="Requirements" placeholder="★ דרישות תפקיד">
+                </div>
+                <div class="form-group">
+                    <i class="fa fa-envelope icon"></i>
+                    <input type="email" class="form-control" id="email" placeholder="★ דו'אל לשליחת קורות חיים" />
+                </div>
+                <!--לשנות לרשימה של ערים-->
+                <div class="form-group">
+                    <label for="location"><span class="red-star">★ </span>מיקום משרה</label>
+                    <select id="location" required>
+                        <option selected disabled value="">בחר עיר</option>
+                        <option value="תל אביב-יפו">תל אביב-יפו</option>
+                        <option value="ראשון לציון">ראשון לציון</option>
+                        <option value="ירושלים">ירושלים</option>
+                        <option value="פתח תקווה">פתח תקווהראשון לציון</option>
+                        <option value="אילת">אילת</option>
+                        <option value="בני ברק">בני ברק</option>
+                        <option value="חולון">חולון</option>
+                        <option value="רמת גן">רמת גן</option>
+                        <option value="אשדוד">אשדוד</option>
+                        <option value="רחובות">רחובות</option>
+                        <option value="נתניה">נתניה</option>
+                        <option value="בת ים">בת ים</option>
+                        <option value="הרצליה">הרצליה</option>
+                        <option value="לוד">לוד</option>
+                        <option value="כפר סבא">כפר סבא</option>
+                        <option value="גבעתיים">גבעתיים</option>
+                        <option value="ראש העין">ראש העין</option>
+                        <option value="אור יהודה">אור יהודה</option>
+                        <option value="רמלה">רמלה</option>
+                        <option value="קריית אונו">קריית אונו</option>
+                        <option value="נס ציונה">נס ציונה</option>
+                        <option value="טבריה">טבריה</option>
+                        <option value="בית שמש">בית שמש</option>
+                        <option value="מודיעין">מודיעין</option>
+                        <option value="רעננה">רעננה</option>
+                        <option value="עכו">עכו</option>
+                        <option value="הוד השרון">הוד השרון</option>
+                        <option value="רמת השרון">רמת השרון</option>
+                        <option value="עפולה">עפולה</option>
+                        <option value="יבנה">יבנה</option>
+                        <option value="בית שאן">בית שאן</option>
+                        <option value="אופקים">אופקים</option>
+                        <option value="גבעת שמואל">גבעת שמואל</option>
+                        <option value="נהריה">נהריה</option>
+                        <option value="קריית שמונה">קריית שמונה</option>
+                        <option value="שדרות">שדרות</option>
+                        <option value="כרמיאל">כרמיאל</option>
+                        <option value="קריית גת">קריית גת</option>
+                        <option value="ערד">ערד</option>
+                        <option value="צפת">צפת</option>
+                        <option value="קריית מוצקין">קריית מוצקין</option>
+                        <option value="קריית ביאליק">קריית ביאליק</option>
+                        <option value="חיפה">חיפה</option>
+                        <option value="נצרת עילית">נצרת עילית</option>
+                        <option value="באר שבע">באר שבע</option>
+                        <option value="טירת כרמל">טירת כרמל</option>
+                        <option value="מגדל העמק">מגדל העמק</option>
+                        <option value="קריית אתא">קריית אתא</option>
+                        <option value="דימונה">דימונה</option>
+                        <option value="אלעד">אלעד</option>
+                        <option value="יהוד">יהוד</option>
+                        <option value="קסריה">קסריה</option>
+                        <option value="אור עקיבא">אור עקיבא</option>
+                        <option value="חדרה">חדרה</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <i class="fa fa-user icon"></i>
+                    <input type="text" class="form-control" id="link" placeholder="★ לינק לאתר החברה">
+                </div>
+
+
+                <input type="submit" value="הוסף" />
+            </form>
+        </center>
+
+
+    </div>
 
 </body>
 </html>

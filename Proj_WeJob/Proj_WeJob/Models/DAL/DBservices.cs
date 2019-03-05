@@ -71,7 +71,8 @@ namespace Proj_WeJob.Models.DAL
             cmd = CreateCommand(cStr, con);             // create the command
             try
             {
-                return cmd.ExecuteNonQuery(); // execute the command   
+                return Convert.ToInt32(cmd.ExecuteScalar());
+                //int numEffected = cmd.ExecuteNonQuery(); // execute the command
             }
             catch (Exception ex)
             {
@@ -99,6 +100,7 @@ namespace Proj_WeJob.Models.DAL
             sb.AppendFormat(" Values ('{0}','{1}','{2}','{3}') ",dis.NameCompany,dis.NamePerson,dis.Phone,dis.Email);
             String prefix = "INSERT INTO Company " + "(CompanyName,ContactName,ContactPhone,ContactMail)";
             command = prefix + sb.ToString();
+            command += "; SELECT SCOPE_IDENTITY()";
             return command;
         }
         ///++++++++++סיום הוספת משתמש+++++++++++
@@ -119,6 +121,7 @@ namespace Proj_WeJob.Models.DAL
                 {   // Read till the end of the data into a row
                     Distributor d = new Distributor
                         (
+                        Convert.ToInt32(dr["CompanyNo"]),
                         Convert.ToString(dr["CompanyName"]),
                         Convert.ToString(dr["ContactName"]),
                         Convert.ToString(dr["ContactPhone"]),

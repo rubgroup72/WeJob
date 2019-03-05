@@ -15,7 +15,6 @@
     <script src="../Scripts/ajaxCalls.js"></script>
     <script>
         $(document).ready(function () {
-            //הערההה
 
             //כיווץ לתוך רשימה נפתחת
             //$('ul.navbar-nav').responsiveCollapse({
@@ -40,7 +39,7 @@
                 // hence the page will not reload
             }
             function success(data) {
-                swal("הנתונים הוכנסו בהצלחה!!")
+                swal("הנתונים הוכנסו בהצלחה", "Great Job", "success");
                 //window.location.href = 'ListOfJobDistributors.html';
             }
             function error(err) {
@@ -100,7 +99,8 @@
         <br /><br />
             <center>
                 <form id="pForm" dir="rtl">
-                    <h2>הוספת מפיץ חדש</h2>
+                    <h1>כרטיס מפיץ</h1>
+                    <img id="imgDis"src="https://png.pngtree.com/svg/20161228/distributor_256973.png"/>
                     <br>
                     <div class="form-group">
                         <i class="fa fa-building icon"></i>
