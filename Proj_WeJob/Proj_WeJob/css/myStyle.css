@@ -24,7 +24,8 @@ input[type=submit] {
         background-color: #45a049;
     }
 .container {
-    width: 50%;
+    width:70%;
+    height: 100%;
     margin-top: 100px;
     border-radius: 5px;
     background-color: #DCDCDC;
@@ -32,12 +33,15 @@ input[type=submit] {
     padding: 20px;
     font-family: Gisha,Calibri, 'Trebuchet MS', sans-serif;
 }
+#distributorTable {
+    width: 100%;
+}
 
 #pForm h2 {
     text-align: center;
-    font-size:40px;
+    font-size: 40px;
     font-weight: bold;
-    color:midnightblue;
+    color: midnightblue;
 }
 body {
     background-image: url("http://www.yo-yoo.co.il/rekaim/images/uploads/f38641.jpg");
@@ -72,3 +76,9 @@ body {
     height:100px;
     width:100px;
 }
+/*.left{
+    float:right;
+}
+.rigth{
+    float:left
+}*/
