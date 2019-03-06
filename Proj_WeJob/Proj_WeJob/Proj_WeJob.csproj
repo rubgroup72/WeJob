@@ -177,7 +177,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\DistributorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
@@ -186,7 +185,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DAL\DBservices.cs" />
-    <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Distributor.cs" />
     <Compile Include="Models\Job.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -223,7 +221,6 @@
     <Content Include="Pages\HomePage.html" />
     <Content Include="Pages\images\dddd.png" />
     <Content Include="Pages\images\logoWeJob.png" />
-    <Content Include="Pages\ListOfStudents.html" />
     <Content Include="Pages\ListOfStudentAndGraduates.html" />
     <Content Include="Pages\InsertDistributor.html" />
     <Content Include="Pages\InsertJob.html" />
