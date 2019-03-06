@@ -186,6 +186,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DAL\DBservices.cs" />
+    <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Distributor.cs" />
     <Compile Include="Models\Job.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

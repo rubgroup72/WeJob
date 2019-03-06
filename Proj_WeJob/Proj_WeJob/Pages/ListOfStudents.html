@@ -34,10 +34,13 @@
                     data: Studentsdata,
                     pageLength: 5,
                     columns: [
+                        { data: "תז" },
                         { data: "שם" },
                         { data: "שם משפחה" },
                         { data: "דוא'ל" },
                         { data: "טלפון" },
+                        { data: "קורות חיים" },
+                        { data: "מחלקה" },
                         {
                             render: function (data, type, row, meta) {
                                 //let dataDis = "data-DisId='" + data.+ "'";
@@ -121,7 +124,7 @@
                             <th>טלפון</th>
                             <th>שם משפחה</th>
                             <th>שם</th>
-                            <th></th>
+                            <th>תז</th>
                         </tr>
                     </thead>
                 </table>
