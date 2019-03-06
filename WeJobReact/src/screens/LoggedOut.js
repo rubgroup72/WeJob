@@ -28,7 +28,7 @@ export default class LoggedOut extends React.Component{
         return {
           headerTransparent: true,
           headerTintColor: colors.white,
-          
+          // inga test
           //headerTitle: 'New Task',
           headerLeft:
           <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="right" color={colors.white} text="משתמש רשום?  " />,
