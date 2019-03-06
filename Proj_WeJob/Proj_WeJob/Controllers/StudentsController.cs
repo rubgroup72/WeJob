@@ -5,21 +5,21 @@ using Proj_WeJob.Models.DAL;
 
 namespace Proj_WeJob.Controllers
 {
-    public class StudentsController:ApiController
+    public class StudentController : ApiController
     {
         // POST api/values
         //הפעלת פונקצית הוספת מפיצים במחלקת מפיץ
-        public void POST([FromBody]Distributor distributor)
-        {
-            distributor.InsertDistibutor();
-        }
+        //public void POST([FromBody]Student student)
+        //{
+        //    student.InsertStudent();
+        //}
         //הפעלת פונקציה שמחזירה את כל המפיצים
         [HttpGet]
-        [Route("api/distributors")]
-        public IEnumerable<Distributor> Get()
+        [Route("api/Student")]
+        public IEnumerable<Student> Get()
         {
-            Distributor d = new Distributor();
-            return d.GetListDistributor();
+            Student d = new Student();
+            return d.GetListStudent();
         }
     }
 }
