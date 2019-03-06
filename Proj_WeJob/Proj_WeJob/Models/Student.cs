@@ -9,19 +9,19 @@ namespace Proj_WeJob.Models.DAL
     public class Student
     {
         //Propeties 
-        public int StudentID { get; set; }
+        public int StudentId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Phone { get; set; }
+        public string CellPhone { get; set; }
         public string Email { get; set; }
 
         //constructor
-        public Student( int _studentID, string _firstName, string _lastName, string _phone, string _email) 
+        public Student( int _studentId, string _firstName, string _lastName, string _cellPhone, string _email) 
         {
-            this.StudentID = _studentID;
+            this.StudentId = _studentId;
             this.FirstName = _firstName;
             this.LastName = _lastName;
-            this.Phone = _phone;
+            this.CellPhone = _cellPhone;
             this.Email = _email;
         }
 

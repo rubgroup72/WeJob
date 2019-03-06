@@ -58,7 +58,9 @@
                               data: "Email",
                               title: "דוא'ל"
                           },
-
+                           //{
+                           //    render: getImg
+                           //},
 
                        {
                            "className": 'edit',
@@ -66,7 +68,7 @@
                            "data": null,
                            "defaultContent": '',
                            render: function (data, type, row, meta) {
-                               let datastu = "data-DisId='" + row.StudentId + "'";
+                               let datastu = "data-StuId='" + row.StudentId + "'";
                                editBtn = " <span class='editBtn btn btn-success fa fa-edit'" + datastu + " ></span> ";
                                return editBtn;
                            }
@@ -74,7 +76,7 @@
                         {
                             "className": 'view',
                             render: function (data, type, row, meta) {
-                                let datastu = "data-DisId='" + row.StudentId + "'";
+                                let datastu = "data-StuId='" + row.StudentId + "'";
                                 viewBtn = "<span class ='viewBtn btn btn-info fa fa-eye-slash'" + datastu + " > </span>";
                                 return viewBtn;
                             }
@@ -82,10 +84,10 @@
                         {
                             "className": 'delete',
                             render: function (data, type, row, meta) {
-                                let datastu = "data-DisId='" + row.StudentId + "'";
+                                let datastu = "data-StuId='" + row.StudentId + "'";
                                 deleteBtn = " <span class='deleteBtn btn btn-danger fa fa-remove'" + datastu + "></span>";
                                 return deleteBtn;
-                            }
+                            },
                         }
                     ],
                 });
@@ -96,6 +98,14 @@
                 alert(err);
             }
         }
+        //function getImg(data, type, full, meta) {
+        //    if (full.Pgroup == "family")
+        //        return ' <img src="images/fa.png" />';
+        //    if (full.Pgroup == "friend")
+        //        return '<img src="images/fr.png" />';
+        //    else
+        //        return '<img src="images/wo.png" />';
+        //}
 
         // this function is activated in case of a failure
         function error(err) {
@@ -117,8 +127,8 @@
                     // Open this row
                     row.child(format(row.data())).show();
                     tr.addClass('shown');
-                    let dataDis = "data-DisId='" + row.CompanyNo + "'";
-                    editBtn = " <span class='editBtn btn btn-success fa fa-check-square-o'" + dataDis + " ></span> ";
+                    let datastu = "data-StuId='" + row.StudentId + "'";
+                    editBtn = " <span class='editBtn btn btn-success fa fa-check-square-o'" + datastu + " ></span> ";
                     document.getElementsByClassName("shown") = editBtn;
                 }
 
