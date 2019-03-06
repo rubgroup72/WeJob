@@ -1,10 +1,210 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+    <title>List Of Student And Graduates</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+    <!--לאייקונים-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../css/MyStyle.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // once the document is ready we fetch a list of Students from the server
+            ajaxCall("GET", "../api/Students", "", getSuccess, error);
+        });
+        // this function is activated in case of a success
+        function getSuccess(Studentsdata) {
+            Students = Studentsdata; // keep the Students array in a global variable;
+            try {
+                tbl = $('#StudentsTable').DataTable({
+                    data: Studentsdata,
+                    "autoWidth": false,
+                    pageLength: 4,
+                    columns: [
+                        {
+                            data: "StudentId",
+                            title: "ת.ז"
+                        },
+                        {
+                            data: "FirstName",
+                            title: "שם פרטי"
+                        },
+                        {
+                            data: "LastName",
+                            title: "שם משפחה"
+                        },
+                       
+                         {
+                             data: "CellPhone",
+                             title: 'טלפון'
+                         },
+                          {
+                              data: "Email",
+                              title: "דוא'ל"
+                          },
+
+
+                       {
+                           "className": 'edit',
+                           "orderable": false,
+                           "data": null,
+                           "defaultContent": '',
+                           render: function (data, type, row, meta) {
+                               let datastu = "data-DisId='" + row.StudentId + "'";
+                               editBtn = " <span class='editBtn btn btn-success fa fa-edit'" + datastu + " ></span> ";
+                               return editBtn;
+                           }
+                       },
+                        {
+                            "className": 'view',
+                            render: function (data, type, row, meta) {
+                                let datastu = "data-DisId='" + row.StudentId + "'";
+                                viewBtn = "<span class ='viewBtn btn btn-info fa fa-eye-slash'" + datastu + " > </span>";
+                                return viewBtn;
+                            }
+                        },
+                        {
+                            "className": 'delete',
+                            render: function (data, type, row, meta) {
+                                let datastu = "data-DisId='" + row.StudentId + "'";
+                                deleteBtn = " <span class='deleteBtn btn btn-danger fa fa-remove'" + datastu + "></span>";
+                                return deleteBtn;
+                            }
+                        }
+                    ],
+                });
+                buttonEvents();
+            }
+
+            catch (err) {
+                alert(err);
+            }
+        }
+
+        // this function is activated in case of a failure
+        function error(err) {
+            swal("Error: " + err);
+        }
+
+        // wire all the buttons to their functions
+        function buttonEvents() {
+            // Add event listener for opening and closing details
+            $("#StudentsTable").on('click', 'td.edit', function () {
+                var tr = $(this).closest('tr');
+                var row = tbl.row(tr);
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
+                    let dataDis = "data-DisId='" + row.CompanyNo + "'";
+                    editBtn = " <span class='editBtn btn btn-success fa fa-check-square-o'" + dataDis + " ></span> ";
+                    document.getElementsByClassName("shown") = editBtn;
+                }
+
+            });
+        }
+        function format(Students) {
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; text-align:center" dir="rtl" >' +
+                '<tr>' +
+                '<td><input type="text" class="form-control" id="id" placeholder="★ ת.ז" ></td>' +
+                '<td><input type="text" class="form-control" id="firstName" placeholder="★ שם פרטי" ></td>' +
+                '<td><input type="text" class="form-control" id="lastName" placeholder="★ שם משפחה" ></td>' +
+                '<td><input type="tel" class="form-control" id="phone" placeholder = "★ טלפון" pattern = "[0]{1}[0-9]{9}" oninvalid ="this.setCustomValidity("0ddddddddd הפורמט צריך להיות")" oninput = "this.setCustomValidity("")></td>' +
+                '<td><input type="email" class="form-control" id="email" placeholder="★ מייל" /></td>' +
+                '<button type="button" class="btn btn-outline-success btn-sm">שמור</button>'
+            '</tr>' +
+            '</table>';
+        }
+
+    </script>
+</head>
+
+
+<body>
+    <!--תפריט-->
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="#" class="navbar-brand">
+                    <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt="">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse navbar-right">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">הגדרות מערכת <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">מועמדים</a></li>
+                            <li><a href="#">משרות</a></li>
+                            <li><a href="#">מחלקות</a></li>
+                            <li><a href="#">תחומי עניין</a></li>
+                            <li><a href="#">שפות</a></li>
+                            <li><a href="#">כישורים</a></li>
+                            <li><a href="#">קטגוריות</a></li>
+                            <li><a href="#">תתי קטגוריות</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">דוחות</a></li>
+                    <li><a href="#">סדנאות</a></li>
+                    <li><a class="active" href="ListOfJobDistributors.html">מעסיקים ומשרות</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">מועמדים <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">סטודנטים</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">בוגרים</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">דף הבית</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <a href="HomePage.html" class="btn btn-outline-info btn-lg " style="float:right">
+            <span class="glyphicon glyphicon-remove"></span>
+        </a>
+        <!--<a href="InsertDistributor.html" class="btn btn-info"> הוסף מפיץ חדש <span class="glyphicon glyphicon-plus"></span></a>-->
+        <br /><br />
+        <center>
+            <form id="pForm">
+                <table id="StudentsTable" class="display nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>CellPhone</th>
+                            <th>LastName</th>
+                            <th>FirstName</th>
+                            <th>StudentId</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+
+            </form>
+        </center>
+    </div>
 </body>
 </html>

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
     <!--לאייקונים-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -19,6 +20,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
 
     <script>
@@ -34,11 +36,25 @@
                     data: Studentsdata,
                     pageLength: 5,
                     columns: [
-                        { data: "תז" },
-                        { data: "שם" },
-                        { data: "שם משפחה" },
-                        { data: "דוא'ל" },
-                        { data: "טלפון" },
+                        {
+                            data: "StudentId",
+                            title: "ת.ז"
+                        },
+                        {
+                            data: "FirstName",
+                            title: "שם פרטי"
+                        },
+                        {
+                            data: "LastName",
+                            title: "שם משפחה"
+                        },
+                        {
+                            data: "Email",
+                            title:"דוא'ל"},
+                         {
+                             data: "CellPhone",
+                             title: 'טלפון'
+                         },
                         
                        
                         {
@@ -113,18 +129,19 @@
         <a href="HomePage.html" class="btn btn-outline-info btn-lg " style="float:right">
             <span class="glyphicon glyphicon-remove"></span>
         </a>
-        <a href="ListOfStudents.html" class="btn btn-info"> הוסף סטודנט חדש <span class="glyphicon glyphicon-plus"></span></a>
+        <!--<a href="InsertDistributor.html" class="btn btn-info"> הוסף מפיץ חדש <span class="glyphicon glyphicon-plus"></span></a>-->
         <br /><br />
         <center>
             <form id="pForm">
-                <table id="distributorTable" class="display nowrap" style="width:100%">
+                <table id="StudentsTable" class="display nowrap" style="width:100%">
                     <thead>
-                        <tr> 
-                            <th>דוא'ל</th>
-                            <th>טלפון</th>
-                            <th>שם משפחה</th>
-                            <th>שם</th>
-                            <th>תז</th>
+                        <tr>
+                            <th>Email</th>
+                            <th>CellPhone</th>
+                            <th>LastName</th>
+                            <th>FirstName</th>
+                            <th>StudentId</th>
+                            <th></th>
                         </tr>
                     </thead>
                 </table>

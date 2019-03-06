@@ -33,7 +33,7 @@ input[type=submit] {
     padding: 20px;
     font-family: Gisha,Calibri, 'Trebuchet MS', sans-serif;
 }
-#distributorTable {
+#distributorTable , #StudentsTable {
     width: 100%;
 }
 

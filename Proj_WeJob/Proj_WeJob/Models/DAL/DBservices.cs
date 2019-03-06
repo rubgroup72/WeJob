@@ -145,5 +145,45 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+        //+++++פונקציה שמחזיה רשימה של סטודנטים ללא סינון
+        public List<Student> GetListStudent(string conString)
+        {
+            SqlConnection con = null;
+            List<Student> ld = new List<Student>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+                String selectSTR = "SELECT * FROM Student";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Student s = new Student
+                        (
+                        Convert.ToInt32(dr["StudentID"]),
+                        Convert.ToString(dr["FirstName"]),
+                        Convert.ToString(dr["LastName"]),
+                        Convert.ToString(dr["CellPhone"]),
+                        Convert.ToString(dr["Email"])
+                        );
+                    ld.Add(s);
+                }
+
+                return ld;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
     }
     }
