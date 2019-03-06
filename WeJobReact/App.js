@@ -5,6 +5,7 @@ import LogIn from './src/screens/LogIn';
 import LoggedOut from './src/screens/LoggedOut';
 
 
+
 const AppNavigator = createStackNavigator({
   Home: {
     screen: LoggedOut,
@@ -17,5 +18,3 @@ const AppNavigator = createStackNavigator({
 });
 
 export default createAppContainer(AppNavigator);
-
-//test

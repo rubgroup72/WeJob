@@ -19,7 +19,15 @@ class LogIn extends Component {
     handleNextButton(){
         alert("Next button pressed");
     }
+
+    static navigationOptions = ({ navigation }) => {
+        const { state } = navigation
+        return {
+          headerTransparent: true,
+        }
+      }
     render(){
+        
         return(
             <KeyboardAvoidingView style={styles.wrapper}>
                 <ScrollView  behavior="padding" enabled>

@@ -2,25 +2,42 @@ import React, {Component} from 'react';
 import colors from '../styles/colors';
 import InlineImage from '../components/InlineImage'
 import {StyleSheet, Text, View, Image, Button } from 'react-native';
-import RoundedButton from '../components/buttons/RoundedButton'
+import RoundedButton from '../components/buttons/RoundedButton';
+import NavBarButton from '../components/buttons/NavBarButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 export default class LoggedOut extends React.Component{
+    
+
     onFacebookPress(){
-        const { navigate } = this.props.navigation;
-        navigate('LogIn');
-    }
+        alert('Facebook button pressed');
+    };
 
     onGooglePlusPress(){
         alert('Google+ button pressed');
-    }
+    };
 
     onRegiterPress(){
         alert('Register button pressed');
-    }
+    };
 
+
+    static navigationOptions = ({ navigation }) => {
+        const { state } = navigation
+        return {
+          headerTransparent: true,
+          headerTintColor: colors.white,
+          
+          //headerTitle: 'New Task',
+          headerLeft:
+          <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="right" color={colors.white} text="משתמש רשום?  " />,
+
+        }
+      }
+    
     render(){
+        const {navigate} = this.props.navigation;
         return (
             <View style={styles.wrapper}>
               <View style={styles.welcomeWrapper}>
@@ -59,7 +76,6 @@ export default class LoggedOut extends React.Component{
                    handleOnPress={this.onRegiterPress}
                 />
               </View>
- 
             </View>
         );
     }
@@ -129,6 +145,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 20
         
+    },
+
+    logInButton: {
+        color: 'red',
+        paddingLeft: 22
     }
 
 
