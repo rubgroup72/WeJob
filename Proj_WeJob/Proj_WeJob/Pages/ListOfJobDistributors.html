@@ -38,10 +38,22 @@
                     "autoWidth": false,
                     pageLength: 4,
                     columns: [
-                        {data: "Phone"},
-                        {data: "Email"},
-                        {data: "NamePerson"},
-                        {data: "NameCompany"}, 
+                        {
+                            data: "Phone",
+                            title:'טלפון'
+                        },
+                        {
+                            data: "Email",
+                            title: 'דוא"ל'
+                        },
+                        {
+                            data: "NamePerson",
+                            title:"שם איש קשר"
+                        },
+                        {
+                            data: "NameCompany",
+                            title:"שם חברה"
+                        }, 
                         {
                             "className": 'edit',
                             "orderable": false,
@@ -115,6 +127,7 @@
                 '<td><input type="text" class="form-control" id="name" placeholder="★ שם איש הקשר" ></td>' +
                 '<td><input type="tel" class="form-control" id="phone" placeholder = "★ טלפון" pattern = "[0]{1}[0-9]{9}" oninvalid ="this.setCustomValidity("0ddddddddd הפורמט צריך להיות")" oninput = "this.setCustomValidity("")></td>' +             
                 '<td><input type="email" class="form-control" id="email" placeholder="★ מייל" /></td>' +
+                '<button type="button" class="btn btn-outline-success btn-sm">שמור</button>'
                 '</tr>' + 
                 '</table>';
         }
