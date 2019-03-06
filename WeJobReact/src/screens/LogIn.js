@@ -52,7 +52,7 @@ class LogIn extends Component {
             </ScrollView>
             <View style = {styles.nextButton}>
                   <NextArrowButton
-                   handleOnPress={() => this.props.navigation.navigate('Home')}
+                   //handleOnPress={() => this.props.navigation.navigate('Home')}
                    />
                 </View>
         </KeyboardAvoidingView>           
