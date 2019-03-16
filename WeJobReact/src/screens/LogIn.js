@@ -11,6 +11,7 @@ import {
 //import { connect } from 'react-redux';
 //import { bindActionCreators } from 'redux';
 //import { ActionCreators } from '../redux/actions';
+//
 import colors from '../styles/colors';
 import InputField from '../components/form/InputField'
 import NextArrowButton from '../components/buttons/NextArrowButton'
