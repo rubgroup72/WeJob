@@ -167,7 +167,8 @@ namespace Proj_WeJob.Models.DAL
                         Convert.ToString(dr["FirstName"]),
                         Convert.ToString(dr["LastName"]),
                         Convert.ToString(dr["CellPhone"]),
-                        Convert.ToString(dr["Email"])
+                        Convert.ToString(dr["Email"]),
+                        Convert.ToString(dr["Gender"])
                         );
                     ld.Add(s);
                 }
@@ -207,7 +208,8 @@ namespace Proj_WeJob.Models.DAL
                         Convert.ToString(dr["FirstName"]),
                         Convert.ToString(dr["LastName"]),
                         Convert.ToString(dr["CellPhone"]),
-                        Convert.ToString(dr["Email"])
+                        Convert.ToString(dr["Email"]),
+                        Convert.ToString(dr["Gender"])
                         );
                     return s;
                 }
@@ -228,7 +230,7 @@ namespace Proj_WeJob.Models.DAL
         }
 
         //פונקציית הרשמה של סטודנט חדש
-        public Student Register(String email, String firstName, String lastName, String phoneNumber, String password)
+        public Student Register(String email, String firstName, String lastName, String phoneNumber, String password, String gender)
         {
             SqlConnection con = null;
             List<Student> currentStudentList = GetListStudent(connectionString);
@@ -242,8 +244,9 @@ namespace Proj_WeJob.Models.DAL
             try
             {
                 con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
-                String selectSTR = "Insert Into Student (StudentId, DepartmentDepartmentCode, FirstName,LastName,Email,CellPhone,Password) Values";
-                selectSTR += String.Format("({0},{1},'{2}','{3}','{4}','{5}','{6}')", studentId, 1, firstName, lastName, email, phoneNumber, password);
+                String selectSTR = "Insert Into Student (StudentId, DepartmentDepartmentCode, FirstName,LastName,Email,CellPhone,Password,Gender) Values";
+                selectSTR += String.Format("({0},{1},'{2}','{3}','{4}','{5}','{6}','{7}')", 
+                    studentId, 1, firstName, lastName, email, phoneNumber, password, gender);
                 var cmd = CreateCommand(selectSTR, con);
                 cmd.ExecuteNonQuery();
             }

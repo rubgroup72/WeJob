@@ -8,15 +8,13 @@ import {
     StyleSheet,
     KeyboardAvoidingView,
 } from 'react-native';
-//import { connect } from 'react-redux';
-//import { bindActionCreators } from 'redux';
-//import { ActionCreators } from '../redux/actions';
-//
+
 import colors from '../styles/colors';
-import InputField from '../components/form/InputField'
-import NextArrowButton from '../components/buttons/NextArrowButton'
-import RoundedButton from '../components/buttons/RoundedButton'
+import InputField from '../components/form/InputField';
+import NextArrowButton from '../components/buttons/NextArrowButton';
+import RoundedButton from '../components/buttons/RoundedButton';
 import axios from 'axios';
+import Loader from '../components/Loader';
 
 class LogIn extends Component {
 
@@ -25,6 +23,7 @@ class LogIn extends Component {
         this.state = {
             email: "",
             password: "",
+            loadingVisible: false,
         };
     }
 
@@ -33,11 +32,15 @@ class LogIn extends Component {
     }
 
     LoginButtonCliked = () => {
+        this.setState({
+            loadingVisible: true
+        });
         axios.post("http://10.0.2.2:53411/api/Login", {
             Email: this.state.email,
             Password: this.state.password,
         })
         .then((response) => {
+            this.setState({ loadingVisible: false });
             if (response.data.Message === '') {
                 alert ('Login succes');
             } else {
@@ -45,6 +48,7 @@ class LogIn extends Component {
             }
         })
         .catch((error) => {
+            this.setState({ loadingVisible: false });
             alert (error);
         });
     }
@@ -101,9 +105,13 @@ class LogIn extends Component {
                   <NextArrowButton
                    handleOnPress={() => this.props.navigation.navigate('Home')}
                    />
-                </View>
-        </KeyboardAvoidingView>           
+            </View>
+            <Loader
+             modalVisible={this.state.loadingVisible}
+             animationType="fade" />  
+        </KeyboardAvoidingView>       
         );
+          
     }
 }
 

@@ -24,9 +24,12 @@ namespace Proj_WeJob.Controllers
         public ReactResponse Post([FromBody] Student s)
         {
             if (s == null)
-            {
                 return new ReactResponse("לא התקבלו פרטים", null);
-            }
+            if (String.IsNullOrEmpty(s.Email))
+                return new ReactResponse("אימייל ריק", null);
+            if (String.IsNullOrEmpty(s.Password))
+                return new ReactResponse("סיסמא ריקה", null);
+
             Student studentFromDB = s.AppLogin();
             if (studentFromDB == null)
             {

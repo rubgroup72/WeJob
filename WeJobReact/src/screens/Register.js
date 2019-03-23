@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import colors from '../styles/colors';
 import InlineImage from '../components/InlineImage'
 import {StyleSheet, Text, View, Image, Button, ScrollView,
-    
-    KeyboardAvoidingView, } from 'react-native';
+    KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import RoundedButton from '../components/buttons/RoundedButton';
 import NavBarButton from '../components/buttons/NavBarButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import InputField from '../components/form/InputField'
 import axios from 'axios';
+import Loader from '../components/Loader';
+
 
 export default class Register extends React.Component{
     
@@ -22,30 +23,38 @@ export default class Register extends React.Component{
             email: '',
             phoneNumber: '',
             password: '',
+            loadingVisible: false,
+            gender: '',
         };
 
         this.onRegisterPress = this.onRegisterPress.bind(this);
       }
 
     onRegisterPress = () => {
+        this.setState({
+            loadingVisible: true
+        });
         axios.post('http://10.0.2.2:53411/api/Register', {
             Email: this.state.email,
             Password: this.state.password,
             FirstName: this.state.firstName,
             LastName: this.state.lastName,
             CellPhone: this.state.phoneNumber,
+            Gender: this.state.gender,
         }, 
         )
-             .then((response) => {
-                 if (response.data.Message === "") {
-                     alert ('Registered');
-                 } else {
-                    alert (response.data.Message);
-                 }
-             })
-             .catch((error) => {
-                alert (error.response.status);
-             });
+        .then((response) => {
+            this.setState({ loadingVisible: false });
+            if (response.data.Message === "") {
+                alert ('Registered');
+            } else {
+            alert (response.data.Message);
+            }
+        })
+        .catch((error) => {
+            this.setState({ loadingVisible: false });
+            alert (error.response.status);
+        });
         // () => this.props.navigation.navigate('LogIn')
     }
     static navigationOptions = ({ navigation }) => {
@@ -53,15 +62,31 @@ export default class Register extends React.Component{
         return {
           headerTransparent: true,
           headerTintColor: colors.white,
-          // inga test
-          //headerTitle: 'New Task',
           headerLeft:
           <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="right" color={colors.white} text="משתמש רשום?  " />,
         }
-      }
+    }
+
+    maleClicked = () =>
+    {
+        this.setState({ gender: 'זכר' });
+    }
+    genderClicked = () =>
+    {
+        this.setState({ gender: 'נקבה' });
+    }
     
     render(){
         const {navigate} = this.props.navigation;
+        var maleImage = <Image  source={require('../img/male.png')}  style = {styles.maleImg} />;
+        if (this.state.gender === 'זכר') {
+            maleImage = <Image  source={require('../img/male.png')}  style = {styles.selectedMaleImg} />;
+        }
+
+        var femaleImage = <Image  source={require('../img/female.png')}  style = {styles.femaleImg} />;
+        if (this.state.gender === 'נקבה') {
+            femaleImage = <Image  source={require('../img/female.png')}  style = {styles.selectedFemaleImg} />;
+        }
         return (
             <KeyboardAvoidingView style={styles.wrapper}>
                 <ScrollView  behavior="padding" enabled>
@@ -70,6 +95,16 @@ export default class Register extends React.Component{
                             <Text style = {styles.welcomeText}> 
                                 { this.state.message }
                             </Text>
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                            <TouchableOpacity activeOpacity = { .5 } onPress={this.maleClicked}>
+                                { maleImage }
+                                <Text style={{ textAlign: "center", color: 'white' }}>זכר</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity activeOpacity = { .5 } onPress={this.genderClicked}>
+                                { femaleImage }
+                                <Text style={{ textAlign: "center", color: 'white' }}>נקבה</Text>
+                            </TouchableOpacity>
+                            </View>
                             <InputField 
                                     labelText = "שם פרטי"
                                     labelTextSize = {14}
@@ -130,6 +165,11 @@ export default class Register extends React.Component{
                             handleOnPress={() => { this.onRegisterPress() }}
                             />
                         </View>
+                        <Loader
+                         modalVisible={this.state.loadingVisible}
+                         animationType="fade" />  
+
+
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
@@ -206,7 +246,41 @@ const styles = StyleSheet.create({
     logInButton: {
         color: 'red',
         paddingLeft: 22
-    }
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+        horizontal: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 10
+    },
+
+    femaleImg: {
+        width: 105,
+        height: 105,
+        tintColor: 'white',
+        marginRight: 100,
+        paddingLeft:100
+    },
+    selectedFemaleImg: {
+        width: 105,
+        height: 105,
+        marginRight: 100,
+        paddingLeft:100
+    },
+
+    maleImg: {
+        width: 105,
+        height: 105,
+        tintColor: 'white',
+    },
+    selectedMaleImg: {
+        width: 105,
+        height: 105,
+    },
+
 
 
 });
