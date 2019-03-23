@@ -16,6 +16,8 @@ namespace Proj_WeJob.Models.DAL
 {
     public class DBservices
     {
+        //connection string details
+        private String connectionString = "DBConnectionString";
 
         public DBservices()
         {
@@ -185,5 +187,44 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+
+        //++++ פונקציית התחברות מאפליקציה לבסיס הנתונים
+        public Student AppLogin(String email, String password)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+                var selectSTR = "SELECT * FROM Student Where email = '" + email + "' and Password = '" + password + "'";
+                var cmd = new SqlCommand(selectSTR, con);
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Student s = new Student
+                        (
+                        Convert.ToInt32(dr["StudentID"]),
+                        Convert.ToString(dr["FirstName"]),
+                        Convert.ToString(dr["LastName"]),
+                        Convert.ToString(dr["CellPhone"]),
+                        Convert.ToString(dr["Email"])
+                        );
+                    return s;
+                }
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+            return null;
+        }
     }
-    }
+}
