@@ -226,5 +226,40 @@ namespace Proj_WeJob.Models.DAL
             }
             return null;
         }
+
+        //פונקציית הרשמה של סטודנט חדש
+        public Student Register(String email, String firstName, String lastName, String phoneNumber, String password)
+        {
+            SqlConnection con = null;
+            List<Student> currentStudentList = GetListStudent(connectionString);
+
+            // Check if email already exists
+            if (currentStudentList.Any(stud => stud.Email == email))
+                return null;
+
+            // Calc new studentId
+            var studentId = currentStudentList.Count() + 1;
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+                String selectSTR = "Insert Into Student (StudentId, DepartmentDepartmentCode, FirstName,LastName,Email,CellPhone,Password) Values";
+                selectSTR += String.Format("({0},{1},'{2}','{3}','{4}','{5}','{6}')", studentId, 1, firstName, lastName, email, phoneNumber, password);
+                var cmd = CreateCommand(selectSTR, con);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+            return AppLogin(email, password);
+        }
     }
 }

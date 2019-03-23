@@ -45,5 +45,12 @@ namespace Proj_WeJob.Models.DAL
             return dbs.AppLogin(Email, Password);
         }
 
+        //פונקציית הרשמה לאפליקציה
+        public Student AppRegister()
+        {
+            DBservices dbs = new DBservices();
+            return dbs.Register(Email, FirstName, LastName, CellPhone, Password);
+        }
+
     }
 }
