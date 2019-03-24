@@ -57,6 +57,7 @@ class LogIn extends Component {
         const { state } = navigation
         return {
           headerTransparent: true,
+          headerTintColor: colors.white,
         }
       }
     render(){

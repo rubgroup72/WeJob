@@ -62,10 +62,8 @@ export default class Register extends React.Component{
         return {
           headerTransparent: true,
           headerTintColor: colors.white,
-          headerLeft:
-          <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="right" color={colors.white} text="משתמש רשום?  " />,
         }
-    }
+      }
 
     maleClicked = () =>
     {
@@ -95,14 +93,21 @@ export default class Register extends React.Component{
                             <Text style = {styles.welcomeText}> 
                                 { this.state.message }
                             </Text>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
+                            <Text style = {styles.logInHeader}>נשמח להכיר אותך!</Text>
+                            <Text style = {styles.subHeader}>ספר לנו קצת על עצמך</Text>
+                            <View 
+                            style={{flex: 1,
+                            justifyContent: 'space-around',
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                            marginBottom: 50,}}>
                             <TouchableOpacity activeOpacity = { .5 } onPress={this.maleClicked}>
                                 { maleImage }
-                                <Text style={{ textAlign: "center", color: 'white' }}>זכר</Text>
+                                <Text style={{ textAlign: "center", color: 'white', fontSize: 14 }}>זכר</Text>
                             </TouchableOpacity>
                             <TouchableOpacity activeOpacity = { .5 } onPress={this.genderClicked}>
                                 { femaleImage }
-                                <Text style={{ textAlign: "center", color: 'white' }}>נקבה</Text>
+                                <Text style={{ textAlign: "center", color: 'white', fontSize: 14 }}>נקבה</Text>
                             </TouchableOpacity>
                             </View>
                             <InputField 
@@ -184,6 +189,22 @@ const styles = StyleSheet.create({
         backgroundColor: colors.green01,
         
     },
+    logInHeader: {
+        fontSize: 35,
+        color: colors.white,
+        fontWeight: '300',
+        marginBottom: 50,
+        marginTop: -50,
+        textAlign: 'center'
+    },
+    subHeader: {
+        fontSize: 20,
+        color: colors.white,
+        fontWeight: '300',
+        marginBottom: 50,
+        marginTop: -50,
+        textAlign: 'center'
+    },
     welcomeWrapper:{
         flex: 1,
         display: "flex",
@@ -258,27 +279,23 @@ const styles = StyleSheet.create({
     },
 
     femaleImg: {
-        width: 105,
-        height: 105,
+        width: 85,
+        height: 85,
         tintColor: 'white',
-        marginRight: 100,
-        paddingLeft:100
     },
     selectedFemaleImg: {
-        width: 105,
-        height: 105,
-        marginRight: 100,
-        paddingLeft:100
+        width: 85,
+        height: 85,
     },
 
     maleImg: {
-        width: 105,
-        height: 105,
+        width: 85,
+        height: 85,
         tintColor: 'white',
     },
     selectedMaleImg: {
-        width: 105,
-        height: 105,
+        width: 85,
+        height: 85,
     },
 
 
