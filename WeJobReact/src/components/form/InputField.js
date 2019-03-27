@@ -12,7 +12,7 @@ import colors from '../../styles/colors';
 
 export default class InputField extends Component{
     render() {
-        const { labelText, labelTextSize, labelColor, textColor,borderBottomColor, inputType, customStyle} = this.props;
+        const { labelText, labelTextSize, labelColor, textColor,borderBottomColor, inputType, customStyle, onChangeTextEvent } = this.props;
         const fontSize = labelTextSize || 14;
         const color = labelColor || colors.white;
         const inputColor = textColor || colors.white;
@@ -25,6 +25,7 @@ export default class InputField extends Component{
              autoCorrect={false}
              style= {[{color: inputColor, borderBottomColor: borderBottom},styles.InputField]}
              secureTextEntry = {inputType === 'password'}
+             onChangeText = {onChangeTextEvent}
             />
 
             </View>
@@ -40,6 +41,7 @@ InputField.propTypes = {
     borderBottomColor: PropTypes.string,
     inputType: PropTypes.string.isRequired,
     customStyle: PropTypes.object,
+    onChangeTextEvent: PropTypes.func,
 
 };
 

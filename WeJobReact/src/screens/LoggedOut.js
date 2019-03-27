@@ -18,8 +18,8 @@ export default class LoggedOut extends React.Component{
         alert('Google+ button pressed');
     };
 
-    onRegiterPress(){
-        alert('Register button pressed');
+    onRegiterPress = () => {
+        this.props.navigation.navigate("Register");
     };
 
 

@@ -14,15 +14,18 @@ namespace Proj_WeJob.Models.DAL
         public string LastName { get; set; }
         public string CellPhone { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
+        public string Gender { get; set; }
 
         //constructor
-        public Student( int _studentId, string _firstName, string _lastName, string _cellPhone, string _email) 
+        public Student( int _studentId, string _firstName, string _lastName, string _cellPhone, string _email, string _gender) 
         {
             this.StudentId = _studentId;
             this.FirstName = _firstName;
             this.LastName = _lastName;
             this.CellPhone = _cellPhone;
             this.Email = _email;
+            this.Gender = _gender;
         }
 
         public Student()
@@ -35,6 +38,20 @@ namespace Proj_WeJob.Models.DAL
         {
             DBservices dbs = new DBservices();
             return dbs.GetListStudent("DBConnectionString");
+        }
+
+        //פונקציית התחברות לאפליקציה
+        public Student AppLogin()
+        {
+            DBservices dbs = new DBservices();
+            return dbs.AppLogin(Email, Password);
+        }
+
+        //פונקציית הרשמה לאפליקציה
+        public Student AppRegister()
+        {
+            DBservices dbs = new DBservices();
+            return dbs.Register(Email, FirstName, LastName, CellPhone, Password, Gender);
         }
 
     }
