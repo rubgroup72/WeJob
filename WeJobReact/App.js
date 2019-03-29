@@ -4,6 +4,7 @@ import { createAppContainer, createStackNavigator, StackActions, NavigationActio
 import LogIn from './src/screens/LogIn';
 import LoggedOut from './src/screens/LoggedOut';
 import Register from './src/screens/Register';
+import Departments from './src/screens/Departments';
 
 
 
@@ -16,6 +17,9 @@ const AppNavigator = createStackNavigator({
   },
   Register: {
     screen: Register,
+  },
+  Departments: {
+    screen: Departments,
   }
 }, {
     initialRouteName: 'Home',

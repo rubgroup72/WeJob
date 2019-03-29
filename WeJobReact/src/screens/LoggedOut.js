@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import colors from '../styles/colors';
 import InlineImage from '../components/InlineImage'
-import {StyleSheet, Text, View, Image, Button } from 'react-native';
+import {StyleSheet, Text, View, Image, Button, ImageBackground  } from 'react-native';
 import RoundedButton from '../components/buttons/RoundedButton';
 import NavBarButton from '../components/buttons/NavBarButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
+
 
 export default class LoggedOut extends React.Component{
     
@@ -28,8 +29,6 @@ export default class LoggedOut extends React.Component{
         return {
           headerTransparent: true,
           headerTintColor: colors.white,
-          // inga test
-          //headerTitle: 'New Task',
           headerLeft:
           <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="right" color={colors.white} text="משתמש רשום?  " />,
 
@@ -39,7 +38,10 @@ export default class LoggedOut extends React.Component{
     render(){
         const {navigate} = this.props.navigation;
         return (
-            <View style={styles.wrapper}>
+            <ImageBackground style={ styles.imgBackground } 
+                 resizeMode='cover' 
+                 source={require('../img/blue.jpeg')}>
+                 <View style={styles.wrapper}>
               <View style={styles.welcomeWrapper}>
                 <Text style = {styles.welcomeText}> 
                     WeJ
@@ -62,9 +64,6 @@ export default class LoggedOut extends React.Component{
                 icon={<Icon name="google" size={20} style = {styles.googleButtonIcon}/>}
                 handleOnPress={this.onGooglePlusPress}
                 />
-                <Text style = {styles.notShareWithoutPermissionsText}>
-                    אנחנו לעולם לא נשתף דבר ללא רשותך
-                </Text>
                 <View style={{flexDirection: 'row'}}>
                   <View style={styles.drawLine} />
                   <Text style={styles.orText}>או</Text>
@@ -75,8 +74,13 @@ export default class LoggedOut extends React.Component{
                    textColor = {colors.white}
                    handleOnPress={this.onRegiterPress}
                 />
+                <Text style = {styles.notShareWithoutPermissionsText}>
+                    אנחנו לעולם לא נשתף דבר ללא רשותך
+                </Text>
               </View>
             </View>
+            </ImageBackground>
+            
         );
     }
 }
@@ -85,7 +89,7 @@ const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
         display: 'flex',
-        backgroundColor: colors.green01,
+        //backgroundColor: colors.green01,
         
     },
     welcomeWrapper:{
@@ -150,7 +154,12 @@ const styles = StyleSheet.create({
     logInButton: {
         color: 'red',
         paddingLeft: 22
-    }
+    },
+    imgBackground: {
+        width: '100%',
+        height: '100%',
+        flex: 1 
+},
 
 
 });
