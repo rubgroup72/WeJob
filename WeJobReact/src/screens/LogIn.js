@@ -7,6 +7,7 @@ import {
     ScrollView,
     StyleSheet,
     KeyboardAvoidingView,
+    ImageBackground,
 } from 'react-native';
 
 import colors from '../styles/colors';
@@ -15,6 +16,7 @@ import NextArrowButton from '../components/buttons/NextArrowButton';
 import RoundedButton from '../components/buttons/RoundedButton';
 import axios from 'axios';
 import Loader from '../components/Loader';
+import Global from '../global';
 
 class LogIn extends Component {
 
@@ -35,7 +37,7 @@ class LogIn extends Component {
         this.setState({
             loadingVisible: true
         });
-        axios.post("http://10.0.2.2:53411/api/Login", {
+        axios.post(Global.BASE_URL + "Login", {
             Email: this.state.email,
             Password: this.state.password,
         })
@@ -61,9 +63,11 @@ class LogIn extends Component {
         }
       }
     render(){
-        
         return(
-            <KeyboardAvoidingView style={styles.wrapper}>
+            <ImageBackground style={ styles.imgBackground } 
+                 resizeMode='cover' 
+                 source={require('../img/blue.jpeg')}>
+                 <KeyboardAvoidingView style={styles.wrapper}>
                 <ScrollView  behavior="padding" enabled>
                  <View style = {styles.scrolViewWrapper}>
                     <Text style = {styles.logInHeader}>התחבר</Text>
@@ -110,7 +114,8 @@ class LogIn extends Component {
             <Loader
              modalVisible={this.state.loadingVisible}
              animationType="fade" />  
-        </KeyboardAvoidingView>       
+        </KeyboardAvoidingView>    
+            </ImageBackground>   
         );
           
     }
@@ -120,7 +125,7 @@ const styles = StyleSheet.create({
     wrapper: {
         display: 'flex',
         flex: 1,
-        backgroundColor: colors.green01,
+        //backgroundColor: colors.green01,
     },
     scrolViewWrapper:{
         marginTop: 70,
@@ -145,10 +150,15 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         left: 20,
         bottom: 20,
-    }
+    },
+    imgBackground: {
+        width: '100%',
+        height: '100%',
+        flex: 1 
+    },
 })
 
-// const mapStateToProps = (state) => {
+// const mapStateToProps = (state) => {  
 //     return {
 //         loggedInStatus: state.loggedInStatus,
 //     }

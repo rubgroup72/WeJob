@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import colors from '../styles/colors';
-import InlineImage from '../components/InlineImage'
 import {StyleSheet, Text, View, Image, Button, ScrollView,
-    KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+    KeyboardAvoidingView, TouchableOpacity, ImageBackground  } from 'react-native';
 import RoundedButton from '../components/buttons/RoundedButton';
 import NavBarButton from '../components/buttons/NavBarButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,6 +9,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 import InputField from '../components/form/InputField'
 import axios from 'axios';
 import Loader from '../components/Loader';
+import Global from '../global';
 
 
 export default class Register extends React.Component{
@@ -33,8 +33,9 @@ export default class Register extends React.Component{
     onRegisterPress = () => {
         this.setState({
             loadingVisible: true
-        });
-        axios.post('http://10.0.2.2:53411/api/Register', {
+        })
+        
+        axios.post(Global.BASE_URL +'Register', {
             Email: this.state.email,
             Password: this.state.password,
             FirstName: this.state.firstName,
@@ -46,7 +47,7 @@ export default class Register extends React.Component{
         .then((response) => {
             this.setState({ loadingVisible: false });
             if (response.data.Message === "") {
-                alert ('Registered');
+                this.props.navigation.navigate('Departments');
             } else {
             alert (response.data.Message);
             }
@@ -55,6 +56,7 @@ export default class Register extends React.Component{
             this.setState({ loadingVisible: false });
             alert (error.response.status);
         });
+        
         // () => this.props.navigation.navigate('LogIn')
     }
     static navigationOptions = ({ navigation }) => {
@@ -86,7 +88,10 @@ export default class Register extends React.Component{
             femaleImage = <Image  source={require('../img/female.png')}  style = {styles.selectedFemaleImg} />;
         }
         return (
-            <KeyboardAvoidingView style={styles.wrapper}>
+            <ImageBackground style={ styles.imgBackground } 
+                 resizeMode='cover' 
+                 source={require('../img/blue.jpeg')}>
+                 <KeyboardAvoidingView style={styles.wrapper}>
                 <ScrollView  behavior="padding" enabled>
                     <View style={styles.wrapper}>
                         <View style={styles.welcomeWrapper}>
@@ -173,11 +178,10 @@ export default class Register extends React.Component{
                         <Loader
                          modalVisible={this.state.loadingVisible}
                          animationType="fade" />  
-
-
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
+            </ImageBackground>
         );
     }
 }
@@ -186,7 +190,7 @@ const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
         display: 'flex',
-        backgroundColor: colors.green01,
+        //backgroundColor: colors.green01,
         
     },
     logInHeader: {
@@ -296,6 +300,11 @@ const styles = StyleSheet.create({
     selectedMaleImg: {
         width: 85,
         height: 85,
+    },
+    imgBackground: {
+        width: '100%',
+        height: '100%',
+        flex: 1 
     },
 
 

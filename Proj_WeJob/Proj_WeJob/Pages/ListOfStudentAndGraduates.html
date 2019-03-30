@@ -58,9 +58,10 @@
                               data: "Email",
                               title: "דוא'ל"
                           },
-                           //{
-                           //    render: getImg
-                           //},
+                             {
+                                 data: "DepartmentName",
+                                 title: "מחלקה"
+                             },
 
                        {
                            "className": 'edit',
@@ -142,6 +143,7 @@
                 '<td><input type="text" class="form-control" id="lastName" placeholder="★ שם משפחה" ></td>' +
                 '<td><input type="tel" class="form-control" id="phone" placeholder = "★ טלפון" pattern = "[0]{1}[0-9]{9}" oninvalid ="this.setCustomValidity("0ddddddddd הפורמט צריך להיות")" oninput = "this.setCustomValidity("")></td>' +
                 '<td><input type="email" class="form-control" id="email" placeholder="★ מייל" /></td>' +
+                '<td><input type="department" class="form-control" id="department" placeholder="★ מחלקה" /></td>' +
                 '<button type="button" class="btn btn-outline-success btn-sm">שמור</button>'
             '</tr>' +
             '</table>';
@@ -149,7 +151,7 @@
 
     </script>
 </head>
-<!--teeeeeeeeeeeeeeeeeeeeettttttttttttttttttttttt-->
+
 
 <body>
     <!--תפריט-->
@@ -203,6 +205,7 @@
                 <table id="StudentsTable" class="display nowrap" style="width:100%">
                     <thead>
                         <tr>
+                            <th>DepartmentName</th>
                             <th>Email</th>
                             <th>CellPhone</th>
                             <th>LastName</th>

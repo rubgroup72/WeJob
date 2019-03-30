@@ -156,7 +156,7 @@ namespace Proj_WeJob.Models.DAL
             try
             {
                 con = connect(conString); // create a connection to the database using the connection String defined in the web config file
-                String selectSTR = "SELECT * FROM Student";
+                String selectSTR = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
                 // get a reader
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
@@ -169,7 +169,9 @@ namespace Proj_WeJob.Models.DAL
                         Convert.ToString(dr["LastName"]),
                         Convert.ToString(dr["CellPhone"]),
                         Convert.ToString(dr["Email"]),
-                        Convert.ToString(dr["Gender"])
+                        Convert.ToString(dr["Gender"]),
+                        Convert.ToString(dr["DepartmentName"])
+
                         );
                     ld.Add(s);
                 }
@@ -197,7 +199,7 @@ namespace Proj_WeJob.Models.DAL
             try
             {
                 con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
-                var selectSTR = "SELECT * FROM Student Where email = '" + email + "' and Password = '" + password + "'";
+                var selectSTR = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode Where email = '" + email + "' and Password = '" + password + "'";
                 var cmd = new SqlCommand(selectSTR, con);
                 // get a reader
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
@@ -210,7 +212,8 @@ namespace Proj_WeJob.Models.DAL
                         Convert.ToString(dr["LastName"]),
                         Convert.ToString(dr["CellPhone"]),
                         Convert.ToString(dr["Email"]),
-                        Convert.ToString(dr["Gender"])
+                        Convert.ToString(dr["Gender"]),
+                        Convert.ToString(dr["Department"])
                         );
                     return s;
                 }

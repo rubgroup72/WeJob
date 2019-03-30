@@ -16,9 +16,10 @@ namespace Proj_WeJob.Models.DAL
         public string Email { get; set; }
         public string Password { get; set; }
         public string Gender { get; set; }
+        public string DepartmentName { get; set; }
 
         //constructor
-        public Student( int _studentId, string _firstName, string _lastName, string _cellPhone, string _email, string _gender) 
+        public Student( int _studentId, string _firstName, string _lastName, string _cellPhone, string _email, string _gender,string _departmentName) 
         {
             this.StudentId = _studentId;
             this.FirstName = _firstName;
@@ -26,6 +27,7 @@ namespace Proj_WeJob.Models.DAL
             this.CellPhone = _cellPhone;
             this.Email = _email;
             this.Gender = _gender;
+            this.DepartmentName = _departmentName;
         }
 
         public Student()
