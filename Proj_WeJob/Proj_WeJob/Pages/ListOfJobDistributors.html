@@ -27,6 +27,11 @@
             // once the document is ready we fetch a list of distributors from the server
             ajaxCall("GET", "../api/distributors", "", getSuccess, error);
             //buttonEvents();
+            $('#distributorTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"
+                }
+            });
         });
         // this function is activated in case of a success
         function getSuccess(distributorsdata) {

@@ -99,8 +99,8 @@ namespace Proj_WeJob.Models.DAL
             String command;
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
-            sb.AppendFormat(" Values ('{0}','{1}','{2}','{3}') ",dis.NameCompany,dis.NamePerson,dis.Phone,dis.Email);
-            String prefix = "INSERT INTO Company " + "(CompanyName,ContactName,ContactPhone,ContactMail)";
+            sb.AppendFormat("Values('{0}','{1}','{2}','{3}')",dis.NameCompany,dis.NamePerson,dis.Phone,dis.Email);
+            String prefix = "INSERT INTO Company " + "(CompanyName,ContactName,ContactPhone,ContactMail) ";
             command = prefix + sb.ToString();
             command += "; SELECT SCOPE_IDENTITY()";
             return command;
@@ -147,6 +147,7 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+     
         //+++++פונקציה שמחזיה רשימה של סטודנטים ללא סינון
         public List<Student> GetListStudent(string conString)
         {

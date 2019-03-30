@@ -185,6 +185,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AppLoginController.cs" />
     <Compile Include="Controllers\AppRegisterController.cs" />
+    <Compile Include="Controllers\CitesController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\DistributorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -194,6 +195,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DAL\DBservices.cs" />
+    <Compile Include="Models\DAL\XMLSevices.cs" />
     <Compile Include="Models\ReactResponse.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Distributor.cs" />
@@ -206,6 +208,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ListCites.xml" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -338,6 +341,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="css\MyStyle2.css" />
     <Content Include="vendor\animate\animate.css" />
     <Content Include="vendor\animsition\css\animsition.css" />
     <Content Include="vendor\animsition\css\animsition.min.css" />
@@ -393,9 +397,7 @@
     <Content Include="vendor\bootstrap\css\bootstrap.css.map" />
     <Content Include="vendor\bootstrap\css\bootstrap.min.css.map" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
