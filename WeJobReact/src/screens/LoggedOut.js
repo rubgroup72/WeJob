@@ -1,15 +1,38 @@
 import React, {Component} from 'react';
 import colors from '../styles/colors';
 import InlineImage from '../components/InlineImage'
-import {StyleSheet, Text, View, Image, Button, ImageBackground  } from 'react-native';
+import {StyleSheet, Text, View, Image, Button, ImageBackground, AsyncStorage } from 'react-native';
 import RoundedButton from '../components/buttons/RoundedButton';
 import NavBarButton from '../components/buttons/NavBarButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { LoginButton, AccessToken } from 'react-native-fbsdk';
 
 
 export default class LoggedOut extends React.Component{
-    
+
+    componentWillMount() {
+        AsyncStorage.getItem('FacebookToken').then((token) => {
+            if (token !== null) {
+                this.fetchFacebookUserData(token);
+            }
+        });
+    }
+
+    fetchFacebookUserData = (token) => {
+        fetch('https://graph.facebook.com/v2.5/me?fields=email,name&access_token=' + token)
+        .then((response) => response.json())
+        .then((json) => {
+            var user = {};
+            user.name = json.name
+            user.id = json.id
+            user.email = json.email
+            this.props.loginFinished('facebook', user);
+        })
+        .catch((exc) => {
+            alert(exc)
+        });
+    }
 
     onFacebookPress(){
         alert('Facebook button pressed');
@@ -58,6 +81,26 @@ export default class LoggedOut extends React.Component{
                 icon={<Icon name="facebook" size={20} style = {styles.facebookButtonIcon}/>}
                 handleOnPress={() => this.props.navigation.navigate('LogIn')}
                 />
+                <LoginButton
+                    readPermissions={['public_profile', 'email']}
+                    onLoginFinished={
+                        (error, result) => {
+                            if (error) {
+                                alert("login has error: " + result.error);
+                            } else if (result.isCancelled) {
+                                alert("login is cancelled.");
+                            } else {
+                                AccessToken.getCurrentAccessToken().then(
+                                (data) => {
+                                    alert(data.accessToken.toString());
+                                    AsyncStorage.setItem('FacebookToken', data.accessToken.toString());
+                                    
+                                    this.fetchFacebookUserData(data.accessToken.toString());
+                                })
+                            }
+                        }
+                    }
+                    onLogoutFinished={() => alert("logout.")} />
                 <RoundedButton
                 text = 'Google+ התחבר עם'
                 textColor = {colors.white}

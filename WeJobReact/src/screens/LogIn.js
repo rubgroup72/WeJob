@@ -16,6 +16,7 @@ import NextArrowButton from '../components/buttons/NextArrowButton';
 import RoundedButton from '../components/buttons/RoundedButton';
 import axios from 'axios';
 import Loader from '../components/Loader';
+import Global from '../global';
 
 class LogIn extends Component {
 
@@ -36,7 +37,7 @@ class LogIn extends Component {
         this.setState({
             loadingVisible: true
         });
-        axios.post("http://10.0.2.2:53411/api/Login", {
+        axios.post(Global.BASE_URL + "Login", {
             Email: this.state.email,
             Password: this.state.password,
         })

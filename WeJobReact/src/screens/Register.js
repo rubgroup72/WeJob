@@ -9,6 +9,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 import InputField from '../components/form/InputField'
 import axios from 'axios';
 import Loader from '../components/Loader';
+import Global from '../global';
 
 
 export default class Register extends React.Component{
@@ -34,7 +35,7 @@ export default class Register extends React.Component{
             loadingVisible: true
         })
         
-        axios.post('http://10.0.2.2:53411/api/Register', {
+        axios.post(Global.BASE_URL +'Register', {
             Email: this.state.email,
             Password: this.state.password,
             FirstName: this.state.firstName,

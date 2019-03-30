@@ -177,7 +177,6 @@ const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
         display: 'flex',
-        //backgroundColor: colors.green01,
         
     },
     logInHeader: {
