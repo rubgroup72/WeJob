@@ -190,32 +190,43 @@
         </div>
     </nav>
 
-    <div class="container">
-        <a href="HomePage.html" class="btn btn-outline-info btn-lg " style="float:right">
-            <span class="glyphicon glyphicon-remove"></span>
-        </a>
-        <a href="InsertDistributor.html" class="btn btn-info"> הוסף מפיץ חדש <span class="glyphicon glyphicon-plus"></span></a>
-        <br /><br />
-        <center>
-            <form id="pForm">
-                <table id="distributorTable" class="display nowrap" style="width:100%">
-                    <thead>
-                        <tr>
-                            <!--<th>טלפון</th>
-                            <th>דוא'ל</th>
-                            <th>שם איש קשר</th>
-                            <th>שם חברה</th>-->
-                            <td>Phone</td>
-                            <td>Email</td>
-                            <td>NamePerson</td>
-                            <td>NameCompany</td>
-                            <th></th>
-                        </tr>
-                    </thead>
-                </table>
+    <div class="container" dir="rtl">
 
-            </form>
-        </center>
+        <div class="card text-center">
+            <div class="card-header" style="color:#072247">
+                <div class="col-xs-12">
+                    <a href="HomePage.html" class="btn btn-outline-info btn-lg " style="float:right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a href="InsertDistributor.html" class="btn btn-info" style="float:left"><span class="glyphicon glyphicon-plus"></span> הוסף מפיץ חדש</a>
+                </div>
+                <div class="col-xs-12">
+                    <h2>רשימת מפיצי משרה</h2>
+                </div>
+            </div>
+            <div class="card-body col-xs-12">
+                <form id="pForm">
+                    <table id="distributorTable" class="display nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <td>Phone</td>
+                                <td>Email</td>
+                                <td>NamePerson</td>
+                                <td>NameCompany</td>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+
+               </form>
+            </div>
+            <div class="card-footer text-muted">
+                <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt="">
+            </div>
+        </div>
+
     </div>
+
+  
 </body>
 </html>
