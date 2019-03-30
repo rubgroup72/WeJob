@@ -13,16 +13,15 @@
     <!--לאייקונים-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="../css/MyStyle.css" rel="stylesheet" />
-    
+
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
-
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"></script>
     <script>
         $(document).ready(function () {
             // once the document is ready we fetch a list of distributors from the server
@@ -40,7 +39,7 @@
                     columns: [
                         {
                             data: "Phone",
-                            title:'טלפון'
+                            title: 'טלפון'
                         },
                         {
                             data: "Email",
@@ -48,12 +47,12 @@
                         },
                         {
                             data: "NamePerson",
-                            title:"שם איש קשר"
+                            title: "שם איש קשר"
                         },
                         {
                             data: "NameCompany",
-                            title:"שם חברה"
-                        }, 
+                            title: "שם חברה"
+                        },
                         {
                             "className": 'edit',
                             "orderable": false,
@@ -61,8 +60,8 @@
                             "defaultContent": '',
                             render: function (data, type, row, meta) {
                                 let dataDis = "data-DisId='" + row.CompanyNo + "'";
-                                editBtn = " <span class='editBtn btn btn-success fa fa-edit'" + dataDis +" ></span> ";  
-                                return editBtn  ;
+                                editBtn = " <span class='editBtn btn btn-success fa fa-edit'" + dataDis + " ></span> ";
+                                return editBtn;
                             }
                         },
                         {
@@ -116,19 +115,19 @@
                     editBtn = " <span class='editBtn btn btn-success fa fa-check-square-o'" + dataDis + " ></span> ";
                     document.getElementsByClassName("shown") = editBtn;
                 }
-               
+
             });
         }
 
-        
+
         function format(distributor) {
             return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; text-align:center" dir="rtl" >' +
                 '<tr>' +
                 '<td><input type="text" class="form-control" id="name" placeholder="★ שם איש הקשר" ></td>' +
-                '<td><input type="tel" class="form-control" id="phone" placeholder = "★ טלפון" pattern = "[0]{1}[0-9]{9}" oninvalid ="this.setCustomValidity("0ddddddddd הפורמט צריך להיות")" oninput = "this.setCustomValidity("")></td>' +             
+                '<td><input type="tel" class="form-control" id="phone" placeholder = "★ טלפון" pattern = "[0]{1}[0-9]{9}" oninvalid ="this.setCustomValidity("0ddddddddd הפורמט צריך להיות")" oninput = "this.setCustomValidity("")></td>' +
                 '<td><input type="email" class="form-control" id="email" placeholder="★ מייל" /></td>' +
                 '<button type="button" class="btn btn-outline-success btn-sm">שמור</button>'
-                '</tr>' + 
+            '</tr>' +
                 '</table>';
         }
     </script>

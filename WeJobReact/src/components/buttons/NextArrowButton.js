@@ -18,7 +18,7 @@ export default class NextArrowButton extends Component {
              onPress={handleOnPress}
             >
                 <Icon 
-                  name = "angle-left"
+                  name = "angle-down"
                   color = {colors.green01}
                   size = {32}
                   style = {styles.icon}
@@ -35,8 +35,8 @@ NextArrowButton.propTypes = {
 
 const styles = StyleSheet.create({
     icon: {
-        marginLeft: -2,
-        marginTop: -2,
+         marginLeft: -2,
+         marginTop: -2,
     },
     button: {
         alignItems: 'center',
