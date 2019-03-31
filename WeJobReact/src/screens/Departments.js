@@ -35,11 +35,11 @@ export default class Register extends React.Component{
             loadingVisible: true
         });
         axios.post('http://10.0.2.2:53411/api/Register', {
-            Email: this.state.marineSciences,
-            Password: this.state.aconomicsAndBusiness,
-            FirstName: this.state.engineering,
-            LastName: this.state.socialAndCommunitySciences,
-            CellPhone: this.state.graduate,
+            MarineSciences: this.state.marineSciences,
+            AconomicsAndBusiness: this.state.aconomicsAndBusiness,
+            Engineering: this.state.engineering,
+            SocialAndCommunitySciences: this.state.socialAndCommunitySciences,
+            Graduate: this.state.graduate,
         }, 
         )
         .then((response) => {
@@ -67,49 +67,108 @@ export default class Register extends React.Component{
     marineClicked = () =>
     {
         this.setState({ marineSciences: true });
+        this.setState({ aconomicsAndBusiness: false });
+        this.setState({ engineering: false });
+        this.setState({ socialAndCommunitySciences: false });
+        this.setState({ graduate: false });
     }
-    genderClicked = () =>
+    aconomicsAndBusinessClicked = () =>
     {
-        this.setState({ gender: 'נקבה' });
+        this.setState({ marineSciences: false });
+        this.setState({ aconomicsAndBusiness: true });
+        this.setState({ engineering: false });
+        this.setState({ socialAndCommunitySciences: false });
+        this.setState({ graduate: false });
+    }
+    engineeringClicked = () =>
+    {
+        this.setState({ marineSciences: false });
+        this.setState({ aconomicsAndBusiness: false });
+        this.setState({ engineering: true });
+        this.setState({ socialAndCommunitySciences: false });
+        this.setState({ graduate: false });
+    }
+    socialAndCommunitySciencesClicked = () =>
+    {
+        this.setState({ marineSciences: false });
+        this.setState({ aconomicsAndBusiness: false });
+        this.setState({ engineering: false });
+        this.setState({ socialAndCommunitySciences: true });
+        this.setState({ graduate: false });
+    }
+    graduateClicked = () =>
+    {
+        this.setState({ marineSciences: false });
+        this.setState({ aconomicsAndBusiness: false });
+        this.setState({ engineering: false });
+        this.setState({ socialAndCommunitySciences: false });
+        this.setState({ graduate: true });
     }
 
     render(){
         //const {navigate} = this.props.navigation;
         var marine = <Icon name ="anchor" 
-        color='rgba(0, 0, 0, 0.38)'
+        color='white'
         size={85}
         type="entypo"/>
+        if (this.state.marineSciences === true) {
+            marine = <Icon name ="anchor" 
+            color='rgba(0, 0, 0, 0.38)'
+            size={85}
+            type="entypo"/>;
+        }
 
-        var cogs = <Icon name ="cogs" 
-        color='rgba(0, 0, 0, 0.38)'
+        var cogs = <Icon name ="cogs"
+        color='white'
         size={85}
         type="entypo"/>
+        if (this.state.engineering === true) {
+            cogs = <Icon name ="cogs" 
+            color='rgba(0, 0, 0, 0.38)'
+            size={85}
+            type="entypo"/>;
+        }
 
-        var suitcase = <Icon name ="suitcase" 
-        color='rgba(0, 0, 0, 0.38)'
+        var suitcase = <Icon name ="suitcase"
+        color='white'
         size={85}
+        style={{ marginLeft: 15 }}
         type="entypo"/>
+        if (this.state.aconomicsAndBusiness === true) {
+            suitcase = <Icon name ="suitcase" 
+            color='rgba(0, 0, 0, 0.38)'
+            size={85}
+            style={{ marginLeft: 15 }}
+            type="entypo"/>;
+        }
 
-        var users = <Icon name ="users" 
-        color='rgba(0, 0, 0, 0.38)'
-        size={85}
-        type="entypo"/>
 
-        var graduate = <Icon name ="graduation-cap" 
-        color='rgba(0, 0, 0, 0.38)'
+        var users = <Icon name ="users"
+        color='white'
+        style={{ marginLeft: 15 }}
         size={85}
         type="entypo"/>
+        if (this.state.socialAndCommunitySciences === true) {
+            users = <Icon name ="users" 
+            color='rgba(0, 0, 0, 0.38)'
+            size={85}
+            style={{ marginLeft: 15 }}
+            type="entypo"/>;
+        }
+
+
+        var graduate = <Icon name ="graduation-cap"
+        color='white'
+        size={85}
+        type="entypo"/>
+        if (this.state.graduate === true) {
+            graduate = <Icon name ="graduation-cap" 
+            color='rgba(0, 0, 0, 0.38)'
+            size={85}
+            type="entypo"/>;
+        }
        
-       
-        // var maleImage = <Image  source={require('../img/male.png')}  style = {styles.maleImg} />;
-        // if (this.state.gender === 'זכר') {
-        //     maleImage = <Image  source={require('../img/male.png')}  style = {styles.selectedMaleImg} />;
-        // }
 
-        // var femaleImage = <Image  source={require('../img/female.png')}  style = {styles.femaleImg} />;
-        // if (this.state.gender === 'נקבה') {
-        //     femaleImage = <Image  source={require('../img/female.png')}  style = {styles.selectedFemaleImg} />;
-        // }
         return (
             <ImageBackground style={ styles.imgBackground } 
                  resizeMode='cover' 
@@ -127,25 +186,25 @@ export default class Register extends React.Component{
                                 { marine }
                                 <Text style={{ textAlign: "center", color: 'white', fontSize: 14 }}>מדעי הים</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity activeOpacity = { .5 } onPress={this.genderClicked}>
+                            <TouchableOpacity activeOpacity = { .5 } onPress={this.engineeringClicked}>
                                 { cogs }
-                                <Text style={{ textAlign: "center", color: 'white', fontSize: 14 }}>הנדסה</Text>
+                                <Text style={{ textAlign: 'center', color: 'white', fontSize: 14 }}>הנדסה</Text>
                             </TouchableOpacity>
                             </View>
                             <View style = {styles.iconsStyle}>
-                            <TouchableOpacity activeOpacity = { .5 } onPress={this.maleClicked}>
+                            <TouchableOpacity activeOpacity = { .5 } onPress={this.aconomicsAndBusinessClicked}>
                                 { suitcase }
-                                <Text style={{ textAlign: "center", color: 'white', fontSize: 14 }}>כלכלה ומנהל עסקים</Text>
+                                <Text style={{ textAlign: 'center', color: 'white', fontSize: 14,  alignItems: 'center' }}>כלכלה ומנהל עסקים</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity activeOpacity = { .5 } onPress={this.genderClicked}>
+                            <TouchableOpacity activeOpacity = { .5 } onPress={this.socialAndCommunitySciencesClicked}>
                                 { users }
-                                <Text style={{ textAlign: "center", color: 'white', fontSize: 14 }}>מדעי החברה והקהילה</Text>
+                                <Text style={{ textAlign: 'center', color: 'white', fontSize: 14 }}>מדעי החברה והקהילה</Text>
                             </TouchableOpacity>
                             </View>
                             <View style = {styles.iconsStyle}>
-                            <TouchableOpacity activeOpacity = { .5 } onPress={this.maleClicked}>
+                            <TouchableOpacity activeOpacity = { .5 } onPress={this.graduateClicked}>
                                 { graduate }
-                                <Text style={{ textAlign: "center", color: 'white', fontSize: 14 }}>בוגר</Text>
+                                <Text style={{ textAlign: "center", color: 'white', fontSize: 14, }}>בוגר</Text>
                             </TouchableOpacity>
                             </View>
                             
@@ -212,25 +271,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
 
-    // femaleImg: {
-    //     width: 85,
-    //     height: 85,
-    //     tintColor: 'white',
-    // },
-    // selectedFemaleImg: {
-    //     width: 85,
-    //     height: 85,
-    // },
-
-    // maleImg: {
-    //     width: 85,
-    //     height: 85,
-    //     tintColor: 'white',
-    // },
-    // selectedMaleImg: {
-    //     width: 85,
-    //     height: 85,
-    // },
     nextButton: {
         alignItems: 'center',
         // left: 20,
@@ -243,6 +283,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         marginBottom: 50,
+        flexWrap: 'wrap'
     },
     imgBackground: {
         width: '100%',
