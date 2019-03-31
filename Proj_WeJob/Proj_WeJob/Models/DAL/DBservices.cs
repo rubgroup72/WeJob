@@ -213,7 +213,7 @@ namespace Proj_WeJob.Models.DAL
                         Convert.ToString(dr["CellPhone"]),
                         Convert.ToString(dr["Email"]),
                         Convert.ToString(dr["Gender"]),
-                        Convert.ToString(dr["Department"])
+                        Convert.ToString(dr["DepartmentName"])
                         );
                     return s;
                 }
