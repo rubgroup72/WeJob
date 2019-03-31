@@ -42,14 +42,14 @@ namespace Proj_WeJob.Models.DAL
             this.ArraySkill = ArraySkill;
         }
         //הכנסת נתונים לטבלה באמצעות קשירה לDB  
-        //public int InsertJob()
-        //{
-        //    DBservices dbs = new DBservices();
-        //    int num1 = dbs.InsertJob(this);
-        //    int num2 = dbs.Insert_JobSkill(this, num1);
-        //    int num3 = dbs.Insert_JobInterst(this, num1);
-        //    int num4 = dbs.Insert_JobLanguage(this, num1);
-        //    return (num1 & num2 & num3 & num4);
-        //}
+        public int InsertJob()
+        {
+            DBservices dbs = new DBservices();
+            int num1 = dbs.InsertJob(this);
+            int num2 = dbs.Insert_JobSkill(this, num1);
+            int num3 = dbs.Insert_JobInterst(this, num1);
+            int num4 = dbs.Insert_JobLanguage(this, num1);
+            return (num1 & num2 & num3 & num4);
+        }
     }
 }

@@ -7,9 +7,9 @@ namespace Proj_WeJob.Controllers
     {
         // POST api/values
         //הפעלת פונקצית הכנסה של פרטי משתמש במחלקת משתמש
-        //public void POST([FromBody]Job j)
-        //{
-        //    j.InsertJob();
-        //}
+        public void POST([FromBody]Job j)
+        {
+            j.InsertJob();
+        }
     }
 }
