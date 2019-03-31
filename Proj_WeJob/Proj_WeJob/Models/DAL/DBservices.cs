@@ -107,6 +107,107 @@ namespace Proj_WeJob.Models.DAL
         }
         ///++++++++++סיום הוספת משתמש+++++++++++
 
+        ///+++++++++הוספת משרה++++++++++++++++++
+        public int InsertJob(Job job)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            String cStr = BuildInsertJob(job);      // helper method to build the insert string
+            cmd = CreateCommand(cStr, con);             // create the command
+            try
+            {
+                int numEffected = Convert.ToInt32(cmd.ExecuteScalar());
+                //int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+        }
+        private String BuildInsertJob(Job job)
+        {
+            String command;
+            StringBuilder sb = new StringBuilder();
+            // use a string builder to create the dynamic string
+            sb.AppendFormat("Values('{0}','{1}','{2}',{3},'{4}','{5}','{6}','{7}','{8}','{9}')", job.JobName, job.JobDescription, job.Requirements,"1", job.MailForCV, job.Location, job.OpenDate, job.ToDate,job.Status,job.Link);
+            String prefix = "INSERT INTO Job " + "(JobName,JobDescription,Requirements,CompanyCompanyNo,MailForCV,Location,OpenDate,ToDate,JobStatusStatusName,Link) ";
+            command = prefix + sb.ToString();
+            command += "; SELECT SCOPE_IDENTITY()";
+            return command;
+        }
+        ///+++++++++הוספת תחומי עניין למשרה++++++++++
+        public int Insert_JobInterst( Job job, int id)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            String cStr = BuildInsert_JobInterst(job, id);      // helper method to build the insert string
+            cmd = CreateCommand(cStr, con);             // create the command
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+        }
+        private String BuildInsert_JobInterst(Job job, int id)
+        {
+            String command = "";
+            String prefix;
+            // use a string builder to create the dynamic string
+            for (int i = 0; i < job.ArrayIntrests.Count; i++)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat("Values({0},'{1}')", id.ToString(), job.ArrayIntrests[i]);
+                prefix = "INSERT INTO bgroup72_prod.dbo.Job_Intrests (JobJobNo,IntrestsIntrestName)";
+                command = command + prefix + sb.ToString() + ";";
+            }
+            return command;
+        }
+        //++++++++++++סיום הוספת תחומי עניין למשרה +++++++++
+
+
         //+++++פונקציה שמחזיה רשימה של מפיצים ללא סינון
         public List<Distributor> GetListDistributor(string conString)
         {
@@ -267,6 +368,126 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
             return AppLogin(email, password);
+        }
+
+        //פונקציה שמחזירה רשימה של שפות 
+        public List<Language> GetListLanguage(string conString)
+        {
+            SqlConnection con = null;
+            List<Language> lp = new List<Language>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Language";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Language la = new Language
+                    {
+                       Name = Convert.ToString(dr["LangName"])
+                    };
+                    lp.Add(la);
+                }
+
+                return lp;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+        //פונקציה שמחזירה רשימה של תחומי עניין 
+        public List<Interst> GetListInterst(string conString)
+        {
+            SqlConnection con = null;
+            List<Interst> inter = new List<Interst>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Intrests";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Interst i = new Interst
+                    {
+                        Name = Convert.ToString(dr["IntrestName"])
+                    };
+                    inter.Add(i);
+                }
+
+                return inter;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+        //פונקציה שמחזירה רשימה של תחומי עניין 
+        public List<Skill> GetListSkill(string conString)
+        {
+            SqlConnection con = null;
+            List<Skill> skills = new List<Skill>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Skill";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Skill s = new Skill
+                    {
+                        Name = Convert.ToString(dr["SkillName"])
+                    };
+                    skills.Add(s);
+                }
+
+                return skills;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
         }
     }
 }
