@@ -3,39 +3,44 @@
 <head>
     <title>List Of Student And Graduates</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
-
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!--לאייקונים-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="../css/MyStyle.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+    <link href="../css/MyStyle2.css" rel="stylesheet" />
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
 
     <script>
         $(document).ready(function () {
-            // once the document is ready we fetch a list of Students from the server
+            // once the document is ready we fetch a list of distributors from the server
             ajaxCall("GET", "../api/Students", "", getSuccess, error);
+            //buttonEvents();
+            
+                
         });
         // this function is activated in case of a success
         function getSuccess(Studentsdata) {
             Students = Studentsdata; // keep the Students array in a global variable;
             try {
                 tbl = $('#StudentsTable').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"
+                    },
                     data: Studentsdata,
                     "autoWidth": false,
-                    pageLength: 4,
+                    pageLength: 8,
                     columns: [
                         {
                             data: "StudentId",
@@ -153,64 +158,72 @@
 </head>
 
 
-<body>
+<body >
     <!--תפריט-->
-    <div class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="#" class="navbar-brand">
-                    <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt="">
-                </a>
-            </div>
-            <div class="navbar-collapse collapse navbar-right">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">הגדרות מערכת <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">מועמדים</a></li>
-                            <li><a href="#">משרות</a></li>
-                            <li><a href="#">מחלקות</a></li>
-                            <li><a href="#">תחומי עניין</a></li>
-                            <li><a href="#">שפות</a></li>
-                            <li><a href="#">כישורים</a></li>
-                            <li><a href="#">קטגוריות</a></li>
-                            <li><a href="#">תתי קטגוריות</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">דוחות</a></li>
-                    <li><a href="#">סדנאות</a></li>
-                    <li><a class="active" href="ListOfJobDistributors.html">מעסיקים ומשרות</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">מועמדים <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">סטודנטים</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">בוגרים</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">דף הבית</a></li>
-                </ul>
-            </div>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light " style="background-color:#F2F2F0;">
+        <a class="navbar-brand" href="#">  <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end " id="navbarTogglerDemo02">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        הגדרות מערכת
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">מועמדים</a>
+                        <a class="dropdown-item" href="#">משרות</a>
+                        <a class="dropdown-item" href="#">מחלקות</a>
+                        <a class="dropdown-item" href="#">תחומי עניין</a>
+                        <a class="dropdown-item" href="#">שפות</a>
+                        <a class="dropdown-item" href="#">כישורים</a>
+                        <a class="dropdown-item" href="#">קטגוריות</a>
+                        <a class="dropdown-item" href="#">תתי קטגוריות</a>
+
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="">דוחות</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">סדנאות</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">מעסיקים ומשרות</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">מועמדים</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="">דף הבית</a>
+                </li>
+
+            </ul>
+            <!--<form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>-->
         </div>
-    </div>
+    </nav>
+  
 
     <div class="container">
-        <a href="HomePage.html" class="btn btn-outline-info btn-lg " style="float:right">
-            <span class="glyphicon glyphicon-remove"></span>
-        </a>
-        <!--<a href="InsertDistributor.html" class="btn btn-info"> הוסף מפיץ חדש <span class="glyphicon glyphicon-plus"></span></a>-->
-        <br /><br />
+       
         <center>
-            <form id="pForm">
-                <table id="StudentsTable" class="display nowrap" style="width:100%">
-                    <thead>
+            <form id="pForm" >
+                <table id="StudentsTable" class="display nowrap " style="width:100%" dir="rtl">
+                    <thead class="col-xs-12">
                         <tr>
-                            <th>DepartmentName</th>
-                            <th>Email</th>
-                            <th>CellPhone</th>
-                            <th>LastName</th>
-                            <th>FirstName</th>
+                         
                             <th>StudentId</th>
+                            <th>FirstName</th>
+                            <th>LastName</th>
+                            <th>CellPhone</th>
+                            <th>Email</th>
+                            <th>DepartmentName</th>
                             <th></th>
                         </tr>
                     </thead>
