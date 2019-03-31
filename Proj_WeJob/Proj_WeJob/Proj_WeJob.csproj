@@ -258,7 +258,7 @@
     <Content Include="Pages\ListOfStudentAndGraduates.html" />
     <Content Include="Pages\InsertDistributor.html" />
     <Content Include="Pages\InsertJob.html" />
-    <Content Include="Pages\ListOfDistributors.html" />
+    <Content Include="Pages\ListOfJobDistributors.html" />
     <Content Include="Pages\ListOfJobsOfDistributor.html" />
     <Content Include="Pages\LogIn.html" />
     <Content Include="Scripts\ajaxCalls.js" />

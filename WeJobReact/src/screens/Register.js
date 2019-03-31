@@ -25,6 +25,7 @@ export default class Register extends React.Component{
             password: '',
             loadingVisible: false,
             gender: '',
+            department: '1',
         };
 
         this.onRegisterPress = this.onRegisterPress.bind(this);
@@ -42,6 +43,7 @@ export default class Register extends React.Component{
             LastName: this.state.lastName,
             CellPhone: this.state.phoneNumber,
             Gender: this.state.gender,
+            Department: this.state.department,
         }, 
         )
         .then((response) => {
