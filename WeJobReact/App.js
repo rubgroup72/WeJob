@@ -6,12 +6,13 @@ import LoggedOut from './src/screens/LoggedOut';
 import Register from './src/screens/Register';
 import Departments from './src/screens/Departments';
 import Main from './src/screens/Main';
+import Languages from './src/screens/Languages';
 
 
 
 const AppNavigator = createStackNavigator({
   Home: {
-    screen: Departments,
+    screen: Languages,
   },
   LogIn: {
     screen: LogIn,
@@ -21,6 +22,9 @@ const AppNavigator = createStackNavigator({
   },
   Departments: {
     screen: Departments,
+  },
+  Languages: {
+    screen: Languages,
   }
 }, {
     initialRouteName: 'Home',

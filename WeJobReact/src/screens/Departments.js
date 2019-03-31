@@ -35,11 +35,11 @@ export default class Register extends React.Component{
             loadingVisible: true
         });
         axios.post('http://10.0.2.2:53411/api/Register', {
-            Email: this.state.marineSciences,
-            Password: this.state.aconomicsAndBusiness,
-            FirstName: this.state.engineering,
-            LastName: this.state.socialAndCommunitySciences,
-            CellPhone: this.state.graduate,
+            MarineSciences: this.state.marineSciences,
+            AconomicsAndBusiness: this.state.aconomicsAndBusiness,
+            Engineering: this.state.engineering,
+            SocialAndCommunitySciences: this.state.socialAndCommunitySciences,
+            Graduate: this.state.graduate,
         }, 
         )
         .then((response) => {
