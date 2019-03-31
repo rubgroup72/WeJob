@@ -11,7 +11,7 @@ import Main from './src/screens/Main';
 
 const AppNavigator = createStackNavigator({
   Home: {
-    screen: Main,
+    screen: Departments,
   },
   LogIn: {
     screen: LogIn,
