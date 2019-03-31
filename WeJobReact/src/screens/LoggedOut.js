@@ -9,6 +9,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 
 
+
 export default class LoggedOut extends React.Component{
 
     componentWillMount() {
@@ -45,18 +46,21 @@ export default class LoggedOut extends React.Component{
     onRegiterPress = () => {
         this.props.navigation.navigate("Register");
     };
+    onLoginPress = () => {
+        this.props.navigation.navigate("LogIn");
+    };
 
 
-    static navigationOptions = ({ navigation }) => {
-        const { state } = navigation
-        return {
-          headerTransparent: true,
-          headerTintColor: colors.white,
-          headerLeft:
-          <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="right" color={colors.white} text="משתמש רשום?  " />,
+    // static navigationOptions = ({ navigation }) => {
+    //     const { state } = navigation
+    //     return {
+    //       headerTransparent: true,
+    //       headerTintColor: colors.white,
+    //       headerLeheaderft:
+    //       <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="משתמש רשום?  " />,
 
-        }
-      }
+    //     }
+    //   }
     
     render(){
         const {navigate} = this.props.navigation;
@@ -74,14 +78,15 @@ export default class LoggedOut extends React.Component{
                     b
                 </Text>
                 
-                <RoundedButton
+                {/* <RoundedButton
                 text = ' התחבר עם פייסבוק'
                 textColor = {colors.green01}
                 background= {colors.white}
                 icon={<Icon name="facebook" size={20} style = {styles.facebookButtonIcon}/>}
                 handleOnPress={() => this.props.navigation.navigate('LogIn')}
-                />
+                /> */}
                 <LoginButton
+                    style = {styles.facebookNativeButton}
                     readPermissions={['public_profile', 'email']}
                     onLoginFinished={
                         (error, result) => {
@@ -107,6 +112,11 @@ export default class LoggedOut extends React.Component{
                 icon={<Icon name="google" size={20} style = {styles.googleButtonIcon}/>}
                 handleOnPress={this.onGooglePlusPress}
                 />
+                <Text 
+                style={{color: 'white', alignSelf: 'center', textDecorationLine: 'underline'}}
+                onPress={this.onLoginPress}>
+                משתמש רשום?
+                </Text>
                 <View style={{flexDirection: 'row'}}>
                   <View style={styles.drawLine} />
                   <Text style={styles.orText}>או</Text>
@@ -132,7 +142,6 @@ const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
         display: 'flex',
-        //backgroundColor: colors.green01,
         
     },
     welcomeWrapper:{
@@ -154,11 +163,18 @@ const styles = StyleSheet.create({
         textShadowRadius: 10
     },
 
-    facebookButtonIcon: {
-        color: colors.green01,
-        position: 'relative',
-        left: 20,
-        zIndex: 8,
+    // facebookButtonIcon: {
+    //     color: colors.green01,
+    //     position: 'relative',
+    //     left: 20,
+    //     zIndex: 8,
+    // },
+    facebookNativeButton: {
+        height: 40,
+        width: 350,
+        alignSelf: 'center',
+        marginBottom: 40,
+
     },
     googleButtonIcon: {
         color: colors.white,
