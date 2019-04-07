@@ -2,8 +2,7 @@
 <html>
 <head>
     <title>List Of Distributor</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!--לאייקונים-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -122,6 +121,9 @@
                 }
 
             });
+            $("#distributorTable").on('click', 'td.view', function () {
+                window.location.href = 'ListOfJobsOfDistributor.html';
+            });
         }
 
 
@@ -172,13 +174,13 @@
                     <a class="nav-link" href="">סדנאות</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="ListOfDistributors.html">מעסיקים ומשרות</a>
+                    <a class="nav-link" href="ListOfJobDistributors.html">מעסיקים ומשרות</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">מועמדים</a>
+                    <a class="nav-link" href="ListOfStudentAndGraduates.html">מועמדים</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">דף הבית</a>
+                    <a class="nav-link" href="HomePage.html">דף הבית</a>
                 </li>
 
             </ul>
@@ -194,9 +196,9 @@
         <div class="card text-center">
             <div class="card-header" style="color:#072247">
                 <div class="col-xs-12">
-                    <a href="HomePage.html" class="btn btn-light btn-lg " style="float:right">
+                    <!--<a href="HomePage.html" class="btn btn-light btn-lg " style="float:right">
                         <span class="glyphicon glyphicon-remove"></span>
-                    </a>
+                    </a>-->
                     <a href="InsertDistributor.html" class="btn btn-info" style="float:left"><span class="glyphicon glyphicon-plus"></span> הוסף מפיץ חדש</a>
                 </div>
                 <div class="col-xs-12">
@@ -217,7 +219,7 @@
                         </thead>
                     </table>
 
-               </form>
+                </form>
             </div>
             <div class="card-footer text-muted">
                 <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt="">
@@ -226,6 +228,6 @@
 
     </div>
 
-  
+
 </body>
 </html>
