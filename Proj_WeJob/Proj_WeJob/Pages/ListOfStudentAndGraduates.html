@@ -68,17 +68,7 @@
                                  title: "מחלקה"
                              },
 
-                       {
-                           "className": 'edit',
-                           "orderable": false,
-                           "data": null,
-                           "defaultContent": '',
-                           render: function (data, type, row, meta) {
-                               let datastu = "data-StuId='" + row.StudentId + "'";
-                               editBtn = " <span class='editBtn btn btn-success fa fa-edit'" + datastu + " ></span> ";
-                               return editBtn;
-                           }
-                       },
+                  
                         {
                             "className": 'view',
                             render: function (data, type, row, meta) {
@@ -94,8 +84,10 @@
                                 deleteBtn = " <span class='deleteBtn btn btn-danger fa fa-remove'" + datastu + "></span>";
                                 return deleteBtn;
                             },
-                        }
-                    ],
+                        },
+                    
+
+                    ]
                 });
                 buttonEvents();
             }
@@ -104,14 +96,7 @@
                 alert(err);
             }
         }
-        //function getImg(data, type, full, meta) {
-        //    if (full.Pgroup == "family")
-        //        return ' <img src="images/fa.png" />';
-        //    if (full.Pgroup == "friend")
-        //        return '<img src="images/fr.png" />';
-        //    else
-        //        return '<img src="images/wo.png" />';
-        //}
+      
 
         // this function is activated in case of a failure
         function error(err) {
@@ -121,37 +106,7 @@
         // wire all the buttons to their functions
         function buttonEvents() {
             // Add event listener for opening and closing details
-            $("#StudentsTable").on('click', 'td.edit', function () {
-                var tr = $(this).closest('tr');
-                var row = tbl.row(tr);
-                if (row.child.isShown()) {
-                    // This row is already open - close it
-                    row.child.hide();
-                    tr.removeClass('shown');
-                }
-                else {
-                    // Open this row
-                    row.child(format(row.data())).show();
-                    tr.addClass('shown');
-                    let datastu = "data-StuId='" + row.StudentId + "'";
-                    editBtn = " <span class='editBtn btn btn-success fa fa-check-square-o'" + datastu + " ></span> ";
-                    document.getElementsByClassName("shown") = editBtn;
-                }
-
-            });
-        }
-        function format(Students) {
-            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; text-align:center" dir="rtl" >' +
-                '<tr>' +
-                '<td><input type="text" class="form-control" id="id" placeholder="★ ת.ז" ></td>' +
-                '<td><input type="text" class="form-control" id="firstName" placeholder="★ שם פרטי" ></td>' +
-                '<td><input type="text" class="form-control" id="lastName" placeholder="★ שם משפחה" ></td>' +
-                '<td><input type="tel" class="form-control" id="phone" placeholder = "★ טלפון" pattern = "[0]{1}[0-9]{9}" oninvalid ="this.setCustomValidity("0ddddddddd הפורמט צריך להיות")" oninput = "this.setCustomValidity("")></td>' +
-                '<td><input type="email" class="form-control" id="email" placeholder="★ מייל" /></td>' +
-                '<td><input type="department" class="form-control" id="department" placeholder="★ מחלקה" /></td>' +
-                '<button type="button" class="btn btn-outline-success btn-sm">שמור</button>'
-            '</tr>' +
-            '</table>';
+     
         }
 
     </script>
@@ -209,6 +164,7 @@
     </nav>
 
     <div class="container">
+<<<<<<< HEAD
 
         <center>
             <form id="pForm">
@@ -228,6 +184,31 @@
 
             </form>
         </center>
+=======
+        <div class="row">
+            <div>
+                <center>
+                    <form id="pForm">
+                        <div>
+                            <table id="StudentsTable" class="display nowrap" style="width:100%" dir="rtl">
+                                <thead>
+                                    <tr>
+                                        <th>StudentId</th>
+                                        <th>FirstName</th>
+                                        <th>LastName</th>
+                                        <th>CellPhone</th>
+                                        <th>Email</th>
+                                        <th>DepartmentName</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </form>
+                </center>
+            </div>
+        </div>
+>>>>>>> 07bc31d10c770d3d1c8515cb463b611de50558a7
     </div>
 </body>
 </html>
