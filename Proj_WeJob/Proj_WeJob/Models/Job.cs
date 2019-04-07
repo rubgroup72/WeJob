@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+
 namespace Proj_WeJob.Models.DAL
 {
     public class Job
@@ -41,6 +42,11 @@ namespace Proj_WeJob.Models.DAL
             this.ArrayLanguage = ArrayLanguage;
             this.ArraySkill = ArraySkill;
         }
+
+        public Job()
+        {
+        }
+
         //הכנסת נתונים לטבלה באמצעות קשירה לDB  
         //public int InsertJob()
         //{
@@ -50,6 +56,12 @@ namespace Proj_WeJob.Models.DAL
         //    //int num3 = dbs.Insert_JobInterst(this, num1);
         //    //int num4 = dbs.Insert_JobLanguage(this, num1);
         //    //return (num1 & num2 & num3 & num4);
+        //}
+        //הצגת כל המשרות של מפיץ ספציפי 
+        //public List<Job> GetListJobs()
+        //{
+        //    DBservices dbs = new DBservices();
+        //    return dbs.GetListJobsOfDistributor("DBConnectionString");
         //}
     }
 }
