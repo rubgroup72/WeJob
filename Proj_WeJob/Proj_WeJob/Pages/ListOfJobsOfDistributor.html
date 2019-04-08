@@ -2,8 +2,9 @@
 <html>
 <head>
     <title>List Of Jobs Of Distributor</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1, shrink-to-fit=no">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!--לאייקונים-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -11,24 +12,30 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
     <link href="../css/MyStyle2.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
-    <script src="../Scripts/ajaxCalls.js"></script>
-</head>
-<body>
+    <!--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7.1.0/dist/promise.min.js"></script>
 
+    <script src="sweetalert2.min.js"></script>
+
+    <script src="../Scripts/ajaxCalls.js"></script>
     <script>
         $(document).ready(function () {
+            document.getElementById("cotart").innerHTML = "רשימת משרות של " + localStorage.getItem("NameCompany");
             // once the document is ready we fetch a list of distributors from the server
-            ajaxCall("GET", "../api/Jobs", "", getSuccess, error);
-            //buttonEvents();
-
+            uri = "../api/Jobs?companyNo=" + localStorage.getItem("CompanyNo");
+            console.log(uri);
+            ajaxCall("GET", uri, "", getSuccess, error);
         });
         // this function is activated in case of a success
         function getSuccess(jobsdata) {
@@ -38,10 +45,42 @@
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"
                     },
-                    data: distributorsdata,
+                    data: jobsdata,
                     "autoWidth": false,
                     pageLength: 4,
+                    dom: "Bfrtip",
                     columns: [
+                        {
+                            "className": 'edit',
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": '',
+                            render: function (data, type, row, meta) {
+                                let dataDis = "data-DisId='" + row.JobNo + "'";
+                                editBtn = " <span class='editBtn btn btn-success fa fa-edit'" + dataDis + " ></span> ";
+                                return editBtn;
+                            }
+                        },
+                        {
+                            "className": 'view',
+                            render: function (data, type, row, meta) {
+                                let dataDis = "data-DisId='" + row.JobNo + "'";
+                                viewBtn = "<span class ='viewBtn btn btn-info fa fa-eye-slash'" + dataDis + " > </span>";
+                                return viewBtn;
+                            }
+                        },
+                        {
+                            "className": 'delete',
+                            render: function (data, type, row, meta) {
+                                let dataDis = "data-DisId='" + row.JobNo + "'";
+                                deleteBtn = " <span class='deleteBtn btn btn-danger fa fa-remove'" + dataDis + "></span>";
+                                return deleteBtn;
+                            }
+                        },
+                        {
+                            data: "JobName",
+                            title: 'קוד משרה'
+                        },
                         {
                             data: "JobName",
                             title: 'שם משרה'
@@ -58,34 +97,6 @@
                             data: "JobStatusStatusName",
                             title: "סטטוס"
                         },
-                        {
-                            "className": 'edit',
-                            "orderable": false,
-                            "data": null,
-                            "defaultContent": '',
-                            render: function (data, type, row, meta) {
-                                let dataDis = "data-DisId='" + row.CompanyNo + "'";
-                                editBtn = " <span class='editBtn btn btn-success fa fa-edit'" + dataDis + " ></span> ";
-                                return editBtn;
-                            }
-                        },
-                        {
-                            "className": 'view',
-                            render: function (data, type, row, meta) {
-                                let dataDis = "data-DisId='" + row.CompanyNo + "'";
-                                viewBtn = "<span class ='viewBtn btn btn-info fa fa-eye-slash'" + dataDis + " > </span>";
-                                return viewBtn;
-                            }
-                        },
-                        {
-                            "className": 'delete',
-                            render: function (data, type, row, meta) {
-                                let dataDis = "data-DisId='" + row.CompanyNo + "'";
-                                deleteBtn = " <span class='deleteBtn btn btn-danger fa fa-remove'" + dataDis + "></span>";
-                                return deleteBtn;
-                            }
-                        }
-
                     ]
                 });
                 buttonEvents();
@@ -101,44 +112,12 @@
             swal("Error: " + err);
         }
 
-        // wire all the buttons to their functions
-        //function buttonEvents() {
-        //    // Add event listener for opening and closing details
-        //    $("#distributorTable").on('click', 'td.edit', function () {
-        //        var tr = $(this).closest('tr');
-        //        var row = tbl.row(tr);
-        //        if (row.child.isShown()) {
-        //            // This row is already open - close it
-        //            row.child.hide();
-        //            tr.removeClass('shown');
-        //        }
-        //        else {
-        //            // Open this row
-        //            row.child(format(row.data())).show();
-        //            tr.addClass('shown');
-        //            let dataDis = "data-DisId='" + row.CompanyNo + "'";
-        //            editBtn = " <span class='editBtn btn btn-success fa fa-check-square-o'" + dataDis + " ></span> ";
-        //            document.getElementsByClassName("shown") = editBtn;
-        //        }
 
-        //    });
-        //    $("#distributorTable").on('click', 'td.view', function () {
-        //        window.location.href = 'ListOfJobsOfDistributor.html';
-        //    });
-        //}
-
-
-        //function format(distributor) {
-        //    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; text-align:center" dir="rtl" >' +
-        //        '<tr>' +
-        //        '<td><input type="text" class="form-control" id="name" placeholder="★ שם איש הקשר" ></td>' +
-        //        '<td><input type="tel" class="form-control" id="phone" placeholder = "★ טלפון" pattern = "[0]{1}[0-9]{9}" oninvalid ="this.setCustomValidity("0ddddddddd הפורמט צריך להיות")" oninput = "this.setCustomValidity("")></td>' +
-        //        '<td><input type="email" class="form-control" id="email" placeholder="★ מייל" /></td>' +
-        //        '<button type="button" class="btn btn-outline-success btn-sm">שמור</button>'
-        //    '</tr>' +
-        //        '</table>';
-        //}
     </script>
+</head>
+<body>
+
+ 
 
 
     <!--תפריט-->
@@ -199,21 +178,24 @@
                         <span class="glyphicon glyphicon-chevron-right"></span>
                     </a>
                     <a href="InsertJob.html" class="btn btn-info" style="float:left"><span class="glyphicon glyphicon-plus"></span> הוספת משרה חדשה </a>
+                    <h2 id="cotart"></h2>
                 </div>
-                <div class="col-xs-12">
-                    <h2>רשימת משרות של</h2>
-                </div>
+                
             </div>
             <div class="card-body col-xs-12">
                 <form id="pForm">
                     <table id="JobsOfdistributorTable" class="display nowrap" style="width:100%">
                         <thead>
                             <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <td>JobNo</td>
                                 <td>JobName</td>
                                 <td>OpenDate</td>
                                 <td>ToDate</td>
                                 <td>JobStatusStatusName</td>
-                                <th></th>
+
                             </tr>
                         </thead>
                     </table>

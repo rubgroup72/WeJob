@@ -11,13 +11,12 @@ namespace Proj_WeJob.Controllers
         //{
         //    j.InsertJob();
         //}
-        //הפעלת פונקציה שמחזירה את כל המפיצים
-        //[HttpGet]
-        //[Route("api/Jobs")]
-        //public IEnumerable<Job> Get()
-        //{
-        //    Job j = new Job();
-        //    return j.GetListJobsOfDistributor();
-        //}
+        [HttpGet]
+        [Route("api/Jobs")]
+        public IEnumerable<Job> GET(string companyNo)
+        {
+            Job j = new Job();
+            return j.GetListJobsOfDistributor(companyNo);
+        }
     }
 }

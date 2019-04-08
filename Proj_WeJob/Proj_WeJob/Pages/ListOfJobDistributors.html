@@ -12,25 +12,32 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
     <link href="../css/MyStyle2.css" rel="stylesheet" />
-
+    <link rel="stylesheet" href="sweetalert2.min.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7.1.0/dist/promise.min.js"></script>
+
+    <script src="sweetalert2.min.js"></script>
+
     <script src="../Scripts/ajaxCalls.js"></script>
 
     <script>
         $(document).ready(function () {
-            // once the document is ready we fetch a list of distributors from the server
+            localStorage.clear();
             ajaxCall("GET", "../api/distributors", "", getSuccess, error);
-            //buttonEvents();
-
         });
         // this function is activated in case of a success
         function getSuccess(distributorsdata) {
+            console.log(distributorsdata)
             distributors = distributorsdata; // keep the distributors array in a global variable;
             try {
                 tbl = $('#distributorTable').DataTable({
@@ -40,9 +47,9 @@
                     data: distributorsdata,
                     "autoWidth": false,
                     pageLength: 4,
-                     dom: "Bfrtip",
+                    dom: "Bfrtip",
                     columns: [
-                            {
+                        {
                             "className": 'edit',
                             "orderable": false,
                             "data": null,
@@ -69,23 +76,32 @@
                                 return deleteBtn;
                             }
                         },
-                         {
+                        {
+                            "className": 'CompanyNo',
+                            data: "CompanyNo",
+                            title: "קוד חברה"
+                        },
+                        {
+                            "className": 'NameCompany',
                             data: "NameCompany",
                             title: "שם חברה"
                         },
-                            {
+                        {
+                            "className": 'NamePerson',
                             data: "NamePerson",
                             title: "שם איש קשר"
                         },
-                             {
+                        {
+                            "className": 'Email',
                             data: "Email",
                             title: 'דוא"ל'
                         },
                         {
+                            "className": 'Phone',
                             data: "Phone",
                             title: 'טלפון'
                         }
-                                      ]
+                    ]
                 });
                 buttonEvents();
             }
@@ -105,68 +121,77 @@
             // Add event listener for opening and closing details
             $("#distributorTable").on('click', 'td.edit', function () {
                 var tr = $(this).closest('tr');
-                var row = tbl.row(tr);
-                if (row.child.isShown()) {
-                    // This row is already open - close it
-                    row.child.hide();
-                    tr.removeClass('shown');
-                }
-                else {
-                    // Open this row
-                    row.child(format(row.data())).show();
-                    tr.addClass('shown');
-                    let dataDis = "data-DisId='" + row.CompanyNo + "'";
-                    editBtn = " <span class='editBtn btn btn-success fa fa-check-square-o'" + dataDis + " ></span> ";
-                    document.getElementsByClassName("shown") = editBtn;
-                }
+                 localStorage.clear();
+                 localStorage.setItem("CompanyNo", tr[0].getElementsByClassName("CompanyNo")[0].innerHTML);
+                            Swal.fire({
+                                input: 'text',
+                                inputValue: tr[0].getElementsByClassName("NamePerson")[0].innerHTML,
+                                title:'עריכת פרטי חברת: '+tr[0].getElementsByClassName("NameCompany")[0].innerHTML ,
+                                text: 'שם איש קשר חדש',
+                             
+                            }).then(function (result) {
+                                tr[0].getElementsByClassName("NamePerson")[0].innerHTML = result.value;
+                                 localStorage.setItem("NamePerson", result.value);
+                                Swal.fire({
+                           input: 'email', 
+                           inputValue: tr[0].getElementsByClassName("Email")[0].innerHTML,
+                           title:'עריכת פרטי חברת: '+tr[0].getElementsByClassName("NameCompany")[0].innerHTML ,
+                           text:'דוא"ל חדש'
+                                }).then(function (result) { 
+                                    tr[0].getElementsByClassName("Email")[0].innerHTML = result.value;
+                                      localStorage.setItem("Email", result.value);
+                                Swal.fire({
+                                    input: 'text', 
+                                      inputValue: tr[0].getElementsByClassName("Phone")[0].innerHTML,
+                                title:'עריכת פרטי חברת: '+tr[0].getElementsByClassName("NameCompany")[0].innerHTML ,
+                           title: 'עריכה',
+                                    text: 'טלפון חדש',
+                            inputValidator: (value) => {
+                                if (value.length!=10) {
+                                  return 'להכניס טלפון בעל 10 ספרות'
+                                }
+                              }
+                                }).then(function (result) {
+                                    tr[0].getElementsByClassName("Phone")[0].innerHTML = result.value;
+                                     localStorage.setItem("Phone", result.value);
+                                //פקודת ajax לעדכון
+                        })
+                        })
+                        })
+                                        
 
             });
             $("#distributorTable").on('click', 'td.view', function () {
+                localStorage.clear();
+                var tr = $(this).closest('tr');
+                localStorage.setItem("CompanyNo", tr[0].getElementsByClassName("CompanyNo")[0].innerHTML);
+                localStorage.setItem("NameCompany",  tr[0].getElementsByClassName("NameCompany")[0].innerHTML);
                 window.location.href = 'ListOfJobsOfDistributor.html';
+            });
+            $("#distributorTable").on('click', 'td.delete', function () {
+                localStorage.clear();
+                localStorage.setItem("CompanyNo", NameCompany);
+                Swal.fire({
+                  title: '?אתה בטוח',
+                  text: "!לא תוכל לבטל זאת",
+                  type: 'אזהרה',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: '!כן,מחק'
+                }).then((result) => {
+                  if (result.value) {
+                    Swal.fire(
+                      'נמחק!',
+                      'פרטי המפיץ נמחקו',
+                      'success'
+                      )
+                      //פקודת ajax למחיקת המפיץ
+                  }
+                })
             });
         }
 
-
-        function format(distributor) {
-            //return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; text-align:center" dir="rtl" >' +
-            //    '<tr>' +
-            //    '<td><input type="text" class="form-control" id="name" placeholder="★ שם איש הקשר" ></td>' +
-            //    '<td><input type="tel" class="form-control" id="phone" placeholder = "★ טלפון" pattern = "[0]{1}[0-9]{9}" oninvalid ="this.setCustomValidity("0ddddddddd הפורמט צריך להיות")" oninput = "this.setCustomValidity("")></td>' +
-            //    '<td><input type="email" class="form-control" id="email" placeholder="★ מייל" /></td>' +
-            //    '<button type="button" class="btn btn-outline-success btn-sm">שמור</button>'
-            //'</tr>' +
-            //    '</table>';
-            return '<div class="col-xs-12">' +
-                '<center>'+
-                '<form id="pForm" dir="rtl" class="was-validated">'+
-                    '<div class="row">'+ 
-                        '<div class="form-group col-xs-12 col-md-4">'+ 
-                            '<label for="exampleFormControlInput2">שם איש קשר</label>'+
-                            '<small><span class="glyphicon glyphicon-starup small" style="color:red"></span></small>'+
-                            '<input type="text" class="form-control" id="name" required>'+
-                        '</div>'+
-                   '<div class="form-group col-xs-12 col-md-4">'+
-                            '<label for="exampleFormControlInput2">דואל</label>'+
-                            '<small><span class="glyphicon glyphicon-chevron-right" style="color:red"></span></small>'+
-                            '<input type="email" class="form-control" id="email" required>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="row">'+
-                        '<div class="form-group  col-xs-12 col-md-4">'+
-                            '<label for="exampleFormControlInput3">טלפון</label>'+
-                            '<input type="tel" class="form-control" id="phone"'+
-                                   'pattern="[0]{1}[0-9]{9}"'+
-                                   'oninvalid="this.setCustomValidity("0ddddddddd הפורמט צריך להיות ")"'+
-                                   "oninput='this.setCustomValidity('')'>"+
-                        '</div>'+
-                      '<div class="col-auto my-1">'+
-                        '<button type="submit" class="btn btn-primary">הוסף</button>'+
-                   '</div>'+
-                    '</div>'+
-                '</form>' +
-                 '<center>'+
-            '</div>'
-        }
     </script>
 </head>
 
@@ -226,14 +251,9 @@
         <div class="card text-center">
             <div class="card-header" style="color:#072247">
                 <div class="col-xs-12">
-                    <!--<a href="HomePage.html" class="btn btn-light btn-lg " style="float:right">
-                <span class="glyphicon glyphicon-remove"></span>
-            </a>-->
                     <a href="InsertDistributor.html" class="btn btn-info" style="float:left"><span class="glyphicon glyphicon-plus"></span> הוסף מפיץ חדש</a>
-                </div>
-                <div class="col-xs-12">
-                    <h2>רשימת מפיצי משרה</h2>
-                </div>
+                    <h2>מפיצים</h2>
+                </div> 
             </div>
            
             <div class="card-body col-xs-12">
@@ -245,6 +265,7 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
+                                    <td>CompanyNo</td>
                                     <td>NameCompany</td>
                                     <td>NamePerson</td>
                                     <td>Email</td>

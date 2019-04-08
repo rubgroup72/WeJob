@@ -450,7 +450,7 @@ namespace Proj_WeJob.Models.DAL
             }
         }
 
-        //פונקציה שמחזירה רשימה של תחומי עניין 
+        //פונקציה שמחזירה רשימה של כישורים 
         public List<Skill> GetListSkill(string conString)
         {
             SqlConnection con = null;
@@ -475,6 +475,47 @@ namespace Proj_WeJob.Models.DAL
                 }
 
                 return skills;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+        public List<Job> GetListJobsOfDistributor(string conString,string companyNo)
+        {
+            SqlConnection con = null;
+            List<Job> jobs = new List<Job>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+                String selectSTR = "SELECT * FROM Job where Job.CompanyCompanyNo='" +companyNo+"'";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Job j = new Job
+                    {
+                        JobNo = Convert.ToInt32(dr["JobNo"]),
+                        JobName = Convert.ToString(dr["JobName"]),
+                        OpenDate = Convert.ToDateTime(dr["OpenDate"]),
+                        ToDate = Convert.ToDateTime(dr["ToDate"]),
+                        Status = Convert.ToString(dr["JobDescription"])
+                    };
+                    jobs.Add(j);
+                }
+
+                return jobs;
             }
             catch (Exception ex)
             {

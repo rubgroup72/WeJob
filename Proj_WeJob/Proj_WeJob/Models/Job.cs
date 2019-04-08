@@ -9,6 +9,7 @@ namespace Proj_WeJob.Models.DAL
     public class Job
     {
         //Propeties 
+        public int JobNo { get; set; }
         public string JobName { get; set; }
         public string JobDescription { get; set; }
         public string Requirements { get; set; }
@@ -24,11 +25,12 @@ namespace Proj_WeJob.Models.DAL
         public List<String> ArraySkill { get; set; }
    
         //constructor
-        public Job(string JobName, string JobDescription, string Requirements,
+        public Job(int JobNo,string JobName, string JobDescription, string Requirements,
             int CompanyCompanyNo, string MailForCV, DateTime OpenDate, DateTime ToDate,
             string Link, List<String> ArrayIntrests, List<String> ArrayLanguage, List<String> ArraySkill,
             string Location,string Status)
         {
+            this.JobNo = JobNo;
             this.JobName = JobName;
             this.JobDescription = JobDescription;
             this.Requirements = Requirements;
@@ -57,11 +59,11 @@ namespace Proj_WeJob.Models.DAL
         //    //int num4 = dbs.Insert_JobLanguage(this, num1);
         //    //return (num1 & num2 & num3 & num4);
         //}
-        //הצגת כל המשרות של מפיץ ספציפי 
-        //public List<Job> GetListJobs()
-        //{
-        //    DBservices dbs = new DBservices();
-        //    return dbs.GetListJobsOfDistributor("DBConnectionString");
-        //}
+//החזרת משרות של מפיץ ספציפי
+        public List<Job> GetListJobsOfDistributor(string companyNo)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetListJobsOfDistributor("DBConnectionString", companyNo);
+        }
     }
 }
