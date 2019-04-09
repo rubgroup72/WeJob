@@ -12,7 +12,7 @@ namespace JobsAlgo
     {
         static object locker = new object(); //רושם לדטא בייס thread יצירת אובייקט נעילה בזמן ש
         static int finishAmount = 0; // כבר נרשמו לדטא בייס (threads) משתנה ששומר כמה חוטים
-        static List<TagsPair> finalTagPairList = new List<TagsPair>(); //יצירת ליסט שישמור את כל התגיות הסופיות שנכניס לדטא בייס
+        static List<TagsPair> finalTagPairList = new List<TagsPair>(); //יצירת ליסט שישמור את כל הזוגות של התגיות הסופיות שנכניס לדטא בייס
         static int amountOfThreads = 40; //שנריץ. נבחר שרירותית 40 threads כמות ה
 
         static void Main(string[] args)
@@ -58,13 +58,13 @@ namespace JobsAlgo
                     }
                 }
             }
-            return tagsList;
+            return tagsList;// מחזירים חזרה רשימה חד חד ערכית של תגיות
         }
 
-        //מחזירים את כל צמדי התגיות האפשריים ואת אחוזי ההופעה שלהם
+        //פוקציה שמחזירה את כל צמדי התגיות האפשריים ואת אחוזי ההופעה שלהם
         static void BuildTagsPairListImprove(List<List<string>> questionsList, List<string> tags, int start, int end)
         {
-            List<TagsPair> tagsPairList = new List<TagsPair>();
+            List<TagsPair> tagsPairList = new List<TagsPair>();// יצירת ליסט שמחזיק את כל האובייקטים מסוג "זוג תגיות"
             for (int i = start; i < end; i++)
             {
                 string firstTag = tags[i];
