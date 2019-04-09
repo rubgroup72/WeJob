@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="bgroup72_prodModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TagsMatchPerecent">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="FirstTag" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SecondTag" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="AtLeastOneTagAppear" Type="int" Nullable="false" />
+    <Property Name="BothTagsAppear" Type="int" Nullable="false" />
+    <Property Name="MatchPercent" Type="float" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="bgroup72_prodModelStoreContainer">
+    <EntitySet Name="TagsMatchPerecent" EntityType="Self.TagsMatchPerecent" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>
