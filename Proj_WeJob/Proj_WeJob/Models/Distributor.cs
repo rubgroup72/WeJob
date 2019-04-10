@@ -44,6 +44,19 @@ namespace Proj_WeJob.Models.DAL
             DBservices dbs = new DBservices();
             return dbs.GetListDistributor("DBConnectionString");
         }
+        //פונקציה שמעדכנת פרטי מפיץ שהשתנו
+        public int UpdateDistributer()
+        {
+            DBservices dbs = new DBservices();
+            int num1 = dbs.UpdateDistributer(this);
+            return num1;
+        }
+
+        public int deleteDistributor(string companyNo)
+        {
+            DBservices db = new DBservices();
+            return db.deleteDistributor(companyNo);
+        }
 
     }
 }

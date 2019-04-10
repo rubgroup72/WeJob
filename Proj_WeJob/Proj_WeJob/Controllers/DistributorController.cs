@@ -21,5 +21,20 @@ namespace Proj_WeJob.Controllers
             Distributor d = new Distributor();
             return d.GetListDistributor();
         }
+        //פונקציה שמפעילה עדכון של פרטי מפיץ
+        [HttpPut]
+        [Route("api/Update")]
+        // PUT api/Update
+        public void Put([FromBody]Distributor d)
+        {
+         d.UpdateDistributer();
+        }
+        [HttpDelete]
+        [Route("api/Dis")]
+        public void DELETE(string companyNo)
+        {
+            Distributor d = new Distributor();
+            d.deleteDistributor(companyNo);
+        }
     }
 }

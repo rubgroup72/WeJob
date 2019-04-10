@@ -12,7 +12,7 @@ namespace Proj_WeJob.Controllers
         //    j.InsertJob();
         //}
         [HttpGet]
-        [Route("api/Jobs")]
+        [Route("api/jobs")]
         public IEnumerable<Job> GET(string companyNo)
         {
             Job j = new Job();

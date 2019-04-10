@@ -496,7 +496,7 @@ namespace Proj_WeJob.Models.DAL
             try
             {
                 con = connect(conString); // create a connection to the database using the connection String defined in the web config file
-                String selectSTR = "SELECT * FROM Job where Job.CompanyCompanyNo='" +companyNo+"'";
+                String selectSTR = "SELECT * FROM Job where Job.CompanyCompanyNo='" + companyNo+"'";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -530,5 +530,89 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+
+        //פונקציה שמעדכנת פרטי מפיץ לאחר שינוי
+        public int UpdateDistributer(Distributor distributor)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            String cStr = BuildUpdataCommand2(distributor);      // helper method to build the insert string
+            cmd = CreateCommand(cStr, con);             // create the command
+            try
+            {
+                return cmd.ExecuteNonQuery(); // execute the command
+                //return person.Id;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+        }
+        private String BuildUpdataCommand2(Distributor dis)
+        {
+            String command;
+            StringBuilder sb = new StringBuilder();
+            // use a string builder to create the dynamic string
+            String prefix = "Update Company SET ContactName='" + dis.NamePerson + "', ContactPhone='" + dis.Phone + "', ContactMail='" + dis.Email + "'";
+            command = prefix;
+            command += " where CompanyNo='" + dis.CompanyNo + "';";
+            return command;
+        }
+        //מחיקת מפיץ
+        public int deleteDistributor(string companyNo)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            String cStr = "DELETE FROM Company WHERE CompanyNo='" + companyNo + "';";     // helper method to build the insert string
+            cmd = CreateCommand(cStr, con);             // create the command '" + per.Gmail + "';"
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+        }
+
     }
 }

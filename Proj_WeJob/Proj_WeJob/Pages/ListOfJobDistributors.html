@@ -56,23 +56,29 @@
                             "defaultContent": '',
                             render: function (data, type, row, meta) {
                                 let dataDis = "data-DisId='" + row.CompanyNo + "'";
-                                editBtn = " <span class='editBtn btn btn-success fa fa-edit'" + dataDis + " ></span> ";
+                                editBtn = "<span class='editBtn btn btn-success fa fa-edit'" + dataDis + "></span>";
                                 return editBtn;
                             }
                         },
                         {
                             "className": 'view',
+                             "orderable": false,
+                            "data": null,
+                            "defaultContent": '',
                             render: function (data, type, row, meta) {
                                 let dataDis = "data-DisId='" + row.CompanyNo + "'";
-                                viewBtn = "<span class ='viewBtn btn btn-info fa fa-eye-slash'" + dataDis + " > </span>";
+                                viewBtn = "<span class ='viewBtn btn btn-info fa fa-eye-slash'" + dataDis + "></span>";
                                 return viewBtn;
                             }
                         },
                         {
                             "className": 'delete',
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": '',
                             render: function (data, type, row, meta) {
                                 let dataDis = "data-DisId='" + row.CompanyNo + "'";
-                                deleteBtn = " <span class='deleteBtn btn btn-danger fa fa-remove'" + dataDis + "></span>";
+                                deleteBtn = "<span class='deleteBtn btn btn-danger fa fa-remove'" + dataDis + "></span>";
                                 return deleteBtn;
                             }
                         },
@@ -144,7 +150,6 @@
                                     input: 'text', 
                                       inputValue: tr[0].getElementsByClassName("Phone")[0].innerHTML,
                                 title:'עריכת פרטי חברת: '+tr[0].getElementsByClassName("NameCompany")[0].innerHTML ,
-                           title: 'עריכה',
                                     text: 'טלפון חדש',
                             inputValidator: (value) => {
                                 if (value.length!=10) {
@@ -154,7 +159,7 @@
                                 }).then(function (result) {
                                     tr[0].getElementsByClassName("Phone")[0].innerHTML = result.value;
                                      localStorage.setItem("Phone", result.value);
-                                //פקודת ajax לעדכון
+                                UpdateDietals();
                         })
                         })
                         })
@@ -169,8 +174,7 @@
                 window.location.href = 'ListOfJobsOfDistributor.html';
             });
             $("#distributorTable").on('click', 'td.delete', function () {
-                localStorage.clear();
-                localStorage.setItem("CompanyNo", NameCompany);
+                var tr = $(this).closest('tr');
                 Swal.fire({
                   title: '?אתה בטוח',
                   text: "!לא תוכל לבטל זאת",
@@ -180,16 +184,50 @@
                   cancelButtonColor: '#d33',
                   confirmButtonText: '!כן,מחק'
                 }).then((result) => {
-                  if (result.value) {
-                    Swal.fire(
+                    if (result.value) {
+                        // Delete a car from the server
+                        ajaxCall("DELETE", "../api/Dis?companyNo="+tr[0].getElementsByClassName("CompanyNo")[0].innerHTML, "", SuccessD, errorUorD);
+                      tr.remove();
+                  }
+                })
+            });
+        }
+         function UpdateDietals() {
+             Distributor = { // Note that the name of the fields must be identical to the names of the properties of the object in the server
+                CompanyNo: localStorage.getItem("CompanyNo"),
+                NamePerson: localStorage.getItem("NamePerson"),
+                Email: localStorage.getItem("Email"),
+                Phone: localStorage.getItem("Phone"),
+            }
+            ajaxCall("PUT", "../api/Update", JSON.stringify(Distributor), successU, errorUorD);
+            return false;
+        }
+        function successU() {
+               Swal.fire({
+                  position: 'top-end',
+                  type: 'success',
+                  title: 'העדכונים נשמרו בהצלחה',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+        }
+        function errorUorD(err) {
+            err = JSON.parse(err.responseText);
+              Swal.fire({
+                  type: 'error',
+                  title: 'שגיאה ',
+                  text: 'משהו לא עובד',
+                  footer:  err.ExceptionMessage
+                })
+            //swal("Error!", err.ExceptionMessage, "error");
+        }  
+
+        function SuccessD() {
+              Swal.fire(
                       'נמחק!',
                       'פרטי המפיץ נמחקו',
                       'success'
                       )
-                      //פקודת ajax למחיקת המפיץ
-                  }
-                })
-            });
         }
 
     </script>
