@@ -44,6 +44,7 @@ input[type=submit] {
     font-size: 40px;
     font-weight: bold;
     color: midnightblue;
+    width:100%;
 }
 body {
     background-image: url("http://www.yo-yoo.co.il/rekaim/images/uploads/f38641.jpg");

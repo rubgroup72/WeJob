@@ -49,7 +49,8 @@
                     },
                     data: Studentsdata,
                     "autoWidth": false,
-                    pageLength: 8,
+                    dom: "Bfrtip",
+                    pageLength: 4,
                     columns: [
                         {
                             "className": 'StudentId',
@@ -57,23 +58,28 @@
                             title: "ת.ז"
                         },
                         {
+                            "className": 'FirstName',
                             data: "FirstName",
                             title: "שם פרטי"
                         },
                         {
+                            "className": 'LastName',
                             data: "LastName",
                             title: "שם משפחה"
                         },
                        
                          {
+                             "className": 'CellPhone',
                              data: "CellPhone",
                              title: 'טלפון'
                          },
                           {
+                              "className": 'Email',
                               data: "Email",
                               title: "דוא'ל"
                           },
                              {
+                                 "className": 'DepartmentName',
                                  data: "DepartmentName",
                                  title: "מחלקה"
                              },
@@ -201,37 +207,44 @@
                 </li>
 
             </ul>
-            <!--<form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>-->
+           
         </div>
     </nav>
 
     <div class="container" dir="rtl">
+       
+         <div class="card text-center">
+           
+              <h2 class="card-header" style="color:#072247">מועמדים</h2>
+             <div class="card-body col-xs-12">
 
-        <center>
-            <form id="pForm" class="student_form">
-                <table id="StudentsTable" class="display nowrap " style="width:100%" dir="rtl">
-                    <thead>
-                        <tr>
-                            <th>StudentId</th>
-                            <th>FirstName</th>
-                            <th>LastName</th>
-                            <th>CellPhone</th>
-                            <th>Email</th>
-                            <th>DepartmentName</th>
-                            <th></th>
-                        </tr>
-                    </thead>    
-                </table>
+                 <form id="pForm">
 
-            </form>
-            <div class="card-footer text-muted">
-                <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt="">
-            </div>
-        </center>
+                     <table id="StudentsTable" class="display nowrap">
 
-    </div>
+                         <thead>
+
+                             <tr>
+
+                                 <th>StudentId</th>
+                                 <th>FirstName</th>
+                                 <th>LastName</th>
+                                 <th>CellPhone</th>
+                                 <th>Email</th>
+                                 <th>DepartmentName</th>
+                                 <th></th>
+                             </tr>
+                         </thead>
+                     </table>
+
+                 </form>
+             </div>
+                
+                  <div class="card-footer text-muted">
+                    <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt="">
+                 </div>
+          </div>
+       
+     </div>
 </body>
 </html>
