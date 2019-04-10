@@ -8,3 +8,6 @@ C:\Users\Inga\source\repos\JobsAlgo\JobsAlgo\obj\Debug\JobsAlgo.pdb
 C:\Users\Inga\source\repos\JobsAlgo\JobsAlgo\bin\Debug\EntityFramework.dll
 C:\Users\Inga\source\repos\JobsAlgo\JobsAlgo\bin\Debug\EntityFramework.xml
 C:\Users\Inga\source\repos\JobsAlgo\JobsAlgo\obj\Debug\JobsAlgo.csproj.CopyComplete
+C:\Users\Michael Sheridan\Desktop\GitHub\WeJob\JobsAlgo\JobsAlgo\bin\Debug\JobsAlgo.exe.config
+C:\Users\Michael Sheridan\Desktop\GitHub\WeJob\JobsAlgo\JobsAlgo\obj\Debug\JobsAlgo.exe
+C:\Users\Michael Sheridan\Desktop\GitHub\WeJob\JobsAlgo\JobsAlgo\obj\Debug\JobsAlgo.pdb

@@ -614,5 +614,43 @@ namespace Proj_WeJob.Models.DAL
             }
         }
 
+
+        //מחיקת סטודנט
+        public int deleteStudent(string StudentId)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            String cStr = "DELETE FROM Student WHERE StudentId ='" + StudentId + "';";     // helper method to build the insert string
+            cmd = CreateCommand(cStr, con);             // create the command '" + per.Gmail + "';"
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+        }
+
     }
 }

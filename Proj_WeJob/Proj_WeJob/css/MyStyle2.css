@@ -21,6 +21,9 @@
     padding: 20px;
     font-family: Calibri,Gisha, 'Trebuchet MS', sans-serif;
 }
+.student_form{
+    text-align:center;
+}
 
 input[type=submit]:hover {
     background-color: #45a049;

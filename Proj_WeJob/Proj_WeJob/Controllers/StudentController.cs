@@ -16,5 +16,13 @@ namespace Proj_WeJob.Controllers
             Student s = new Student();
             return s.GetListStudent();
         }
+        //פונקציה למחיקת סטודנט
+        [HttpDelete]
+        [Route("api/stu")]
+        public void DELETE(string StudentId)
+        {
+            Student s = new Student();
+            s.deleteStudent(StudentId);
+        }
     }
 }
