@@ -20,48 +20,73 @@
     <script>
 
         $(document).ready(function () {
-            //הבאת נתוני כישורים,תחומי עניין ושפות מבסיס הנתונים
-            ajaxCall("GET", "../api/Interst", "", successGetInterst, error);
-            ajaxCall("GET", "../api/Language", "", successGetLanguage, error);
-            ajaxCall("GET", "../api/Skill", "", successGetSkill, error);
+            if (localStorage.getItem("whatFun") == "edit" || localStorage.getItem("whatFun") == "view") {
+                 uri = "../api/Job?JobNo=" + localStorage.getItem("JobNo");
+                console.log(uri);
+                ajaxCall("Get", uri, "", getSuccess, error);
+                //צריך להוסיף פקודת אגקס להבאת תחומי עניין, שפות וכישורים שנבחרו למשרה
+            }
+            else {
+                //הבאת נתוני כישורים,תחומי עניין ושפות מבסיס הנתונים
+                ajaxCall("GET", "../api/Interst", "", successGetInterst, error);
+                ajaxCall("GET", "../api/Language", "", successGetLanguage, error);
+                ajaxCall("GET", "../api/Skill", "", successGetSkill, error);
+            } 
+                $("#pForm").submit(f1);
+        });
 
-            $("#pForm").submit(f1);
-
-            //בעת לחיצה על כפתור הכנס נגיע לפונקצית הוספת מפיץ
+          //בעת לחיצה על כפתור הכנס נגיע לפונקצית הוספת מפיץ
             function AddJob() {
                 //get all hobbies from DB
 
                 Job = { // Note that the name of the fields must be identical to the names of the properties of the object in the server
+                    CompanyCompanyNo: localStorage.getItem("CompanyNo"),
                     JobName: $("#JobName").val(),
                     JobDescription: $("#JobDescription").val(),
                     Requirements: $("#Requirements").val(),
                     MailForCV: $("#MailForCV").val(),
                     OpenDate: Date.now(),
-                    ToDate: Date.now() + 45,
+                    ToDate: Date.now()+45,
                     Link: $("#Link").val(),
                     Location: $("#location").val(),
                     Status: $("#status").val(),
                     ArrayIntrests: $("#exampleFormControlSelect2").val(),
                     ArrayLanguage: $("#exampleFormControlSelect3").val(),
                     ArraySkill: $("#exampleFormControlSelect4").val(),
-
                 }
                 //פקודת אגקס להכנסת משרה
-                ajaxCall("POST", "../api/jobs", JSON.stringify(Job), success, error);
+                ajaxCall("POST", "../api/JobNew", JSON.stringify(Job), success, error);
             }
             function f1() {
                 AddJob();
                 return false; // the return false will prevent the form from being submitted
                 // hence the page will not reload
             }
-            function success(data) {
-                swal("הנתונים הוכנסו בהצלחה")
-                //window.location.href = 'ListOfJobDistributors.html';
-            }
-            function error(err) {
-                err = JSON.parse(err.responseText);
-                swal("Error!", err.ExceptionMessage, "error");
-            }
+            
+              function success() {
+               Swal.fire({
+                  position: 'top-end',
+                  type: 'success',
+                  title: 'הנתונים נשמרו בהצלחה',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+        
+        }
+         function error(err) {
+            err = JSON.parse(err.responseText);
+              Swal.fire({
+                  type: 'error',
+                  title: 'שגיאה ',
+                  text: 'משהו לא עובד',
+                  footer:  err.ExceptionMessage
+                })
+            //swal("Error!", err.ExceptionMessage, "error");
+        }  
+            //function error(err) {
+            //    err = JSON.parse(err.responseText);
+            //    swal("Error!", err.ExceptionMessage, "error");
+            //}
             //סוף פונקציות להכנסת משרה
 
             // this function is activated in case of a success of intersts
@@ -112,8 +137,28 @@
                     alert(err);
                 }
             }
+            function getSuccess(dataJob) {
+                if (localStorage.getItem("whatFun") == "view") {
+                    document.getElementById("JobName").disabled=true;
+                    document.getElementById("MailForCV").disabled = true;
+                    document.getElementById("Requirements").disabled = true;
+                      document.getElementById("location").disabled=true;
+                    document.getElementById("JobDescription").disabled=true;
+                    document.getElementById("Link").disabled=true;
+                    document.getElementById("status").disabled=true;
+                }
+                document.getElementById("JobName").value = dataJob.JobName;
+                document.getElementById("MailForCV").value = dataJob.MailForCV;
+                document.getElementById("JobDescription").value = dataJob.JobDescription;
+                document.getElementById("Link").value = dataJob.Link;
+                document.getElementById("status").value = dataJob.Status;
+                document.getElementById("Requirements").value = dataJob.Link;
+                document.getElementById("location").value = dataJob.Status;
+                document.getElementById("view").remove();
+                localStorage.removeItem('whatFun');
+                
+            }
 
-        });
     </script>
 
 
@@ -162,11 +207,11 @@
                 </li>
 
             </ul>
-          
+
         </div>
     </nav>
 
-    <div class="container" dir="rtl">
+    <div class="container" dir="rtl" id="Div">
 
         <div class="card text-center">
             <div class="card-header" style="color:#072247">
@@ -176,7 +221,7 @@
                     </a>
                 </div>
                 <div class="col-xs-12">
-                    <h2>הוספת משרה</h2>
+                    <h2>כרטיס משרה</h2>
                 </div>
             </div>
             <div class="card-body col-xs-12">
@@ -247,8 +292,8 @@
 
                         </div>
                     </div>
-                    <div class="col-auto my-1">
-                        <button type="submit" class="btn btn-primary">הוסף</button>
+                    <div class="col-auto my-1" >
+                        <button type="submit" class="btn btn-primary" id="view">שמור</button>
                         <a href="MatchingSubCategories.html" class="btn btn-outline-primary">המשך להתאמת קטגוריות</a>
 
                     </div>
@@ -262,6 +307,9 @@
         </div>
 
     </div>
+
+ 
+
 
 </body>
 </html>

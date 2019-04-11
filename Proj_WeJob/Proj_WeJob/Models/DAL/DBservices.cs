@@ -149,7 +149,7 @@ namespace Proj_WeJob.Models.DAL
             String command;
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
-            sb.AppendFormat("Values('{0}','{1}','{2}',{3},'{4}','{5}','{6}','{7}','{8}','{9}')", job.JobName, job.JobDescription, job.Requirements,"1", job.MailForCV, job.Location, job.OpenDate, job.ToDate,job.Status,job.Link);
+            sb.AppendFormat("Values('{0}','{1}','{2}',{3},'{4}','{5}','{6}','{7}','{8}','{9}')", job.JobName, job.JobDescription, job.Requirements, Convert.ToInt32(job.CompanyCompanyNo), job.MailForCV, job.Location, job.OpenDate, job.ToDate,job.Status,job.Link);
             String prefix = "INSERT INTO Job " + "(JobName,JobDescription,Requirements,CompanyCompanyNo,MailForCV,Location,OpenDate,ToDate,JobStatusStatusName,Link) ";
             command = prefix + sb.ToString();
             command += "; SELECT SCOPE_IDENTITY()";
@@ -489,7 +489,7 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-        
+    //פונקציה שמחזירה את המשרות של מפיץ ספציפי    
         public List<Job> GetListJobsOfDistributor(string conString,string companyNo)
         {
             SqlConnection con = null;
@@ -497,13 +497,12 @@ namespace Proj_WeJob.Models.DAL
             try
             {
                 con = connect(conString); // create a connection to the database using the connection String defined in the web config file
-                String selectSTR = "SELECT * FROM Job  where Job.CompanyCompanyNo = '" + companyNo+"'";
-               
+                String selectSTR = "SELECT * FROM Job where Job.CompanyCompanyNo='" + companyNo+"'";
+                //LEFT JOIN JobStatus ON Job.JobStatusStatusName = JobStatus.StatusName
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
-
                 while (dr.Read())
                 {   // Read till the end of the data into a row
                     Job j = new Job
@@ -512,12 +511,65 @@ namespace Proj_WeJob.Models.DAL
                         JobName = Convert.ToString(dr["JobName"]),
                         OpenDate = Convert.ToDateTime(dr["OpenDate"]),
                         ToDate = Convert.ToDateTime(dr["ToDate"]),
-                        Status = Convert.ToString(dr["JobDescription"])
+                        Location = Convert.ToString(dr["Location"]),
+                        Status = Convert.ToString(dr["JobStatusStatusName"]),
                     };
                     jobs.Add(j);
                 }
 
                 return jobs;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+        //פונקציה שמחזירה את פרטי משרה מסוימת
+
+        public Job GetJob(string conString, string JobNo)
+        {
+            SqlConnection con = null;
+            Job job = new Job();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+                String selectSTR = "SELECT * FROM Job where Job.JobNo='" + JobNo + "'";
+                //LEFT JOIN JobStatus ON Job.JobStatusStatusName = JobStatus.StatusName
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    if (job != null)
+                    {
+                        Job j = new Job
+                        {
+                            JobNo = Convert.ToInt32(dr["JobNo"]),
+                            JobName = Convert.ToString(dr["JobName"]),
+                            JobDescription = Convert.ToString(dr["JobDescription"]),
+                            Requirements = Convert.ToString(dr["Requirements"]),
+                            MailForCV = Convert.ToString(dr["MailForCV"]),
+                            Location = Convert.ToString(dr["Location"]),
+                            OpenDate = Convert.ToDateTime(dr["OpenDate"]),
+                            ToDate = Convert.ToDateTime(dr["ToDate"]),
+                            Status = Convert.ToString(dr["JobStatusStatusName"]),
+                            Link = Convert.ToString(dr["Link"]),
+                        };
+                        job = j;
+                    }   
+                }
+
+                return job;
             }
             catch (Exception ex)
             {

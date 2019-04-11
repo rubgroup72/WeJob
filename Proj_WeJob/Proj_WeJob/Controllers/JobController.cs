@@ -3,20 +3,29 @@ using System.Web.Http;
 using Proj_WeJob.Models.DAL;
 namespace Proj_WeJob.Controllers
 {
-    public class JobControllera:ApiController
+    public class JobController:ApiController
     {
         // POST api/values
         //הפעלת פונקצית הכנסה של פרטי משתמש במחלקת משתמש
-        //public void POST([FromBody]Job j)
-        //{
-        //    j.InsertJob();
-        //}
+        [HttpPost]
+        [Route("api/JobNew")]
+        public void POST([FromBody]Job j)
+        {
+            j.InsertJob();
+        }
         [HttpGet]
-        [Route("api/jobs")]
+        [Route("api/Jobs")]
         public IEnumerable<Job> GET(string companyNo)
         {
             Job j = new Job();
             return j.GetListJobsOfDistributor(companyNo);
+        }
+        [HttpGet]
+        [Route("api/Job")]
+        public Job Get(string JobNo)
+        {
+            Job j = new Job();
+            return j.GetJob(JobNo);
         }
     }
 }

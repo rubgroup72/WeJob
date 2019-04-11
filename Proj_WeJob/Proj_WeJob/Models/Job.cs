@@ -44,26 +44,31 @@ namespace Proj_WeJob.Models.DAL
             this.ArrayLanguage = ArrayLanguage;
             this.ArraySkill = ArraySkill;
         }
-
         public Job()
         {
         }
 
-        //הכנסת נתונים לטבלה באמצעות קשירה לDB  
-        //public int InsertJob()
-        //{
-        //    //DBservices dbs = new DBservices();
-        //    //int num1 = dbs.InsertJob(this);
-        //    //int num2 = dbs.Insert_JobSkill(this, num1);
-        //    //int num3 = dbs.Insert_JobInterst(this, num1);
-        //    //int num4 = dbs.Insert_JobLanguage(this, num1);
-        //    //return (num1 & num2 & num3 & num4);
-        //}
-//החזרת משרות של מפיץ ספציפי
+        //הכנסת נתונים לטבלה באמצעות קשירה לDB
+        public int InsertJob()
+        {
+            DBservices dbs = new DBservices();
+            int num1 = dbs.InsertJob(this);
+            //int num2 = dbs.Insert_JobSkill(this, num1);
+            int num3 = dbs.Insert_JobInterst(this, num1);
+            //int num4 = dbs.Insert_JobLanguage(this, num1);
+            return (num1 & num3);
+            //return (num1 & num2 & num3 & num4);
+        }
+        //החזרת משרות של מפיץ ספציפי
         public List<Job> GetListJobsOfDistributor(string companyNo)
         {
             DBservices dbs = new DBservices();
             return dbs.GetListJobsOfDistributor("DBConnectionString", companyNo);
+        }
+        public Job GetJob(string JobNo)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetJob("DBConnectionString", JobNo);
         }
     }
 }
