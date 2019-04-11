@@ -125,7 +125,8 @@
                     str = "<label for='exampleFormControlSelect4'>כישורים</label>";
                     str += "<select multiple class='form-control' id='exampleFormControlSelect4'>";
                     for (var i = 0; i < Skilldata.length; i++) {
-                        str += "<option value='" + skill[i].Name + "'>" + skill[i].Name + '</option >';
+                        console.log(skill[i].SkillNo);
+                        str += "<option value='" + skill[i].SkillNo + "'>" + skill[i].Name + '</option >';
                     }
                     str += " </select>";
                     document.getElementById("skills").innerHTML = str;

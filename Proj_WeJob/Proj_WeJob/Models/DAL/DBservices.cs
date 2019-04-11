@@ -209,6 +209,112 @@ namespace Proj_WeJob.Models.DAL
 
 
         //+++++פונקציה שמחזיה רשימה של מפיצים ללא סינון
+
+        ///+++++++++הוספת שפות למשרה++++++++++
+        public int Insert_JobLanguage(Job job, int id)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            String cStr = BuildInsert_JobLanguage(job,id);      // helper method to build the insert string
+            cmd = CreateCommand(cStr, con);             // create the command
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+        }
+        private String BuildInsert_JobLanguage(Job job, int id)
+        {
+            String command = "";
+            String prefix;
+            // use a string builder to create the dynamic string
+            for (int i = 0; i < job.ArrayLanguage.Count; i++)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat("Values({0},'{1}',{2})", id.ToString(), job.ArrayLanguage[i],1);
+                prefix = "INSERT INTO bgroup72_prod.dbo.Job_Language(JobJobNo,LanguageLangName,Degree)";
+                command = command + prefix + sb.ToString() + ";";
+            }
+            return command;
+        }
+        //++++++++++++סיום הוספת שפות למשרה +++++++++
+
+        ///+++++++++הוספת כישורים למשרה++++++++++
+        public int Insert_JobSkill(Job job, int id)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            String cStr = BuildInsert_JobSkill(job, id);      // helper method to build the insert string
+            cmd = CreateCommand(cStr, con);             // create the command
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+        }
+        private String BuildInsert_JobSkill(Job job, int id)
+        {
+            String command = "";
+            String prefix;
+            // use a string builder to create the dynamic string
+            for (int i = 0; i < job.ArraySkill.Count; i++)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat("Values({0},{1})", id.ToString(), job.ArraySkill[i]);
+                prefix = "INSERT INTO bgroup72_prod.dbo.Job_Skill(JobJobNo,SkillSkillNo)";
+                command = command + prefix + sb.ToString() + ";";
+            }
+            return command;
+        }
+        //++++++++++++סיום הוספת שפות למשרה +++++++++
+        //+++++פונקציה שמחזיה רשימה של מפיצים ללא סינון
+
         public List<Distributor> GetListDistributor(string conString)
         {
             SqlConnection con = null;
@@ -470,6 +576,7 @@ namespace Proj_WeJob.Models.DAL
                 {   // Read till the end of the data into a row
                     Skill s = new Skill
                     {
+                        SkillNo=Convert.ToInt32(dr["SkillNo"]),
                         Name = Convert.ToString(dr["SkillName"])
                     };
                     skills.Add(s);

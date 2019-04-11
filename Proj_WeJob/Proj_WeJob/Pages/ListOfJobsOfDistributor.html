@@ -139,22 +139,22 @@
             });
             $("#JobsOfdistributorTable").on('click', 'td.delete', function () {
    
-                //var tr = $(this).closest('tr');
-                //Swal.fire({
-                //  title: '?אתה בטוח',
-                //  text: "!לא תוכל לבטל זאת",
-                //  type: 'אזהרה',
-                //  showCancelButton: true,
-                //  confirmButtonColor: '#3085d6',
-                //  cancelButtonColor: '#d33',
-                //  confirmButtonText: '!כן,מחק'
-                //}).then((result) => {
-                //    if (result.value) {
-                //        // Delete a car from the server
-                //        ajaxCall("DELETE", "../api/Dis?companyNo="+tr[0].getElementsByClassName("CompanyNo")[0].innerHTML, "", SuccessD, errorUorD);
-                //      tr.remove();
-                //  }
-                //})
+                var tr = $(this).closest('tr');
+                Swal.fire({
+                  title: '?אתה בטוח',
+                  text: "!לא תוכל לבטל זאת",
+                  type: 'אזהרה',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: '!כן,מחק'
+                }).then((result) => {
+                    if (result.value) {
+                        // Delete a car from the server
+                        //ajaxCall("DELETE", "../api/Dis?companyNo="+tr[0].getElementsByClassName("CompanyNo")[0].innerHTML, "", SuccessD, errorUorD);
+                      tr.remove();
+                  }
+                })
             });
               function errorUorD(err) {
             err = JSON.parse(err.responseText);

@@ -9,11 +9,13 @@ namespace Proj_WeJob.Models
     public class Skill
     {
         //properties      
+        public int SkillNo { get; set; }
         public string Name { get; set; }
 
         //constructor
-        public Skill(string Name)
+        public Skill(int SkillNo,string Name)
         {
+            this.SkillNo = SkillNo;
             this.Name = Name;
         }
 

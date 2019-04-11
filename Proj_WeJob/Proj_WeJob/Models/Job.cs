@@ -53,11 +53,10 @@ namespace Proj_WeJob.Models.DAL
         {
             DBservices dbs = new DBservices();
             int num1 = dbs.InsertJob(this);
-            //int num2 = dbs.Insert_JobSkill(this, num1);
+            int num2 = dbs.Insert_JobSkill(this, num1);
             int num3 = dbs.Insert_JobInterst(this, num1);
-            //int num4 = dbs.Insert_JobLanguage(this, num1);
-            return (num1 & num3);
-            //return (num1 & num2 & num3 & num4);
+            int num4 = dbs.Insert_JobLanguage(this, num1);
+            return (num1 & num2 & num3 & num4);
         }
         //החזרת משרות של מפיץ ספציפי
         public List<Job> GetListJobsOfDistributor(string companyNo)
