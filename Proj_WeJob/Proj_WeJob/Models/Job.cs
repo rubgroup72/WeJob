@@ -59,12 +59,11 @@ namespace Proj_WeJob.Models.DAL
         //    //int num4 = dbs.Insert_JobLanguage(this, num1);
         //    //return (num1 & num2 & num3 & num4);
         //}
-//החזרת משרות של מפיץ ספציפיstring companyNo
-        public List<Job> GetListJobsOfDistributor()
+//החזרת משרות של מפיץ ספציפי
+        public List<Job> GetListJobsOfDistributor(string companyNo)
         {
             DBservices dbs = new DBservices();
-            return dbs.GetListJobsOfDistributor("DBConnectionString");
+            return dbs.GetListJobsOfDistributor("DBConnectionString", companyNo);
         }
-        //, companyNo
     }
 }

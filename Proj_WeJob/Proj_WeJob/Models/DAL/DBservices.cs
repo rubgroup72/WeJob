@@ -489,16 +489,16 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-        //,string companyNo
-        public List<Job> GetListJobsOfDistributor(string conString)
+        
+        public List<Job> GetListJobsOfDistributor(string conString,string companyNo)
         {
             SqlConnection con = null;
             List<Job> jobs = new List<Job>();
             try
             {
                 con = connect(conString); // create a connection to the database using the connection String defined in the web config file
-                String selectSTR = "SELECT * FROM Job ";
-                //where Job.CompanyCompanyNo = '" + companyNo+"'
+                String selectSTR = "SELECT * FROM Job  where Job.CompanyCompanyNo = '" + companyNo+"'";
+               
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader

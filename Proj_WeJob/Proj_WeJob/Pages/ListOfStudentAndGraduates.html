@@ -52,6 +52,22 @@
                     dom: "Bfrtip",
                     pageLength: 4,
                     columns: [
+                         {
+                            "className": 'view',
+                            render: function (data, type, row, meta) {
+                                let datastu = "data-StuId='" + row.StudentId + "'";
+                                viewBtn = "<span class ='viewBtn btn btn-info fa fa-eye-slash'" + datastu + " > </span>";
+                                return viewBtn;
+                            }
+                        },
+                        {
+                            "className": 'delete',
+                            render: function (data, type, row, meta) {
+                                let datastu = "data-StuId='" + row.StudentId + "'";
+                                deleteBtn = " <span class='deleteBtn btn btn-danger fa fa-remove'" + datastu + "></span>";
+                                return deleteBtn;
+                            },
+                        },
                         {
                             "className": 'StudentId',
                             data: "StudentId",
@@ -85,22 +101,7 @@
                              },
 
                   
-                        {
-                            "className": 'view',
-                            render: function (data, type, row, meta) {
-                                let datastu = "data-StuId='" + row.StudentId + "'";
-                                viewBtn = "<span class ='viewBtn btn btn-info fa fa-eye-slash'" + datastu + " > </span>";
-                                return viewBtn;
-                            }
-                        },
-                        {
-                            "className": 'delete',
-                            render: function (data, type, row, meta) {
-                                let datastu = "data-StuId='" + row.StudentId + "'";
-                                deleteBtn = " <span class='deleteBtn btn btn-danger fa fa-remove'" + datastu + "></span>";
-                                return deleteBtn;
-                            },
-                        },
+                       
                     
 
                     ]
@@ -225,14 +226,15 @@
                          <thead>
 
                              <tr>
-
+                                 <th></th>
+                                 <th></th>
                                  <th>StudentId</th>
                                  <th>FirstName</th>
                                  <th>LastName</th>
                                  <th>CellPhone</th>
                                  <th>Email</th>
                                  <th>DepartmentName</th>
-                                 <th></th>
+
                              </tr>
                          </thead>
                      </table>

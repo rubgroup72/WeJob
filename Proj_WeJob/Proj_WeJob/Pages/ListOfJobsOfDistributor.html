@@ -33,13 +33,12 @@
         $(document).ready(function () {
             document.getElementById("cotart").innerHTML = "רשימת משרות של " + localStorage.getItem("NameCompany");
             // once the document is ready we fetch a list of distributors from the server
-            //uri = "../api/jobs?companyNo=" + localStorage.getItem("CompanyNo");
-            //console.log(uri);
-            ajaxCall("GET", "../api/jobs", "", getSuccess, error);
+            uri = "../api/jobs?companyNo=" + localStorage.getItem("CompanyNo");
+            console.log(uri);
+            ajaxCall("GET", uri, "", getSuccess, error);
         });
         // this function is activated in case of a success
         function getSuccess(jobsdata) {
-            jobs = jobsdata; // keep the distributors array in a global variable;
             try {
                 tbl = $('#JobsOfdistributorTable').DataTable({
                     "language": {

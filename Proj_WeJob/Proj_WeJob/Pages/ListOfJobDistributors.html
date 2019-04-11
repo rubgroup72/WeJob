@@ -37,8 +37,6 @@
         });
         // this function is activated in case of a success
         function getSuccess(distributorsdata) {
-            console.log(distributorsdata)
-            distributors = distributorsdata; // keep the distributors array in a global variable;
             try {
                 tbl = $('#distributorTable').DataTable({
                     "language": {

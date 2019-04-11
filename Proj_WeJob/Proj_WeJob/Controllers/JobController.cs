@@ -13,12 +13,10 @@ namespace Proj_WeJob.Controllers
         //}
         [HttpGet]
         [Route("api/jobs")]
-        //string companyNo
-        public IEnumerable<Job> GET()
+        public IEnumerable<Job> GET(string companyNo)
         {
             Job j = new Job();
-            //companyNo
-            return j.GetListJobsOfDistributor();
+            return j.GetListJobsOfDistributor(companyNo);
         }
     }
 }
