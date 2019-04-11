@@ -42,6 +42,14 @@ namespace Proj_WeJob.Models.DAL
             return dbs.GetListStudent("DBConnectionString");
         }
 
+        //הצגת סטודנטים עם סינון
+        public List<Student> GetListStudent(string StudentId)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetListStudent("DBConnectionString", StudentId);
+        }
+
+
         //פונקציית התחברות לאפליקציה
         public Student AppLogin()
         {
