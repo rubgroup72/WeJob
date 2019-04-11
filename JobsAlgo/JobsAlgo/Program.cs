@@ -29,7 +29,7 @@ namespace JobsAlgo
             }
             Console.ReadLine();
         }
-        //פונקציה שמחזיר רשימה של כל השאלות כשבתוך כל שאלה רשימה של תגיות
+        //פונקציה שמחזירה רשימה של כל השאלות כשבתוך כל שאלה רשימה של תגיות
         static List<List<string>> GetAllQuestions()
         {
             string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Inga\source\repos\JobsAlgo\JobsAlgo\AllTags.txt");
