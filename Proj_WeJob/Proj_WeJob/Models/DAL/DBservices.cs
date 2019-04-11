@@ -149,8 +149,8 @@ namespace Proj_WeJob.Models.DAL
             String command;
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
-            sb.AppendFormat("Values('{0}','{1}','{2}',{3},'{4}','{5}','{6}','{7}','{8}','{9}')", job.JobName, job.JobDescription, job.Requirements, Convert.ToInt32(job.CompanyCompanyNo), job.MailForCV, job.Location, job.OpenDate, job.ToDate,job.Status,job.Link);
-            String prefix = "INSERT INTO Job " + "(JobName,JobDescription,Requirements,CompanyCompanyNo,MailForCV,Location,OpenDate,ToDate,JobStatusStatusName,Link) ";
+            sb.AppendFormat("Values('{0}','{1}','{2}',{3},'{4}','{5}','{6}','{7}','{8}','{9}')", job.JobName, job.JobDescription, job.Requirements, Convert.ToInt32(job.CompanyCompanyNo), job.Location,job.MailForCV ,job.OpenDate, job.ToDate,job.Status,job.Link);
+            String prefix = "INSERT INTO Job " + "(JobName,JobDescription,Requirements,CompanyCompanyNo,Location,MailForCV,OpenDate,ToDate,JobStatusStatusName,Link) ";
             command = prefix + sb.ToString();
             command += "; SELECT SCOPE_IDENTITY()";
             return command;
@@ -229,6 +229,7 @@ namespace Proj_WeJob.Models.DAL
                         Convert.ToString(dr["ContactName"]),
                         Convert.ToString(dr["ContactPhone"]),
                         Convert.ToString(dr["ContactMail"])
+                       
                         );
                     ld.Add(d);
                 }

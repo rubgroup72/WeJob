@@ -46,7 +46,7 @@
                     Requirements: $("#Requirements").val(),
                     MailForCV: $("#MailForCV").val(),
                     OpenDate: Date.now(),
-                    ToDate: Date.now()+45,
+                    ToDate: Date.now(),
                     Link: $("#Link").val(),
                     Location: $("#location").val(),
                     Status: $("#status").val(),
@@ -83,10 +83,7 @@
                 })
             //swal("Error!", err.ExceptionMessage, "error");
         }  
-            //function error(err) {
-            //    err = JSON.parse(err.responseText);
-            //    swal("Error!", err.ExceptionMessage, "error");
-            //}
+          
             //סוף פונקציות להכנסת משרה
 
             // this function is activated in case of a success of intersts
@@ -145,7 +142,8 @@
                       document.getElementById("location").disabled=true;
                     document.getElementById("JobDescription").disabled=true;
                     document.getElementById("Link").disabled=true;
-                    document.getElementById("status").disabled=true;
+                    document.getElementById("status").disabled = true;
+                  document.getElementById("view").remove();
                 }
                 document.getElementById("JobName").value = dataJob.JobName;
                 document.getElementById("MailForCV").value = dataJob.MailForCV;
@@ -154,7 +152,7 @@
                 document.getElementById("status").value = dataJob.Status;
                 document.getElementById("Requirements").value = dataJob.Link;
                 document.getElementById("location").value = dataJob.Status;
-                document.getElementById("view").remove();
+
                 localStorage.removeItem('whatFun');
                 
             }
