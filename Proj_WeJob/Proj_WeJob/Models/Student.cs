@@ -55,6 +55,11 @@ namespace Proj_WeJob.Models.DAL
             DBservices dbs = new DBservices();
             return dbs.Register(Email, FirstName, LastName, CellPhone, Password, Gender);
         }
+        public int deleteStudent(string StudentId)
+        {
+            DBservices db = new DBservices();
+            return db.deleteStudent(StudentId);
+        }
 
     }
 }

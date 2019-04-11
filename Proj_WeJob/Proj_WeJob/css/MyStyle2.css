@@ -9,9 +9,16 @@
    
 }
 
+
 .card-header h2 {
     font-weight: bold;
 }
+
+
+#StudentsTable{
+    width:100%;
+}
+
 .container {
     width: 70%;
     height: 100%;
@@ -20,6 +27,11 @@
     background-color: #F2F2F0;
     padding: 20px;
     font-family: Calibri,Gisha, 'Trebuchet MS', sans-serif;
+}
+.student_form{
+    text-align:center;
+    width: 100%;
+   
 }
 
 input[type=submit]:hover {
