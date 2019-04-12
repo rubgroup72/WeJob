@@ -641,6 +641,54 @@ namespace Proj_WeJob.Models.DAL
             }
         }
 
+        //פונקציה שמחזירה את פרטי סטודנט ספציפי    
+        public List<Student> GetListStudent(string conString, string StudentId)
+        {
+            SqlConnection con = null;
+            List<Student> student = new List<Student>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+                String cStr = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode WHERE StudentId ='" + StudentId + "';";     // helper method to build the insert string
+                //LEFT JOIN JobStatus ON Job.JobStatusStatusName = JobStatus.StatusName
+                SqlCommand cmd = new SqlCommand(cStr, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Student s = new Student
+                          (
+                          Convert.ToInt32(dr["StudentID"]),
+                          Convert.ToString(dr["FirstName"]),
+                          Convert.ToString(dr["LastName"]),
+                          Convert.ToString(dr["CellPhone"]),
+                          Convert.ToString(dr["Email"]),
+                          Convert.ToString(dr["Gender"]),
+                          Convert.ToString(dr["DepartmentName"])
+                          );
+                    student.Add(s);
+                }
+
+                return student;
+                ;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+
+
         //פונקציה שמחזירה את פרטי משרה מסוימת
 
         public Job GetJob(string conString, string JobNo)
