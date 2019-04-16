@@ -8,6 +8,7 @@ import {
     StyleSheet,
     KeyboardAvoidingView,
     ImageBackground,
+    AsyncStorage,
 } from 'react-native';
 
 import colors from '../styles/colors';
@@ -37,14 +38,18 @@ class LogIn extends Component {
         this.setState({
             loadingVisible: true
         });
-        axios.post(Global.BASE_URL + "Login", {
+        const httpClient = axios.create();
+        httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
+        httpClient.post(Global.BASE_URL + "Login", {
             Email: this.state.email,
             Password: this.state.password,
         })
         .then((response) => {
             this.setState({ loadingVisible: false });
             if (response.data.Message === '') {
-                alert ('Login succes');
+                var student = response.data.Data;
+                AsyncStorage.setItem(Global.USER_EMAIL, student.email);
+                this.props.navigation.navigate('Main');
             } else {
                 alert (response.data.Message);
             }

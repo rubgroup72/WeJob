@@ -7,33 +7,11 @@ import NavBarButton from '../components/buttons/NavBarButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
+import Global from '../global';
 
 
 
 export default class LoggedOut extends React.Component{
-
-    componentWillMount() {
-        AsyncStorage.getItem('FacebookToken').then((token) => {
-            if (token !== null) {
-                this.fetchFacebookUserData(token);
-            }
-        });
-    }
-
-    fetchFacebookUserData = (token) => {
-        fetch('https://graph.facebook.com/v2.5/me?fields=email,name&access_token=' + token)
-        .then((response) => response.json())
-        .then((json) => {
-            var user = {};
-            user.name = json.name
-            user.id = json.id
-            user.email = json.email
-            this.props.loginFinished('facebook', user);
-        })
-        .catch((exc) => {
-            alert(exc)
-        });
-    }
 
     onFacebookPress(){
         alert('Facebook button pressed');
@@ -47,21 +25,9 @@ export default class LoggedOut extends React.Component{
         this.props.navigation.navigate("Register");
     };
     onLoginPress = () => {
-        this.props.navigation.navigate("LogIn");
+        this.props.navigation.navigate(Global.LOGIN_PAGE);
     };
 
-
-    // static navigationOptions = ({ navigation }) => {
-    //     const { state } = navigation
-    //     return {
-    //       headerTransparent: true,
-    //       headerTintColor: colors.white,
-    //       headerLeheaderft:
-    //       <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="משתמש רשום?  " />,
-
-    //     }
-    //   }
-    
     render(){
         const {navigate} = this.props.navigation;
         return (
@@ -98,14 +64,14 @@ export default class LoggedOut extends React.Component{
                                 AccessToken.getCurrentAccessToken().then(
                                 (data) => {
                                     alert(data.accessToken.toString());
-                                    AsyncStorage.setItem('FacebookToken', data.accessToken.toString());
+                                    AsyncStorage.setItem(Global.FACEBOOK_TOKEN_STRING, data.accessToken.toString());
                                     
-                                    this.fetchFacebookUserData(data.accessToken.toString());
+                                    this.props.fetchFacebookUserData(data.accessToken.toString());
                                 })
                             }
                         }
                     }
-                    onLogoutFinished={() => alert("logout.")} />
+                    onLogoutFinished={() => this.props.logoutFacebook()} />
                 <RoundedButton
                 text = 'Google+ התחבר עם'
                 textColor = {colors.white}

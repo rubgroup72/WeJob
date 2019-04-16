@@ -9,6 +9,7 @@ import Loader from '../components/Loader';
 import NextArrowButton from '../components/buttons/NextArrowButton';
 import { Dropdown } from 'react-native-material-dropdown';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import Global from '../global';
 
 
 
@@ -26,7 +27,9 @@ export default class Register extends React.Component{
         this.setState({
             loadingVisible: true
         });
-        axios.get('http://10.0.2.2:53411/api/language')
+        const httpClient = axios.create();
+        httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
+        httpClient.get( Global.BASE_URL +'language')
         .then((response) => {
             this.setState({ loadingVisible: false });
             var temp = [];

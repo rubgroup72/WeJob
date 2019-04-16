@@ -69,5 +69,24 @@ namespace Proj_WeJob.Models.DAL
             return db.deleteStudent(StudentId);
         }
 
+        //פונקציית התחברות עם פייסבוק
+        public Student FacebookLogin()
+        {
+            DBservices dbs = new DBservices();
+            return dbs.FacebookLogin(Email, FirstName, LastName, Password);
+        }
+
+        //פונקציה שמעדכנת את הפרטים של הסטודנט בהינתן אימייל
+        public void UpdateData()
+        {
+            DBservices dbs = new DBservices();
+            dbs.UpdateStudentDataByEmail(Email, this);
+        }
+
+        public void UpdatePassword(String newPassword)
+        {
+            DBservices dbs = new DBservices();
+            dbs.UpdatePassword(Email, newPassword);
+        }
     }
 }

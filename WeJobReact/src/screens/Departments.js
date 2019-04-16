@@ -10,6 +10,7 @@ import InputField from '../components/form/InputField'
 import axios from 'axios';
 import Loader from '../components/Loader';
 import NextArrowButton from '../components/buttons/NextArrowButton';
+import Global from '../global';
 
 
 
@@ -34,7 +35,9 @@ export default class Register extends React.Component{
         this.setState({
             loadingVisible: true
         });
-        axios.post('http://10.0.2.2:53411/api/Register', {
+        const httpClient = axios.create();
+        httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
+        httpClient.post(Global.BASE_URL + 'Register', {
             MarineSciences: this.state.marineSciences,
             AconomicsAndBusiness: this.state.aconomicsAndBusiness,
             Engineering: this.state.engineering,

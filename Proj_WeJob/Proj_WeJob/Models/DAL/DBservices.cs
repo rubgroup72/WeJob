@@ -862,5 +862,77 @@ namespace Proj_WeJob.Models.DAL
             }
         }
 
+        //התחברות עם פייסבוק
+        public Student FacebookLogin(String email, String firstName, String lastName, String password)
+        {
+            // Need to check if exists. Otherwise add to DB
+            var currentStudentList = GetListStudent(connectionString).FirstOrDefault(i => i.Email == email);
+            if (currentStudentList != null)
+                return currentStudentList;
+            password = "";
+            return Register(email, firstName, lastName, "", password, "");
+        }
+
+        //עדכון פרטי סטודנט בהינתן אימייל
+        public int UpdateStudentDataByEmail(String email, Student s)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+
+                String updateSTR = "UPDATE STUDENT SET ";
+                updateSTR += " FirstName='" + s.FirstName + "', ";
+                updateSTR += " LastName='" + s.LastName + "', ";
+                updateSTR += " CellPhone='" + s.CellPhone + "', ";
+                updateSTR += " gender='" + s.Gender + "' ";
+                updateSTR += " Where Email='" + email + "'";
+                SqlCommand cmd = new SqlCommand(updateSTR, con);
+
+                var t = cmd.ExecuteNonQuery();
+                return t;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+        //עדכון סיסמא
+        public int UpdatePassword(String email, String newPassword)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+
+                String updateSTR = "UPDATE STUDENT SET ";
+                updateSTR += " Password='" + newPassword + "' ";
+                updateSTR += " Email='" + email + "'";
+                SqlCommand cmd = new SqlCommand(updateSTR, con);
+
+                return cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+
     }
 }
