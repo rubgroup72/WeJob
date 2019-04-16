@@ -17,43 +17,28 @@ export default class Register extends React.Component{
     constructor(props) {
         super(props);
         this.state = { 
-            message: false,
-            marineSciences: false,
-            aconomicsAndBusiness: false,
-            engineering: false,
-            socialAndCommunitySciences: false,
-            graduate: false,
-            loadingVisible: false,
+            data: [],
+            loadingVisible: true,
         };
-
-        this.onRegisterPress = this.onRegisterPress.bind(this);
       }
 
-    onRegisterPress = () => {
+      componentWillMount() {
         this.setState({
             loadingVisible: true
         });
-        axios.post('http://10.0.2.2:53411/api/Register', {
-            Email: this.state.marineSciences,
-            Password: this.state.aconomicsAndBusiness,
-            FirstName: this.state.engineering,
-            LastName: this.state.socialAndCommunitySciences,
-            CellPhone: this.state.graduate,
-        }, 
-        )
+        axios.get('http://10.0.2.2:53411/api/language')
         .then((response) => {
             this.setState({ loadingVisible: false });
-            if (response.data.Message === "") {
-                alert ('Registered');
-            } else {
-            alert (response.data.Message);
+            var temp = [];
+            for (var i = 0; i < response.data.length; ++i) {
+                temp.push({ value: response.data[i].Name });
             }
+            this.setState({ data: temp });
         })
         .catch((error) => {
             this.setState({ loadingVisible: false });
             alert (error.response.status);
         });
-        // () => this.props.navigation.navigate('LogIn')
     }
     static navigationOptions = ({ navigation }) => {
         const { state } = navigation
@@ -71,30 +56,11 @@ export default class Register extends React.Component{
     
 
     render(){
-        //const {navigate} = this.props.navigation;
-        let data = [{
-            value: 'Banana',
-          }, {
-            value: 'Mango',
-          }, {
-            value: 'Pear',
-          }];
-
           var radio_props = [
             {label: 'בסיסי', value: 0, },
             {label: 'בינוני', value: 1 },
             {label: 'שפת אם', value: 2 }
           ];
-
-        //   var RadioButtonProject = React.createClass({
-        //     getInitialState: function() {
-        //       return {
-        //         value: 0,
-        //       }
-        //     }
-        //     })
-      
-
         return (
             <ImageBackground style={ styles.imgBackground } 
                  resizeMode='cover' 
@@ -111,7 +77,7 @@ export default class Register extends React.Component{
                             <Dropdown
                              containerStyle={{width:200}}
                              label='בחר שפה ראשונה'
-                             data={data}
+                             data={this.state.data}
                              />
                              <RadioForm
                              radio_props={radio_props}
@@ -123,27 +89,26 @@ export default class Register extends React.Component{
                             <Dropdown
                              containerStyle={{width:200}}
                              label='בחר שפה שנייה'
-                             data={data}
-                             
+                             data={this.state.data}
                              />
                              <RadioForm
                              radio_props={radio_props}
                              initial={0}
-  formHorizontal={true}
-  labelHorizontal={true}
-  labelStyle={{fontSize: 20, color: '#2ecc71'}}
-  animation={true}
                              onPress={(value) => {this.setState({value:value})}}
                              />
                             </View>
-                            
-                            
-                            {/* <RoundedButton
-                            text = 'הרשמה'
-                            textColor = {colors.green01}
-                            background= {colors.white}
-                            handleOnPress={() => { this.onRegisterPress() }}
-                            /> */}
+                            <View style = {styles.iconsStyle}>
+                            <Dropdown
+                             containerStyle={{width:200}}
+                             label='בחר שפה שלישית'
+                             data={this.state.data}
+                             />
+                             <RadioForm
+                             radio_props={radio_props}
+                             initial={0}
+                             onPress={(value) => {this.setState({value:value})}}
+                             />
+                            </View>
                             <View style = {styles.nextButton}>
                                 <NextArrowButton
                                  handleOnPress={() => this.props.navigation.navigate('Home')}
@@ -173,7 +138,7 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontWeight: '300',
         marginBottom: 50,
-        marginTop: -50,
+        marginTop: -60,
         textAlign: 'center'
     },
 
