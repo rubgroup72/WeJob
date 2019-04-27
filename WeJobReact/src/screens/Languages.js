@@ -10,6 +10,7 @@ import NextArrowButton from '../components/buttons/NextArrowButton';
 import { Dropdown } from 'react-native-material-dropdown';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import Global from '../global';
+import { DrawerActions } from 'react-navigation';
 
 
 
@@ -21,6 +22,22 @@ export default class Register extends React.Component{
             data: [],
             loadingVisible: true,
         };
+      }
+
+      static navigationOptions = ({navigation}) => {
+        return {
+            headerTransparent: true,
+            headerTintColor: colors.green01,
+            // headerRight: (
+            //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
+            // ),
+            title: 'שפות',
+            headerLeft: (
+                <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
+                    <Icon name="bars" size={30} color= {colors.white} />
+                </TouchableOpacity>
+            ),
+        }
       }
 
       componentWillMount() {
@@ -43,13 +60,13 @@ export default class Register extends React.Component{
             alert (error.response.status);
         });
     }
-    static navigationOptions = ({ navigation }) => {
-        const { state } = navigation
-        return {
-          headerTransparent: true,
-          headerTintColor: colors.white,
-        }
-      }
+    // static navigationOptions = ({ navigation }) => {
+    //     const { state } = navigation
+    //     return {
+    //       headerTransparent: true,
+    //       headerTintColor: colors.white,
+    //     }
+    //   }
 
     marineClicked = () =>
     {

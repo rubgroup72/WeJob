@@ -9,21 +9,68 @@ import Main from './src/screens/Main';
 import Languages from './src/screens/Languages';
 import Global from './src/global';
 import PersonalProfile from './src/screens/PersonlProfile';
+import SubDepartments from './src/screens/SubDepartments';
 
 const MainStack = createStackNavigator({
   Main: { screen: Main },
   Register: { screen: Register },
+  LoggedOut: {screen: LoggedOut},
 });
+
+//יצירת תפריט עבור דף ההתחברות הראשוני
+const LoggedOutStack = createStackNavigator({
+  LoggedOut: { screen: LoggedOut }
+});
+
+//יצירת תפריט עבור דף הפרופיל האישי
 const profileStack = createStackNavigator({
   Profile: { screen: PersonalProfile }
 }, {
   defaultNavigationOptions: {
     headerStyle: {
-        backgroundColor: '#28F1A6',
+        backgroundColor: 'trasparent',
         elevation: 0,
         shadowOpacity: 0
     },
-    headerTitle: 'פרופיל אישי',
+    headerTitle: '',
+    headerTintColor: '#333333',
+    headerTitleStyle: {
+        fontWeight: 'bold',
+        color: '#ffffff'
+    }
+}
+});
+
+//יצירת תפריט עבור דף שפות
+const LanguageStack = createStackNavigator({
+  Languages: { screen: Languages }
+}, {
+  defaultNavigationOptions: {
+    headerStyle: {
+        backgroundColor: 'trasparent',
+        elevation: 0,
+        shadowOpacity: 0
+    },
+    headerTitle: '',
+    headerTintColor: '#333333',
+    headerTitleStyle: {
+        fontWeight: 'bold',
+        color: '#ffffff'
+    }
+}
+});
+
+const DepartmentsStack = createStackNavigator({
+  Departments: { screen: Departments },
+  SubDepartments: {screen: SubDepartments },
+}, {
+  defaultNavigationOptions: {
+    headerStyle: {
+        backgroundColor: 'trasparent',
+        elevation: 0,
+        shadowOpacity: 0
+    },
+    headerTitle: '',
     headerTintColor: '#333333',
     headerTitleStyle: {
         fontWeight: 'bold',
@@ -36,13 +83,13 @@ const hiddenDrawerItems = [
   'Register',
 ]
 const drawerNav = createDrawerNavigator({
-  Home: { screen: MainStack, },
+  'דף הבית': { screen: MainStack, },
   'התחברות': { screen: LogIn, }, // sync with Global.js
-  Departments: { screen: Departments, },
-  Languages: { screen: Languages, },
+  'מחלקות': { screen: DepartmentsStack, },
+  'שפות': { screen: LanguageStack, },
   'פרופיל': { screen: profileStack },
 }, {
-    initialRouteName: 'Home',
+    initialRouteName: 'דף הבית',
     drawerPosition: 'right',
     drawerOpenRoute: 'DrawerRightOpen', 
     drawerCloseRoute: 'DrawerRightClose', 

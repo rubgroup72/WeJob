@@ -6,4 +6,5 @@ export default {
     DEFUALT_REQUEST_TIMEOUT_MS: 15000,
     LOGIN_PAGE: 'התחברות',
     ASYNC_STORAGE_STUDEMT: 'StudentAsyncStorageData',// המפתח של הלוקאל סטוראג' ששומר את הפרטים של הסטונדט
+    USER_SELECTED_DEPARTMENT_CODE: 'SelectedDepartmentCode'
 }

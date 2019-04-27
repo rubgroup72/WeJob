@@ -31,13 +31,13 @@ export default class Main extends React.Component{
         return {
             headerTransparent: true,
             headerTintColor: colors.green01,
-            headerRight: (
-                <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
-            ),
+            // headerRight: (
+            //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
+            // ),
             title: 'WeJob',
             headerLeft: (
                 <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
-                    <Icon name="bars" size={30} color="#900" />
+                    <Icon name="bars" size={30} color= {colors.white} />
                 </TouchableOpacity>
             ),
         }
@@ -108,6 +108,7 @@ export default class Main extends React.Component{
             student: student,
          });
          AsyncStorage.setItem(Global.ASYNC_STORAGE_STUDEMT, JSON.stringify(student));
+         AsyncStorage.setItem(Global.USER_EMAIL, student.Email);
     }
     //פונקציה שמסמנת שהסטודנט התנתק מפייסבוק
     logoutFacebook = () => {

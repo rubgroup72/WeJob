@@ -5,7 +5,7 @@ import {StyleSheet, Text, View, Image, Button, ImageBackground, AsyncStorage } f
 import RoundedButton from '../components/buttons/RoundedButton';
 import NavBarButton from '../components/buttons/NavBarButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+//import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import Global from '../global';
 

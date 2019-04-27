@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import colors from '../styles/colors';
 import {StyleSheet, Text, View, Image, Button, ScrollView,
-    KeyboardAvoidingView, TouchableOpacity, ImageBackground  } from 'react-native';
-import RoundedButton from '../components/buttons/RoundedButton';
-import NavBarButton from '../components/buttons/NavBarButton';
+    KeyboardAvoidingView, TouchableOpacity, ImageBackground, AsyncStorage  } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import InputField from '../components/form/InputField'
@@ -26,39 +24,11 @@ export default class Register extends React.Component{
             socialAndCommunitySciences: false,
             graduate: false,
             loadingVisible: false,
+            selectedDepartment: 0,
         };
-
-        this.onRegisterPress = this.onRegisterPress.bind(this);
       }
 
-    onRegisterPress = () => {
-        this.setState({
-            loadingVisible: true
-        });
-        const httpClient = axios.create();
-        httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
-        httpClient.post(Global.BASE_URL + 'Register', {
-            MarineSciences: this.state.marineSciences,
-            AconomicsAndBusiness: this.state.aconomicsAndBusiness,
-            Engineering: this.state.engineering,
-            SocialAndCommunitySciences: this.state.socialAndCommunitySciences,
-            Graduate: this.state.graduate,
-        }, 
-        )
-        .then((response) => {
-            this.setState({ loadingVisible: false });
-            if (response.data.Message === "") {
-                alert ('Registered');
-            } else {
-            alert (response.data.Message);
-            }
-        })
-        .catch((error) => {
-            this.setState({ loadingVisible: false });
-            alert (error.response.status);
-        });
-        // () => this.props.navigation.navigate('LogIn')
-    }
+    
     static navigationOptions = ({ navigation }) => {
         const { state } = navigation
         return {
@@ -106,6 +76,24 @@ export default class Register extends React.Component{
         this.setState({ engineering: false });
         this.setState({ socialAndCommunitySciences: false });
         this.setState({ graduate: true });
+    }
+    handleNextButtonClicked = () => {
+        var selectedDepartmentCode = 0;
+        if (this.state.engineering) {
+            selectedDepartmentCode = 1;
+        } else if (this.state.marineSciences) {
+            selectedDepartmentCode = 4;
+        } else if (this.state.aconomicsAndBusiness) {
+            selectedDepartmentCode = 2;
+        } else if (this.state.socialAndCommunitySciences) {
+            selectedDepartmentCode = 3;
+        } else {
+            alert ('חובה לבחור פקולטה');
+            return;
+        }
+
+        AsyncStorage.setItem(Global.USER_SELECTED_DEPARTMENT_CODE, selectedDepartmentCode.toString());
+        this.props.navigation.navigate('SubDepartments');
     }
 
     render(){
@@ -171,7 +159,6 @@ export default class Register extends React.Component{
             type="entypo"/>;
         }
        
-
         return (
             <ImageBackground style={ styles.imgBackground } 
                  resizeMode='cover' 
@@ -210,16 +197,9 @@ export default class Register extends React.Component{
                                 <Text style={{ textAlign: "center", color: 'white', fontSize: 14, }}>בוגר</Text>
                             </TouchableOpacity>
                             </View>
-                            
-                            {/* <RoundedButton
-                            text = 'הרשמה'
-                            textColor = {colors.green01}
-                            background= {colors.white}
-                            handleOnPress={() => { this.onRegisterPress() }}
-                            /> */}
                             <View style = {styles.nextButton}>
                                 <NextArrowButton
-                                 handleOnPress={() => this.props.navigation.navigate('Home')}
+                                 handleOnPress={() => this.handleNextButtonClicked()}
                                  />
                             </View>
                         </View>
@@ -267,11 +247,6 @@ const styles = StyleSheet.create({
         textShadowColor: 'rgba(0, 0, 0, 0.85)',
         textShadowOffset: {width: -1, height: 1},
         textShadowRadius: 10
-    },
-
-    container: {
-        flex: 1,
-        justifyContent: 'center'
     },
 
     nextButton: {
