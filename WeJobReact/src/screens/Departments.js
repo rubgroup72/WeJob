@@ -97,7 +97,6 @@ export default class Register extends React.Component{
     }
 
     render(){
-        //const {navigate} = this.props.navigation;
         var marine = <Icon name ="anchor" 
         color='white'
         size={85}

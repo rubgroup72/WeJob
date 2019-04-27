@@ -74,21 +74,26 @@ export default class Register extends React.Component{
     handleNextButtonClicked = () => {
         const httpClient = axios.create();
         httpClient.defaults.timeout = 15000;
-        httpClient.post(Global.BASE_URL +'AppUpdateSubDepartment', {
-            Email: this.state.email,
-            DepartmentCode: this.state.selectedDepartment,
-            SubDepartmentCode: this.state.selectedSubDepartment,
-        }, 
-        )
-        .then((response) => {
-            this.setState({ loadingVisible: false });
-            AsyncStorage.setItem(Global.ASYNC_STORAGE_STUDEMT, JSON.stringify(response.data));
-            this.props.navigation.navigate('Languages');
-        })
-        .catch((error) => {
-            this.setState({ loadingVisible: false });
-            alert (error.response.status);
-        });
+        if (this.state.selectedSubDepartment == 0)
+        alert("חייב לבחור מחלקה")
+        else {
+            httpClient.post(Global.BASE_URL +'AppUpdateSubDepartment', {
+                Email: this.state.email,
+                DepartmentCode: this.state.selectedDepartment,
+                SubDepartmentCode: this.state.selectedSubDepartment,
+            }, 
+            )
+            .then((response) => {
+                this.setState({ loadingVisible: false });
+                AsyncStorage.setItem(Global.ASYNC_STORAGE_STUDEMT, JSON.stringify(response.data));
+                this.props.navigation.navigate('Languages');
+            })
+            .catch((error) => {
+                this.setState({ loadingVisible: false });
+                alert (error.response.status);
+            });
+        }
+    
     }
     render(){
         var tableRows = this.getTableRows();
@@ -100,6 +105,10 @@ export default class Register extends React.Component{
                 <ScrollView  behavior="padding" enabled>
                     <View style={styles.wrapper}>
                         <View style={styles.welcomeWrapper}>
+                        <Text style = {styles.welcomeText}> 
+                                { this.state.message }
+                            </Text>
+                        <Text style = {styles.logInHeader}>באיזו מחלקה?</Text>
                         <Table borderStyle={{borderColor: 'transparent'}}>
                             <Rows data={tableRows} textStyle={styles.text}/>
                         </Table>

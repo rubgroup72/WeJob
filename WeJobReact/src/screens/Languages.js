@@ -68,18 +68,13 @@ export default class Register extends React.Component{
     //     }
     //   }
 
-    marineClicked = () =>
-    {
-        this.setState({ marineSciences: true });
-
-    }
     
 
     render(){
           var radio_props = [
-            {label: 'בסיסי', value: 0, },
-            {label: 'בינוני', value: 1 },
-            {label: 'שפת אם', value: 2 }
+            {label:  ' בסיסי ', value: 0, },
+            {label: ' בינוני ', value: 1 },
+            {label: ' שפת אם ', value: 2 }
           ];
         return (
             <ImageBackground style={ styles.imgBackground } 
@@ -98,23 +93,36 @@ export default class Register extends React.Component{
                              containerStyle={{width:200}}
                              label='בחר שפה ראשונה'
                              data={this.state.data}
+                             style = {{color: 'white'}} //for changed text color
+                             baseColor="rgba(255, 255, 255, 1)" //for initial text color
                              />
                              <RadioForm
                              radio_props={radio_props}
                              initial={0}
                              onPress={(value) => {this.setState({value:value})}}
+                             buttonColor= {'#FFFFFF'}
+                             labelColor={'#FFFFFF'}
+                             selectedButtonColor={'#FFFFFF'}
+                             selectedLabelColor=   {'#FFFFFF'}                  
                              />
+
                             </View>
                             <View style = {styles.iconsStyle}>
                             <Dropdown
                              containerStyle={{width:200}}
                              label='בחר שפה שנייה'
                              data={this.state.data}
+                             style = {{color: 'white'}} //for changed text color
+                             baseColor="rgba(255, 255, 255, 1)" //for initial text color
                              />
                              <RadioForm
                              radio_props={radio_props}
                              initial={0}
                              onPress={(value) => {this.setState({value:value})}}
+                             buttonColor= {'#FFFFFF'}
+                             labelColor={'#FFFFFF'}
+                             selectedButtonColor={'#FFFFFF'}
+                             selectedLabelColor=   {'#FFFFFF'} 
                              />
                             </View>
                             <View style = {styles.iconsStyle}>
@@ -122,11 +130,17 @@ export default class Register extends React.Component{
                              containerStyle={{width:200}}
                              label='בחר שפה שלישית'
                              data={this.state.data}
+                             style = {{color: 'white'}} //for changed text color
+                             baseColor="rgba(255, 255, 255, 1)" //for initial text color
                              />
                              <RadioForm
                              radio_props={radio_props}
                              initial={0}
                              onPress={(value) => {this.setState({value:value})}}
+                             buttonColor= {'#FFFFFF'}
+                             labelColor={'#FFFFFF'}
+                             selectedButtonColor={'#FFFFFF'}
+                             selectedLabelColor=   {'#FFFFFF'} 
                              />
                             </View>
                             <View style = {styles.nextButton}>
