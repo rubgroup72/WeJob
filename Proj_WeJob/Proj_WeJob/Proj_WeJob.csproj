@@ -201,6 +201,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Compile Include="Controllers\AppDepartmentController.cs" />
     <Compile Include="Controllers\AppFacebookController.cs" />
     <Compile Include="Controllers\AppGetStudentByEmailController.cs" />
@@ -208,6 +209,11 @@
     <Compile Include="Controllers\AppPersonalInfoController.cs" />
     <Compile Include="Controllers\AppRegisterController.cs" />
     <Compile Include="Controllers\AppStudentLanguagesController.cs" />
+=======
+    <Compile Include="Controllers\AppLoginController.cs" />
+    <Compile Include="Controllers\AppRegisterController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
 =======
     <Compile Include="Controllers\AppLoginController.cs" />
     <Compile Include="Controllers\AppRegisterController.cs" />
@@ -222,6 +228,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    <Compile Include="Controllers\SubCategoryController.cs" />
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
 =======
     <Compile Include="Controllers\SubCategoryController.cs" />
 >>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
@@ -230,14 +240,20 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Compile Include="Models\DAL\DBservices.cs" />
     <Compile Include="Models\DAL\XMLSevices.cs" />
     <Compile Include="Models\Department.cs" />
 =======
+=======
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\DAL\DBservices.cs" />
     <Compile Include="Models\DAL\XMLSevices.cs" />
     <Compile Include="Models\DataTrain.cs" />
+<<<<<<< HEAD
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
+=======
 >>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
     <Compile Include="Models\Interst.cs" />
     <Compile Include="Models\Language.cs" />
@@ -247,7 +263,11 @@
     <Compile Include="Models\Distributor.cs" />
     <Compile Include="Models\Job.cs" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Compile Include="Models\SubDepartment.cs" />
+=======
+    <Compile Include="Models\SubCategory.cs" />
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
 =======
     <Compile Include="Models\SubCategory.cs" />
 >>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob

@@ -18,10 +18,13 @@ namespace Proj_WeJob.Models.DAL
         public string Gender { get; set; }
         public string DepartmentName { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public int DepartmentCode { get; set; }
         public string SubDepartmentName { get; set; }
         public int SubDepartmentCode { get; set; }
         public List<Language> LanguagesList { get; set; }
+=======
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
 =======
 >>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
 
@@ -77,6 +80,7 @@ namespace Proj_WeJob.Models.DAL
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         //פונקציית התחברות עם פייסבוק
         public Student FacebookLogin()
         {
@@ -115,6 +119,8 @@ namespace Proj_WeJob.Models.DAL
             DBservices dbs = new DBservices();
             dbs.UpdateStudentLanguages(StudentId, LanguagesList);
         }
+=======
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
 =======
 >>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
     }

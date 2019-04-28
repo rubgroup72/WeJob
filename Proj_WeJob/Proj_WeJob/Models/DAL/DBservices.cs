@@ -863,6 +863,7 @@ namespace Proj_WeJob.Models.DAL
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         //התחברות עם פייסבוק
         public Student FacebookLogin(String email, String firstName, String lastName, String password)
         {
@@ -1175,6 +1176,8 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+=======
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
 =======
 >>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
     }

@@ -18,6 +18,7 @@ export default class Register extends React.Component{
         super(props);
         this.state = { 
 <<<<<<< HEAD
+<<<<<<< HEAD
             data: [],
             loadingVisible: true,
             firstLang: '',
@@ -28,6 +29,8 @@ export default class Register extends React.Component{
             thirdDegree: 0,
             studentId: '',
 =======
+=======
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
             message: false,
             marineSciences: false,
             aconomicsAndBusiness: false,
@@ -35,6 +38,9 @@ export default class Register extends React.Component{
             socialAndCommunitySciences: false,
             graduate: false,
             loadingVisible: false,
+<<<<<<< HEAD
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
+=======
 >>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
         };
 
@@ -53,6 +59,7 @@ export default class Register extends React.Component{
             CellPhone: this.state.graduate,
         }, 
         )
+<<<<<<< HEAD
         .then((response) => {
             this.setState({ loadingVisible: false });
             if (response.data.Message === "") {
@@ -145,11 +152,21 @@ export default class Register extends React.Component{
             this.setState({ loadingVisible: false });
             alert ('hi');
             // this.props.navigation.navigate('Languages');
+=======
+        .then((response) => {
+            this.setState({ loadingVisible: false });
+            if (response.data.Message === "") {
+                alert ('Registered');
+            } else {
+            alert (response.data.Message);
+            }
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
         })
         .catch((error) => {
             this.setState({ loadingVisible: false });
             alert (error.response.status);
         });
+<<<<<<< HEAD
     
     }
 
@@ -172,11 +189,26 @@ export default class Register extends React.Component{
         this.setState({ thirdLang: value });
     };
 =======
+=======
+        // () => this.props.navigation.navigate('LogIn')
+    }
+    static navigationOptions = ({ navigation }) => {
+        const { state } = navigation
+        return {
+          headerTransparent: true,
+          headerTintColor: colors.white,
+        }
+      }
+
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
     marineClicked = () =>
     {
         this.setState({ marineSciences: true });
 
     }
+<<<<<<< HEAD
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
+=======
 >>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
     
 
@@ -222,6 +254,7 @@ export default class Register extends React.Component{
                              containerStyle={{width:200}}
                              label='בחר שפה ראשונה'
 <<<<<<< HEAD
+<<<<<<< HEAD
                              value={this.state.firstLang}
                              data={this.state.data}
                              onChangeText={this.firstLanguagesChanged}
@@ -244,12 +277,21 @@ export default class Register extends React.Component{
                              initial={0}
                              onPress={(value) => {this.setState({value:value})}}
 >>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
+=======
+                             data={data}
+                             />
+                             <RadioForm
+                             radio_props={radio_props}
+                             initial={0}
+                             onPress={(value) => {this.setState({value:value})}}
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
                              />
                             </View>
                             <View style = {styles.iconsStyle}>
                             <Dropdown
                              containerStyle={{width:200}}
                              label='בחר שפה שנייה'
+<<<<<<< HEAD
 <<<<<<< HEAD
                              data={this.state.data}
                              onChangeText={this.secondLanguagesChanged}
@@ -291,12 +333,22 @@ export default class Register extends React.Component{
                              />
                              <RadioForm
                              radio_props={radio_props}
+=======
+                             data={data}
+                             
+                             />
+                             <RadioForm
+                             radio_props={radio_props}
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
                              initial={0}
   formHorizontal={true}
   labelHorizontal={true}
   labelStyle={{fontSize: 20, color: '#2ecc71'}}
   animation={true}
                              onPress={(value) => {this.setState({value:value})}}
+<<<<<<< HEAD
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
+=======
 >>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
                              />
                             </View>
