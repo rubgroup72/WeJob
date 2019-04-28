@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using Proj_WeJob.Models.DAL;
-using System.Linq;
 
 
 namespace Proj_WeJob.Controllers
@@ -34,17 +33,6 @@ namespace Proj_WeJob.Controllers
         {
             Student s = new Student();
             s.deleteStudent(StudentId);
-        }
-
-        //פונקציה שמעדכנת את הפרטים של הסטודנט - משמש את האפליקציה
-        [HttpPost]
-        [Route("api/Students")]
-        public Student Post([FromBody] Student s)
-        {
-            if (s == null)
-                return null;
-            s.UpdateData();
-            return s;
         }
     }
 }
