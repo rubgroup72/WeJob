@@ -26,11 +26,6 @@ namespace Proj_WeJob.Controllers
         public void Post([FromBody] Student s)
         {
             s.UpdateDepartmentAndSubDepartment();
-            //if (studentFromDB == null)
-            //{
-            //    return new ReactResponse("יוזר לא קיים במערכת", null);
-            //}
-            //return new ReactResponse("", studentFromDB);
         }
 
 

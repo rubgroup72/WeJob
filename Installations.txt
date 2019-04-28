@@ -1,0 +1,36 @@
+https://reactnavigation.org/docs/en/hello-react-navigation.html
+
+//No need to run
+To start new project:
+npm install -g react-native-cli
+react-native init wejobproj
+
+for icons:
+npm install react-native-vector-icons --save
+
+for navigation:
+npm install --save react-navigation
+npm install --save react-navigation-redux-helpers
+
+npm install react-native-navigation
+
+npm install react-native-navigation-bar --save
+
+//to add get and post to the project
+npm install axios
+
+//to add facebook login
+npm install react-native-fbsdk@0.8.0
+
+//to add picker
+npm install --save react-native-material-dropdown
+
+//to add readio buttons
+npm i react-native-simple-radio-button --save
+npm link react-native-fbsdk
+
+//to install carousel
+npm install --save react-native-snap-carousel
+
+//to add files
+npm install react-native-fileupload --save
