@@ -9,6 +9,8 @@ import Loader from '../components/Loader';
 import NextArrowButton from '../components/buttons/NextArrowButton';
 import { Dropdown } from 'react-native-material-dropdown';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import Global from '../global';
+import { DrawerActions } from 'react-navigation';
 
 
 
@@ -17,7 +19,6 @@ export default class Register extends React.Component{
     constructor(props) {
         super(props);
         this.state = { 
-<<<<<<< HEAD
             data: [],
             loadingVisible: true,
             firstLang: '',
@@ -27,40 +28,38 @@ export default class Register extends React.Component{
             secondDegree: 0,
             thirdDegree: 0,
             studentId: '',
-=======
-            message: false,
-            marineSciences: false,
-            aconomicsAndBusiness: false,
-            engineering: false,
-            socialAndCommunitySciences: false,
-            graduate: false,
-            loadingVisible: false,
->>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
         };
-
-        this.onRegisterPress = this.onRegisterPress.bind(this);
       }
 
-    onRegisterPress = () => {
+      static navigationOptions = ({navigation}) => {
+        return {
+            headerTransparent: true,
+            headerTintColor: colors.green01,
+            // headerRight: (
+            //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
+            // ),
+            title: 'שפות',
+            headerLeft: (
+                <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
+                    <Icon name="bars" size={30} color= {colors.white} />
+                </TouchableOpacity>
+            ),
+        }
+      }
+
+      componentWillMount() {
         this.setState({
             loadingVisible: true
         });
-        axios.post('http://10.0.2.2:53411/api/Register', {
-            Email: this.state.marineSciences,
-            Password: this.state.aconomicsAndBusiness,
-            FirstName: this.state.engineering,
-            LastName: this.state.socialAndCommunitySciences,
-            CellPhone: this.state.graduate,
-        }, 
-        )
+        const httpClient = axios.create();
+        httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
+        httpClient.get( Global.BASE_URL +'language')
         .then((response) => {
             this.setState({ loadingVisible: false });
-            if (response.data.Message === "") {
-                alert ('Registered');
-            } else {
-            alert (response.data.Message);
+            var temp = [];
+            for (var i = 0; i < response.data.length; ++i) {
+                temp.push({ value: response.data[i].Name });
             }
-<<<<<<< HEAD
             this.setState({ data: temp });
             this.fetchStudentLanguages();
         })
@@ -110,24 +109,20 @@ export default class Register extends React.Component{
                 secondDegree: secondDegree,
                 thirdDegree: thirdDegree,
             });
-=======
->>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
         })
         .catch((error) => {
             this.setState({ loadingVisible: false });
             alert (error.response.status);
         });
-        // () => this.props.navigation.navigate('LogIn')
     }
-    static navigationOptions = ({ navigation }) => {
-        const { state } = navigation
-        return {
-          headerTransparent: true,
-          headerTintColor: colors.white,
-        }
-      }
+    // static navigationOptions = ({ navigation }) => {
+    //     const { state } = navigation
+    //     return {
+    //       headerTransparent: true,
+    //       headerTintColor: colors.white,
+    //     }
+    //   }
 
-<<<<<<< HEAD
     handleNextButtonClicked = () => {
         var langList = [];
         langList.push({ Name: this.state.firstLang, Degree: this.state.firstDegree});
@@ -171,40 +166,14 @@ export default class Register extends React.Component{
     thirdLanguagesChanged = (value, index, data) => {
         this.setState({ thirdLang: value });
     };
-=======
-    marineClicked = () =>
-    {
-        this.setState({ marineSciences: true });
-
-    }
->>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
     
 
     render(){
-        //const {navigate} = this.props.navigation;
-        let data = [{
-            value: 'Banana',
-          }, {
-            value: 'Mango',
-          }, {
-            value: 'Pear',
-          }];
-
           var radio_props = [
-            {label: 'בסיסי', value: 0, },
-            {label: 'בינוני', value: 1 },
-            {label: 'שפת אם', value: 2 }
+            {label:  ' בסיסי ', value: 0, },
+            {label: ' בינוני ', value: 1 },
+            {label: ' שפת אם ', value: 2 }
           ];
-
-        //   var RadioButtonProject = React.createClass({
-        //     getInitialState: function() {
-        //       return {
-        //         value: 0,
-        //       }
-        //     }
-        //     })
-      
-
         return (
             <ImageBackground style={ styles.imgBackground } 
                  resizeMode='cover' 
@@ -221,7 +190,6 @@ export default class Register extends React.Component{
                             <Dropdown
                              containerStyle={{width:200}}
                              label='בחר שפה ראשונה'
-<<<<<<< HEAD
                              value={this.state.firstLang}
                              data={this.state.data}
                              onChangeText={this.firstLanguagesChanged}
@@ -236,21 +204,13 @@ export default class Register extends React.Component{
                              labelColor={'#FFFFFF'}
                              selectedButtonColor={'#FFFFFF'}
                              selectedLabelColor=   {'#FFFFFF'}                  
-=======
-                             data={data}
                              />
-                             <RadioForm
-                             radio_props={radio_props}
-                             initial={0}
-                             onPress={(value) => {this.setState({value:value})}}
->>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
-                             />
+
                             </View>
                             <View style = {styles.iconsStyle}>
                             <Dropdown
                              containerStyle={{width:200}}
                              label='בחר שפה שנייה'
-<<<<<<< HEAD
                              data={this.state.data}
                              onChangeText={this.secondLanguagesChanged}
                              value={this.state.secondLang}
@@ -285,29 +245,8 @@ export default class Register extends React.Component{
                              labelColor={'#FFFFFF'}
                              selectedButtonColor={'#FFFFFF'}
                              selectedLabelColor=   {'#FFFFFF'} 
-=======
-                             data={data}
-                             
-                             />
-                             <RadioForm
-                             radio_props={radio_props}
-                             initial={0}
-  formHorizontal={true}
-  labelHorizontal={true}
-  labelStyle={{fontSize: 20, color: '#2ecc71'}}
-  animation={true}
-                             onPress={(value) => {this.setState({value:value})}}
->>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
                              />
                             </View>
-                            
-                            
-                            {/* <RoundedButton
-                            text = 'הרשמה'
-                            textColor = {colors.green01}
-                            background= {colors.white}
-                            handleOnPress={() => { this.onRegisterPress() }}
-                            /> */}
                             <View style = {styles.nextButton}>
                                 <NextArrowButton
                                  handleOnPress={() => this.handleNextButtonClicked()}
@@ -337,7 +276,7 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontWeight: '300',
         marginBottom: 50,
-        marginTop: -50,
+        marginTop: -60,
         textAlign: 'center'
     },
 
