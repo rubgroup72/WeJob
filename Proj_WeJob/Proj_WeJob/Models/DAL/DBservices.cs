@@ -364,7 +364,7 @@ namespace Proj_WeJob.Models.DAL
             try
             {
                 con = connect(conString); // create a connection to the database using the connection String defined in the web config file
-                String selectSTR = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode Left Join Department_SubDepartment SD on S.SubDepartmentCode = SD.SubDepartmentId";
+                String selectSTR = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
                 // get a reader
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
@@ -378,8 +378,7 @@ namespace Proj_WeJob.Models.DAL
                         Convert.ToString(dr["CellPhone"]),
                         Convert.ToString(dr["Email"]),
                         Convert.ToString(dr["Gender"]),
-                        Convert.ToString(dr["DepartmentName"]),
-                        Convert.ToString(dr["SubDepartmentName"])
+                        Convert.ToString(dr["DepartmentName"])
 
                         );
                     ld.Add(s);
@@ -408,7 +407,7 @@ namespace Proj_WeJob.Models.DAL
             try
             {
                 con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
-                var selectSTR = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode Left Join Department_SubDepartment SD on S.SubDepartmentCode = SD.SubDepartmentId Where email = '" + email + "' and Password = '" + password + "'";
+                var selectSTR = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode Where email = '" + email + "' and Password = '" + password + "'";
                 var cmd = new SqlCommand(selectSTR, con);
                 // get a reader
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
@@ -422,8 +421,7 @@ namespace Proj_WeJob.Models.DAL
                         Convert.ToString(dr["CellPhone"]),
                         Convert.ToString(dr["Email"]),
                         Convert.ToString(dr["Gender"]),
-                        Convert.ToString(dr["DepartmentName"]),
-                        Convert.ToString(dr["SubDepartmentName"])
+                        Convert.ToString(dr["DepartmentName"])
                         );
                     return s;
                 }
@@ -460,7 +458,7 @@ namespace Proj_WeJob.Models.DAL
                 con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
                 String selectSTR = "Insert Into Student (StudentId, DepartmentDepartmentCode, FirstName,LastName,Email,CellPhone,Password,Gender) Values";
                 selectSTR += String.Format("({0},{1},'{2}','{3}','{4}','{5}','{6}','{7}')", 
-                    studentId, 0, firstName, lastName, email, phoneNumber, password, gender);
+                    studentId, 1, firstName, lastName, email, phoneNumber, password, gender);
                 var cmd = CreateCommand(selectSTR, con);
                 cmd.ExecuteNonQuery();
             }
@@ -651,7 +649,7 @@ namespace Proj_WeJob.Models.DAL
             try
             {
                 con = connect(conString); // create a connection to the database using the connection String defined in the web config file
-                String cStr = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode Left Join Department_SubDepartment SD on S.SubDepartmentCode = SD.SubDepartmentId WHERE StudentId ='" + StudentId + "';";     // helper method to build the insert string
+                String cStr = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode WHERE StudentId ='" + StudentId + "';";     // helper method to build the insert string
                 //LEFT JOIN JobStatus ON Job.JobStatusStatusName = JobStatus.StatusName
                 SqlCommand cmd = new SqlCommand(cStr, con);
 
@@ -667,8 +665,7 @@ namespace Proj_WeJob.Models.DAL
                           Convert.ToString(dr["CellPhone"]),
                           Convert.ToString(dr["Email"]),
                           Convert.ToString(dr["Gender"]),
-                          Convert.ToString(dr["DepartmentName"]),
-                          Convert.ToString(dr["SubDepartmentName"])
+                          Convert.ToString(dr["DepartmentName"])
                           );
                     student.Add(s);
                 }
@@ -865,6 +862,7 @@ namespace Proj_WeJob.Models.DAL
             }
         }
 
+<<<<<<< HEAD
         //התחברות עם פייסבוק
         public Student FacebookLogin(String email, String firstName, String lastName, String password)
         {
@@ -1177,5 +1175,7 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+=======
+>>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
     }
 }
