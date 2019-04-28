@@ -1,97 +1,74 @@
 ﻿<!DOCTYPE html>
 <html lang="he">
 <head>
-    <title>Matching Sub Categories</title>
+    <title>Insert job</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!--לאייקונים-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="../css/MyStyle2.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <script src="../Scripts/ajaxCalls.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
 
-    <script>
+    <!--<script>
 
         $(document).ready(function () {
+
             //$("#pForm").submit(f1);
-            //הבאת כל הקטגוריות
-            ajaxCall("GET", "../api/Category", "", successGetCategory, error);
-            //הבאת כל הפוסטים
-             //ajaxCall("GET", "../api/DataTrain", "", successGetDataTrain, error);
 
             //בעת לחיצה על כפתור הכנס נגיע לפונקצית הוספת מפיץ
-            //function AddJob() {
-            //}
+            function AddJob() {
+                //get all hobbies from DB
+                //ajaxCall("GET", "../api/Interst", "", successGetInterst, errorGetInterst);
+                //ajaxCall("GET", "../api/Language", "", successGetLanguage, errorGetLanguage);
+                //ajaxCall("GET", "../api/Skill", "", successGetSkill, errorGetSkill);
+                //Job = { // Note that the name of the fields must be identical to the names of the properties of the object in the server
+                //    JobName: $("#").val(),
+                //    JobDescription: $("#").val(),
+                //    Requirements: $("#").val(),
+                //    MailForCV: $("#").val(),
+                //    OpenDate: $("#").val(),
+                //    ToDate: $("#").val(),
+                //    Link: $("#").val(),
+                //    ArrayIntrests: $("#").val(),
+                //    ArrayLanguage: $("#").val(),
+                //    ArraySkill: $("#").val(),
+
+            }
             //ajaxCall("POST", "../api/jobs", JSON.stringify(Distributor), success, error);
-        });
-
-        function successGetDataTrain(DataTrain) {
-            dataTrain = DataTrain;
-
         }
-        
-        function successGetCategory(CategoryData) {
-            category = CategoryData;
-            console.log(category);
-        try {
-            str = "<label for='exampleFormControlSelect2'>קטגוריות</label>";
-            str += "<select class='form-control' id='exampleFormControlSelect2' onchange='GetSub()'>";
-            str+="<option value='0' selected disabled='disabled'>בחר</option >";
-            for (var i = 0; i < CategoryData.length; i++) {
-                str += "<option value='" + category[i].CategoryNo +"'>" + category[i].CategoryName + '</option>';
+                function f1() {
+                AddJob();
+                return false; // the return false will prevent the form from being submitted
+                // hence the page will not reload
             }
-                str += " </select>";
-        document.getElementById("category").innerHTML = str;
-           }
-            catch (err) {
-            alert(err);
-        }
-        }
-        //הבאת כל התתי קטגוריות
-        function GetSub() {
-            uri = "../api/SubCategory?CategoryNo=" + $("#exampleFormControlSelect2").val();
-                ajaxCall("GET", uri, "", successGetSubCategory, error);
-        }
-          function successGetSubCategory(SubCategoryData) {
-            Subcategory = SubCategoryData;
-        try {
-            str = "<label for='exampleFormControlSelect3'>תתי קטגוריות</label>";
-        str += "<select multiple class='form-control' id='exampleFormControlSelect3'>";
-                for (var i = 0; i < SubCategoryData.length; i++) {
-                str += "<option value='" + Subcategory[i].SubCategoryNo + "'>" + Subcategory[i].SubCategoryName + '</option >';
+                function success(data) {
+                swal("הנתונים הוכנסו בהצלחה")
+                //window.location.href = 'ListOfJobDistributors.html';
             }
-                str += " </select>";
-            document.getElementById("subcategory").innerHTML = str;
-            //for (var i = 0; i < SubCategoryData.length; i++) {
-            //        uri = "../api/DataTrain?SubCategory=" +  Subcategory[i].SubCategoryName;
-            //    ajaxCall("GET", uri, "", successGetDataTrain, error);
-            //}
-    }
-            catch (err) {
-            alert(err);
-        }
-        }
-        console.log(category);
-        //function f1() {
-            //     AddJob();
-            //     return false; // the return false will prevent the form from being submitted
-            //     // hence the page will not reload
-            // }
-            //     function success(data) {
-            //     swal("הנתונים הוכנסו בהצלחה")
-            //     //window.location.href = 'ListOfJobDistributors.html';
-            // }
-            function error(err) {
+                function error(err) {
                 err = JSON.parse(err.responseText);
                 swal("Error!", err.ExceptionMessage, "error");
             }
 
+                function successGetRSS(data) {
+                console.log(data);
+                str = "";
+                for (var i = 0; i < data.length; i++) {
+                    str += "<p>" + data[i] + "</p>";
+                }
 
+                $(".container").append(str);
+            }
 
-    </script>
+                function errorGetRSS(err) {
+                console.log(err);
+            }
+            });
+    </script>-->
 
 
 
@@ -162,13 +139,25 @@
             <div class="card-body col-xs-12">
                 <form id="pForm" dir="rtl" class="was-validated">
                     <div class="row">
-                        <!--קטגוריות-->
-                        <div class="form-group col-xs-12 col-md-6" id="category">
-                           
+                        <div class="form-group col-xs-12 col-md-6">
+                            <label for="exampleFormControlSelect4">קטגוריה</label>
+                            <select multiple class="form-control" id="exampleFormControlSelect5">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
                         </div>
-                        <!--תתי קטגוריות-->
-                        <div class="form-group col-xs-12 col-md-6" id="subcategory">
-                           
+                        <div class="form-group col-xs-12 col-md-6">
+                            <label for="exampleFormControlSelect5">תת קטגוריה</label>
+                            <select multiple class="form-control" id="exampleFormControlSelect6">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-auto my-1">

@@ -53,16 +53,13 @@
                     pageLength: 4,
                     columns: [
                          {
-                             "className": 'view',
-                             "orderable": false,
-                             "data": null,
-                             "defaultContent": '',
-                             render: function (data, type, row, meta) {
-                                 let datastu = "data-StuId='" + row.StudentId + "'";
-                                 viewBtn = "<span class ='viewBtn btn btn-info fa fa-eye-slash'" + datastu + "></span>";
-                                 return viewBtn;
-                             }
-                         },
+                            "className": 'view',
+                            render: function (data, type, row, meta) {
+                                let datastu = "data-StuId='" + row.StudentId + "'";
+                                viewBtn = "<span class ='viewBtn btn btn-info fa fa-eye-slash'" + datastu + " > </span>";
+                                return viewBtn;
+                            }
+                        },
                         {
                             "className": 'delete',
                             render: function (data, type, row, meta) {
@@ -125,7 +122,7 @@
 
         // wire all the buttons to their functions
         function buttonEvents() {
-            
+            // Add event listener for opening and closing details
             $('#StudentsTable').on('click', 'td.delete', function () {
                 var tr = $(this).closest('tr');
                 Swal.fire({
@@ -138,30 +135,20 @@
                     confirmButtonText: '!כן,מחק'
                 }).then((result) => {
                     if (result.value) {
-                        // Delete a student from the server
+                        // Delete a car from the server
                         ajaxCall("DELETE", "../api/stu?StudentId=" + tr[0].getElementsByClassName("StudentId")[0].innerHTML, "", DeleteSuccess, DeleteError);
                         tr.remove();
                     }
                 })
             });
 
-            $("#StudentsTable").on('click', 'td.view', function () {
-                localStorage.clear();
-                var tr = $(this).closest('tr');
-                localStorage.setItem("StudentId", tr[0].getElementsByClassName("StudentId")[0].innerHTML);
-                localStorage.setItem("FirstName", tr[0].getElementsByClassName("FirstName")[0].innerHTML);
-                localStorage.setItem("LastName", tr[0].getElementsByClassName("LastName")[0].innerHTML);
-                window.location.href = 'StudentProfile.html';
-            });
-
-
         }
         function DeleteSuccess() {
             Swal.fire(
-                       'נמחק!',
-                       'פרטי המפיץ נמחקו',
-                       'success'
-                       )
+                    'נמחק!',
+                    'פרטי המפיץ נמחקו',
+                    'success'
+                    )
         }
         function DeleteError(err) {
             err = JSON.parse(err.responseText);

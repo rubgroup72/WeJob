@@ -35,12 +35,12 @@
             document.getElementById("cotart").innerHTML = "רשימת משרות של " + localStorage.getItem("NameCompany");
             // once the document is ready we fetch a list of distributors from the server
             uri = "../api/Jobs?companyNo=" + localStorage.getItem("CompanyNo");
-            //console.log(uri);
+            console.log(uri);
             ajaxCall("GET", uri, "", getSuccess, error);
         });
         // this function is activated in case of a success
         function getSuccess(jobsdata) {
-            //console.log(jobsdata);
+            console.log(jobsdata);
             try {
                 tbl = $('#JobsOfdistributorTable').DataTable({
                     "language": {
