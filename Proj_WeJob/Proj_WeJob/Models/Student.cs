@@ -17,9 +17,12 @@ namespace Proj_WeJob.Models.DAL
         public string Password { get; set; }
         public string Gender { get; set; }
         public string DepartmentName { get; set; }
+        public int DepartmentCode { get; set; }
+        public string SubDepartmentName { get; set; }
+        public int SubDepartmentCode { get; set; }
 
         //constructor
-        public Student( int _studentId, string _firstName, string _lastName, string _cellPhone, string _email, string _gender,string _departmentName) 
+        public Student( int _studentId, string _firstName, string _lastName, string _cellPhone, string _email, string _gender,string _departmentName, string _subDepartmentName) 
         {
             this.StudentId = _studentId;
             this.FirstName = _firstName;
@@ -28,6 +31,7 @@ namespace Proj_WeJob.Models.DAL
             this.Email = _email;
             this.Gender = _gender;
             this.DepartmentName = _departmentName;
+            this.SubDepartmentName = _subDepartmentName;
         }
 
         public Student()
@@ -69,5 +73,32 @@ namespace Proj_WeJob.Models.DAL
             return db.deleteStudent(StudentId);
         }
 
+        //פונקציית התחברות עם פייסבוק
+        public Student FacebookLogin()
+        {
+            DBservices dbs = new DBservices();
+            return dbs.FacebookLogin(Email, FirstName, LastName, Password);
+        }
+
+        //פונקציה שמעדכנת את הפרטים של הסטודנט בהינתן אימייל
+        public void UpdateData()
+        {
+            DBservices dbs = new DBservices();
+            dbs.UpdateStudentDataByEmail(Email, this);
+        }
+
+        //עדכון סיסמא
+        public void UpdatePassword(String newPassword)
+        {
+            DBservices dbs = new DBservices();
+            dbs.UpdatePassword(Email, newPassword);
+        }
+
+        //הוספת מחלקה ותת מחלקה בהינתן אימייל
+        public void UpdateDepartmentAndSubDepartment()
+        {
+            DBservices dbs = new DBservices();
+            dbs.UpdateStudentDeapartmentAndSubDepartment(Email, DepartmentCode, SubDepartmentCode);
+        }
     }
 }

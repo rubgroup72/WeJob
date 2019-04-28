@@ -364,7 +364,7 @@ namespace Proj_WeJob.Models.DAL
             try
             {
                 con = connect(conString); // create a connection to the database using the connection String defined in the web config file
-                String selectSTR = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode";
+                String selectSTR = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode Left Join Department_SubDepartment SD on S.SubDepartmentCode = SD.SubDepartmentId";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
                 // get a reader
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
@@ -378,7 +378,8 @@ namespace Proj_WeJob.Models.DAL
                         Convert.ToString(dr["CellPhone"]),
                         Convert.ToString(dr["Email"]),
                         Convert.ToString(dr["Gender"]),
-                        Convert.ToString(dr["DepartmentName"])
+                        Convert.ToString(dr["DepartmentName"]),
+                        Convert.ToString(dr["SubDepartmentName"])
 
                         );
                     ld.Add(s);
@@ -481,7 +482,7 @@ namespace Proj_WeJob.Models.DAL
             try
             {
                 con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
-                var selectSTR = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode Where email = '" + email + "' and Password = '" + password + "'";
+                var selectSTR = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode Left Join Department_SubDepartment SD on S.SubDepartmentCode = SD.SubDepartmentId Where email = '" + email + "' and Password = '" + password + "'";
                 var cmd = new SqlCommand(selectSTR, con);
                 // get a reader
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
@@ -495,7 +496,8 @@ namespace Proj_WeJob.Models.DAL
                         Convert.ToString(dr["CellPhone"]),
                         Convert.ToString(dr["Email"]),
                         Convert.ToString(dr["Gender"]),
-                        Convert.ToString(dr["DepartmentName"])
+                        Convert.ToString(dr["DepartmentName"]),
+                        Convert.ToString(dr["SubDepartmentName"])
                         );
                     return s;
                 }
@@ -532,7 +534,7 @@ namespace Proj_WeJob.Models.DAL
                 con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
                 String selectSTR = "Insert Into Student (StudentId, DepartmentDepartmentCode, FirstName,LastName,Email,CellPhone,Password,Gender) Values";
                 selectSTR += String.Format("({0},{1},'{2}','{3}','{4}','{5}','{6}','{7}')", 
-                    studentId, 1, firstName, lastName, email, phoneNumber, password, gender);
+                    studentId, 0, firstName, lastName, email, phoneNumber, password, gender);
                 var cmd = CreateCommand(selectSTR, con);
                 cmd.ExecuteNonQuery();
             }
@@ -723,7 +725,7 @@ namespace Proj_WeJob.Models.DAL
             try
             {
                 con = connect(conString); // create a connection to the database using the connection String defined in the web config file
-                String cStr = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode WHERE StudentId ='" + StudentId + "';";     // helper method to build the insert string
+                String cStr = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode Left Join Department_SubDepartment SD on S.SubDepartmentCode = SD.SubDepartmentId WHERE StudentId ='" + StudentId + "';";     // helper method to build the insert string
                 //LEFT JOIN JobStatus ON Job.JobStatusStatusName = JobStatus.StatusName
                 SqlCommand cmd = new SqlCommand(cStr, con);
 
@@ -739,7 +741,8 @@ namespace Proj_WeJob.Models.DAL
                           Convert.ToString(dr["CellPhone"]),
                           Convert.ToString(dr["Email"]),
                           Convert.ToString(dr["Gender"]),
-                          Convert.ToString(dr["DepartmentName"])
+                          Convert.ToString(dr["DepartmentName"]),
+                          Convert.ToString(dr["SubDepartmentName"])
                           );
                     student.Add(s);
                 }
@@ -931,6 +934,198 @@ namespace Proj_WeJob.Models.DAL
                 if (con != null)
                 {
                     // close the db connection
+                    con.Close();
+                }
+            }
+        }
+
+        //התחברות עם פייסבוק
+        public Student FacebookLogin(String email, String firstName, String lastName, String password)
+        {
+            // Need to check if exists. Otherwise add to DB
+            var currentStudentList = GetListStudent(connectionString).FirstOrDefault(i => i.Email == email);
+            if (currentStudentList != null)
+                return currentStudentList;
+            password = "";
+            return Register(email, firstName, lastName, "", password, "");
+        }
+
+        //עדכון פרטי סטודנט בהינתן אימייל
+        public int UpdateStudentDataByEmail(String email, Student s)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+
+                String updateSTR = "UPDATE STUDENT SET ";
+                updateSTR += " FirstName='" + s.FirstName + "', ";
+                updateSTR += " LastName='" + s.LastName + "', ";
+                updateSTR += " CellPhone='" + s.CellPhone + "', ";
+                updateSTR += " gender='" + s.Gender + "' ";
+                updateSTR += " Where Email='" + email + "'";
+                SqlCommand cmd = new SqlCommand(updateSTR, con);
+
+                var t = cmd.ExecuteNonQuery();
+                return t;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+        //עדכון סיסמא
+        public int UpdatePassword(String email, String newPassword)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+
+                String updateSTR = "UPDATE STUDENT SET ";
+                updateSTR += " Password='" + newPassword + "' ";
+                updateSTR += " Email='" + email + "'";
+                SqlCommand cmd = new SqlCommand(updateSTR, con);
+
+                return cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+        //פונקציה שמביאה את כל המחלקות
+        public List<Department> AllDepartments()
+        {
+            SqlConnection con = null;
+            List<Department> departmentsList = new List<Department>();
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Department";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Department s = new Department
+                    {
+                        DepartmentCode = Convert.ToInt32(dr["DepartmentCode"]),
+                        DepartmentName = Convert.ToString(dr["DepartmentName"]),
+                        Description = Convert.ToString(dr["Description"]),
+                        SubDepartmentList = AllSubDepartments(Convert.ToInt32(dr["DepartmentCode"])),
+                    };
+                    departmentsList.Add(s);
+                }
+
+                return departmentsList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+
+        }
+
+
+        //פונקציה שמביאה את כל התתי המחלקות
+        public List<SubDepartment> AllSubDepartments(int DepartmentCode)
+        {
+            SqlConnection con = null;
+            List<SubDepartment> subDepartmentsList = new List<SubDepartment>();
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Department_SubDepartment where DepartmentCode = '"+DepartmentCode +"'";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    SubDepartment s = new SubDepartment
+                    {
+                        SubDepartmentId = Convert.ToInt32(dr["SubDepartmentId"]),
+                        SubDepartmentName = Convert.ToString(dr["SubDepartmentName"]),
+                        DepartmentCode = Convert.ToInt32(dr["DepartmentCode"]),
+
+                    };
+                    subDepartmentsList.Add(s);
+                }
+
+                return subDepartmentsList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+
+        }
+
+        //עדכון מחלקה ותת מחלקה לסטודנט
+        public int UpdateStudentDeapartmentAndSubDepartment(String email, int departmentCode, int subDepartmentCode)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+
+                String updateSTR = "UPDATE STUDENT SET ";
+                updateSTR += " DepartmentDepartmentCode='" + departmentCode + "', ";
+                updateSTR += " SubDepartmentCode='" + subDepartmentCode + "' ";
+                updateSTR += " Where Email='" + email + "'";
+                SqlCommand cmd = new SqlCommand(updateSTR, con);
+
+                var t = cmd.ExecuteNonQuery();
+                return t;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
                     con.Close();
                 }
             }
