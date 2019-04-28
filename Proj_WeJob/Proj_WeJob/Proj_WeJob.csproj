@@ -211,8 +211,11 @@
 =======
     <Compile Include="Controllers\AppLoginController.cs" />
     <Compile Include="Controllers\AppRegisterController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\CategoryController.cs" />
 >>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
+=======
+>>>>>>> parent of 2bf5c34... a
     <Compile Include="Controllers\CitesController.cs" />
     <Compile Include="Controllers\InterstController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
@@ -222,13 +225,17 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     <Compile Include="Controllers\SubCategoryController.cs" />
 >>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
+=======
+>>>>>>> parent of 2bf5c34... a
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <Compile Include="Models\DAL\DBservices.cs" />
     <Compile Include="Models\DAL\XMLSevices.cs" />
@@ -239,6 +246,10 @@
     <Compile Include="Models\DAL\XMLSevices.cs" />
     <Compile Include="Models\DataTrain.cs" />
 >>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
+=======
+    <Compile Include="Models\DAL\DBservices.cs" />
+    <Compile Include="Models\DAL\XMLSevices.cs" />
+>>>>>>> parent of 2bf5c34... a
     <Compile Include="Models\Interst.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\ReactResponse.cs" />
@@ -247,10 +258,13 @@
     <Compile Include="Models\Distributor.cs" />
     <Compile Include="Models\Job.cs" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Compile Include="Models\SubDepartment.cs" />
 =======
     <Compile Include="Models\SubCategory.cs" />
 >>>>>>> parent of c17af19... Merge branch 'master' of https://github.com/rubgroup72/WeJob
+=======
+>>>>>>> parent of 2bf5c34... a
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
