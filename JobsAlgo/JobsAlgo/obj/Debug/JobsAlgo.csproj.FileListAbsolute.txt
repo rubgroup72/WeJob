@@ -11,3 +11,13 @@ C:\Users\Inga\source\repos\JobsAlgo\JobsAlgo\obj\Debug\JobsAlgo.csproj.CopyCompl
 C:\Users\Michael Sheridan\Desktop\GitHub\WeJob\JobsAlgo\JobsAlgo\bin\Debug\JobsAlgo.exe.config
 C:\Users\Michael Sheridan\Desktop\GitHub\WeJob\JobsAlgo\JobsAlgo\obj\Debug\JobsAlgo.exe
 C:\Users\Michael Sheridan\Desktop\GitHub\WeJob\JobsAlgo\JobsAlgo\obj\Debug\JobsAlgo.pdb
+C:\Users\Inga\Repos\WeJob\JobsAlgo\JobsAlgo\bin\Debug\JobsAlgo.exe.config
+C:\Users\Inga\Repos\WeJob\JobsAlgo\JobsAlgo\bin\Debug\JobsAlgo.exe
+C:\Users\Inga\Repos\WeJob\JobsAlgo\JobsAlgo\bin\Debug\JobsAlgo.pdb
+C:\Users\Inga\Repos\WeJob\JobsAlgo\JobsAlgo\bin\Debug\EntityFramework.dll
+C:\Users\Inga\Repos\WeJob\JobsAlgo\JobsAlgo\bin\Debug\EntityFramework.xml
+C:\Users\Inga\Repos\WeJob\JobsAlgo\JobsAlgo\obj\Debug\JobsAlgo.csprojAssemblyReference.cache
+C:\Users\Inga\Repos\WeJob\JobsAlgo\JobsAlgo\obj\Debug\JobsAlgo.csproj.CoreCompileInputs.cache
+C:\Users\Inga\Repos\WeJob\JobsAlgo\JobsAlgo\obj\Debug\JobsAlgo.csproj.CopyComplete
+C:\Users\Inga\Repos\WeJob\JobsAlgo\JobsAlgo\obj\Debug\JobsAlgo.exe
+C:\Users\Inga\Repos\WeJob\JobsAlgo\JobsAlgo\obj\Debug\JobsAlgo.pdb
