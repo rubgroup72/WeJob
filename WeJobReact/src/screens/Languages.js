@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import colors from '../styles/colors';
 import {StyleSheet, Text, View, Image, Button, ScrollView,
-    KeyboardAvoidingView, TouchableOpacity, ImageBackground  } from 'react-native';
+    KeyboardAvoidingView, TouchableOpacity, ImageBackground, AsyncStorage  } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import axios from 'axios';
@@ -21,8 +21,17 @@ export default class Register extends React.Component{
         this.state = { 
             data: [],
             loadingVisible: true,
+            firstLang: '',
+            secondLang: '',
+            thirdLang: '',
+            firstDegree: 0,
+            secondDegree: 0,
+            thirdDegree: 0,
+            studentId: '',
         };
       }
+
+      
 
       static navigationOptions = ({navigation}) => {
         return {
@@ -54,12 +63,105 @@ export default class Register extends React.Component{
                 temp.push({ value: response.data[i].Name });
             }
             this.setState({ data: temp });
+            this.fetchStudentLanguages();
         })
         .catch((error) => {
             this.setState({ loadingVisible: false });
             alert (error.response.status);
         });
+
+        AsyncStorage.getItem(Global.ASYNC_STORAGE_STUDEMT).then((jsonStudent) => {
+            if (jsonStudent !== null) {
+                var student = JSON.parse(jsonStudent);
+                this.setState({
+                    studentId: student.StudentId
+                });
+            }
+        });
     }
+    fetchStudentLanguages = () => {
+        const httpClient = axios.create();
+        httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
+        httpClient.get( Global.BASE_URL +'AppStudentLanguagesController?studentId=' + this.state.studentId)
+        .then((response) => {
+            this.setState({ loadingVisible: false });
+            var firstLanguage = '';
+            var firstDegree = 0;
+            var secondLanguage = '';
+            var secondDegree = 0;
+            var thirdLanguage = '';
+            var thirdDegree = 0;
+            if (response.data.length >= 1) {
+                firstLanguage = response.data[0].Name;
+                firstDegree = response.data[0].Degree;
+            }
+            if (response.data.length >= 2) {
+                secondLanguage = response.data[1].Name;
+                secondDegree = response.data[1].Degree;
+            }
+            if (response.data.length >= 3) {
+                thirdLanguage = response.data[2].Name;
+                thirdDegree = response.data[2].Degree;
+            }
+            this.setState({ 
+                firstLang: firstLanguage, 
+                secondLang: secondLanguage, 
+                thirdLang: thirdLanguage,
+                firstDegree: 2, // firstDegree,
+                secondDegree: secondDegree,
+                thirdDegree: thirdDegree,
+            });
+        })
+        .catch((error) => {
+            this.setState({ loadingVisible: false });
+        });
+    };
+    
+    handleNextButtonClicked = () => {
+        var langList = [];
+        langList.push({ Name: this.state.firstLang, Degree: this.state.firstDegree});
+        langList.push({ Name: this.state.secondLang, Degree: this.state.secondDegree});
+        langList.push({ Name: this.state.thirdLang, Degree: this.state.thirdDegree});
+
+        const httpClient = axios.create();
+        httpClient.defaults.timeout = 15000;
+        httpClient.post(Global.BASE_URL +'AppStudentLanguagesController', {
+            LanguagesList: langList,
+            StudentId: this.state.studentId
+        }, 
+        )
+        .then((response) => {
+            this.setState({ loadingVisible: false });
+            alert ('hi');
+            // this.props.navigation.navigate('Languages');
+        })
+        .catch((error) => {
+            this.setState({ loadingVisible: false });
+            alert (error.response.status);
+        });
+    
+    }
+
+    langDegreeChanged = (index, degree) => {
+        if (index === 0)
+            this.setState({ firstDegree: degree });
+        else if (index === 1)
+            this.setState({ secondDegree: degree });
+        else
+            this.setState({ thirdDegree: degree });
+    }
+
+    firstLanguagesChanged = (value, index, data) => {
+        this.setState({ firstLang: value });
+    };
+    secondLanguagesChanged = (value, index, data) => {
+        this.setState({ secondLang: value });
+    };
+    thirdLanguagesChanged = (value, index, data) => {
+        this.setState({ thirdLang: value });
+    };
+
+    
     // static navigationOptions = ({ navigation }) => {
     //     const { state } = navigation
     //     return {
@@ -92,14 +194,16 @@ export default class Register extends React.Component{
                             <Dropdown
                              containerStyle={{width:200}}
                              label='בחר שפה ראשונה'
+                             value={this.state.firstLang}
                              data={this.state.data}
+                             onChangeText={this.firstLanguagesChanged}
                              style = {{color: 'white'}} //for changed text color
                              baseColor="rgba(255, 255, 255, 1)" //for initial text color
                              />
                              <RadioForm
                              radio_props={radio_props}
-                             initial={0}
-                             onPress={(value) => {this.setState({value:value})}}
+                             initial={this.state.firstDegree}
+                             onPress={(value) => { this.langDegreeChanged(0, value); }}
                              buttonColor= {'#FFFFFF'}
                              labelColor={'#FFFFFF'}
                              selectedButtonColor={'#FFFFFF'}
@@ -112,13 +216,15 @@ export default class Register extends React.Component{
                              containerStyle={{width:200}}
                              label='בחר שפה שנייה'
                              data={this.state.data}
+                             onChangeText={this.secondLanguagesChanged}
+                             value={this.state.secondLang}
                              style = {{color: 'white'}} //for changed text color
                              baseColor="rgba(255, 255, 255, 1)" //for initial text color
                              />
                              <RadioForm
                              radio_props={radio_props}
-                             initial={0}
-                             onPress={(value) => {this.setState({value:value})}}
+                             initial={this.state.secondDegree}
+                             onPress={(value) => { this.langDegreeChanged(1, value); }}
                              buttonColor= {'#FFFFFF'}
                              labelColor={'#FFFFFF'}
                              selectedButtonColor={'#FFFFFF'}
@@ -129,14 +235,16 @@ export default class Register extends React.Component{
                             <Dropdown
                              containerStyle={{width:200}}
                              label='בחר שפה שלישית'
+                             value={this.state.thirdLang}
+                             onChangeText={this.thirdLanguagesChanged}
                              data={this.state.data}
                              style = {{color: 'white'}} //for changed text color
                              baseColor="rgba(255, 255, 255, 1)" //for initial text color
                              />
                              <RadioForm
                              radio_props={radio_props}
-                             initial={0}
-                             onPress={(value) => {this.setState({value:value})}}
+                             initial={this.state.thirdDegree}
+                             onPress={(value) => { this.langDegreeChanged(2, value); }}
                              buttonColor= {'#FFFFFF'}
                              labelColor={'#FFFFFF'}
                              selectedButtonColor={'#FFFFFF'}
@@ -145,7 +253,7 @@ export default class Register extends React.Component{
                             </View>
                             <View style = {styles.nextButton}>
                                 <NextArrowButton
-                                 handleOnPress={() => this.props.navigation.navigate('Home')}
+                                   handleOnPress={() => this.handleNextButtonClicked()}
                                  />
                             </View>
                         </View>

@@ -9,8 +9,14 @@ namespace Proj_WeJob.Models.DAL
     {
         //properties      
         public string Name { get; set; }
+        public int Degree { get; set; }
 
         //constructor
+        public Language(string Name, int Degree)
+        {
+            this.Degree = Degree;
+            this.Name = Name;
+        }
         public Language(string Name)
         {          
             this.Name = Name;

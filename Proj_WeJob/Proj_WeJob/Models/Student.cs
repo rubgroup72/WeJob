@@ -20,6 +20,7 @@ namespace Proj_WeJob.Models.DAL
         public int DepartmentCode { get; set; }
         public string SubDepartmentName { get; set; }
         public int SubDepartmentCode { get; set; }
+        public List<Language> LanguagesList { get; set; }
 
         //constructor
         public Student( int _studentId, string _firstName, string _lastName, string _cellPhone, string _email, string _gender,string _departmentName, string _subDepartmentName) 
@@ -99,6 +100,16 @@ namespace Proj_WeJob.Models.DAL
         {
             DBservices dbs = new DBservices();
             dbs.UpdateStudentDeapartmentAndSubDepartment(Email, DepartmentCode, SubDepartmentCode);
+        }
+        public List<Language> GetLanguages()
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetStudentLanguages(StudentId);
+        }
+        public void UpdateStudentLanguages()
+        {
+            DBservices dbs = new DBservices();
+            dbs.UpdateStudentLanguages(StudentId, LanguagesList);
         }
     }
 }
