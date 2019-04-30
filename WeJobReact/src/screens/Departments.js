@@ -9,7 +9,7 @@ import axios from 'axios';
 import Loader from '../components/Loader';
 import NextArrowButton from '../components/buttons/NextArrowButton';
 import Global from '../global';
-
+import { DrawerActions } from 'react-navigation';
 
 
 export default class Register extends React.Component{
@@ -29,11 +29,19 @@ export default class Register extends React.Component{
       }
 
     
-    static navigationOptions = ({ navigation }) => {
-        const { state } = navigation
+      static navigationOptions = ({navigation}) => {
         return {
-          headerTransparent: true,
-          headerTintColor: colors.white,
+            headerTransparent: true,
+            headerTintColor: colors.green01,
+            // headerRight: (
+            //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
+            // ),
+            title: 'מחלקות',
+            headerLeft: (
+                <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
+                    <Icon name="bars" size={30} color= {colors.white} />
+                </TouchableOpacity>
+            ),
         }
       }
 

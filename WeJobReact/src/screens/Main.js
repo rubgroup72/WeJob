@@ -25,9 +25,18 @@ export default class Main extends React.Component{
             isDemoUser: false,
             isFirstFetch: false,
         }
+        this.props.navigation.addListener('willFocus', this.loadComponent);
+
     }
 
     static navigationOptions = ({navigation}) => {
+        const { params = {} } = navigation.state;
+        let headerLeftInternal = null;
+        if (params.shouldShow) {
+            headerLeftInternal = (<TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
+            <Icon name="bars" size={30} color= {colors.white} />
+            </TouchableOpacity>);
+        }
         return {
             headerTransparent: true,
             headerTintColor: colors.green01,
@@ -35,19 +44,40 @@ export default class Main extends React.Component{
             //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
             // ),
             title: 'WeJob',
-            headerLeft: (
-                <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
-                    <Icon name="bars" size={30} color= {colors.white} />
-                </TouchableOpacity>
-            ),
+            headerLeft: headerLeftInternal,
         }
       }
 
+
+      loadComponent = () => {
+          if (this.state.userLoggedOut) 
+              this.tryLogin();
+          else  {
+            // In case the user have been logged out from another screen  
+            AsyncStorage.getItem(Global.IS_USER_LOGGED_IN).then((res) => {
+                if (res === "false") {
+                    this.setState({
+                        userLoggedOut: true,
+                        loginWithFacebook: false,
+                        loginWithGoogle: false,
+                        loginWithEmail: false,
+                        student: null,
+                        isDemoUser: false,
+                    });
+                }
+            });
+          }
+
+          this.props.navigation.setParams({ shouldShow: !this.state.userLoggedOut });
+      }
       componentWillMount() {
         if (this.state.isFirstFetch) {
             return;
         }
         this.state.isFirstFetch = true;
+        this.tryLogin();
+    }
+    tryLogin = () => {
         AsyncStorage.getItem(Global.FACEBOOK_TOKEN_STRING).then((token) => {
             if (token !== null) {
                 // Check what happend with facebook
@@ -109,6 +139,8 @@ export default class Main extends React.Component{
          });
          AsyncStorage.setItem(Global.ASYNC_STORAGE_STUDEMT, JSON.stringify(student));
          AsyncStorage.setItem(Global.USER_EMAIL, student.Email);
+         AsyncStorage.setItem(Global.IS_USER_LOGGED_IN, "true");
+         this.props.navigation.setParams({ shouldShow: true });
     }
     //פונקציה שמסמנת שהסטודנט התנתק מפייסבוק
     logoutFacebook = () => {

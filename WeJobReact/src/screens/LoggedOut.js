@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 //import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import Global from '../global';
-
+import { LoginManager } from 'react-native-fbsdk';
 
 
 export default class LoggedOut extends React.Component{
@@ -25,8 +25,30 @@ export default class LoggedOut extends React.Component{
         this.props.navigation.navigate("Register");
     };
     onLoginPress = () => {
-        this.props.navigation.navigate(Global.LOGIN_PAGE);
+        this.props.navigation.navigate("LogIn");
     };
+
+    handleFacebookLogin = () => {
+        const navigationObj = this.props.navigation;
+        LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
+          function (result) {
+            if (result.isCancelled) {
+                alert("login is cancelled.");
+            } else {
+                AccessToken.getCurrentAccessToken().then(
+                (data) => {
+                    AsyncStorage.setItem(Global.FACEBOOK_TOKEN_STRING, data.accessToken.toString());
+                    navigationObj.navigate('Main');
+                    //this.props.navigation.navigate('Main');
+                    // this.props.fetchFacebookUserData(data.accessToken.toString());
+                })
+            }
+          },
+          function (error) {
+            alert('Login fail with error: ' + error)
+          }
+        )
+      }
 
     render(){
         const {navigate} = this.props.navigation;
@@ -44,14 +66,19 @@ export default class LoggedOut extends React.Component{
                     b
                 </Text>
                 
-                {/* <RoundedButton
+                <RoundedButton
                 text = ' התחבר עם פייסבוק'
                 textColor = {colors.green01}
                 background= {colors.white}
                 icon={<Icon name="facebook" size={20} style = {styles.facebookButtonIcon}/>}
-                handleOnPress={() => this.props.navigation.navigate('LogIn')}
-                /> */}
-                <LoginButton
+                handleOnPress={this.handleFacebookLogin}
+                />
+                {/* <Button
+        onPress={this.handleFacebookLogin}
+        title="Continue with fb"
+        color="#4267B2"
+      /> */}
+                {/* <LoginButton
                     style = {styles.facebookNativeButton}
                     readPermissions={['public_profile', 'email']}
                     onLoginFinished={
@@ -71,13 +98,13 @@ export default class LoggedOut extends React.Component{
                             }
                         }
                     }
-                    onLogoutFinished={() => this.props.logoutFacebook()} />
-                <RoundedButton
+                    onLogoutFinished={() => this.props.logoutFacebook()} /> */}
+                {/* <RoundedButton
                 text = 'Google+ התחבר עם'
                 textColor = {colors.white}
                 icon={<Icon name="google" size={20} style = {styles.googleButtonIcon}/>}
                 handleOnPress={this.onGooglePlusPress}
-                />
+                /> */}
                 <Text 
                 style={{color: 'white', alignSelf: 'center', textDecorationLine: 'underline'}}
                 onPress={this.onLoginPress}>

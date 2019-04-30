@@ -48,7 +48,7 @@ class LogIn extends Component {
             this.setState({ loadingVisible: false });
             if (response.data.Message === '') {
                 var student = response.data.Data;
-                AsyncStorage.setItem(Global.USER_EMAIL, student.email);
+                AsyncStorage.setItem(Global.USER_EMAIL, student.Email);
                 this.props.navigation.navigate('Main');
             } else {
                 alert (response.data.Message);

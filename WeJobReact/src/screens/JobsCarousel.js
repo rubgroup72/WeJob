@@ -28,6 +28,22 @@ export default class JobsCarousel extends React.Component {
             }
         ]}
     }
+    
+    static navigationOptions = ({navigation}) => {
+        return {
+            headerTransparent: true,
+            headerTintColor: colors.green01,
+            // headerRight: (
+            //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
+            // ),
+            title: 'WeJob1',
+            headerLeft: (
+                <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
+                    <Icon name="bars" size={30} color= {colors.white} />
+                </TouchableOpacity>
+            ),
+        }
+      }
 
     _renderItem({item,index}){
         return (

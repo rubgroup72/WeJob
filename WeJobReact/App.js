@@ -10,11 +10,14 @@ import Languages from './src/screens/Languages';
 import Global from './src/global';
 import PersonalProfile from './src/screens/PersonlProfile';
 import SubDepartments from './src/screens/SubDepartments';
+import JobsCarousel from './src/screens/JobsCarousel';
 
 const MainStack = createStackNavigator({
   Main: { screen: Main },
   Register: { screen: Register },
   LoggedOut: {screen: LoggedOut},
+  JobsCarousel: { screen: JobsCarousel },
+  LogIn: { screen: LogIn }
 });
 
 //יצירת תפריט עבור דף ההתחברות הראשוני
@@ -84,7 +87,7 @@ const hiddenDrawerItems = [
 ]
 const drawerNav = createDrawerNavigator({
   'דף הבית': { screen: MainStack, },
-  'התחברות': { screen: LogIn, }, // sync with Global.js
+  // 'התחברות': { screen: LogIn, }, // sync with Global.js
   'מחלקות': { screen: DepartmentsStack, },
   'שפות': { screen: LanguageStack, },
   'פרופיל': { screen: profileStack },

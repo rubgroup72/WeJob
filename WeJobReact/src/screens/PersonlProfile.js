@@ -9,6 +9,8 @@ import axios from 'axios';
 import Loader from '../components/Loader';
 import Global from '../global';
 import InputField from '../components/form/InputField';
+import { LoginButton, AccessToken } from 'react-native-fbsdk';
+import { LoginManager } from 'react-native-fbsdk';
 
 export default class PersonalProfile extends React.Component{
 
@@ -30,7 +32,13 @@ export default class PersonalProfile extends React.Component{
         this.onSubmitPress = this.onSubmitPress.bind(this);
       }
 
-
+    logoutFacebook = () => {
+        LoginManager.logOut();
+        AsyncStorage.setItem(Global.FACEBOOK_TOKEN_STRING, '');
+        AsyncStorage.setItem(Global.USER_EMAIL, '');
+        AsyncStorage.setItem(Global.IS_USER_LOGGED_IN, "false");
+        this.props.navigation.navigate('Main');
+    }
     componentWillMount() {
         AsyncStorage.getItem(Global.ASYNC_STORAGE_STUDEMT).then((jsonStudent) => {
             if (jsonStudent !== null) {
@@ -192,6 +200,11 @@ export default class PersonalProfile extends React.Component{
                             handleOnPress={() => { this.onSubmitPress() }}
                             />
                         </View>
+                        
+                        {/* <LoginButton
+                            style = {styles.facebookNativeButton}
+                            onLogoutFinished={() => this.logoutFacebook()} /> */}
+                        <Button onPress={() => this.logoutFacebook()} title="התנתקות" >התנתקות מייל</Button>
                         <Loader
                          modalVisible={this.state.loadingVisible}
                          animationType="fade" />  
