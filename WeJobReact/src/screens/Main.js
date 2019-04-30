@@ -94,7 +94,7 @@ export default class Main extends React.Component{
     fetchStudentDataByEmail = (email) => {
         const httpClient = axios.create();
         httpClient.defaults.timeout = 15000;
-        httpClient.get(Global.BASE_URL + "AppGetStudentByEmail/?email=" + email)
+        httpClient.get(Global.BASE_URL + "AppGetStudentByEmail?email=" + email)
                 .then((response) => {
                     if (response.data !== undefined && response.data !== null) {
                         this.loginFinished('email', response.data);
@@ -151,7 +151,7 @@ export default class Main extends React.Component{
         });
         AsyncStorage.setItem(Global.FACEBOOK_TOKEN_STRING, '');
     }
-    //משיכת אימייל שאיתו התחברנו לפייסבוק
+    //משיכת פרטי סטודנט שאיתו התחברנו לפייסבוק
     fetchFacebookUserData = (token) => {
         fetch('https://graph.facebook.com/v2.5/me?fields=email,name&access_token=' + token)
         .then((response) => response.json())

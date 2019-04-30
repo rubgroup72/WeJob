@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Proj_WeJob.Models.DAL;
 
 
 namespace Proj_WeJob.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class DistributorController:ApiController
     {
         // POST api/values

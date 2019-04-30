@@ -2,10 +2,11 @@
 using System.Web.Http;
 using Proj_WeJob.Models.DAL;
 using System.Linq;
-
+using System.Web.Http.Cors;
 
 namespace Proj_WeJob.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class StudentController:ApiController
     {
      
