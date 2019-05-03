@@ -8,4 +8,5 @@ export default {
     ASYNC_STORAGE_STUDEMT: 'StudentAsyncStorageData',// המפתח של הלוקאל סטוראג' ששומר את הפרטים של הסטונדט
     USER_SELECTED_DEPARTMENT_CODE: 'SelectedDepartmentCode',
     IS_USER_LOGGED_IN: 'UserLoggedIn',
+    USER_SELECTED_CATEGORY_CODE: 'SelectedCategoryCode'
 }

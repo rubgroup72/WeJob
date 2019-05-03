@@ -11,6 +11,8 @@ import Global from './src/global';
 import PersonalProfile from './src/screens/PersonlProfile';
 import SubDepartments from './src/screens/SubDepartments';
 import JobsCarousel from './src/screens/JobsCarousel';
+import Category from './src/screens/Category';
+import SubCategory from './src/screens/SubCategory';
 
 const MainStack = createStackNavigator({
   Main: { screen: Main },
@@ -27,7 +29,7 @@ const LoggedOutStack = createStackNavigator({
 
 //יצירת תפריט עבור דף הפרופיל האישי
 const profileStack = createStackNavigator({
-  Profile: { screen: PersonalProfile }
+  Profile: { screen: PersonalProfile },
 }, {
   defaultNavigationOptions: {
     headerStyle: {
@@ -63,9 +65,29 @@ const LanguageStack = createStackNavigator({
 }
 });
 
+//יצירת תפריט עבור מחלקות
 const DepartmentsStack = createStackNavigator({
   Departments: { screen: Departments },
   SubDepartments: {screen: SubDepartments },
+}, {
+  defaultNavigationOptions: {
+    headerStyle: {
+        backgroundColor: 'trasparent',
+        elevation: 0,
+        shadowOpacity: 0
+    },
+    headerTitle: '',
+    headerTintColor: '#333333',
+    headerTitleStyle: {
+        fontWeight: 'bold',
+        color: '#ffffff'
+    }
+}
+});
+
+const CategoriesStack = createStackNavigator({
+  Category: {screen: Category},
+  SubCategory: { screen: SubCategory },
 }, {
   defaultNavigationOptions: {
     headerStyle: {
@@ -91,6 +113,8 @@ const drawerNav = createDrawerNavigator({
   'מחלקות': { screen: DepartmentsStack, },
   'שפות': { screen: LanguageStack, },
   'פרופיל': { screen: profileStack },
+  'קטגוריות': {screen: CategoriesStack },
+  //'תתי קטגוריות': { screen: CategoriesStack },
 }, {
     initialRouteName: 'דף הבית',
     drawerPosition: 'right',

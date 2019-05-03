@@ -690,8 +690,6 @@ namespace Proj_WeJob.Models.DAL
             }
         }
 
-
-
         //פונקציה שמחזירה את פרטי משרה מסוימת
 
         public Job GetJob(string conString, string JobNo)
@@ -826,7 +824,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
 
         //מחיקת סטודנט
         public int deleteStudent(string StudentId)
@@ -980,7 +977,6 @@ namespace Proj_WeJob.Models.DAL
             }
 
         }
-
 
         //פונקציה שמביאה את כל התתי המחלקות
         public List<SubDepartment> AllSubDepartments(int DepartmentCode)
@@ -1182,5 +1178,86 @@ namespace Proj_WeJob.Models.DAL
             }
         }
 
+        //פונקציה שמחזירה רשימה של תגיות 
+        public List<Tags> GetListTags(int CategoryCode)
+        {
+            SqlConnection con = null;
+            List<Tags> lp = new List<Tags>();
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+                String selectSTR = "SELECT TOP 100 * FROM Hot_Tags where CategoryNo = '"+ CategoryCode + "'";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Tags la = new Tags
+                    {
+                        Id = Convert.ToInt32(dr["Id"]),
+                        TagName = Convert.ToString(dr["TagName"]),
+                        Count = Convert.ToInt32(dr["Count"])
+                    };
+                    lp.Add(la);
+                }
+
+                return lp;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+        //פונקציה שמחזירה רשימה של קטגוריות 
+        public List<Category> GetListCategories(string conString)
+        {
+            SqlConnection con = null;
+            List<Category> lp = new List<Category>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Category";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Category la = new Category
+                    {
+                        CategoryNo = Convert.ToInt32(dr["CategoryNo"]),
+                        CategoryName = Convert.ToString(dr["CategoryName"])
+                    };
+                    lp.Add(la);
+                }
+
+                return lp;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
     }
 }

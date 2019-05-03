@@ -133,7 +133,7 @@ export default class Register extends React.Component{
         .then((response) => {
             this.setState({ loadingVisible: false });
             alert ('hi');
-            // this.props.navigation.navigate('Languages');
+            this.props.navigation.navigate('Category');
         })
         .catch((error) => {
             this.setState({ loadingVisible: false });

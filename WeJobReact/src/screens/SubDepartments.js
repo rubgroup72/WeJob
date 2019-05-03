@@ -30,9 +30,9 @@ export default class Register extends React.Component{
         });
         AsyncStorage.getItem(Global.USER_EMAIL).then((Email) => {
             this.setState({ email: Email });
-        });
-        
+        }); 
     }
+    
     fetchSubDepartmentCodeFromServer = () => {
         const httpClient = axios.create();
         httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
