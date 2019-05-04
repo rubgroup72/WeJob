@@ -13,14 +13,6 @@ import { LoginManager } from 'react-native-fbsdk';
 
 export default class LoggedOut extends React.Component{
 
-    onFacebookPress(){
-        alert('Facebook button pressed');
-    };
-
-    onGooglePlusPress(){
-        alert('Google+ button pressed');
-    };
-
     onRegiterPress = () => {
         this.props.navigation.navigate("Register");
     };
@@ -61,7 +53,7 @@ export default class LoggedOut extends React.Component{
                 <Text style = {styles.welcomeText}> 
                     WeJ
                     <InlineImage
-                    style={{ width:15, height:15}}
+                    style={{ width:11, height:11}}
                     source={require('../img/Ruppin_Academic_Center_Logo.png')}/>
                     b
                 </Text>
@@ -145,23 +137,24 @@ const styles = StyleSheet.create({
 
     },
     welcomeText: {
-        fontSize: 60,
+        fontSize: 55,
         color: colors.white,
         fontWeight: "500",
         marginTop: 20,
         marginBottom: 20,
-        padding: 80,
+        padding: 70,
+        alignSelf: 'center',
         textShadowColor: 'rgba(0, 0, 0, 0.85)',
         textShadowOffset: {width: -1, height: 1},
         textShadowRadius: 10
     },
 
-    // facebookButtonIcon: {
-    //     color: colors.green01,
-    //     position: 'relative',
-    //     left: 20,
-    //     zIndex: 8,
-    // },
+    facebookButtonIcon: {
+        color: colors.green01,
+        position: 'relative',
+        left: 20,
+        zIndex: 8,
+    },
     facebookNativeButton: {
         height: 40,
         width: 350,

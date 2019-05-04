@@ -33,21 +33,21 @@ export default class Register extends React.Component{
 
       
 
-      static navigationOptions = ({navigation}) => {
-        return {
-            headerTransparent: true,
-            headerTintColor: colors.green01,
-            // headerRight: (
-            //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
-            // ),
-            title: 'שפות',
-            headerLeft: (
-                <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
-                    <Icon name="bars" size={30} color= {colors.white} />
-                </TouchableOpacity>
-            ),
-        }
-      }
+    //   static navigationOptions = ({navigation}) => {
+    //     return {
+    //         headerTransparent: true,
+    //         headerTintColor: colors.green01,
+    //         // headerRight: (
+    //         //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
+    //         // ),
+    //         title: 'שפות',
+    //         headerLeft: (
+    //             <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
+    //                 <Icon name="bars" size={30} color= {colors.white} />
+    //             </TouchableOpacity>
+    //         ),
+    //     }
+    //   }
 
       componentWillMount() {
         this.setState({
@@ -162,13 +162,13 @@ export default class Register extends React.Component{
     };
 
     
-    // static navigationOptions = ({ navigation }) => {
-    //     const { state } = navigation
-    //     return {
-    //       headerTransparent: true,
-    //       headerTintColor: colors.white,
-    //     }
-    //   }
+    static navigationOptions = ({ navigation }) => {
+        const { state } = navigation
+        return {
+          headerTransparent: true,
+          headerTintColor: colors.white,
+        }
+      }
 
     
 
@@ -189,7 +189,7 @@ export default class Register extends React.Component{
                             <Text style = {styles.welcomeText}> 
                                 { this.state.message }
                             </Text>
-                            <Text style = {styles.logInHeader}> בחר שפות</Text>
+                            <Text style = {styles.logInHeader}> דבר איתנו ב...</Text>
                             <View style = {styles.iconsStyle}>
                             <Dropdown
                              containerStyle={{width:200}}

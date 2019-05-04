@@ -24,8 +24,6 @@ namespace Proj_WeJob.Controllers
         [HttpPost]
         public ReactResponse Post([FromBody] Student s)
         {
-            Thread.Sleep(5000);
-
             if (s == null)
                 return new ReactResponse("לא התקבלו נתונים", null);
             if (String.IsNullOrEmpty(s.FirstName))

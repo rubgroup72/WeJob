@@ -37,6 +37,7 @@ export default class PersonalProfile extends React.Component{
         AsyncStorage.setItem(Global.FACEBOOK_TOKEN_STRING, '');
         AsyncStorage.setItem(Global.USER_EMAIL, '');
         AsyncStorage.setItem(Global.IS_USER_LOGGED_IN, "false");
+        AsyncStorage.setItem(Global.ASYNC_STORAGE_STUDEMT, '');
         this.props.navigation.navigate('Main');
     }
     componentWillMount() {
@@ -60,7 +61,7 @@ export default class PersonalProfile extends React.Component{
             headerTintColor: colors.green01,
             headerLeft: (
                 <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
-                    <Icon name="bars" size={30} color="#900" />
+                    <Icon name="bars" size={30} color={colors.white} />
                 </TouchableOpacity>
             ),
         }

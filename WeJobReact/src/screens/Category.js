@@ -18,13 +18,16 @@ export default class Category extends React.Component{
         aconomicsAndBusiness: false,
         categoriesList: [],
         loadingVisible: false,
-        selectedCategory: 0
+        selectedCategory: 0,
+        selectedCategoryName: ''
     }
   }
 
   componentWillMount() {
     this.fetchCategoryCodeFromServer();
 }
+
+    
 
 fetchCategoryCodeFromServer = () => {
     const httpClient = axios.create();
@@ -40,17 +43,19 @@ fetchCategoryCodeFromServer = () => {
 }
 
 selectedCategory = (i) => {
-    this.setState({ selectedCategory: i });
+    this.setState({ selectedCategory: i.CategoryNo });
+    this.setState({ selectedCategoryName: i.CategoryName });
 }
 getTableRows = () => {
     var tableRows = [];
     var arr = this.state.categoriesList;
     for (var i = 0; i < arr.length; i++) {
         var tempRow = [];
-        tempRow.push(<RoundedButton text = {arr[i].CategoryName} 
+        tempRow.push(<RoundedButton 
+            text = {arr[i].CategoryName} 
             background = { this.state.selectedCategory === arr[i].CategoryNo ? colors.white : 'transparent' }
             textColor = {this.state.selectedCategory === arr[i].CategoryNo ? colors.green01 : 'white' } 
-            handleOnPress = {this.selectedCategory.bind(this, arr[i].CategoryNo)}
+            handleOnPress = {this.selectedCategory.bind(this, arr[i])}
             />);
         tableRows.push(tempRow);
     }
@@ -59,6 +64,7 @@ getTableRows = () => {
 
 handleNextButtonClicked = () => {
     AsyncStorage.setItem(Global.USER_SELECTED_CATEGORY_CODE, this.state.selectedCategory.toString());
+    AsyncStorage.setItem(Global.USER_SELECTED_CATEGORY_NAME, this.state.selectedCategoryName.toString());
     this.props.navigation.navigate('SubCategory');
 }
 

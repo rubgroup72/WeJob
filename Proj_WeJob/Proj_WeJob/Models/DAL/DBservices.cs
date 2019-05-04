@@ -458,9 +458,9 @@ namespace Proj_WeJob.Models.DAL
             try
             {
                 con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
-                String selectSTR = "Insert Into Student (StudentId, DepartmentDepartmentCode, FirstName,LastName,Email,CellPhone,Password,Gender) Values";
-                selectSTR += String.Format("({0},{1},'{2}','{3}','{4}','{5}','{6}','{7}')", 
-                    studentId, 0, firstName, lastName, email, phoneNumber, password, gender);
+                String selectSTR = "Insert Into Student (StudentId, FirstName,LastName,Email,CellPhone,Password,Gender) Values";
+                selectSTR += String.Format("({0},'{1}','{2}','{3}','{4}','{5}','{6}')", 
+                    studentId, firstName, lastName, email, phoneNumber, password, gender);
                 var cmd = CreateCommand(selectSTR, con);
                 cmd.ExecuteNonQuery();
             }

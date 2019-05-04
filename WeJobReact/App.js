@@ -65,10 +65,11 @@ const LanguageStack = createStackNavigator({
 }
 });
 
-//יצירת תפריט עבור מחלקות
+//   שפות + יצירת תפריט עבור מחלקות
 const DepartmentsStack = createStackNavigator({
   Departments: { screen: Departments },
   SubDepartments: {screen: SubDepartments },
+  Languages: { screen: Languages },
 }, {
   defaultNavigationOptions: {
     headerStyle: {
@@ -111,10 +112,9 @@ const drawerNav = createDrawerNavigator({
   'דף הבית': { screen: MainStack, },
   // 'התחברות': { screen: LogIn, }, // sync with Global.js
   'מחלקות': { screen: DepartmentsStack, },
-  'שפות': { screen: LanguageStack, },
+  //'שפות': { screen: LanguageStack, },
   'פרופיל': { screen: profileStack },
   'קטגוריות': {screen: CategoriesStack },
-  //'תתי קטגוריות': { screen: CategoriesStack },
 }, {
     initialRouteName: 'דף הבית',
     drawerPosition: 'right',

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import colors from '../styles/colors';
 import {StyleSheet, Text, View, Image, Button, ScrollView,
-    KeyboardAvoidingView, TouchableOpacity, ImageBackground  } from 'react-native';
+    KeyboardAvoidingView, TouchableOpacity, ImageBackground, AsyncStorage  } from 'react-native';
 import RoundedButton from '../components/buttons/RoundedButton';
 import NavBarButton from '../components/buttons/NavBarButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -49,7 +49,8 @@ export default class Register extends React.Component{
         .then((response) => {
             this.setState({ loadingVisible: false });
             if (response.data.Message === "") {
-                this.props.navigation.navigate('Departments');
+                AsyncStorage.setItem(Global.USER_EMAIL, this.state.email);
+                this.props.navigation.navigate('Main');
             } else {
             alert (response.data.Message);
             }

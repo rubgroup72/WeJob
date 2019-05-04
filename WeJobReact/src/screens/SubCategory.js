@@ -9,8 +9,8 @@ import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-ta
 import axios from 'axios';
 //import Loader from '../components/Loader';
 
-const KEYS_TO_FILTERS = ['user.name', 'subject'];
- 
+
+
 export default class SubCategory extends React.Component{
  constructor(props) {
     super(props);
@@ -22,6 +22,7 @@ export default class SubCategory extends React.Component{
         email:'',
         searchTerm: '',
         selectedSubCategoryList: [],
+        selectedCategoryName: ''
     }
   }
 
@@ -32,6 +33,9 @@ export default class SubCategory extends React.Component{
     });
     AsyncStorage.getItem(Global.USER_EMAIL).then((Email) => {
         this.setState({ email: Email });
+    });
+    AsyncStorage.getItem(Global.USER_SELECTED_CATEGORY_NAME).then((CategoryName) => {
+        this.setState({ selectedCategoryName: CategoryName });
     }); 
 }
 
@@ -62,27 +66,34 @@ selectedSubCategoryEvent = (i) => {
 getTableRows = () => {
     var tableRows = [];
     var arr = this.state.subCategoriesList;
-    var maxIterations = arr.length > 10 ? 10 : arr.length;
     var currentSelectedSubCategoryList = this.state.selectedSubCategoryList;
-    for (var i = 0; i < maxIterations; i = i + 2) {
-        var tempRow = [];
-        
-        for (var j = 0; j < 2; j++) {
-            if (i + j == maxIterations) {
-                return;
-            }
-
-            var isSelected = currentSelectedSubCategoryList.includes(arr[i + j].Id);
-            tempRow.push(<RoundedButton text = {arr[i + j].TagName} 
-                background = { isSelected ? colors.white : 'transparent' }
-                textColor = { isSelected ? colors.green01 : 'white' } 
-                handleOnPress = {this.selectedSubCategoryEvent.bind(this, arr[i + j].Id)}
-                />);
+    var maxResults = 10;
+    var amountOfResults = 0;
+    var tempRow = [];
+    for (var i = 0; i < arr.length; i = ++i) {
+        if (tempRow.length == 2) {
+            tableRows.push(tempRow);
+            tempRow = [];
         }
-        
-        
-        tableRows.push(tempRow);
+
+        if (this.state.searchTerm != '' && !arr[i].TagName.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
+            continue;
+
+        var isSelected = currentSelectedSubCategoryList.includes(arr[i].Id);
+        if (this.state.searchTerm == '' && amountOfResults >= maxResults && !isSelected)
+            continue;
+
+        tempRow.push(<RoundedButton text = {arr[i].TagName} 
+            background = { isSelected ? colors.white : 'transparent' }
+            textColor = { isSelected ? colors.green01 : 'white' } 
+            handleOnPress = {this.selectedSubCategoryEvent.bind(this, arr[i].Id)}
+            />);
+        amountOfResults++;
     }
+
+    if (tempRow.length != 0)
+        tableRows.push(tempRow);
+
     return tableRows;
 }
 
@@ -100,7 +111,6 @@ getTableRows = () => {
   }
 
   render() {
-    // const filteredEmails = emails.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
     var tableRows = this.getTableRows();
     return (
         <ImageBackground style={ styles.imgBackground }
@@ -113,7 +123,8 @@ getTableRows = () => {
                         <Text style = {styles.welcomeText}> 
                                 { this.state.message }
                             </Text>
-                        <Text style = {styles.logInHeader}>בחר תחומי עניין</Text>
+                        <Text style = {styles.logInHeader}>מה מעניין אותך בעולם </Text>
+                        <Text style = {styles.logInHeaderCatName}> ה{this.state.selectedCategoryName}</Text>
                         </View>
                         <View>
                             <SearchInput 
@@ -123,23 +134,9 @@ getTableRows = () => {
                             placeholderTextColor = {colors.white01}
                             />
                             <ScrollView>
-                            <Table borderStyle={{borderColor: 'transparent'}}>
-                                  <Rows data={tableRows} textStyle={styles.text}/>
-                                </Table>
-                            {/* {filteredEmails.map(email => {
-                            return (
-                                // <RoundedButton
-                                //     handleOnPress={()=>alert(email.user.name)}
-                                //     key={email.id}
-                                //     text = {email.user.name}
-                                //     textColor = {colors.white}>
-                                    
-                                // </RoundedButton>
                                 <Table borderStyle={{borderColor: 'transparent'}}>
-                                  <Rows data={tableRows} textStyle={styles.text}/>
+                                    <Rows data={tableRows} textStyle={styles.text}/>
                                 </Table>
-                            )
-                            })} */}
                             </ScrollView>
                         </View>
                         <View style = {styles.nextButton}>
@@ -182,6 +179,14 @@ wrapper: {
 logInHeader: {
     fontSize: 35,
     color: colors.white,
+    fontWeight: '300',
+    marginBottom: 50,
+    marginTop: -50,
+    textAlign: 'center'
+},
+logInHeaderCatName: {
+    fontSize: 35,
+    color: colors.green01,
     fontWeight: '300',
     marginBottom: 50,
     marginTop: -50,
