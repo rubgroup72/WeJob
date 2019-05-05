@@ -22,10 +22,6 @@ const MainStack = createStackNavigator({
   LogIn: { screen: LogIn }
 });
 
-//יצירת תפריט עבור דף ההתחברות הראשוני
-const LoggedOutStack = createStackNavigator({
-  LoggedOut: { screen: LoggedOut }
-});
 
 //יצירת תפריט עבור דף הפרופיל האישי
 const profileStack = createStackNavigator({

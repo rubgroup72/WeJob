@@ -22,6 +22,7 @@ export default class LoggedOut extends React.Component{
 
     handleFacebookLogin = () => {
         const navigationObj = this.props.navigation;
+        const onFinishFunction = this.props.fetchFacebookUserData;
         LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
           function (result) {
             if (result.isCancelled) {
@@ -30,9 +31,9 @@ export default class LoggedOut extends React.Component{
                 AccessToken.getCurrentAccessToken().then(
                 (data) => {
                     AsyncStorage.setItem(Global.FACEBOOK_TOKEN_STRING, data.accessToken.toString());
-                    navigationObj.navigate('Main');
-                    //this.props.navigation.navigate('Main');
-                    // this.props.fetchFacebookUserData(data.accessToken.toString());
+                    // navigationObj.navigate('Main');
+                    onFinishFunction(data.accessToken.toString());
+                    // this.props.navigation.navigate('Main');
                 })
             }
           },

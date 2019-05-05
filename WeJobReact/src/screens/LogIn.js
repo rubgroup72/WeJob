@@ -13,7 +13,6 @@ import {
 
 import colors from '../styles/colors';
 import InputField from '../components/form/InputField';
-import NextArrowButton from '../components/buttons/NextArrowButton';
 import RoundedButton from '../components/buttons/RoundedButton';
 import axios from 'axios';
 import Loader from '../components/Loader';
@@ -111,11 +110,6 @@ class LogIn extends Component {
              </View>
 
             </ScrollView>
-            <View style = {styles.nextButton}>
-                  <NextArrowButton
-                   handleOnPress={() => this.props.navigation.navigate('Home')}
-                   />
-            </View>
             <Loader
              modalVisible={this.state.loadingVisible}
              animationType="fade" />  
