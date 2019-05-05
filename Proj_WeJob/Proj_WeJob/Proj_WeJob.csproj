@@ -232,6 +232,8 @@
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Distributor.cs" />
     <Compile Include="Models\Job.cs" />
+    <Compile Include="Controllers\SubCategoryController.cs" />
+    <Compile Include="Models\SubCategory.cs" />
     <Compile Include="Models\SubDepartment.cs" />
     <Compile Include="Models\Tags.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

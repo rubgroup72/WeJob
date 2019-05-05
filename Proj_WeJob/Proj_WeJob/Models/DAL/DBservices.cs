@@ -1259,5 +1259,46 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+
+        // פונקציה שמחזירה רשימה של תתי קטגוריות לפי הקטגוריה שנבחרה
+        public List<SubCategory> GetListSubCategories(string conString, string CategoryNo)
+        {
+            SqlConnection con = null;
+            List<SubCategory> lsc = new List<SubCategory>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Category_SubCategory as csc left join SubCategory as sc on csc.SubCategorySubCategoryNo= sc.SubCategoryNo where CategoryCategoryNo='" + CategoryNo+"'";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    SubCategory sc = new SubCategory
+                    {
+                        SubCategoryNo = Convert.ToInt32(dr["SubCategoryNo"]),
+                        SubCategoryName = Convert.ToString(dr["SubCategoryName"])
+                    };
+                    lsc.Add(sc);
+                }
+
+                return lsc;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
     }
 }
