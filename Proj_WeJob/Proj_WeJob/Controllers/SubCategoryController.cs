@@ -15,5 +15,12 @@ namespace Proj_WeJob.Models
             SubCategory Ca = new SubCategory();
             return Ca.ReadSubCategories(CategoryNo);
         }
+        [HttpGet]
+        [Route("api/SubCategorySearch")]
+        public List<SubCategory> get(string Search, string CategoryNo)
+        {
+            SubCategory Ca = new SubCategory();
+            return Ca.ReadSubCategoriesForSearch(Search,CategoryNo);
+        }
     }
 }

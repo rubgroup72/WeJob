@@ -313,6 +313,59 @@ namespace Proj_WeJob.Models.DAL
             return command;
         }
         //++++++++++++סיום הוספת שפות למשרה +++++++++
+
+        //הוספת תתי קטגוריות למשרה
+        public int Insert_JobSubCategory(Job job, int id)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            String cStr = BuildInsert_JobSubCategory(job, id);      // helper method to build the insert string
+            cmd = CreateCommand(cStr, con);             // create the command
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+        }
+        private String BuildInsert_JobSubCategory(Job job, int id)
+        {
+            String command = "";
+            String prefix;
+            // use a string builder to create the dynamic string
+            for (int i = 0; i < job.ArrayLanguage.Count; i++)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat("Values('{0}','{1}')", id.ToString(), job.ArraySubCategory[i]);
+                prefix = "INSERT INTO bgroup72_prod.dbo.SubCategory_Job(SubCategorySubCategoryNo,JobJobNo)";
+                command = command + prefix + sb.ToString() + ";";
+            }
+            return command;
+        }
+
+
         //+++++פונקציה שמחזיה רשימה של מפיצים ללא סינון
 
         public List<Distributor> GetListDistributor(string conString)
@@ -1270,6 +1323,47 @@ namespace Proj_WeJob.Models.DAL
                 con = connect(conString); // create a connection to the database using the connection String defined in the web config file
 
                 String selectSTR = "SELECT * FROM Category_SubCategory as csc left join SubCategory as sc on csc.SubCategorySubCategoryNo= sc.SubCategoryNo where CategoryCategoryNo='" + CategoryNo+"'";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    SubCategory sc = new SubCategory
+                    {
+                        SubCategoryNo = Convert.ToInt32(dr["SubCategoryNo"]),
+                        SubCategoryName = Convert.ToString(dr["SubCategoryName"])
+                    };
+                    lsc.Add(sc);
+                }
+
+                return lsc;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+        
+        // פונקציה שמחזירה רשימה של תתי קטגוריות עבור החיפוש ולפי אותה הקטגוריה שנבחרה 
+        public List<SubCategory> GetListSubCategoriesForSearch(string conString,string search, string CategoryNo)
+        {
+            SqlConnection con = null;
+            List<SubCategory> lsc = new List<SubCategory>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Category_SubCategory as csc left join SubCategory as sc on csc.SubCategorySubCategoryNo= sc.SubCategoryNo where CategoryCategoryNo='" + CategoryNo + "' and sc.SubCategoryName like '%"+search+"%'";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader

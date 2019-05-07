@@ -22,30 +22,30 @@
 
         $(document).ready(function () {
 
-            //$("#pForm").submit(f1);
+            $("#pForm").submit(f1);
             ajaxCall("GET", "../api/Category", "", successGetCategory, error);
-            //$("#Categorys").change(function () {
-            //    $(this).hide();
-            //});
-
-            $('select').selectpicker();
         });
         function SubCategoryFunction() {
             uri = "../api/SubCategory?CategoryNo=" + $("#Select1").val();
             ajaxCall("GET", uri, "", successGetSubCategory, error);
+        }
+        function getSubCatFromSearch() {
+            uri = "../api/SubCategorySearch?Search=" + $("#search").val() + "&CategoryNo=" + $("#Select1").val();
+            ajaxCall("get", uri, "", successGetSubCategory, error);
         }
         // this function is activated in case of a success of category
         function successGetCategory(CategoryData) {
             Category = CategoryData;
             try {
                 str = "<label for='exampleFormControlSelect2'>קטגוריה</label>";
-                str += "<select class='form-control' onchange='SubCategoryFunction()' id='Select1'>";
-                str += "<option value='בחר'  disabled selected>בחר</option>";
+                str += "<select required class='form-control' onchange='SubCategoryFunction()' id='Select1' > ";
+                str += "<option value='בחר'  disabled selected>בחר</option> ";
                 for (var i = 0; i < CategoryData.length; i++) {
                     str += "<option class='selectCat' value='" + Category[i].CategoryNo + "'>" + Category[i].CategoryName + '</option >';
                 }
                 str += " </select>";
                 document.getElementById("category").innerHTML = str;
+                
             }
             catch (err) {
                 alert(err);
@@ -56,9 +56,9 @@
         function successGetSubCategory(SubCategoryData) {
             SubCategory = SubCategoryData;
             try {
-                str = "<label for='exampleFormControlSelect3'>תת קטגוריה</label>";
-                str += "<select class='selectpicker' multiple data-live-search='true' >";
-                str += "<input class='form-control' id='myInput' type='text' placeholder='Search..'>";
+                str = '<label for="exampleFormControlInput1">חיפוש תת קטגוריה</label>';
+                str += '<input type="text" class="form-control" id="search" onchange=getSubCatFromSearch() />';
+                str += "<select class='form-control' required multiple id='exampleFormControlSelect2'>";
                 str += "<option value='בחר'  disabled selected>בחר</option>";
                 for (var i = 0; i < SubCategoryData.length; i++) {
                     str += "<option class='selectCat' value='" + SubCategory[i].SubCategoryNo + "'>" + SubCategory[i].SubCategoryName + '</option >';
@@ -66,10 +66,13 @@
                 str += " </select>";
                 document.getElementById("subcategory").innerHTML = str;
             }
+           
             catch (err) {
                 alert(err);
             }
         }
+
+        
         function error(err) {
             err = JSON.parse(err.responseText);
             Swal.fire({
@@ -77,15 +80,48 @@
                 title: 'שגיאה ',
                 text: 'משהו לא עובד',
                 footer: err.ExceptionMessage
-            })
+            });
             //swal("Error!", err.ExceptionMessage, "error");
         }
-        $(function () {
-            $("#Select2").dashboardCodeBsMultiSelect();
-        });
+       
+         function AddJob() {
+                //get all hobbies from DB
 
-
-
+                Job = { // Note that the name of the fields must be identical to the names of the properties of the object in the server
+                    CompanyCompanyNo: localStorage.getItem("CompanyNo"),
+                    JobName: localStorage.getItem("JobName"),
+                    JobDescription:localStorage.getItem("JobDescription"),
+                    Requirements:localStorage.getItem("Requirements"),
+                    MailForCV: localStorage.getItem("MailForCV"),
+                    OpenDate: localStorage.getItem("OpenDate"),
+                    ToDate: localStorage.getItem("ToDate"),
+                    Link: localStorage.getItem("Link"),
+                    Location:localStorage.getItem("Location"),
+                    Status:localStorage.getItem("Status"),
+                    ArrayIntrests: localStorage.getItem("ArrayIntrests"),
+                    ArrayLanguage: localStorage.getItem("ArrayLanguage"),
+                    ArraySkill: localStorage.getItem("ArraySkill"),
+                    ArraySubCategory: $("#exampleFormControlSelect2").val(),
+                }
+                //פקודת אגקס להכנסת משרה
+                ajaxCall("POST", "../api/JobNew", JSON.stringify(Job), success, error);
+            }
+            function f1() {
+                AddJob();
+                return false; // the return false will prevent the form from being submitted
+                // hence the page will not reload
+            }
+        function success() {
+            Swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'הנתונים נשמרו בהצלחה',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        
+        }
+    
 
     </script>
 
@@ -152,21 +188,21 @@
                     </a>
                 </div>
                 <div class="col-xs-12">
-                    <h2>התאמת תתי קטגוריות</h2>
+                    <h2>התאמת תתי קטגוריות למשרה</h2>
                 </div>
             </div>
             <div class="card-body col-xs-12">
                 <form id="pForm" dir="rtl" class="was-validated">
                     <div class="row">
                         <div class="form-group col-xs-12 col-md-6" id="category">
-                        
+                          
                         </div>
-                        <div class="form-group col-xs-12 col-md-6"  id="subcategory">
-                         
+                        <div class="form-group col-xs-12 col-md-6" id="subcategory">
+                            
                         </div>
                     </div>
                     <div class="col-auto my-1">
-                        <button type="submit" class="btn btn-primary">התאם</button>
+                        <button type="submit" class="btn btn-primary">הוסף משרה</button>
                     </div>
 
                 </form>

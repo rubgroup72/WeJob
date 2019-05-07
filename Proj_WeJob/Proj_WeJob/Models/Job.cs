@@ -23,13 +23,16 @@ namespace Proj_WeJob.Models.DAL
         public List<String> ArrayIntrests { get; set; }
         public List<String> ArrayLanguage{ get; set; }
         public List<String> ArraySkill { get; set; }
-   
+
+        public List<string> ArraySubCategory { get; set; }
+
         //constructor
         public Job(int JobNo,string JobName, string JobDescription, string Requirements,
             int CompanyCompanyNo, string MailForCV, DateTime OpenDate, DateTime ToDate,
-            string Link, List<String> ArrayIntrests, List<String> ArrayLanguage, List<String> ArraySkill,
+            string Link, List<String> ArrayIntrests, List<String> ArrayLanguage, List<String> ArraySkill, List<string> ArraySubCategory,
             string Location,string Status)
         {
+            this.CompanyCompanyNo = CompanyCompanyNo;
             this.JobNo = JobNo;
             this.JobName = JobName;
             this.JobDescription = JobDescription;
@@ -43,6 +46,7 @@ namespace Proj_WeJob.Models.DAL
             this.ArrayIntrests = ArrayIntrests;
             this.ArrayLanguage = ArrayLanguage;
             this.ArraySkill = ArraySkill;
+            this.ArraySubCategory = ArraySubCategory;
         }
         public Job()
         {
@@ -56,7 +60,9 @@ namespace Proj_WeJob.Models.DAL
             int num2 = dbs.Insert_JobSkill(this, num1);
             int num3 = dbs.Insert_JobInterst(this, num1);
             int num4 = dbs.Insert_JobLanguage(this, num1);
-            return (num1 & num2 & num3 & num4);
+            int num5 = dbs.Insert_JobSubCategory(this, num1);
+            //return (num1 & num2 & num3 & num4 & num5);
+            return (num1 & num5);
         }
         //החזרת משרות של מפיץ ספציפי
         public List<Job> GetListJobsOfDistributor(string companyNo)

@@ -36,53 +36,55 @@
         });
 
           //בעת לחיצה על כפתור הכנס נגיע לפונקצית הוספת מפיץ
-            function AddJob() {
-                //get all hobbies from DB
+        function SaveJob() {
+            //get all hobbies from DB
+            localStorage.setItem("JobName", $("#JobName").val());
+            localStorage.setItem("JobDescription", $("#JobDescription").val());
+            localStorage.setItem("Requirements", $("#Requirements").val());
+            localStorage.setItem("MailForCV", $("#MailForCV").val());
+            localStorage.setItem("OpenDate", Date.now());
+            localStorage.setItem("ToDate", Date.now());
+            localStorage.setItem("Link", $("#Link").val());
+            localStorage.setItem("Location", $("#Location").val());
+            localStorage.setItem("Status", $("#status").val());
+            localStorage.setItem("ArrayIntrests", $("#intersts").val());
+            localStorage.setItem("ArrayLanguage", $("#languages").val());
+            localStorage.setItem("ArraySkill", $("#skills").val());
+            Swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'הנתונים נשמרו בהצלחה',
+                showConfirmButton: false,
+                timer: 1500
+            });
 
-                Job = { // Note that the name of the fields must be identical to the names of the properties of the object in the server
-                    CompanyCompanyNo: localStorage.getItem("CompanyNo"),
-                    JobName: $("#JobName").val(),
-                    JobDescription: $("#JobDescription").val(),
-                    Requirements: $("#Requirements").val(),
-                    MailForCV: $("#MailForCV").val(),
-                    OpenDate: Date.now(),
-                    ToDate: Date.now(),
-                    Link: $("#Link").val(),
-                    Location: $("#location").val(),
-                    Status: $("#status").val(),
-                    ArrayIntrests: $("#exampleFormControlSelect2").val(),
-                    ArrayLanguage: $("#exampleFormControlSelect3").val(),
-                    ArraySkill: $("#exampleFormControlSelect4").val(),
-                }
-                //פקודת אגקס להכנסת משרה
-                ajaxCall("POST", "../api/JobNew", JSON.stringify(Job), success, error);
-            }
+        }
+             
+                //Job = { // Note that the name of the fields must be identical to the names of the properties of the object in the server
+                //    CompanyCompanyNo: localStorage.getItem("CompanyNo"),
+                //    JobName: $("#JobName").val(),
+                //    JobDescription: $("#JobDescription").val(),
+                //    Requirements: $("#Requirements").val(),
+                //    MailForCV: $("#MailForCV").val(),
+                //    OpenDate: Date.now(),
+                //    ToDate: Date.now(),
+                //    Link: $("#Link").val(),
+                //    Location: $("#location").val(),
+                //    Status: $("#status").val(),
+                //    ArrayIntrests: $("#exampleFormControlSelect2").val(),
+                //    ArrayLanguage: $("#exampleFormControlSelect3").val(),
+                //    ArraySkill: $("#exampleFormControlSelect4").val(),
+                //}
+                ////פקודת אגקס להכנסת משרה
+                //ajaxCall("POST", "../api/JobNew", JSON.stringify(Job), success, error);
+            
             function f1() {
-                AddJob();
+                SaveJob();
                 return false; // the return false will prevent the form from being submitted
                 // hence the page will not reload
             }
             
-              function success() {
-               Swal.fire({
-                  position: 'top-end',
-                  type: 'success',
-                  title: 'הנתונים נשמרו בהצלחה',
-                  showConfirmButton: false,
-                  timer: 1500
-                })
-        
-        }
-         function error(err) {
-            err = JSON.parse(err.responseText);
-              Swal.fire({
-                  type: 'error',
-                  title: 'שגיאה ',
-                  text: 'משהו לא עובד',
-                  footer:  err.ExceptionMessage
-                })
-            //swal("Error!", err.ExceptionMessage, "error");
-        }  
+              
           
             //סוף פונקציות להכנסת משרה
 
@@ -156,7 +158,17 @@
 
                 localStorage.removeItem('whatFun');
                 
-            }
+        }
+           function error(err) {
+            err = JSON.parse(err.responseText);
+            Swal.fire({
+                type: 'error',
+                title: 'שגיאה ',
+                text: 'משהו לא עובד',
+                footer: err.ExceptionMessage
+            })
+            //swal("Error!", err.ExceptionMessage, "error");
+        }
 
     </script>
 

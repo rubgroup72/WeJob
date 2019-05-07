@@ -23,5 +23,11 @@ namespace Proj_WeJob.Models
             DBservices dbs = new DBservices();
             return dbs.GetListSubCategories("DBConnectionString", CategoryNo);
         }
+        // פונקציה שמחזירה רשימה של תתי קטגוריות לפי החיפוש
+        public List<SubCategory> ReadSubCategoriesForSearch(string search, string CategoryNo)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetListSubCategoriesForSearch("DBConnectionString", search, CategoryNo);
+        }
     }
 }
