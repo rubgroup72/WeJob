@@ -50,6 +50,7 @@ export default class Register extends React.Component{
             this.setState({ loadingVisible: false });
             if (response.data.Message === "") {
                 AsyncStorage.setItem(Global.USER_EMAIL, this.state.email);
+                AsyncStorage.setItem(Global.IS_JUST_REGISTERED, 'true');
                 this.props.navigation.navigate('Main');
             } else {
             alert (response.data.Message);

@@ -12,7 +12,7 @@ import Global from '../global';
 import { DrawerActions } from 'react-navigation';
 
 
-export default class Register extends React.Component{
+export default class Department extends React.Component{
     
     constructor(props) {
         super(props);
@@ -26,9 +26,41 @@ export default class Register extends React.Component{
             loadingVisible: false,
             selectedDepartment: 0,
         };
+
+        this.props.navigation.addListener('willFocus', this.loadComponent);
       }
 
     
+      loadComponent = () => {
+        AsyncStorage.getItem(Global.ASYNC_STORAGE_STUDEMT).then((jsonStudent) => {
+            if (jsonStudent !== null) {
+                var student = JSON.parse(jsonStudent);
+                var engineering = false;
+                var marineSciences = false;
+                var aconomicsAndBusiness = false;
+                var socialAndCommunitySciences = false;
+                
+                if (student.DepartmentCode === 1) {
+                    engineering = true;
+                } else if (student.DepartmentCode === 4) {
+                    marineSciences = true;
+                } else if (student.DepartmentCode === 2) {
+                    aconomicsAndBusiness = true;
+                } else if (student.DepartmentCode === 3) {
+                    socialAndCommunitySciences = true;
+                }
+
+                this.setState({
+                    studentId: student.StudentId,
+                    engineering: engineering,
+                    marineSciences: marineSciences,
+                    aconomicsAndBusiness: aconomicsAndBusiness,
+                    socialAndCommunitySciences: socialAndCommunitySciences,
+                });
+            }
+        });
+      }
+      
       static navigationOptions = ({navigation}) => {
         return {
             headerTransparent: true,
@@ -121,6 +153,7 @@ export default class Register extends React.Component{
         size={85}
         type="entypo"/>
         if (this.state.engineering === true) {
+            alert ('eng is on');
             cogs = <Icon name ="cogs" 
             color='rgba(0, 0, 0, 0.38)'
             size={85}

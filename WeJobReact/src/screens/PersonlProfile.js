@@ -30,6 +30,7 @@ export default class PersonalProfile extends React.Component{
         };
 
         this.onSubmitPress = this.onSubmitPress.bind(this);
+        this.props.navigation.addListener('willFocus', this.loadComponent);
       }
 
     logoutFacebook = () => {
@@ -38,9 +39,12 @@ export default class PersonalProfile extends React.Component{
         AsyncStorage.setItem(Global.USER_EMAIL, '');
         AsyncStorage.setItem(Global.IS_USER_LOGGED_IN, "false");
         AsyncStorage.setItem(Global.ASYNC_STORAGE_STUDEMT, '');
+        AsyncStorage.setItem(Global.USER_SELECTED_DEPARTMENT_CODE, '');
+        AsyncStorage.setItem(Global.USER_SELECTED_CATEGORY_CODE, '');
+        AsyncStorage.setItem(Global.USER_SELECTED_CATEGORY_NAME, '');
         this.props.navigation.navigate('Main');
     }
-    componentWillMount() {
+    loadComponent = () => {
         AsyncStorage.getItem(Global.ASYNC_STORAGE_STUDEMT).then((jsonStudent) => {
             if (jsonStudent !== null) {
                 var student = JSON.parse(jsonStudent);
@@ -173,7 +177,7 @@ export default class PersonalProfile extends React.Component{
                                 >
                             </InputField>
                             <InputField 
-                                    labelText = "דואר אלקטרוני"
+                                    labelText = "דואר אלקטרוני (קריאה בלבד)"
                                     labelTextSize = {14}
                                     labelColor = {colors.white}
                                     textColor = {colors.white}
@@ -182,6 +186,7 @@ export default class PersonalProfile extends React.Component{
                                     onChangeTextEvent={(text) => this.setState({ email: text }) }
                                     customStyle = {{marginBottom: 30}}
                                     textValue = {this.state.email }
+                                    isNotEditable= {'true'}
                             ></InputField>
                             <InputField 
                                     labelText = "פלאפון"

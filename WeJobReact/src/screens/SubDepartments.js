@@ -85,8 +85,13 @@ export default class Register extends React.Component{
             )
             .then((response) => {
                 this.setState({ loadingVisible: false });
-                AsyncStorage.setItem(Global.ASYNC_STORAGE_STUDEMT, JSON.stringify(response.data));
-                this.props.navigation.navigate('Languages');
+                AsyncStorage.getItem(Global.ASYNC_STORAGE_STUDEMT).then((jsonStudent) => {
+                    var student = JSON.parse(jsonStudent);
+                    student.DepartmentCode = this.state.selectedDepartment;
+                    student.SubDepartmentCode = this.state.selectedSubDepartment;
+                    AsyncStorage.setItem(Global.ASYNC_STORAGE_STUDEMT, JSON.stringify(student));
+                    this.props.navigation.navigate('Languages');
+                });
             })
             .catch((error) => {
                 this.setState({ loadingVisible: false });

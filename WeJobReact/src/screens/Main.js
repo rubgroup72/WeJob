@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import JobsCarousel from './JobsCarousel';
 import Global from '../global';
 import axios from 'axios';
+import Department from './Departments';
 
 export default class Main extends React.Component{
 
@@ -24,6 +25,7 @@ export default class Main extends React.Component{
             student: null,
             isDemoUser: false,
             isFirstFetch: false,
+            navigateToDepartment: false,
         }
         this.props.navigation.addListener('willFocus', this.loadComponent);
 
@@ -50,6 +52,17 @@ export default class Main extends React.Component{
 
 
       loadComponent = () => {
+          AsyncStorage.getItem(Global.IS_JUST_REGISTERED).then((res) => {
+            if (res === "true") {
+                AsyncStorage.setItem(Global.IS_JUST_REGISTERED, "false");
+                this.setState({ navigateToDepartment: true });
+            } else {
+                if (this.state.navigateToDepartment) {
+                    this.setState({ navigateToDepartment: false });
+                }
+            }
+          });
+
           if (this.state.userLoggedOut) 
               this.tryLogin();
           else  {
@@ -171,6 +184,9 @@ export default class Main extends React.Component{
             return <LoggedOut fetchFacebookUserData={this.fetchFacebookUserData} 
             logoutFacebook={this.logoutFacebook}
             navigation={this.props.navigation} />;
+        }
+        if (this.state.navigateToDepartment) {
+            return <Department navigation={this.props.navigation} />;
         }
         var string = this.state.student.email + ' ' + this.state.student.name;
         return <JobsCarousel navigation={this.props.navigation} />;

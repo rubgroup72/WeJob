@@ -24,7 +24,7 @@ namespace Proj_WeJob.Models.DAL
         public List<Tags> TagsList { get; set; }
 
         //constructor
-        public Student(int _studentId, string _firstName, string _lastName, string _cellPhone, string _email, string _gender, string _departmentName, string _subDepartmentName)
+        public Student(int _studentId, string _firstName, string _lastName, string _cellPhone, string _email, string _gender, string _departmentName, string _subDepartmentName, int _departmentCode, int _subDepartmentCode)
         {
             this.StudentId = _studentId;
             this.FirstName = _firstName;
@@ -34,6 +34,8 @@ namespace Proj_WeJob.Models.DAL
             this.Gender = _gender;
             this.DepartmentName = _departmentName;
             this.SubDepartmentName = _subDepartmentName;
+            this.DepartmentCode = _departmentCode;
+            this.SubDepartmentCode = _subDepartmentCode;
         }
 
         public Student()
