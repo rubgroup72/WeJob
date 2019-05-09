@@ -121,6 +121,11 @@ namespace Proj_WeJob.Models.DAL
             DBservices dbs = new DBservices();
             dbs.UpdateStudentSubCategories(StudentId, TagsList);
         }
+        public int GetAmountStudents()
+        {
+            DBservices db = new DBservices();
+            return db.GetAmountStudents("DBConnectionString");
+        }
 
     }
 }

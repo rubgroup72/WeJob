@@ -1479,5 +1479,80 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+
+        public int GetAmountDistributors(string conString)
+        {
+            SqlConnection con = null;
+           int AmountDistributors = 0;
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM [bgroup72_prod].[dbo].[Company]";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+
+                    AmountDistributors += 1;
+
+                }
+
+                return AmountDistributors;
+           
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+        public int GetAmountStudents(string conString)
+        {
+            SqlConnection con = null;
+            int AmountStudents = 0;
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM [bgroup72_prod].[dbo].[Student]";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+
+                    AmountStudents += 1;
+
+                }
+
+                return AmountStudents;
+
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
     }
 }

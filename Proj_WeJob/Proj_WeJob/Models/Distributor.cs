@@ -57,6 +57,10 @@ namespace Proj_WeJob.Models.DAL
             DBservices db = new DBservices();
             return db.deleteDistributor(companyNo);
         }
-
+        public int GetAmountDistributors()
+        {
+            DBservices db = new DBservices();
+            return db.GetAmountDistributors("DBConnectionString");
+        }
     }
 }
