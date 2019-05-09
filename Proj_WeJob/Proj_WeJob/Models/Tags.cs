@@ -9,7 +9,7 @@ namespace Proj_WeJob.Models
     public class Tags
     {
         //properties      
-        public int Id { get; set; }
+        public int SubCategoryNo { get; set; }
         public string TagName { get; set; }
         public int Count { get; set; }
 

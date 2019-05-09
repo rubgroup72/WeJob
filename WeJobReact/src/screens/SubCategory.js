@@ -18,7 +18,7 @@ export default class SubCategory extends React.Component{
         selectedCategory: 0,
         subCategoriesList: [],
         loadingVisible: false,
-        //selectedSubDepartment: 0,
+        studentId: '',
         email:'',
         searchTerm: '',
         selectedSubCategoryList: [],
@@ -27,22 +27,31 @@ export default class SubCategory extends React.Component{
   }
 
   componentWillMount() {
+    //הבאת שם הקטגוריה שנבחרה מהזיכרון הלוקאלי
+    AsyncStorage.getItem(Global.USER_SELECTED_CATEGORY_NAME).then((CategoryName) => {
+    this.setState({ selectedCategoryName: CategoryName });
+    }); 
+    //הבאת מספר הקטגוריה שנבחרה מהזיכרון הלוקאלי
     AsyncStorage.getItem(Global.USER_SELECTED_CATEGORY_CODE).then((SelectedCategoryCode) => {
         this.setState({ selectedCategory: SelectedCategoryCode });
         this.fetchSubCategoryCodeFromServer();
     });
-    AsyncStorage.getItem(Global.USER_EMAIL).then((Email) => {
-        this.setState({ email: Email });
+    //הבאת אובייקט הסטודנט מהזיכרון הלוקאלי
+    AsyncStorage.getItem(Global.ASYNC_STORAGE_STUDEMT).then((jsonStudent) => {
+        if (jsonStudent !== null) {
+            var student = JSON.parse(jsonStudent);
+            this.setState({
+                studentId: student.StudentId
+            });
+        }
     });
-    AsyncStorage.getItem(Global.USER_SELECTED_CATEGORY_NAME).then((CategoryName) => {
-        this.setState({ selectedCategoryName: CategoryName });
-    }); 
 }
 
+//הבאת השמות של התגיות מהדטא בייס
 fetchSubCategoryCodeFromServer = () => {
     const httpClient = axios.create();
     httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
-    var url = Global.BASE_URL +'AppGetTagsbyCategory?categoryCode=' + this.state.selectedCategory;
+    var url = Global.BASE_URL +'AppSubCategoryController?categoryCode=' + this.state.selectedCategory;
     httpClient.get(url)
     .then((response) => {
         this.setState({ subCategoriesList: response.data, loadingVisible: false });
@@ -52,6 +61,7 @@ fetchSubCategoryCodeFromServer = () => {
     });
 }
 
+//פוקנציה שמפועלת בעת בחירת התגיות הרצויות
 selectedSubCategoryEvent = (i) => {
     var currentSelectedSubCategoryList = this.state.selectedSubCategoryList;
     if (!currentSelectedSubCategoryList.includes(i)) {
@@ -63,6 +73,8 @@ selectedSubCategoryEvent = (i) => {
 
     this.setState({ selectedSubCategoryList: currentSelectedSubCategoryList });
 }
+
+//יצירת טבלה כך שבכל שורה יופיעו 2 תגיות
 getTableRows = () => {
     var tableRows = [];
     var arr = this.state.subCategoriesList;
@@ -79,28 +91,53 @@ getTableRows = () => {
         if (this.state.searchTerm != '' && !arr[i].TagName.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
             continue;
 
-        var isSelected = currentSelectedSubCategoryList.includes(arr[i].Id);
+        var isSelected = currentSelectedSubCategoryList.includes(arr[i].SubCategoryNo);
         if (this.state.searchTerm == '' && amountOfResults >= maxResults && !isSelected)
             continue;
 
         tempRow.push(<RoundedButton text = {arr[i].TagName} 
             background = { isSelected ? colors.white : 'transparent' }
             textColor = { isSelected ? colors.green01 : 'white' } 
-            handleOnPress = {this.selectedSubCategoryEvent.bind(this, arr[i].Id)}
+            handleOnPress = {this.selectedSubCategoryEvent.bind(this, arr[i].SubCategoryNo)}
             />);
         amountOfResults++;
     }
-
     if (tempRow.length != 0)
         tableRows.push(tempRow);
 
     return tableRows;
 }
 
-
+//חיפוש תגיות
   searchUpdated(term) {
     this.setState({ searchTerm: term })
   }
+
+//השמת הקטגוריות הנבחרות לדטא בייס
+handleNextButtonClicked = () => {
+    var tagsList = [];
+    for (var i = 0; i < this.state.selectedSubCategoryList.length; ++i) {
+        tagsList.push({ SubCategoryNo: this.state.selectedSubCategoryList[i] });
+    }
+
+    const httpClient = axios.create();
+    httpClient.defaults.timeout = 15000;
+    httpClient.post(Global.BASE_URL +'AppSubCategoryController', {
+        TagsList: tagsList,
+        StudentId: this.state.studentId
+    }, 
+    )
+    .then((response) => {
+        this.setState({ loadingVisible: false });
+        alert ('hi');
+        //this.props.navigation.navigate('Category');
+    })
+    .catch((error) => {
+        this.setState({ loadingVisible: false });
+        alert (error.response.status);
+    });
+}
+
 
   static navigationOptions = ({ navigation }) => {
     const { state } = navigation

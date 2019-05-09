@@ -12,6 +12,7 @@ namespace Proj_WeJob.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AppCategoryController : ApiController
     {
+        //פונקציה שמביאה את כל הקטגוריות
         [HttpGet]
         [Route("api/Category")]
         public List<Category> GET()

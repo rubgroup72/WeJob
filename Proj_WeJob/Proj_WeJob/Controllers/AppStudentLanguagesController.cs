@@ -13,6 +13,7 @@ namespace Proj_WeJob.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AppStudentLanguagesController : ApiController
     {
+        //פוקנציה שמביאה את השפות שהסטודנט בחר 
         [HttpGet]
         public List<Language> Get(int studentId)
         {
@@ -20,6 +21,7 @@ namespace Proj_WeJob.Controllers
             return s.GetLanguages();
         }
 
+        //פוקנציה שמעדכנת לסטודנט את השפות שהוא בחר
         [HttpPost]
         public void Post([FromBody] Student s)
         {

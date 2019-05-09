@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.202
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proj_WeJob", "Proj_WeJob\Proj_WeJob.csproj", "{CBF109EB-76EE-4E60-BFCA-1B422290CA64}"
 EndProject
@@ -11,8 +11,8 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CBF109EB-76EE-4E60-BFCA-1B422290CA64}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{CBF109EB-76EE-4E60-BFCA-1B422290CA64}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{CBF109EB-76EE-4E60-BFCA-1B422290CA64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBF109EB-76EE-4E60-BFCA-1B422290CA64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBF109EB-76EE-4E60-BFCA-1B422290CA64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBF109EB-76EE-4E60-BFCA-1B422290CA64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

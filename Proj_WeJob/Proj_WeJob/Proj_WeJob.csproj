@@ -204,7 +204,7 @@
     <Compile Include="Controllers\AppDepartmentController.cs" />
     <Compile Include="Controllers\AppFacebookController.cs" />
     <Compile Include="Controllers\AppGetStudentByEmailController.cs" />
-    <Compile Include="Controllers\AppGetTagsController.cs" />
+    <Compile Include="Controllers\AppSubCategoryController.cs" />
     <Compile Include="Controllers\AppLoginController.cs" />
     <Compile Include="Controllers\AppPersonalInfoController.cs" />
     <Compile Include="Controllers\AppRegisterController.cs" />

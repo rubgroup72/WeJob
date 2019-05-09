@@ -1148,13 +1148,14 @@ namespace Proj_WeJob.Models.DAL
             }
         }
 
-        //פונקציית עדכון שםות סטודנט
+        //פונקציית עדכון שפות סטודנט
         public void UpdateStudentLanguages(int studentId, List<Language> languages)
         {
             RemoveStudentLanguages(studentId);
             AddStudentLanguages(studentId, languages);
         }
-        //פונקציות עזר
+
+        //  פונקציות עזר לשפות
         private void RemoveStudentLanguages(int studentId)
         {
             SqlConnection con;
@@ -1231,6 +1232,90 @@ namespace Proj_WeJob.Models.DAL
             }
         }
 
+        //פונקציית עדכון תגיות סטודנט
+        public void UpdateStudentSubCategories(int studentId, List<Tags> tags)
+        {
+            RemoveStudentTags(studentId);
+            AddStudentTags(studentId, tags);
+        }
+
+        //  פונקציות עזר לתגיות
+        private void RemoveStudentTags(int studentId)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            String cStr = "DELETE FROM Student_SubCategory WHERE StudentId = " + studentId + ";";     // helper method to build the insert string
+            cmd = CreateCommand(cStr, con);             // create the command '" + per.Gmail + "';"
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+        }
+        private void AddStudentTags(int studentId, List<Tags> tags)
+        {
+            SqlConnection con = null;
+            if (tags == null || tags.Count == 0)
+                return;
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+
+                String addStr = "Insert Into Student_SubCategory Values ";
+                bool isFirst = true;
+                foreach (var tag in tags)
+                {
+
+                    if (isFirst)
+                    {
+                        addStr += String.Format("({0}, {1})", tag.SubCategoryNo, studentId);
+                        isFirst = false;
+                    }
+                    else
+                        addStr += String.Format(",({0}, {1})", tag.SubCategoryNo, studentId);
+                }
+                if (isFirst)
+                    return;
+
+                var cmd = CreateCommand(addStr, con);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+
         //פונקציה שמחזירה רשימה של תגיות 
         public List<Tags> GetListTags(int CategoryCode)
         {
@@ -1249,7 +1334,7 @@ namespace Proj_WeJob.Models.DAL
                 {   // Read till the end of the data into a row
                     Tags la = new Tags
                     {
-                        Id = Convert.ToInt32(dr["Id"]),
+                        SubCategoryNo = Convert.ToInt32(dr["SubCategoryNo"]),
                         TagName = Convert.ToString(dr["TagName"]),
                         Count = Convert.ToInt32(dr["Count"])
                     };
