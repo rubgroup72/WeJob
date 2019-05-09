@@ -12,11 +12,12 @@ import colors from '../../styles/colors';
 
 export default class InputField extends Component{
     render() {
-        const { labelText, labelTextSize, labelColor, textColor,borderBottomColor, inputType, customStyle, onChangeTextEvent, textValue } = this.props;
+        const { labelText, labelTextSize, labelColor, textColor,borderBottomColor, inputType, customStyle, onChangeTextEvent, textValue, isNotEditable } = this.props;
         const fontSize = labelTextSize || 14;
         const color = labelColor || colors.white;
         const inputColor = textColor || colors.white;
         const borderBottom = borderBottomColor || 'transparent';
+        const isEditable = isNotEditable === 'true' ? false: true;
 
         return (
             <View style = {[customStyle, styles.wrapper]}>
@@ -27,6 +28,7 @@ export default class InputField extends Component{
              secureTextEntry = {inputType === 'password'}
              onChangeText = {onChangeTextEvent}
              value = {textValue}
+             editable = {isEditable}
             />
             </View>
         );
@@ -43,6 +45,7 @@ InputField.propTypes = {
     customStyle: PropTypes.object,
     onChangeTextEvent: PropTypes.func,
     textValue: PropTypes.string,
+    isNotEditable: PropTypes.string,
 
 };
 

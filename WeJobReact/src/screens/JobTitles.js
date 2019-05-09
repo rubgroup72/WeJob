@@ -11,7 +11,7 @@ import axios from 'axios';
 
 
 
-export default class SubCategory extends React.Component{
+export default class JobTitles extends React.Component{
  constructor(props) {
     super(props);
     this.state = {
@@ -26,10 +26,7 @@ export default class SubCategory extends React.Component{
   }
 
   componentWillMount() {
-    //הבאת שם הקטגוריה שנבחרה מהזיכרון הלוקאלי
-    AsyncStorage.getItem(Global.USER_SELECTED_CATEGORY_NAME).then((CategoryName) => {
-    this.setState({ selectedCategoryName: CategoryName });
-    }); 
+
     //הבאת מספר הקטגוריה שנבחרה מהזיכרון הלוקאלי
     AsyncStorage.getItem(Global.USER_SELECTED_CATEGORY_CODE).then((SelectedCategoryCode) => {
         this.setState({ selectedCategory: SelectedCategoryCode });
@@ -129,7 +126,7 @@ handleNextButtonClicked = () => {
     .then((response) => {
         this.setState({ loadingVisible: false });
         alert ('hi');
-        this.props.navigation.navigate('JobTitles');
+        //this.props.navigation.navigate('Category');
     })
     .catch((error) => {
         this.setState({ loadingVisible: false });
@@ -159,8 +156,7 @@ handleNextButtonClicked = () => {
                         <Text style = {styles.welcomeText}> 
                                 { this.state.message }
                             </Text>
-                        <Text style = {styles.logInHeader}>מה מעניין אותך בעולם </Text>
-                        <Text style = {styles.logInHeaderCatName}> ה{this.state.selectedCategoryName}</Text>
+                        <Text style = {styles.logInHeader}>איזה תפקיד תרצה לעשות </Text>
                         </View>
                         <View>
                             <SearchInput 

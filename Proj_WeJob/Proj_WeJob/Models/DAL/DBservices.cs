@@ -54,7 +54,35 @@ namespace Proj_WeJob.Models.DAL
 
             return cmd;
         }
-
+        //פונקציה שמקבלת שורה וממירה שדה מספרי למספר
+        private int GetIntFromSqlDataReader(SqlDataReader dr, string propName)
+        {
+            try
+            {
+                return Convert.ToInt32(dr[propName]);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        //פונקציה שמייצרת אובייקט של סטודנט
+        private Student CreateStudentFromSqlDataReader(SqlDataReader dr)
+        {
+            return new Student
+                        (
+                        Convert.ToInt32(dr["StudentID"]),
+                        Convert.ToString(dr["FirstName"]),
+                        Convert.ToString(dr["LastName"]),
+                        Convert.ToString(dr["CellPhone"]),
+                        Convert.ToString(dr["Email"]),
+                        Convert.ToString(dr["Gender"]),
+                        Convert.ToString(dr["DepartmentName"]),
+                        Convert.ToString(dr["SubDepartmentName"]),
+                        GetIntFromSqlDataReader(dr, "DepartmentDerpartmentCode"),
+                        GetIntFromSqlDataReader(dr, "SubDepartmentCode")
+                        );
+        }
         ///+++++++++הוספת מפיץ חדש++++++++++++++++++
         public int InsertDistibutor(Distributor distributor)
         {
@@ -423,19 +451,7 @@ namespace Proj_WeJob.Models.DAL
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
                 while (dr.Read())
                 {   // Read till the end of the data into a row
-                    Student s = new Student
-                        (
-                        Convert.ToInt32(dr["StudentID"]),
-                        Convert.ToString(dr["FirstName"]),
-                        Convert.ToString(dr["LastName"]),
-                        Convert.ToString(dr["CellPhone"]),
-                        Convert.ToString(dr["Email"]),
-                        Convert.ToString(dr["Gender"]),
-                        Convert.ToString(dr["DepartmentName"]),
-                        Convert.ToString(dr["SubDepartmentName"])
-
-                        );
-                    ld.Add(s);
+                    ld.Add(CreateStudentFromSqlDataReader(dr));
                 }
 
                 return ld;
@@ -467,18 +483,7 @@ namespace Proj_WeJob.Models.DAL
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
                 while (dr.Read())
                 {   // Read till the end of the data into a row
-                    Student s = new Student
-                        (
-                        Convert.ToInt32(dr["StudentID"]),
-                        Convert.ToString(dr["FirstName"]),
-                        Convert.ToString(dr["LastName"]),
-                        Convert.ToString(dr["CellPhone"]),
-                        Convert.ToString(dr["Email"]),
-                        Convert.ToString(dr["Gender"]),
-                        Convert.ToString(dr["DepartmentName"]),
-                        Convert.ToString(dr["SubDepartmentName"])
-                        );
-                    return s;
+                    return CreateStudentFromSqlDataReader(dr);
                 }
             }
             catch (Exception ex)
@@ -712,18 +717,7 @@ namespace Proj_WeJob.Models.DAL
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
                 while (dr.Read())
                 {   // Read till the end of the data into a row
-                    Student s = new Student
-                          (
-                          Convert.ToInt32(dr["StudentID"]),
-                          Convert.ToString(dr["FirstName"]),
-                          Convert.ToString(dr["LastName"]),
-                          Convert.ToString(dr["CellPhone"]),
-                          Convert.ToString(dr["Email"]),
-                          Convert.ToString(dr["Gender"]),
-                          Convert.ToString(dr["DepartmentName"]),
-                          Convert.ToString(dr["SubDepartmentName"])
-                          );
-                    student.Add(s);
+                    student.Add(CreateStudentFromSqlDataReader(dr));
                 }
 
                 return student;

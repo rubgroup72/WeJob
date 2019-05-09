@@ -107,7 +107,7 @@ export default class Register extends React.Component{
                 firstLang: firstLanguage, 
                 secondLang: secondLanguage, 
                 thirdLang: thirdLanguage,
-                firstDegree: 2, // firstDegree,
+                firstDegree: firstDegree,
                 secondDegree: secondDegree,
                 thirdDegree: thirdDegree,
             });
@@ -132,7 +132,6 @@ export default class Register extends React.Component{
         )
         .then((response) => {
             this.setState({ loadingVisible: false });
-            alert ('hi');
             this.props.navigation.navigate('Category');
         })
         .catch((error) => {
