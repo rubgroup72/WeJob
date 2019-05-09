@@ -248,6 +248,7 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="css\forHomePage.css" />
     <Content Include="css\main.css" />
     <Content Include="css\MyStyle.css" />
     <Content Include="css\util.css" />
@@ -269,6 +270,7 @@
     <Content Include="images\img-01.png" />
     <Content Include="js\main.js" />
     <Content Include="Pages\HomePage.html" />
+    <Content Include="Pages\HomePage1.html" />
     <Content Include="Pages\images\dddd.png" />
     <Content Include="Pages\images\logoWeJob.png" />
     <Content Include="Pages\MatchingSubCategories.html" />
