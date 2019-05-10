@@ -75,5 +75,16 @@ namespace Proj_WeJob.Models.DAL
             DBservices dbs = new DBservices();
             return dbs.GetJob("DBConnectionString", JobNo);
         }
+        public int GetAmountJobsGood()
+        {
+            DBservices db = new DBservices();
+            return db.GetAmountJobsGood("DBConnectionString");
+        }
+        public int GetAmountJobsBad()
+        {
+            DBservices db = new DBservices();
+            return db.GetAmountJobsBad("DBConnectionString");
+        }
+
     }
 }

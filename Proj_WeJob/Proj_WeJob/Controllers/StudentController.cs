@@ -47,5 +47,12 @@ namespace Proj_WeJob.Controllers
             s.UpdateData();
             return s;
         }
+        [HttpGet]
+        [Route("api/AmountStudents")]
+        public int GET()
+        {
+            Student d = new Student();
+            return d.GetAmountStudents();
+        }
     }
 }

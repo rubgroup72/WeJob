@@ -38,5 +38,14 @@ namespace Proj_WeJob.Controllers
             Distributor d = new Distributor();
             d.deleteDistributor(companyNo);
         }
+        
+        //הפעלת פונקציה שמחזירה את כמות המעסיקים
+        [HttpGet]
+        [Route("api/AmountDistributors")]
+        public int GET()
+        {
+            Distributor d = new Distributor();
+            return d.GetAmountDistributors();
+        }
     }
 }
