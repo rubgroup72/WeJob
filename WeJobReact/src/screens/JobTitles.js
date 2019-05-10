@@ -16,12 +16,11 @@ export default class JobTitles extends React.Component{
     super(props);
     this.state = {
         selectedCategory: 0,
-        subCategoriesList: [],
+        JobTitlesList: [],
         loadingVisible: false,
         studentId: '',
         searchTerm: '',
-        selectedSubCategoryList: [],
-        selectedCategoryName: ''
+        selectedJobTitlesList: [],
     }
   }
 
@@ -30,9 +29,9 @@ export default class JobTitles extends React.Component{
     //הבאת מספר הקטגוריה שנבחרה מהזיכרון הלוקאלי
     AsyncStorage.getItem(Global.USER_SELECTED_CATEGORY_CODE).then((SelectedCategoryCode) => {
         this.setState({ selectedCategory: SelectedCategoryCode });
-        this.fetchSubCategoryCodeFromServer();
+        this.fetchJobNamesFromServer();
     });
-    //הבאת אובייקט הסטודנט מהזיכרון הלוקאלי
+    //  הבאת אובייקט הסטודנט מהזיכרון הלוקאלי והשמת המספר האישי שלו במשתנה
     AsyncStorage.getItem(Global.ASYNC_STORAGE_STUDEMT).then((jsonStudent) => {
         if (jsonStudent !== null) {
             var student = JSON.parse(jsonStudent);
@@ -43,38 +42,40 @@ export default class JobTitles extends React.Component{
     });
 }
 
-//הבאת השמות של התגיות מהדטא בייס
-fetchSubCategoryCodeFromServer = () => {
+//הבאת השמות של המשרות מהדטא בייס
+fetchJobNamesFromServer = () => {
     const httpClient = axios.create();
     httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
-    var url = Global.BASE_URL +'AppSubCategoryController?categoryCode=' + this.state.selectedCategory;
+    var url = Global.BASE_URL +'AppJobController?categoryNo=' + this.state.selectedCategory;
     httpClient.get(url)
     .then((response) => {
-        this.setState({ subCategoriesList: response.data, loadingVisible: false });
+        this.setState({ JobTitlesList: response.data, loadingVisible: false });
+        alert("ffff")
     })
     .catch((error) => {
         this.setState({ loadingVisible: false });
+        alert(this.state.selectedCategory)
     });
 }
 
-//פוקנציה שמפועלת בעת בחירת התגיות הרצויות
-selectedSubCategoryEvent = (i) => {
-    var currentSelectedSubCategoryList = this.state.selectedSubCategoryList;
-    if (!currentSelectedSubCategoryList.includes(i)) {
-        currentSelectedSubCategoryList.push(i);
+//פוקנציה שמפועלת בעת בחירת המשרות הרצויות
+selectedJobTitlesEvent = (i) => {
+    var currentSelectedJobTitlesList = this.state.selectedJobTitlesList;
+    if (!currentSelectedJobTitlesList.includes(i)) {
+        currentSelectedJobTitlesList.push(i);
     } else {
-        var index = currentSelectedSubCategoryList.indexOf(i);
-        currentSelectedSubCategoryList.splice(index, 1);
+        var index = currentSelectedJobTitlesList.indexOf(i);
+        currentSelectedJobTitlesList.splice(index, 1);
     }
 
-    this.setState({ selectedSubCategoryList: currentSelectedSubCategoryList });
+    this.setState({ selectedJobTitlesList: currentSelectedJobTitlesList });
 }
 
 //יצירת טבלה כך שבכל שורה יופיעו 2 תגיות
 getTableRows = () => {
     var tableRows = [];
-    var arr = this.state.subCategoriesList;
-    var currentSelectedSubCategoryList = this.state.selectedSubCategoryList;
+    var arr = this.state.JobTitlesList;
+    var currentSelectedJobTitlesList = this.state.selectedJobTitlesList;
     var maxResults = 10;
     var amountOfResults = 0;
     var tempRow = [];
@@ -84,17 +85,17 @@ getTableRows = () => {
             tempRow = [];
         }
 
-        if (this.state.searchTerm != '' && !arr[i].TagName.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
+        if (this.state.searchTerm != '' && !arr[i].JobName.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
             continue;
 
-        var isSelected = currentSelectedSubCategoryList.includes(arr[i].SubCategoryNo);
+        var isSelected = currentSelectedJobTitlesList.includes(arr[i].JobNo);
         if (this.state.searchTerm == '' && amountOfResults >= maxResults && !isSelected)
             continue;
 
-        tempRow.push(<RoundedButton text = {arr[i].TagName} 
+        tempRow.push(<RoundedButton text = {arr[i].JobName} 
             background = { isSelected ? colors.white : 'transparent' }
             textColor = { isSelected ? colors.green01 : 'white' } 
-            handleOnPress = {this.selectedSubCategoryEvent.bind(this, arr[i].SubCategoryNo)}
+            handleOnPress = {this.selectedJobTitlesEvent.bind(this, arr[i].JobNo)}
             />);
         amountOfResults++;
     }
@@ -109,11 +110,11 @@ getTableRows = () => {
     this.setState({ searchTerm: term })
   }
 
-//השמת הקטגוריות הנבחרות לדטא בייס
+//השמת המשרות הנבחרות לדטא בייס
 handleNextButtonClicked = () => {
     var tagsList = [];
-    for (var i = 0; i < this.state.selectedSubCategoryList.length; ++i) {
-        tagsList.push({ SubCategoryNo: this.state.selectedSubCategoryList[i] });
+    for (var i = 0; i < this.state.selectedJobTitlesList.length; ++i) {
+        tagsList.push({ SubCategoryNo: this.state.selectedJobTitlesList[i] });
     }
 
     const httpClient = axios.create();
@@ -125,7 +126,7 @@ handleNextButtonClicked = () => {
     )
     .then((response) => {
         this.setState({ loadingVisible: false });
-        alert ('hi');
+        alert ('GOOD JOB! May the odds be ever in your favor');
         //this.props.navigation.navigate('Category');
     })
     .catch((error) => {
@@ -134,7 +135,7 @@ handleNextButtonClicked = () => {
     });
 }
 
-
+//ניווט
   static navigationOptions = ({ navigation }) => {
     const { state } = navigation
     return {

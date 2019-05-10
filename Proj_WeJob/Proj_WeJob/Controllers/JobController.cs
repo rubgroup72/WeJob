@@ -36,12 +36,12 @@ namespace Proj_WeJob.Controllers
             Job d = new Job();
             return d.GetAmountJobsGood();
         }
-        [HttpGet]
-        [Route("api/AmountJobsBad")]
-        public int Get()
-        {
-            Job d = new Job();
-            return d.GetAmountJobsBad();
-        }
+        //[HttpGet]
+        //[Route("api/AmountJobsBad")]
+        //public int Get()
+        //{
+        //    Job d = new Job();
+        //    return d.GetAmountJobsBad();
+        //}
     }
 }

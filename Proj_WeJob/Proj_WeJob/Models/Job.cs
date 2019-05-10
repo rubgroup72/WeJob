@@ -20,6 +20,7 @@ namespace Proj_WeJob.Models.DAL
         public string Link { get; set; }
         public string Location { get; set; }
         public string Status { get; set; }
+        public int CategoryNo { get; set; }
         public List<String> ArrayIntrests { get; set; }
         public List<String> ArrayLanguage{ get; set; }
         public List<String> ArraySkill { get; set; }
@@ -30,7 +31,7 @@ namespace Proj_WeJob.Models.DAL
         public Job(int JobNo,string JobName, string JobDescription, string Requirements,
             int CompanyCompanyNo, string MailForCV, DateTime OpenDate, DateTime ToDate,
             string Link, List<String> ArrayIntrests, List<String> ArrayLanguage, List<String> ArraySkill, List<string> ArraySubCategory,
-            string Location,string Status)
+            string Location,string Status, int CategoryNo)
         {
             this.CompanyCompanyNo = CompanyCompanyNo;
             this.JobNo = JobNo;
@@ -43,6 +44,7 @@ namespace Proj_WeJob.Models.DAL
             this.Link = Link;
             this.Location = Location;
             this.Status = Status;
+            this.CategoryNo = CategoryNo;
             this.ArrayIntrests = ArrayIntrests;
             this.ArrayLanguage = ArrayLanguage;
             this.ArraySkill = ArraySkill;
@@ -80,11 +82,11 @@ namespace Proj_WeJob.Models.DAL
             DBservices db = new DBservices();
             return db.GetAmountJobsGood("DBConnectionString");
         }
-        public int GetAmountJobsBad()
+        //לאפליקציה - מביאה משרות לפי מספר קטגוריה
+        public List<Job> GetListJobNames(int CategoryNo)
         {
-            DBservices db = new DBservices();
-            return db.GetAmountJobsBad("DBConnectionString");
+            DBservices dbs = new DBservices();
+            return dbs.GetListJobNames(CategoryNo);
         }
-
     }
 }

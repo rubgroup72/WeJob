@@ -128,7 +128,7 @@ handleNextButtonClicked = () => {
     )
     .then((response) => {
         this.setState({ loadingVisible: false });
-        alert ('hi');
+        //alert ('hi');
         this.props.navigation.navigate('JobTitles');
     })
     .catch((error) => {

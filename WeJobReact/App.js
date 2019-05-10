@@ -13,6 +13,7 @@ import SubDepartments from './src/screens/SubDepartments';
 import JobsCarousel from './src/screens/JobsCarousel';
 import Category from './src/screens/Category';
 import SubCategory from './src/screens/SubCategory';
+import JobTitles from './src/screens/JobTitles';
 
 const MainStack = createStackNavigator({
   Main: { screen: Main },
@@ -82,9 +83,10 @@ const DepartmentsStack = createStackNavigator({
 }
 });
 
-const CategoriesStack = createStackNavigator({
+const JobStack = createStackNavigator({
   Category: {screen: Category},
   SubCategory: { screen: SubCategory },
+  JobTitles: {screen: JobTitles},
 }, {
   defaultNavigationOptions: {
     headerStyle: {
@@ -108,9 +110,8 @@ const drawerNav = createDrawerNavigator({
   'דף הבית': { screen: MainStack, },
   // 'התחברות': { screen: LogIn, }, // sync with Global.js
   'מחלקות': { screen: DepartmentsStack, },
-  //'שפות': { screen: LanguageStack, },
   'פרופיל': { screen: profileStack },
-  'קטגוריות': {screen: CategoriesStack },
+  'מסכי חיפוש משרה': {screen: JobStack },
 }, {
     initialRouteName: 'דף הבית',
     drawerPosition: 'right',

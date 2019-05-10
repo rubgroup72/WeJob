@@ -1474,7 +1474,48 @@ namespace Proj_WeJob.Models.DAL
             }
         }
 
-        public int GetAmountDistributors(string conString)
+        //פונקציה שמחזירה שמות של משרות עבור קטגוריה נתונה
+        public List<Job> GetListJobNames (int CategoryNo )
+        {
+            SqlConnection con = null;
+            List<Job> lsc = new List<Job>();
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Job where CategoryNo='" + CategoryNo + "'";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Job sc = new Job
+                    {
+                        JobNo = Convert.ToInt32(dr["JobNo"]),
+                        JobName = Convert.ToString(dr["JobName"]),
+                    };
+                    lsc.Add(sc);
+                }
+
+                return lsc;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+		
+		public int GetAmountDistributors(string conString)
         {
             SqlConnection con = null;
            int AmountDistributors = 0;
