@@ -57,6 +57,10 @@
 		76E1AE89FF334B4390736707 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E63F9ACBB73346B4AC9A59E4 /* Octicons.ttf */; };
 		1F03B7CDAACE4400B9512944 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BCCD5B4CC9BF4E138BCFD7DD /* SimpleLineIcons.ttf */; };
 		66E5060A4C4B4B24BFB1533B /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6773A74F2ECE47F0A61C300E /* Zocial.ttf */; };
+		AF37A2F8A5494C139F82D4B7 /* libRNDocumentPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3406B0E16A64E1380AEF23C /* libRNDocumentPicker.a */; };
+		51E073B47F1E4874BF664F60 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E312770A93C74DCAA9EF2B0C /* libRCTFBSDK.a */; };
+		4744413D933A4CE9A696A04A /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E79FD154F443C091C66B07 /* libReactNativeNavigation.a */; };
+		EF947FCCB36D4864BA052771 /* ReactNativeNavigationTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = E6409D0476C64B66960793AE /* ReactNativeNavigationTests.xctest */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -384,6 +388,13 @@
 		E63F9ACBB73346B4AC9A59E4 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		BCCD5B4CC9BF4E138BCFD7DD /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		6773A74F2ECE47F0A61C300E /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DC3638912A0C4112BBC3DBB1 /* RNDocumentPicker.xcodeproj */ = {isa = PBXFileReference; name = "RNDocumentPicker.xcodeproj"; path = "../node_modules/react-native-document-picker/ios/RNDocumentPicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		D3406B0E16A64E1380AEF23C /* libRNDocumentPicker.a */ = {isa = PBXFileReference; name = "libRNDocumentPicker.a"; path = "libRNDocumentPicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		7ADDCBAC155F4047A51E0ACA /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; name = "RCTFBSDK.xcodeproj"; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		E312770A93C74DCAA9EF2B0C /* libRCTFBSDK.a */ = {isa = PBXFileReference; name = "libRCTFBSDK.a"; path = "libRCTFBSDK.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		D84DB4AA466445BF80EFF940 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativeNavigation.xcodeproj"; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		48E79FD154F443C091C66B07 /* libReactNativeNavigation.a */ = {isa = PBXFileReference; name = "libReactNativeNavigation.a"; path = "libReactNativeNavigation.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		E6409D0476C64B66960793AE /* ReactNativeNavigationTests.xctest */ = {isa = PBXFileReference; name = "ReactNativeNavigationTests.xctest"; path = "ReactNativeNavigationTests.xctest"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.cfbundle; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -414,6 +425,10 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				E8B25B319799449CB56A56FF /* libRNGestureHandler.a in Frameworks */,
 				9614C74F8254407A83FB8316 /* libRNVectorIcons.a in Frameworks */,
+				AF37A2F8A5494C139F82D4B7 /* libRNDocumentPicker.a in Frameworks */,
+				51E073B47F1E4874BF664F60 /* libRCTFBSDK.a in Frameworks */,
+				4744413D933A4CE9A696A04A /* libReactNativeNavigation.a in Frameworks */,
+				EF947FCCB36D4864BA052771 /* ReactNativeNavigationTests.xctest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,6 +621,9 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				D7882CD24CC54D4C810CAC80 /* RNGestureHandler.xcodeproj */,
 				172925D000084361BD6583CA /* RNVectorIcons.xcodeproj */,
+				DC3638912A0C4112BBC3DBB1 /* RNDocumentPicker.xcodeproj */,
+				7ADDCBAC155F4047A51E0ACA /* RCTFBSDK.xcodeproj */,
+				D84DB4AA466445BF80EFF940 /* ReactNativeNavigation.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1275,11 +1293,18 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
+					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
+					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 				);
 			};
 			name = Debug;
@@ -1304,11 +1329,18 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
+					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
+					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 				);
 			};
 			name = Release;
@@ -1333,6 +1365,9 @@
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
+					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
+					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 				);
 			};
 			name = Debug;
@@ -1356,6 +1391,9 @@
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
+					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
+					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 				);
 			};
 			name = Release;
@@ -1388,11 +1426,18 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
+					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
+					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 				);
 			};
 			name = Debug;
@@ -1425,11 +1470,18 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
+					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
+					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 				);
 			};
 			name = Release;
@@ -1461,11 +1513,18 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
+					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
+					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 				);
 			};
 			name = Debug;
@@ -1497,11 +1556,18 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
+					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
+					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 				);
 			};
 			name = Release;
