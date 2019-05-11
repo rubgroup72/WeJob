@@ -153,7 +153,6 @@ export default class Department extends React.Component{
         size={85}
         type="entypo"/>
         if (this.state.engineering === true) {
-            alert ('eng is on');
             cogs = <Icon name ="cogs" 
             color='rgba(0, 0, 0, 0.38)'
             size={85}

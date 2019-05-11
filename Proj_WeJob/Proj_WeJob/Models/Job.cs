@@ -17,6 +17,7 @@ namespace Proj_WeJob.Models.DAL
         public string MailForCV { get; set; }
         public DateTime OpenDate { get; set; }
         public DateTime ToDate { get; set; }
+        public string JobStatusStatusName { get; set; }
         public string Link { get; set; }
         public string Location { get; set; }
         public string Status { get; set; }
@@ -30,7 +31,7 @@ namespace Proj_WeJob.Models.DAL
         //constructor
         public Job(int JobNo,string JobName, string JobDescription, string Requirements,
             int CompanyCompanyNo, string MailForCV, DateTime OpenDate, DateTime ToDate,
-            string Link, List<String> ArrayIntrests, List<String> ArrayLanguage, List<String> ArraySkill, List<string> ArraySubCategory,
+            string JobStatusStatusName, string Link, List<String> ArrayIntrests, List<String> ArrayLanguage, List<String> ArraySkill, List<string> ArraySubCategory,
             string Location,string Status, int CategoryNo, List <string> JobTitlesList)
         {
             this.CompanyCompanyNo = CompanyCompanyNo;
@@ -41,6 +42,7 @@ namespace Proj_WeJob.Models.DAL
             this.MailForCV = MailForCV;
             this.OpenDate = OpenDate;
             this.ToDate = ToDate;
+            this.JobStatusStatusName = JobStatusStatusName;
             this.Link = Link;
             this.Location = Location;
             this.Status = Status;
@@ -89,5 +91,14 @@ namespace Proj_WeJob.Models.DAL
             DBservices dbs = new DBservices();
             return dbs.GetListJobNames(CategoryNo);
         }
+
+        //לאפליקציה - מביאה משרות לפי תגיות נבחרות ושמות של משרות
+        public List<Job> GetListOfJobs(string studentId)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetListOfJobs(studentId);
+        }
+
+
     }
 }

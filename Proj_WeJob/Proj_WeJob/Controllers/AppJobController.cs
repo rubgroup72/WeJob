@@ -30,5 +30,13 @@ namespace Proj_WeJob.Controllers
                 return;
             s.UpdateStudentTempJobs();
         }
+
+        //הבאה של משרות לפי תגיות נבחרות ושמות נבחרים
+        [HttpGet]
+        public List<Job> GET(string studentId)
+        {
+            Job j = new Job();
+            return j.GetListOfJobs(studentId);
+        }
     }
 }

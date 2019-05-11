@@ -1,6 +1,8 @@
 import { DrawerActions } from 'react-navigation';    
 import React from 'react';
-import { StyleSheet,Text, Image, View,SafeAreaView ,TouchableHighlight} from 'react-native';
+import { StyleSheet,Text, Image, View,SafeAreaView ,TouchableHighlight, AsyncStorage} from 'react-native';
+import axios from 'axios';
+import Global from '../global';
 
 import Carousel from 'react-native-snap-carousel';
 
@@ -9,50 +11,79 @@ export default class JobsCarousel extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            studentId: '',
             activeIndex:0,
-            carouselItems: [
-            {
-                title:"עבודה 1"
-            },
-            {
-                title:"עבודה 2"
-            },
-            {
-                title:"עבודה 3"
-            },
-            {
-                title:"עבודה 4"
-            },
-            {
-                title:"עבודה 5"
+            JobsList: [],
+        }
+
+    }
+
+    componentWillMount() {
+        //  הבאת אובייקט הסטודנט מהזיכרון הלוקאלי והשמת המספר האישי שלו במשתנה
+        AsyncStorage.getItem(Global.ASYNC_STORAGE_STUDEMT).then((jsonStudent) => {
+            if (jsonStudent !== null) {
+                var student = JSON.parse(jsonStudent);
+                this.setState({
+                    studentId: student.StudentId
+                });
+                this.fetchJobsFromServer();
             }
-        ]}
+        });
+    }
+
+    //הבאת המשרות  מהדטא בייס לפי בחירת הסטודנט בהתאם לתגיות ולשמות
+    fetchJobsFromServer = () => {
+        const httpClient = axios.create();
+        httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
+        var url = Global.BASE_URL +'AppJobController?studentId=' + this.state.studentId;
+        httpClient.get(url)
+        .then((response) => {
+            this.setState({ JobsList: response.data, loadingVisible: false });
+        })
+        .catch((error) => {
+            this.setState({ loadingVisible: false });
+        });
     }
     
+
+
     static navigationOptions = ({navigation}) => {
         return {
             headerTransparent: true,
             headerTintColor: colors.green01,
-            // headerRight: (
-            //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
-            // ),
-            title: 'WeJob1',
-            headerLeft: (
+            headerRight: (
                 <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
                     <Icon name="bars" size={30} color= {colors.white} />
                 </TouchableOpacity>
+            //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
             ),
+            //title: 'WeJob1',
+            // headerLeft: (
+            //     <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
+            //         <Icon name="bars" size={30} color= {colors.white} />
+            //     </TouchableOpacity>
+            // ),
         }
       }
 
-    _renderItem({item,index}){
+    _renderItem = ({item,index}) => {
         return (
-            <View style={{flex:1,justifyContent:'center',alignItems:'center'}}> 
+            <View style={{ width: 200, height: 200, flexDirection: 'row', margin: 24, top: 200 }}>
                 <Image
-                    source={require('../assets/usericon.png')}
-                    />
-                <Text style={{color:'#fff'}} >{item.title}</Text>
-            </View>
+                style={{ width: 200, height: 200, position: 'absolute' }}
+                source={{ uri: 'https://www.dike.lib.ia.us/images/sample-1.jpg/image' }}
+                />
+                <View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)', alignSelf: 'flex-end' }}>
+                <Text style={{ color: 'white', fontSize: 20, margin: 6 }}>{item.JobName}</Text>
+                <Text style={{ color: 'white', margin: 6 }}>{item.JobDescription}</Text>
+                </View>
+             </View>
+            // <View style={{flex:1,justifyContent:'center',alignItems:'center'}}> 
+            //     <Image
+            //         source={require('../assets/usericon.png')}
+            //         />
+            //     <Text style={{color:'#fff'}} >{item.JobName}</Text>
+            // </View>
         )
     }
 
@@ -68,14 +99,13 @@ export default class JobsCarousel extends React.Component {
 
             <View>
                 <Carousel
-
-                        ref={ref => this.carousel = ref}
-                        data={this.state.carouselItems}
-                        sliderWidth={250}
-                        itemWidth={250}
-                        renderItem={this._renderItem}
-                        onSnapToItem = { index => this.setState({activeIndex:index}) }
-                    />
+                    ref={ref => this.carousel = ref}
+                    data={this.state.JobsList}
+                    sliderWidth={250}
+                    itemWidth={250}
+                    renderItem={this._renderItem}
+                    onSnapToItem = { index => this.setState({activeIndex:index}) }
+                />
             </View>
 
             <TouchableHighlight            

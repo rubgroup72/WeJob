@@ -250,7 +250,8 @@ export default class PersonalProfile extends React.Component{
                             onPress={() => { this.uploadCVButtonClicked() }} />
                             <Text
                             style={{color: colors.white}}
-                            >  העלאת קובץ קורות חיים</Text>
+                            >  העלאת קובץ קורות חיים
+                            </Text>
                             </View>
                             <RoundedButton
                             text = 'עדכון פרטים'

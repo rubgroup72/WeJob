@@ -1778,5 +1778,55 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+
+        //הבאת משרות רלוונטיות לפי תגיות נבחרות ושמות של משרות
+        public List<Job> GetListOfJobs(string studentId)
+        {
+            SqlConnection con = null;
+            //int intStudentId = Convert.ToInt32(studentId);
+            List<Job> lsc = new List<Job>();
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "select * from Job where job.JobNo in (select SJ.JobJobNo from SubCategory_Job SJ where SubCategorySubCategoryNo in (select SubCategoryNo from Student_SubCategory where StudentId= " + studentId + ") UNION select JobJobNo from Job_Student where StudentStudentId = " + studentId + ");";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Job sc = new Job
+                    {
+                        JobNo = Convert.ToInt32(dr["JobNo"]),
+                        JobName = Convert.ToString(dr["JobName"]),
+                        JobDescription = Convert.ToString(dr["JobDescription"]),
+                        Requirements = Convert.ToString(dr["Requirements"]),
+                        CompanyCompanyNo = Convert.ToInt32(dr["CompanyCompanyNo"]),
+                        MailForCV = Convert.ToString(dr["MailForCV"]),
+                        Location = Convert.ToString(dr["Location"]),
+                        JobStatusStatusName = Convert.ToString(dr["JobStatusStatusName"]),
+                        Link = Convert.ToString(dr["JobStatusStatusName"]),
+                        CategoryNo = Convert.ToInt32(dr["CategoryNo"]),
+                    };
+                    lsc.Add(sc);
+                }
+
+                return lsc;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
     }
 }
