@@ -147,6 +147,24 @@ namespace Proj_WeJob.Models.DAL
             DBservices dbs = new DBservices();
             dbs.UpdateCV(StudentId, CVFile, CVName);
         }
+        //פוקנציה שמחזירה את כל התגים שהסטודנט בחר
+        public List<int> GetSelectedSubCategories()
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetSelectedSubCategories(StudentId);
+        }
+        //פונקציה שמחזירה את הקטגוריה שהסטודנט בחר
+        public int GetSelectedCategory()
+        {
+            DBservices dbs = new DBservices();
+            var subCatergoriesList = GetSelectedSubCategories();
+            if (subCatergoriesList.Count > 0)
+            {
+                return dbs.GetStudentSelectedCategory(subCatergoriesList[0]);
+            }
+
+            return 0;
+        }
 
     }
 }

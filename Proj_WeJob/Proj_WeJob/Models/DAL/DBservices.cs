@@ -1828,5 +1828,76 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+
+        //פוקנציה שמחזירה את התגיות שנבחרו ע"י סטודנט כדי לסמן אותן באפליקציה
+        public List<int> GetSelectedSubCategories(int studentId)
+        {
+            SqlConnection con = null;
+            List<int> retList = new List<int>();
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Student_SubCategory where StudentId=" + studentId + ";";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {
+                    retList.Add(Convert.ToInt32(dr["SubCategoryNo"]));
+                }
+
+                return retList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+        //פונקציה שמחזירה את הקטגוריה שנבחרה ע"י הסטודנט כדי לסמן באפליקציה
+        public int GetStudentSelectedCategory(int subCategory)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "select CategoryCategoryNo from Category_SubCategory where SubCategorySubCategoryNo = " + subCategory;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {
+                    return Convert.ToInt32(dr["CategoryCategoryNo"]);
+                }
+
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
     }
 }

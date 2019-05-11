@@ -19,26 +19,47 @@ export default class Category extends React.Component{
         categoriesList: [],
         loadingVisible: false,
         selectedCategory: 0,
-        selectedCategoryName: ''
+        selectedCategoryName: '',
+        studentId: 0
     }
+    this.props.navigation.addListener('willFocus', this.loadComponent);
   }
 
-  componentWillMount() {
+  loadComponent = () => {
     this.fetchCategoryCodeFromServer();
 }
 
-    
-
 fetchCategoryCodeFromServer = () => {
-    const httpClient = axios.create();
-    httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
-    var url = Global.BASE_URL +'Category';
-    httpClient.get(url)
-    .then((response) => {
-        this.setState({ categoriesList: response.data, loadingVisible: false });
-    })
-    .catch((error) => {
-        this.setState({ loadingVisible: false });
+    AsyncStorage.getItem(Global.ASYNC_STORAGE_STUDEMT).then((jsonStudent) => {
+        if (jsonStudent !== null) {
+            var student = JSON.parse(jsonStudent);
+            this.setState({
+                studentId: student.StudentId,
+            });
+        }
+
+        const httpClient = axios.create();
+        httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
+        var url = Global.BASE_URL +'Category?studentId=' + this.state.studentId;
+        httpClient.get(url)
+        .then((response) => {
+            var selectedCategoryName = '';
+            if (response.data.AllCategoriesList !== undefined) {
+                for (var i = 0; i < response.data.AllCategoriesList.length; ++i) {
+                    if (response.data.AllCategoriesList[i].CategoryNo === response.data.SelectedCategoryId)
+                        selectedCategoryName = response.data.AllCategoriesList[i].CategoryName;
+                }
+            }
+            this.setState({ 
+                categoriesList: response.data.AllCategoriesList, 
+                loadingVisible: false,
+                selectedCategory: response.data.SelectedCategoryId,
+                selectedCategoryName: selectedCategoryName
+            });
+        })
+        .catch((error) => {
+            this.setState({ loadingVisible: false });
+        });
     });
 }
 

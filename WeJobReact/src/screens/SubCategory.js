@@ -23,18 +23,11 @@ export default class SubCategory extends React.Component{
         selectedSubCategoryList: [],
         selectedCategoryName: ''
     }
+
+    this.props.navigation.addListener('willFocus', this.loadComponent);
   }
 
-  componentWillMount() {
-    //הבאת שם הקטגוריה שנבחרה מהזיכרון הלוקאלי
-    AsyncStorage.getItem(Global.USER_SELECTED_CATEGORY_NAME).then((CategoryName) => {
-    this.setState({ selectedCategoryName: CategoryName });
-    }); 
-    //הבאת מספר הקטגוריה שנבחרה מהזיכרון הלוקאלי
-    AsyncStorage.getItem(Global.USER_SELECTED_CATEGORY_CODE).then((SelectedCategoryCode) => {
-        this.setState({ selectedCategory: SelectedCategoryCode });
-        this.fetchSubCategoryCodeFromServer();
-    });
+  loadComponent = () => {
     //הבאת אובייקט הסטודנט מהזיכרון הלוקאלי
     AsyncStorage.getItem(Global.ASYNC_STORAGE_STUDEMT).then((jsonStudent) => {
         if (jsonStudent !== null) {
@@ -44,16 +37,29 @@ export default class SubCategory extends React.Component{
             });
         }
     });
+    //הבאת שם הקטגוריה שנבחרה מהזיכרון הלוקאלי
+    AsyncStorage.getItem(Global.USER_SELECTED_CATEGORY_NAME).then((CategoryName) => {
+        this.setState({ selectedCategoryName: CategoryName });
+    }); 
+    //הבאת מספר הקטגוריה שנבחרה מהזיכרון הלוקאלי
+    AsyncStorage.getItem(Global.USER_SELECTED_CATEGORY_CODE).then((SelectedCategoryCode) => {
+        this.setState({ selectedCategory: SelectedCategoryCode });
+        this.fetchSubCategoryCodeFromServer();
+    });
 }
 
 //הבאת השמות של המשרות מהדטא בייס
 fetchSubCategoryCodeFromServer = () => {
     const httpClient = axios.create();
     httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
-    var url = Global.BASE_URL +'AppSubCategoryController?categoryCode=' + this.state.selectedCategory;
+    var url = Global.BASE_URL +'AppSubCategoryController?categoryCode=' + this.state.selectedCategory + '&studentId=' + this.state.studentId;
     httpClient.get(url)
     .then((response) => {
-        this.setState({ subCategoriesList: response.data, loadingVisible: false });
+        this.setState({ 
+            subCategoriesList: response.data.AllTagsList, 
+            loadingVisible: false,
+            selectedSubCategoryList: response.data.StudentTagsList
+        });
     })
     .catch((error) => {
         this.setState({ loadingVisible: false });
@@ -160,7 +166,7 @@ handleNextButtonClicked = () => {
                                 { this.state.message }
                             </Text>
                         <Text style = {styles.logInHeader}>מה מעניין אותך בעולם </Text>
-                        <Text style = {styles.logInHeaderCatName}> ה{this.state.selectedCategoryName}</Text>
+                        <Text style = {styles.logInHeaderCatName}> {this.state.selectedCategoryName}</Text>
                         </View>
                         <View>
                             <SearchInput 

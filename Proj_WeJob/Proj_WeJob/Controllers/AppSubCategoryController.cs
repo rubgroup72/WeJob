@@ -16,10 +16,15 @@ namespace Proj_WeJob.Controllers
     {
         //פונקציה שמביאה את כל התגיות מהדטא בייס לפי קוד קטגוריה
         [HttpGet]
-        public List<Tags> Get(int categoryCode)
+        public SubCatergoryResponse Get(int categoryCode, int studentId)
         {
             Tags t = new Tags();
-            return t.GetAllTags(categoryCode);
+            SubCatergoryResponse ret = new SubCatergoryResponse();
+            ret.AllTagsList = t.GetAllTags(categoryCode);
+            Student s = new Student();
+            s.StudentId = studentId;
+            ret.StudentTagsList = s.GetSelectedSubCategories();
+            return ret;
         }
 
         //עדכון תגיות שהסטודנט בחר
@@ -29,6 +34,13 @@ namespace Proj_WeJob.Controllers
             if (s == null)
                 return;
             s.UpdateStudentSubCategories();
+        }
+
+        //מחלקה שמחזיקה את כל התגיות שיש בדטא בייס ואת כל התגיות שהמשתמש בחר
+        public class SubCatergoryResponse
+        {
+            public List<Tags> AllTagsList { get; set; }
+            public List<int> StudentTagsList { get; set; }
         }
     }
 

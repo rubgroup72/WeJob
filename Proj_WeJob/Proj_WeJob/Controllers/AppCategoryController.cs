@@ -1,4 +1,5 @@
 ﻿using Proj_WeJob.Models;
+using Proj_WeJob.Models.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,21 @@ namespace Proj_WeJob.Controllers
         //פונקציה שמביאה את כל הקטגוריות
         [HttpGet]
         [Route("api/Category")]
-        public List<Category> GET()
+        public CategoryResponse GET(int studentId)
         {
             Category Ca = new Category();
-            return Ca.ReadCategories();
+            CategoryResponse CR = new CategoryResponse();
+            CR.AllCategoriesList= Ca.ReadCategories();
+            Student s = new Student();
+            s.StudentId = studentId;
+            CR.SelectedCategoryId = s.GetSelectedCategory();
+            return CR;
         }
+    }
+
+    public class CategoryResponse
+    {
+        public List<Category> AllCategoriesList { get; set; }
+        public int SelectedCategoryId { get; set; }
     }
 }
