@@ -24,14 +24,14 @@ namespace Proj_WeJob.Models.DAL
         public List<String> ArrayIntrests { get; set; }
         public List<String> ArrayLanguage{ get; set; }
         public List<String> ArraySkill { get; set; }
-
         public List<string> ArraySubCategory { get; set; }
+        public List<string> JobTitlesList { get; set; }
 
         //constructor
         public Job(int JobNo,string JobName, string JobDescription, string Requirements,
             int CompanyCompanyNo, string MailForCV, DateTime OpenDate, DateTime ToDate,
             string Link, List<String> ArrayIntrests, List<String> ArrayLanguage, List<String> ArraySkill, List<string> ArraySubCategory,
-            string Location,string Status, int CategoryNo)
+            string Location,string Status, int CategoryNo, List <string> JobTitlesList)
         {
             this.CompanyCompanyNo = CompanyCompanyNo;
             this.JobNo = JobNo;
@@ -49,6 +49,7 @@ namespace Proj_WeJob.Models.DAL
             this.ArrayLanguage = ArrayLanguage;
             this.ArraySkill = ArraySkill;
             this.ArraySubCategory = ArraySubCategory;
+            this.JobTitlesList = JobTitlesList;
         }
         public Job()
         {

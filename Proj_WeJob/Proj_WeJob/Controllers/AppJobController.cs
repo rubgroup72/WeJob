@@ -22,13 +22,13 @@ namespace Proj_WeJob.Controllers
             return j.GetListJobNames(categoryNo);
         }
 
-        // עדכון משרות שהסטודנט בחר כרלוונטיות עבורו
-        //[HttpPost]
-        //public void Post([FromBody] Student s)
-        //{
-        //    if (s == null)
-        //        return;
-        //    s.UpdateStudentTempJobs();
-        //}
+        // רישום משרות שהסטודנט בחר כרלוונטיות עבורו
+        [HttpPost]
+        public void Post([FromBody] Student s)
+        {
+            if (s == null)
+                return;
+            s.UpdateStudentTempJobs();
+        }
     }
 }

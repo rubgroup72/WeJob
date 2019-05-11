@@ -11,6 +11,8 @@ import Global from '../global';
 import InputField from '../components/form/InputField';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import { LoginManager } from 'react-native-fbsdk';
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+import RNFS from 'react-native-fs';
 
 export default class PersonalProfile extends React.Component{
 
@@ -27,11 +29,49 @@ export default class PersonalProfile extends React.Component{
             gender: '',
             department: '1',
             editGender: false,
+            studentId: 0,
+            cvName : '',
         };
 
         this.onSubmitPress = this.onSubmitPress.bind(this);
         this.props.navigation.addListener('willFocus', this.loadComponent);
       }
+      uploadCVButtonClicked = () => {
+        DocumentPicker.show({
+            filetype: [DocumentPickerUtil.allFiles()],
+          },(error,res) => {
+              if (error !== undefined && error !== null) {
+                alert (error);
+              } else {
+                if (res.type !== 'application/pdf') {
+                    // TODO - support word too
+                      alert ('קבצים נתמכים מסוג pdf/word');
+                      return;
+                }
+
+                this.setState({ loadingVisible: true });
+                RNFS.readFile(res.uri, 'base64')
+                    .then(result => {
+                        const httpClient = axios.create();
+                        httpClient.defaults.timeout = 15000;
+                        httpClient.post(Global.BASE_URL + 'Students', { 
+                            StudentId: this.state.studentId,
+                            CVFile: result,
+                            CVName: res.fileName
+                        })
+                        .then((response) => {
+                            this.setState({ loadingVisible: false });
+                            alert ('התעדכן בהצלחה');
+                        })
+                        .catch((error) => {
+                            this.setState({ loadingVisible: false });
+                            alert (error.response.status);
+                        });
+                    })
+                    .catch(error => alert('FS-error', error));
+              }
+          });
+    }  
 
     logoutFacebook = () => {
         LoginManager.logOut();
@@ -54,7 +94,9 @@ export default class PersonalProfile extends React.Component{
                     email: student.Email,
                     phoneNumber: student.CellPhone,
                     gender: student.Gender,
-                    editGender: student.Gender === ''
+                    editGender: student.Gender === '',
+                    studentId: student.StudentId,
+                    cvName: student.CVName,
                 });
             }
         });
@@ -199,6 +241,11 @@ export default class PersonalProfile extends React.Component{
                                     customStyle = {{marginBottom: 30}}
                                     textValue = {this.state.phoneNumber }
                             ></InputField>
+                            <RoundedButton
+                            text = 'העלאת קו"ח'
+                            textColor = {colors.green01}
+                            background= {colors.white}
+                            handleOnPress={() => { this.uploadCVButtonClicked() }} />
                             <RoundedButton
                             text = 'עדכון פרטים'
                             textColor = {colors.green01}

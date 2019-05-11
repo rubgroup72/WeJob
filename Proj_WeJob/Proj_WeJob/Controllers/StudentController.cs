@@ -44,6 +44,11 @@ namespace Proj_WeJob.Controllers
         {
             if (s == null)
                 return null;
+            if (!string.IsNullOrEmpty(s.CVName)) //אם מצורפים קורות חיים לבקשה
+            {
+                s.UpdateCV();
+                return s;
+            }
             s.UpdateData();
             return s;
         }

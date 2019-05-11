@@ -46,7 +46,7 @@ export default class SubCategory extends React.Component{
     });
 }
 
-//הבאת השמות של התגיות מהדטא בייס
+//הבאת השמות של המשרות מהדטא בייס
 fetchSubCategoryCodeFromServer = () => {
     const httpClient = axios.create();
     httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;

@@ -80,7 +80,8 @@ namespace Proj_WeJob.Models.DAL
                         Convert.ToString(dr["DepartmentName"]),
                         Convert.ToString(dr["SubDepartmentName"]),
                         GetIntFromSqlDataReader(dr, "DepartmentDerpartmentCode"),
-                        GetIntFromSqlDataReader(dr, "SubDepartmentCode")
+                        GetIntFromSqlDataReader(dr, "SubDepartmentCode"),
+                        Convert.ToString(dr["CV_Name"])
                         );
         }
         ///+++++++++הוספת מפיץ חדש++++++++++++++++++
@@ -1309,7 +1310,6 @@ namespace Proj_WeJob.Models.DAL
             }
         }
 
-
         //פונקציה שמחזירה רשימה של תגיות 
         public List<Tags> GetListTags(int CategoryCode)
         {
@@ -1650,6 +1650,120 @@ namespace Proj_WeJob.Models.DAL
 
                 return AmountJobsGood;
 
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+        //פונקציית עדכון תגיות סטודנט
+        public void UpdateStudentTempJobs(int studentId, List<Job> jobTitles)
+        {
+            RemoveStudentTempJobs(studentId);
+            AddStudentTempJobs(studentId, jobTitles);
+        }
+
+        //  פונקציות עזר לתגיות
+        private void RemoveStudentTempJobs(int studentId)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            String cStr = "DELETE FROM Job_Student WHERE StudentStudentId = " + studentId + ";";     // helper method to build the insert string
+            cmd = CreateCommand(cStr, con);             // create the command '" + per.Gmail + "';"
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+        }
+        private void AddStudentTempJobs(int studentId, List<Job> jobs)
+        {
+            SqlConnection con = null;
+            if (jobs == null || jobs.Count == 0)
+                return;
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+
+                String addStr = "Insert Into Job_Student Values ";
+                bool isFirst = true;
+                foreach (var job in jobs)
+                {
+
+                    if (isFirst)
+                    {
+                        addStr += String.Format("({0}, {1}, {2}, '{3}')", job.JobNo, studentId, "GETDATE()", "");
+                        isFirst = false;
+                    }
+                    else
+                        addStr += String.Format(",({0}, {1}, {2}, '{3}')", job.JobNo, studentId, "GETDATE()", "");
+                }
+                if (isFirst)
+                    return;
+
+                var cmd = CreateCommand(addStr, con);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+        //פונקציית עדכון קורות חיים בדטא בייס
+        public int UpdateCV(int StudentId, string CVFile, string CVName)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+
+                String updateSTR = "UPDATE STUDENT SET ";
+                updateSTR += " CV_Name='" + CVName + "', ";
+                updateSTR += " CV_File='" + CVFile + "' ";
+                updateSTR += " Where StudentId= " + StudentId + ";";
+                SqlCommand cmd = new SqlCommand(updateSTR, con);
+
+                var t = cmd.ExecuteNonQuery();
+                return t;
             }
             catch (Exception ex)
             {

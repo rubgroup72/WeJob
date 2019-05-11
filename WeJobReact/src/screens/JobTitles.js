@@ -21,6 +21,7 @@ export default class JobTitles extends React.Component{
         studentId: '',
         searchTerm: '',
         selectedJobTitlesList: [],
+
     }
   }
 
@@ -50,7 +51,6 @@ fetchJobNamesFromServer = () => {
     httpClient.get(url)
     .then((response) => {
         this.setState({ JobTitlesList: response.data, loadingVisible: false });
-        alert("ffff")
     })
     .catch((error) => {
         this.setState({ loadingVisible: false });
@@ -71,7 +71,7 @@ selectedJobTitlesEvent = (i) => {
     this.setState({ selectedJobTitlesList: currentSelectedJobTitlesList });
 }
 
-//יצירת טבלה כך שבכל שורה יופיעו 2 תגיות
+//יצירת טבלה כך שבכל שורה יופיעו 2 משרות
 getTableRows = () => {
     var tableRows = [];
     var arr = this.state.JobTitlesList;
@@ -112,15 +112,15 @@ getTableRows = () => {
 
 //השמת המשרות הנבחרות לדטא בייס
 handleNextButtonClicked = () => {
-    var tagsList = [];
+    var jobTtilesList = [];
     for (var i = 0; i < this.state.selectedJobTitlesList.length; ++i) {
-        tagsList.push({ SubCategoryNo: this.state.selectedJobTitlesList[i] });
+        jobTtilesList.push({ JobNo: this.state.selectedJobTitlesList[i] });
     }
 
     const httpClient = axios.create();
     httpClient.defaults.timeout = 15000;
-    httpClient.post(Global.BASE_URL +'AppSubCategoryController', {
-        TagsList: tagsList,
+    httpClient.post(Global.BASE_URL +'AppJobController', {
+        JobTitlesList: jobTtilesList,
         StudentId: this.state.studentId
     }, 
     )

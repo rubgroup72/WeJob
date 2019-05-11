@@ -22,9 +22,12 @@ namespace Proj_WeJob.Models.DAL
         public int SubDepartmentCode { get; set; }
         public List<Language> LanguagesList { get; set; }
         public List<Tags> TagsList { get; set; }
+        public List <Job> JobTitlesList { get; set; }
+        public string CVName { get; set; }
+        public string CVFile { get; set; }
 
         //constructor
-        public Student(int _studentId, string _firstName, string _lastName, string _cellPhone, string _email, string _gender, string _departmentName, string _subDepartmentName, int _departmentCode, int _subDepartmentCode)
+        public Student(int _studentId, string _firstName, string _lastName, string _cellPhone, string _email, string _gender, string _departmentName, string _subDepartmentName, int _departmentCode, int _subDepartmentCode, String _cvName)
         {
             this.StudentId = _studentId;
             this.FirstName = _firstName;
@@ -36,6 +39,7 @@ namespace Proj_WeJob.Models.DAL
             this.SubDepartmentName = _subDepartmentName;
             this.DepartmentCode = _departmentCode;
             this.SubDepartmentCode = _subDepartmentCode;
+            this.CVName = _cvName;
         }
 
         public Student()
@@ -123,10 +127,25 @@ namespace Proj_WeJob.Models.DAL
             DBservices dbs = new DBservices();
             dbs.UpdateStudentSubCategories(StudentId, TagsList);
         }
+
         public int GetAmountStudents()
         {
             DBservices db = new DBservices();
             return db.GetAmountStudents("DBConnectionString");
+        }
+
+        //עדכון משרות זמניות שהסטודנט בחר
+        public void UpdateStudentTempJobs()
+        {
+            DBservices dbs = new DBservices();
+            dbs.UpdateStudentTempJobs(StudentId, JobTitlesList);
+        }
+
+        //העלאת קורות חיים של הסטודנט באפליקציה
+        public void UpdateCV()
+        {
+            DBservices dbs = new DBservices();
+            dbs.UpdateCV(StudentId, CVFile, CVName);
         }
 
     }
