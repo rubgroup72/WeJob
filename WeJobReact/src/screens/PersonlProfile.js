@@ -241,11 +241,17 @@ export default class PersonalProfile extends React.Component{
                                     customStyle = {{marginBottom: 30}}
                                     textValue = {this.state.phoneNumber }
                             ></InputField>
-                            <RoundedButton
-                            text = 'העלאת קו"ח'
-                            textColor = {colors.green01}
-                            background= {colors.white}
-                            handleOnPress={() => { this.uploadCVButtonClicked() }} />
+                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                            <Icon name="paperclip" 
+                            size={40} 
+                            color={colors.white}
+                            style={{textAlign: "left"}}
+                            text = "העלאת קורות חיים"
+                            onPress={() => { this.uploadCVButtonClicked() }} />
+                            <Text
+                            style={{color: colors.white}}
+                            >  העלאת קובץ קורות חיים</Text>
+                            </View>
                             <RoundedButton
                             text = 'עדכון פרטים'
                             textColor = {colors.green01}

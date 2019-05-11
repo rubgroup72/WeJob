@@ -79,7 +79,7 @@ namespace Proj_WeJob.Models.DAL
                         Convert.ToString(dr["Gender"]),
                         Convert.ToString(dr["DepartmentName"]),
                         Convert.ToString(dr["SubDepartmentName"]),
-                        GetIntFromSqlDataReader(dr, "DepartmentDerpartmentCode"),
+                        GetIntFromSqlDataReader(dr, "DepartmentDepartmentCode"),
                         GetIntFromSqlDataReader(dr, "SubDepartmentCode"),
                         Convert.ToString(dr["CV_Name"])
                         );
