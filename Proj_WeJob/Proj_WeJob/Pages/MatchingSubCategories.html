@@ -21,7 +21,7 @@
     <script>
 
         $(document).ready(function () {
-
+            localStorage.removeItem("SubCats");
             $("#pForm").submit(f1);
             ajaxCall("GET", "../api/Category", "", successGetCategory, error);
         });
@@ -45,7 +45,10 @@
                 }
                 str += " </select>";
                 document.getElementById("category").innerHTML = str;
-                
+                if (localStorage.getItem("SubCats") != null) {
+               document.getElementById("subcategory").innerHTML += '<label>' + localStorage.getItem("SubCats") + ', </label>';
+
+                }
             }
             catch (err) {
                 alert(err);
@@ -57,14 +60,32 @@
             SubCategory = SubCategoryData;
             try {
                 str = '<label for="exampleFormControlInput1">חיפוש תת קטגוריה</label>';
-                str += '<input type="text" class="form-control" id="search" onchange=getSubCatFromSearch() />';
+                str += '<input type="text" class="form-control" id="search" onchange=getSubCatFromSearch() />';   
                 str += "<select class='form-control' required multiple id='exampleFormControlSelect2'>";
                 str += "<option value='בחר'  disabled selected>בחר</option>";
                 for (var i = 0; i < SubCategoryData.length; i++) {
-                    str += "<option class='selectCat' value='" + SubCategory[i].SubCategoryNo + "'>" + SubCategory[i].SubCategoryName + '</option >';
+                    var code = SubCategory[i].SubCategoryNo.toString();
+                    str += "<option class='selectCat' value='" + SubCategory[i].SubCategoryNo + "'  onclick=labelSubCat(this.text,code)> " + SubCategory[i].SubCategoryName + '</option >';
                 }
                 str += " </select>";
-                document.getElementById("subcategory").innerHTML = str;
+                if (localStorage.getItem("SubCats") == null) {
+                    document.getElementById("subcategory").innerHTML = str;
+                }
+                else {
+                    // Get the existing data
+            var existing = localStorage.getItem('SubCats');
+            // If no existing data, create an array
+            // Otherwise, convert the localStorage string to an array
+                    existing = existing ? existing.split(',') : [];
+                      str1 = '<div class="form-group">';
+                    for (var i = 0; i < existing.length; i++) {
+                        str1 += '<input type="checkbox" name="fancy-checkbox-primary-custom-icons" id="fancy-checkbox-primary-custom-icons" value="' + existing[i] + '" autocomplete="off" checked onchange=changeListSubCat(this)>';
+                 str1 += '<label for="fancy-checkbox-primary-custom-icons" class="[ btn btn-default active ]">' + existing[i] + '</label>';
+                    }
+            str1 += '</div>';
+                    document.getElementById("subcategory").innerHTML = str + str1;
+                }
+
             }
            
             catch (err) {
@@ -72,7 +93,22 @@
             }
         }
 
-        
+        function labelSubCat(subcat,subCatNo) {
+          // Get the existing data
+            var existing = localStorage.getItem('SubCats');
+            // If no existing data, create an array
+            // Otherwise, convert the localStorage string to an array
+            existing = existing ? existing.split(',') : [];
+            // Add new data to localStorage Array
+            existing.push(subcat);
+            // Save back to localStorage
+            localStorage.setItem('SubCats', existing.toString());
+            str = '<div class="form-group">';
+            str += '<input type="checkbox" name="fancy-checkbox-primary-custom-icons" id="fancy-checkbox-primary-custom-icons" value="' + subcat + '" autocomplete="off" checked onchange=changeListSubCat(this)>';
+            str += '<label for="fancy-checkbox-primary-custom-icons" class="[ btn btn-default active ]">' + subcat + '</label>';
+            str += '</div>';
+            document.getElementById("subcategory").innerHTML += '<label>' + str + '</label>';
+                }
         function error(err) {
             err = JSON.parse(err.responseText);
             Swal.fire({
@@ -82,6 +118,25 @@
                 footer: err.ExceptionMessage
             });
             //swal("Error!", err.ExceptionMessage, "error");
+        }
+        function changeListSubCat(subcatremove) {
+             // Get the existing data
+            var existing = localStorage.getItem('SubCats');
+            // If no existing data, create an array
+            // Otherwise, convert the localStorage string to an array
+            existing = existing ? existing.split(',') : [];
+            // Add new data to localStorage Array
+            var arrayNewSubCat = [];
+            var j = 0;
+            for (var i = 0; i < existing.length; i++) {
+                if (existing[i] == subcatremove.defaultValue) {
+                    continue;
+                }
+                arrayNewSubCat[j] = existing[i];
+                j++;
+            }
+            // Save back to localStorage
+            localStorage.setItem('SubCats', arrayNewSubCat.toString());
         }
        
          function AddJob() {
