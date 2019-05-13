@@ -117,6 +117,7 @@ export default class Department extends React.Component{
         this.setState({ socialAndCommunitySciences: false });
         this.setState({ graduate: true });
     }
+//שמירת הקוד של המחלקה שבחר הסטודנט
     handleNextButtonClicked = () => {
         var selectedDepartmentCode = 0;
         if (this.state.engineering) {
@@ -131,7 +132,7 @@ export default class Department extends React.Component{
             alert ('חובה לבחור פקולטה');
             return;
         }
-
+//שמירת הקוד בזיכרון לוקאלי ומעבר לדף תת קטגוריה
         AsyncStorage.setItem(Global.USER_SELECTED_DEPARTMENT_CODE, selectedDepartmentCode.toString());
         this.props.navigation.navigate('SubDepartments');
     }

@@ -53,9 +53,11 @@ export default class Register extends React.Component{
         this.setState({
             loadingVisible: true
         });
+        //קריאה לדטא בייס 
         const httpClient = axios.create();
         httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
         httpClient.get( Global.BASE_URL +'language')
+        //במידה וחוזר מידע שומר בתכונה 
         .then((response) => {
             this.setState({ loadingVisible: false });
             var temp = [];
@@ -69,7 +71,7 @@ export default class Register extends React.Component{
             this.setState({ loadingVisible: false });
             alert (error.response.status);
         });
-
+//הבאת התז של הסטודנט מהזיכרון הלוקל
         AsyncStorage.getItem(Global.ASYNC_STORAGE_STUDEMT).then((jsonStudent) => {
             if (jsonStudent !== null) {
                 var student = JSON.parse(jsonStudent);
@@ -79,6 +81,7 @@ export default class Register extends React.Component{
             }
         });
     }
+    //הבאת השפות שהסטודנט בחר והשמתם בתכונות של הקומפוננטה
     fetchStudentLanguages = () => {
         const httpClient = axios.create();
         httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
@@ -116,7 +119,7 @@ export default class Register extends React.Component{
             this.setState({ loadingVisible: false });
         });
     };
-    
+    //כאשר הסטודנט לחץ על כפתור הבא ,נשמור את השפות שבחר ונכניס לדטא בייס
     handleNextButtonClicked = () => {
         var langList = [];
         langList.push({ Name: this.state.firstLang, Degree: this.state.firstDegree});
@@ -140,7 +143,7 @@ export default class Register extends React.Component{
         });
     
     }
-
+//שמירת הרמה של השפות שהסטודנט בחר
     langDegreeChanged = (index, degree) => {
         if (index === 0)
             this.setState({ firstDegree: degree });
@@ -149,7 +152,7 @@ export default class Register extends React.Component{
         else
             this.setState({ thirdDegree: degree });
     }
-
+//שמירת השפות שבחר הסטודנט
     firstLanguagesChanged = (value, index, data) => {
         this.setState({ firstLang: value });
     };
@@ -199,7 +202,8 @@ export default class Register extends React.Component{
                              style = {{color: 'white'}} //for changed text color
                              baseColor="rgba(255, 255, 255, 1)" //for initial text color
                              />
-                             <RadioForm
+                             
+                             <RadioForm //כמו כפתור רדיו 
                              radio_props={radio_props}
                              initial={this.state.firstDegree}
                              onPress={(value) => { this.langDegreeChanged(0, value); }}

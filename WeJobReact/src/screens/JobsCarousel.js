@@ -31,7 +31,7 @@ export default class JobsCarousel extends React.Component {
         });
     }
 
-    //הבאת המשרות  מהדטא בייס לפי בחירת הסטודנט בהתאם לתגיות ולשמות
+    //הבאת המשרות  מהדטא בייס לפי בחירת הסטודנט
     fetchJobsFromServer = () => {
         const httpClient = axios.create();
         httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
@@ -46,12 +46,13 @@ export default class JobsCarousel extends React.Component {
     }
     
 
-
+//העיצוב של הקרוסלה 
     static navigationOptions = ({navigation}) => {
         return {
             headerTransparent: true,
             headerTintColor: colors.green01,
             headerRight: (
+                
                 <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
                     <Icon name="bars" size={30} color= {colors.white} />
                 </TouchableOpacity>
