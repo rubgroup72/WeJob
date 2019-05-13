@@ -178,62 +178,62 @@ namespace Proj_WeJob.Models.DAL
             String command;
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
-            sb.AppendFormat("Values('{0}','{1}','{2}',{3},'{4}','{5}','{6}','{7}','{8}','{9}')", job.JobName, job.JobDescription, job.Requirements, Convert.ToInt32(job.CompanyCompanyNo), job.Location,job.MailForCV ,job.OpenDate, job.ToDate,job.Status,job.Link);
-            String prefix = "INSERT INTO Job " + "(JobName,JobDescription,Requirements,CompanyCompanyNo,Location,MailForCV,OpenDate,ToDate,JobStatusStatusName,Link) ";
+            sb.AppendFormat("Values('{0}','{1}','{2}',{3},'{4}','{5}','{6}','{7}','{8}','{9}',{10})", job.JobName, job.JobDescription, job.Requirements, Convert.ToInt32(job.CompanyCompanyNo), job.Location,job.MailForCV ,job.OpenDate, job.ToDate,job.Status,job.Link,job.CategoryNo);
+            String prefix = "INSERT INTO Job " + "(JobName,JobDescription,Requirements,CompanyCompanyNo,Location,MailForCV,OpenDate,ToDate,JobStatusStatusName,Link,CategoryNo) ";
             command = prefix + sb.ToString();
             command += "; SELECT SCOPE_IDENTITY()";
             return command;
         }
         ///+++++++++הוספת תחומי עניין למשרה++++++++++
-        public int Insert_JobInterst( Job job, int id)
-        {
-            SqlConnection con;
-            SqlCommand cmd;
-            try
-            {
-                con = connect("DBConnectionString"); // create the connection
-            }
-            catch (Exception ex)
-            {
-                // write to log
-                throw (ex);
-            }
-            String cStr = BuildInsert_JobInterst(job, id);      // helper method to build the insert string
-            cmd = CreateCommand(cStr, con);             // create the command
-            try
-            {
-                int numEffected = cmd.ExecuteNonQuery(); // execute the command
-                return numEffected;
-            }
-            catch (Exception ex)
-            {
-                return 0;
-                // write to log
-                throw (ex);
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    // close the db connection
-                    con.Close();
-                }
-            }
-        }
-        private String BuildInsert_JobInterst(Job job, int id)
-        {
-            String command = "";
-            String prefix;
-            // use a string builder to create the dynamic string
-            for (int i = 0; i < job.ArrayIntrests.Count; i++)
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.AppendFormat("Values({0},'{1}')", id.ToString(), job.ArrayIntrests[i]);
-                prefix = "INSERT INTO bgroup72_prod.dbo.Job_Intrests (JobJobNo,IntrestsIntrestName)";
-                command = command + prefix + sb.ToString() + ";";
-            }
-            return command;
-        }
+        //public int Insert_JobInterst( Job job, int id)
+        //{
+        //    SqlConnection con;
+        //    SqlCommand cmd;
+        //    try
+        //    {
+        //        con = connect("DBConnectionString"); // create the connection
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // write to log
+        //        throw (ex);
+        //    }
+        //    String cStr = BuildInsert_JobInterst(job, id);      // helper method to build the insert string
+        //    cmd = CreateCommand(cStr, con);             // create the command
+        //    try
+        //    {
+        //        int numEffected = cmd.ExecuteNonQuery(); // execute the command
+        //        return numEffected;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return 0;
+        //        // write to log
+        //        throw (ex);
+        //    }
+        //    finally
+        //    {
+        //        if (con != null)
+        //        {
+        //            // close the db connection
+        //            con.Close();
+        //        }
+        //    }
+        //}
+        //private String BuildInsert_JobInterst(Job job, int id)
+        //{
+        //    String command = "";
+        //    String prefix;
+        //    // use a string builder to create the dynamic string
+        //    for (int i = 0; i < job.ArrayIntrests.Count; i++)
+        //    {
+        //        StringBuilder sb = new StringBuilder();
+        //        sb.AppendFormat("Values({0},'{1}')", id.ToString(), job.ArrayIntrests[i]);
+        //        prefix = "INSERT INTO bgroup72_prod.dbo.Job_Intrests (JobJobNo,IntrestsIntrestName)";
+        //        command = command + prefix + sb.ToString() + ";";
+        //    }
+        //    return command;
+        //}
         //++++++++++++סיום הוספת תחומי עניין למשרה +++++++++
 
 
@@ -387,8 +387,8 @@ namespace Proj_WeJob.Models.DAL
             for (int i = 0; i < job.ArrayLanguage.Count; i++)
             {
                 StringBuilder sb = new StringBuilder();
-                sb.AppendFormat("Values('{0}','{1}')", id.ToString(), job.ArraySubCategory[i]);
-                prefix = "INSERT INTO bgroup72_prod.dbo.SubCategory_Job(SubCategorySubCategoryNo,JobJobNo)";
+                sb.AppendFormat("Values({0},{1})", id.ToString(), job.ArraySubCategory[i]);
+                prefix = "INSERT INTO bgroup72_prod.dbo.SubCategory_Job(JobJobNo,SubCategorySubCategoryNo)";
                 command = command + prefix + sb.ToString() + ";";
             }
             return command;

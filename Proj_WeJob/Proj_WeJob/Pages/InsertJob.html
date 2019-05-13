@@ -20,6 +20,7 @@
     <script>
 
         $(document).ready(function () {
+             document.getElementById("cotart").innerHTML = "כרטיס משרה לחברת  " + localStorage.getItem("NameCompany");
             if (localStorage.getItem("whatFun") == "edit" || localStorage.getItem("whatFun") == "view") {
                  uri = "../api/Job?JobNo=" + localStorage.getItem("JobNo");
                 console.log(uri);
@@ -28,7 +29,7 @@
             }
             else {
                 //הבאת נתוני כישורים,תחומי עניין ושפות מבסיס הנתונים
-                ajaxCall("GET", "../api/Interst", "", successGetInterst, error);
+                //ajaxCall("GET", "../api/Interst", "", successGetInterst, error);
                 ajaxCall("GET", "../api/Language", "", successGetLanguage, error);
                 ajaxCall("GET", "../api/Skill", "", successGetSkill, error);
             } 
@@ -47,7 +48,7 @@
             localStorage.setItem("Link", $("#Link").val());
             localStorage.setItem("Location", $("#location").val());
             localStorage.setItem("Status", $("#status").val());
-            localStorage.setItem("ArrayIntrests", $("#exampleFormControlSelect2").val());
+            //localStorage.setItem("ArrayIntrests", $("#exampleFormControlSelect2").val());
             localStorage.setItem("ArrayLanguage", $("#exampleFormControlSelect3").val());
             localStorage.setItem("ArraySkill", $("#exampleFormControlSelect4").val());
             Swal.fire({
@@ -89,21 +90,21 @@
             //סוף פונקציות להכנסת משרה
 
             // this function is activated in case of a success of intersts
-            function successGetInterst(Interstdata) {
-                interst = Interstdata;
-                try {
-                    str = "<label for='exampleFormControlSelect2'>תחומי עניין</label>";
-                    str += "<select multiple class='form-control' id='exampleFormControlSelect2'>";
-                    for (var i = 0; i < Interstdata.length; i++) {
-                        str += "<option value='" + interst[i].Name + "'>" + interst[i].Name + '</option >';
-                    }
-                    str += " </select>";
-                    document.getElementById("intersts").innerHTML = str;
-                }
-                catch (err) {
-                    alert(err);
-                }
-            }
+            //function successGetInterst(Interstdata) {
+            //    interst = Interstdata;
+            //    try {
+            //        str = "<label for='exampleFormControlSelect2'>תחומי עניין</label>";
+            //        str += "<select multiple class='form-control' id='exampleFormControlSelect2'>";
+            //        for (var i = 0; i < Interstdata.length; i++) {
+            //            str += "<option value='" + interst[i].Name + "'>" + interst[i].Name + '</option >';
+            //        }
+            //        str += " </select>";
+            //        document.getElementById("intersts").innerHTML = str;
+            //    }
+            //    catch (err) {
+            //        alert(err);
+            //    }
+            //}
             // this function is activated in case of a success of language
             function successGetLanguage(Languagedata) {
                 language = Languagedata;
@@ -232,7 +233,8 @@
                     </a>
                 </div>
                 <div class="col-xs-12">
-                    <h2>כרטיס משרה</h2>
+                    <h2 id="cotart"></h2>
+                    <!--<h2>כרטיס משרה</h2>-->
                 </div>
             </div>
             <div class="card-body col-xs-12">
@@ -293,13 +295,13 @@
                     </div>
 
                     <div class="row">
-                        <div class="form-group col-xs-12 col-md-4" id="intersts">
+                        <!--<div class="form-group col-xs-12 col-md-4" id="intersts">
+
+                        </div>-->
+                        <div class="form-group col-xs-12 col-md-6" id="languages">
 
                         </div>
-                        <div class="form-group col-xs-12 col-md-4" id="languages">
-
-                        </div>
-                        <div class="form-group col-xs-12 col-md-4" id="skills">
+                        <div class="form-group col-xs-12 col-md-6" id="skills">
 
                         </div>
                     </div>
