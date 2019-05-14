@@ -48,7 +48,7 @@ export default class SubCategory extends React.Component{
     });
 }
 
-//הבאת השמות של המשרות מהדטא בייס
+//הבאת השמות של התתי קטגוריות מהדטא בייס
 fetchSubCategoryCodeFromServer = () => {
     const httpClient = axios.create();
     httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
@@ -69,13 +69,14 @@ fetchSubCategoryCodeFromServer = () => {
 //פוקנציה שמפועלת בעת בחירת התגיות הרצויות
 selectedSubCategoryEvent = (i) => {
     var currentSelectedSubCategoryList = this.state.selectedSubCategoryList;
+    //אם הקוד של התת קטגוריה לא מופיע ברשימה בחירה נוכחית שלו נכניס אותו לרשימה
     if (!currentSelectedSubCategoryList.includes(i)) {
         currentSelectedSubCategoryList.push(i);
-    } else {
+    } else {//אם הוא כן מופיע נחליף את האינדקס שלו להיות ראשון
         var index = currentSelectedSubCategoryList.indexOf(i);
         currentSelectedSubCategoryList.splice(index, 1);
     }
-
+//נשמור את הרשימה בחירה של התתי קטגוריות
     this.setState({ selectedSubCategoryList: currentSelectedSubCategoryList });
 }
 

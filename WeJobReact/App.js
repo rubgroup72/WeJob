@@ -15,6 +15,7 @@ import Category from './src/screens/Category';
 import SubCategory from './src/screens/SubCategory';
 import JobTitles from './src/screens/JobTitles';
 
+//מעבר בין הדפים על פי ההגדרות שהגדרנו בנויגטור
 const MainStack = createStackNavigator({
   Main: { screen: Main },
   Register: { screen: Register },
@@ -82,7 +83,7 @@ const DepartmentsStack = createStackNavigator({
     }
 }
 });
-
+//יצירת תפריט עבור דף משרות
 const JobStack = createStackNavigator({
   Category: {screen: Category},
   SubCategory: { screen: SubCategory },
@@ -106,6 +107,7 @@ const JobStack = createStackNavigator({
 const hiddenDrawerItems = [
   'Register',
 ]
+//יצירת תפריט ראשי
 const drawerNav = createDrawerNavigator({
   'דף הבית': { screen: MainStack, },
   // 'התחברות': { screen: LogIn, }, // sync with Global.js

@@ -19,7 +19,7 @@ export default class JobsCarousel extends React.Component {
     }
 
     componentWillMount() {
-        //  הבאת אובייקט הסטודנט מהזיכרון הלוקאלי והשמת המספר האישי שלו במשתנה
+        //  הבאת אובייקט סטודנט מהזיכרון הלוקאלי והשמת המספר האישי שלו במשתנה
         AsyncStorage.getItem(Global.ASYNC_STORAGE_STUDEMT).then((jsonStudent) => {
             if (jsonStudent !== null) {
                 var student = JSON.parse(jsonStudent);
@@ -31,7 +31,7 @@ export default class JobsCarousel extends React.Component {
         });
     }
 
-    //הבאת המשרות  מהדטא בייס לפי בחירת הסטודנט
+    //הבאת המשרות  מהדטא בייס לפי 3 התנאים להצגת משרה (אחד לאחד בין תגיות ,אחד לאחד בין תפקיד, והאלגוריתם 
     fetchJobsFromServer = () => {
         const httpClient = axios.create();
         httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
@@ -52,7 +52,7 @@ export default class JobsCarousel extends React.Component {
             headerTransparent: true,
             headerTintColor: colors.green01,
             headerRight: (
-                
+
                 <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
                     <Icon name="bars" size={30} color= {colors.white} />
                 </TouchableOpacity>
@@ -66,7 +66,7 @@ export default class JobsCarousel extends React.Component {
             // ),
         }
       }
-
+///לכל פריט בקרוסלה נציג את הנתונים הבאים
     _renderItem = ({item,index}) => {
         return (
             <View style={{ width: 200, height: 200, flexDirection: 'row', margin: 24, top: 200 }}>

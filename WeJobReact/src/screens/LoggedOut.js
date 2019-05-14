@@ -13,13 +13,16 @@ import { LoginManager } from 'react-native-fbsdk';
 
 export default class LoggedOut extends React.Component{
 
+    //כאשר לוחץ על כפתור הירשם עוברים לדף הרשמה register
     onRegiterPress = () => {
         this.props.navigation.navigate("Register");
     };
+    //כאשר לוחץ על לינק משתמש רשום נעבור לדף כניסה login
     onLoginPress = () => {
         this.props.navigation.navigate("LogIn");
     };
-
+// כאשר לוחץ על כפתור התחבר עם פייסבוק נפתח דף פרופיל התחברות לפייסבוק 
+//נשמור בזיכרון הלוקאלי את הטוקן של ההתחברות לפייסבוק 
     handleFacebookLogin = () => {
         const navigationObj = this.props.navigation;
         const onFinishFunction = this.props.fetchFacebookUserData;

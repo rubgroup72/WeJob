@@ -179,15 +179,20 @@ export default class Main extends React.Component{
             alert(exc)
         });
     }
+    //המעבר לדפים 
     getScreenToShow = () => {
+        //כאשר האפליקציה עולה זהו הדף הראשון אליו נגיע באופן דיפולטיבי
+        // ונעביר לדף את הנתונים של המשתמש ואת הטוקן של הפייסבוק
         if (this.state.userLoggedOut) {
             return <LoggedOut fetchFacebookUserData={this.fetchFacebookUserData} 
             logoutFacebook={this.logoutFacebook}
             navigation={this.props.navigation} />;
         }
+        //אם המשתמש לא רשום במערכת מהדף של רגיסטר יעבור לדף של בחירה מחלקה
         if (this.state.navigateToDepartment) {
             return <Department navigation={this.props.navigation} />;
         }
+        //אם המשתמש רשום במערכת והוא מבצע התחברות בדרך כולשהי הוא יגיע לדף משרות
         var string = this.state.student.email + ' ' + this.state.student.name;
         return <JobsCarousel navigation={this.props.navigation} />;
     }
