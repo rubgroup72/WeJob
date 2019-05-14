@@ -48,7 +48,7 @@ export default class SubCategory extends React.Component{
     });
 }
 
-//הבאת השמות של התתי קטגוריות מהדטא בייס
+//הבאת השמות של התת קטגוריות מהדטא בייס
 fetchSubCategoryCodeFromServer = () => {
     const httpClient = axios.create();
     httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
@@ -69,35 +69,40 @@ fetchSubCategoryCodeFromServer = () => {
 //פוקנציה שמפועלת בעת בחירת התגיות הרצויות
 selectedSubCategoryEvent = (i) => {
     var currentSelectedSubCategoryList = this.state.selectedSubCategoryList;
-    //אם הקוד של התת קטגוריה לא מופיע ברשימה בחירה נוכחית שלו נכניס אותו לרשימה
+    //במידה והליסט הזמני של התת תגיות לא מכיל את התגית שהסטודנט כרגע בחר באפליק' , נכניס אותה
     if (!currentSelectedSubCategoryList.includes(i)) {
         currentSelectedSubCategoryList.push(i);
-    } else {//אם הוא כן מופיע נחליף את האינדקס שלו להיות ראשון
+    } 
+    // במידה והוא כן מכיל, נמחק אותו מהליסט כדי שלא תהיה כפילות
+    else {
         var index = currentSelectedSubCategoryList.indexOf(i);
         currentSelectedSubCategoryList.splice(index, 1);
     }
-//נשמור את הרשימה בחירה של התתי קטגוריות
+
     this.setState({ selectedSubCategoryList: currentSelectedSubCategoryList });
 }
 
 //יצירת טבלה כך שבכל שורה יופיעו 2 תגיות
 getTableRows = () => {
     var tableRows = [];
-    var arr = this.state.subCategoriesList;
-    var currentSelectedSubCategoryList = this.state.selectedSubCategoryList;
+    var arr = this.state.subCategoriesList; //שמירה של כל התגיות שהבאנו מהדטא בייס במערך
+    var currentSelectedSubCategoryList = this.state.selectedSubCategoryList; // שמירה של התגיות שהוא בחר באפליק'
     var maxResults = 10;
-    var amountOfResults = 0;
+    var amountOfResults = 0; // כמות התגיות שמופיעה כרגע על האפליקציה
     var tempRow = [];
     for (var i = 0; i < arr.length; i = ++i) {
         if (tempRow.length == 2) {
             tableRows.push(tempRow);
             tempRow = [];
         }
-
+        //להבא i אם יש מילה בחיפוש והיא לא שווה לתגית שאנחנו מסתכלים עלייה כרגע, נקדם את
         if (this.state.searchTerm != '' && !arr[i].TagName.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
             continue;
 
+        //  משתנה שמחזיק אם התגית שאנחנו מסתכלים עלייה כרגע  כבר נבחרה 
         var isSelected = currentSelectedSubCategoryList.includes(arr[i].SubCategoryNo);
+
+        //אם החיפוש ריק וגם כמות התגיות שמופיעות כרגע על המסך >10 וגם התגית שאנחנו מסתכלים עלייה כרגע לא נבחרה
         if (this.state.searchTerm == '' && amountOfResults >= maxResults && !isSelected)
             continue;
 

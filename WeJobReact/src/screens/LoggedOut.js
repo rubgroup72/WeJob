@@ -21,11 +21,11 @@ export default class LoggedOut extends React.Component{
     onLoginPress = () => {
         this.props.navigation.navigate("LogIn");
     };
-// כאשר לוחץ על כפתור התחבר עם פייסבוק נפתח דף פרופיל התחברות לפייסבוק 
-//נשמור בזיכרון הלוקאלי את הטוקן של ההתחברות לפייסבוק 
+// כאשר לוחץ על כפתור התחבר עם פייסבוק נפתח דף פרופיל התחברות לפייסבוק
+//נשמור בזיכרון הלוקאלי את הטוקן של ההתחברות לפייסבוק
     handleFacebookLogin = () => {
-        const navigationObj = this.props.navigation;
-        const onFinishFunction = this.props.fetchFacebookUserData;
+        // const navigationObj = this.props.navigation;
+        const fetchFacebookUserData = this.props.fetchFacebookUserData;
         LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
           function (result) {
             if (result.isCancelled) {
@@ -35,7 +35,7 @@ export default class LoggedOut extends React.Component{
                 (data) => {
                     AsyncStorage.setItem(Global.FACEBOOK_TOKEN_STRING, data.accessToken.toString());
                     // navigationObj.navigate('Main');
-                    onFinishFunction(data.accessToken.toString());
+                    fetchFacebookUserData(data.accessToken.toString());
                     // this.props.navigation.navigate('Main');
                 })
             }

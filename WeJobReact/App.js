@@ -15,7 +15,7 @@ import Category from './src/screens/Category';
 import SubCategory from './src/screens/SubCategory';
 import JobTitles from './src/screens/JobTitles';
 
-//מעבר בין הדפים על פי ההגדרות שהגדרנו בנויגטור
+//מחסנית ראשית שמאפשרת ניווט בין מסכי הרשמה, משרות, התנתקות
 const MainStack = createStackNavigator({
   Main: { screen: Main },
   Register: { screen: Register },
@@ -25,7 +25,7 @@ const MainStack = createStackNavigator({
 });
 
 
-//יצירת תפריט עבור דף הפרופיל האישי
+//יצירת מחסנית עבור דף עדכון הפרופיל האישי
 const profileStack = createStackNavigator({
   Profile: { screen: PersonalProfile },
 }, {
@@ -44,26 +44,7 @@ const profileStack = createStackNavigator({
 }
 });
 
-//יצירת תפריט עבור דף שפות
-const LanguageStack = createStackNavigator({
-  Languages: { screen: Languages }
-}, {
-  defaultNavigationOptions: {
-    headerStyle: {
-        backgroundColor: 'trasparent',
-        elevation: 0,
-        shadowOpacity: 0
-    },
-    headerTitle: '',
-    headerTintColor: '#333333',
-    headerTitleStyle: {
-        fontWeight: 'bold',
-        color: '#ffffff'
-    }
-}
-});
-
-//   שפות + יצירת תפריט עבור מחלקות
+//  מחסנית שמכילה את מסכי המחלקות, תת מחלקות ושפות
 const DepartmentsStack = createStackNavigator({
   Departments: { screen: Departments },
   SubDepartments: {screen: SubDepartments },
@@ -83,7 +64,8 @@ const DepartmentsStack = createStackNavigator({
     }
 }
 });
-//יצירת תפריט עבור דף משרות
+
+//מחסנית שכילה קטגוריה, תת קטגוריה ומשרות
 const JobStack = createStackNavigator({
   Category: {screen: Category},
   SubCategory: { screen: SubCategory },
@@ -104,15 +86,11 @@ const JobStack = createStackNavigator({
 }
 });
 
-const hiddenDrawerItems = [
-  'Register',
-]
-//יצירת תפריט ראשי
+//השמות של המחסניות איך שהן יופיעו בתפריט ההמבורגר הנפתח
 const drawerNav = createDrawerNavigator({
   'דף הבית': { screen: MainStack, },
-  // 'התחברות': { screen: LogIn, }, // sync with Global.js
-  'מחלקות': { screen: DepartmentsStack, },
-  'פרופיל': { screen: profileStack },
+  'עדכון פרופיל': { screen: profileStack },
+  'דפי הרשמה': { screen: DepartmentsStack, },
   'מסכי חיפוש משרה': {screen: JobStack },
 }, {
     initialRouteName: 'דף הבית',
@@ -123,6 +101,7 @@ const drawerNav = createDrawerNavigator({
     
 });
 
+//?????
 const AppNavigator = createStackNavigator({
   RootScope: { screen: drawerNav }
 },

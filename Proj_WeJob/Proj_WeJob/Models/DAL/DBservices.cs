@@ -1788,8 +1788,23 @@ namespace Proj_WeJob.Models.DAL
             try
             {
                 con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
-
-                String selectSTR = "select * from Job where job.JobNo in (select SJ.JobJobNo from SubCategory_Job SJ where SubCategorySubCategoryNo in (select SubCategoryNo from Student_SubCategory where StudentId= " + studentId + ") UNION select JobJobNo from Job_Student where StudentStudentId = " + studentId + ");";
+                String selectSTR =
+                "select * from [bgroup72_prod].[dbo].[Job] where job.JobNo in " +
+                "(select SJ.JobJobNo from[bgroup72_prod].[dbo].[SubCategory_Job] SJ " +
+                "where SubCategorySubCategoryNo in " +
+                "(select SubCategoryNo from[bgroup72_prod].[dbo].[SubCategory] " +
+                "where SubCategory.SubCategoryName in " +
+                "(select distinct SubCategoryName2 from[bgroup72_prod].[dbo].[Table_PrecentPairTags] " +
+                "where [Table_PrecentPairTags].SubCategoryName1 in " +
+                "(select distinct SubCategoryName from[bgroup72_prod].[dbo].[SubCategory] as s " +
+                "left join[bgroup72_prod].[dbo].[Student_SubCategory] as ssc on s.SubCategoryNo= ssc.SubCategoryNo where StudentId = "+ studentId+")" +
+                "and precent>=0.01 and SubCategoryName1<>SubCategoryName2)) " +
+                "UNION " +
+                "select SJ.JobJobNo from SubCategory_Job SJ " +
+                "where SubCategorySubCategoryNo in " +
+                "(select SubCategoryNo from Student_SubCategory where StudentId= " + studentId +") " +
+                "UNION " +
+                "select JobJobNo from[bgroup72_prod].[dbo].[Job_Student] where StudentStudentId = " + studentId +"); ";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader

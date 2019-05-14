@@ -31,6 +31,7 @@ export default class Main extends React.Component{
 
     }
 
+    //הגדרות של הניווט
     static navigationOptions = ({navigation}) => {
         const { params = {} } = navigation.state;
         let headerLeftInternal = null;
@@ -50,19 +51,21 @@ export default class Main extends React.Component{
         }
       }
 
-
+      //קופוננטה שמתבצעת בכל פעם שהדף נטען
       loadComponent = () => {
           AsyncStorage.getItem(Global.IS_JUST_REGISTERED).then((res) => {
             if (res === "true") {
+                // אם הסטודנט נרשם נעביר אותו לדף מחלקות
                 AsyncStorage.setItem(Global.IS_JUST_REGISTERED, "false");
                 this.setState({ navigateToDepartment: true });
             } else {
+                //אם הוא לא נרשם עתה אבל הדגל של ניווט לדף מחלקות דולק, נכבה אותו
                 if (this.state.navigateToDepartment) {
                     this.setState({ navigateToDepartment: false });
                 }
             }
           });
-
+        // אם היוזר נמצא בדף ההתחברות, ננסה לחבר אותו לפי הפרטים ששמורים לנו ממקודם
           if (this.state.userLoggedOut) 
               this.tryLogin();
           else  {
@@ -81,8 +84,9 @@ export default class Main extends React.Component{
             });
           }
 
-          this.props.navigation.setParams({ shouldShow: !this.state.userLoggedOut });
+          this.props.navigation.setParams({ shouldShow: !this.state.userLoggedOut }); // אם היוזר מחובר תראה תפריט בצד
       }
+      //קומפוננטה שקוראת רק פעם אחת כשהדף עולה בפעם הראשונה
       componentWillMount() {
         if (this.state.isFirstFetch) {
             return;
@@ -90,6 +94,7 @@ export default class Main extends React.Component{
         this.state.isFirstFetch = true;
         this.tryLogin();
     }
+    //ננסה לחבר את היוזר באחת האופציות ששמורות לנו במידה והתחבר מקודם
     tryLogin = () => {
         AsyncStorage.getItem(Global.FACEBOOK_TOKEN_STRING).then((token) => {
             if (token !== null) {
@@ -120,7 +125,23 @@ export default class Main extends React.Component{
                     alert (error);
                 });
     }
-    //מביאים מהשרת את פרטי הסטודנט בעזרת אימייל שנתנו
+        //משיכת פרטי סטודנט שאיתו התחברנו לפייסבוק
+        fetchFacebookUserData = (token) => {
+            fetch('https://graph.facebook.com/v2.5/me?fields=email,name&access_token=' + token)
+            .then((response) => response.json())
+            .then((json) => {
+                var user = {};
+                user.name = json.name;
+                user.id = json.id;
+                user.email = json.email;
+                this.fetchStudentDataFromFacebook(user.email, user.name, token);//מושכים נתונים מהשרת בעזרת האימייל שקיבלנו מפייסבוק
+            })
+            .catch((exc) => {
+                alert(exc)
+            });
+        }
+        
+    // מביאים מהשרת את פרטי הסטודנט בעזרת אימייל שנתנו לנו מפייסבוק
     fetchStudentDataFromFacebook = (email, name, token) => {
         const httpClient = axios.create();
         httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
@@ -164,36 +185,24 @@ export default class Main extends React.Component{
         });
         AsyncStorage.setItem(Global.FACEBOOK_TOKEN_STRING, '');
     }
-    //משיכת פרטי סטודנט שאיתו התחברנו לפייסבוק
-    fetchFacebookUserData = (token) => {
-        fetch('https://graph.facebook.com/v2.5/me?fields=email,name&access_token=' + token)
-        .then((response) => response.json())
-        .then((json) => {
-            var user = {};
-            user.name = json.name;
-            user.id = json.id;
-            user.email = json.email;
-            this.fetchStudentDataFromFacebook(user.email, user.name, token);//מושכים נתונים מהשרת בעזרת האימייל שקיבלנו מפייסבוק
-        })
-        .catch((exc) => {
-            alert(exc)
-        });
-    }
-    //המעבר לדפים 
+
+    //איזה מסך נרצה להציג לסטודנט
     getScreenToShow = () => {
         //כאשר האפליקציה עולה זהו הדף הראשון אליו נגיע באופן דיפולטיבי
         // ונעביר לדף את הנתונים של המשתמש ואת הטוקן של הפייסבוק
+        //אם הדגל של ניתוק דולק
         if (this.state.userLoggedOut) {
-            return <LoggedOut fetchFacebookUserData={this.fetchFacebookUserData} 
+            return <LoggedOut 
+            fetchFacebookUserData={this.fetchFacebookUserData} 
             logoutFacebook={this.logoutFacebook}
             navigation={this.props.navigation} />;
         }
-        //אם המשתמש לא רשום במערכת מהדף של רגיסטר יעבור לדף של בחירה מחלקה
+        //אם הדגל של מחלקות דלוק תעביר אותי למחלקות
         if (this.state.navigateToDepartment) {
             return <Department navigation={this.props.navigation} />;
         }
-        //אם המשתמש רשום במערכת והוא מבצע התחברות בדרך כולשהי הוא יגיע לדף משרות
-        var string = this.state.student.email + ' ' + this.state.student.name;
+        //אחרת תעביר לקרוסלת משרות
+        //var string = this.state.student.email + ' ' + this.state.student.name;
         return <JobsCarousel navigation={this.props.navigation} />;
     }
     
