@@ -17,7 +17,7 @@ export default class JobsCarousel extends React.Component {
         }
 
     }
-
+//ברגע שהדף סיים להיטען יתבצע מה שכתוב בפונקציה 
     componentWillMount() {
         //  הבאת אובייקט סטודנט מהזיכרון הלוקאלי והשמת המספר האישי שלו במשתנה
         AsyncStorage.getItem(Global.ASYNC_STORAGE_STUDEMT).then((jsonStudent) => {
@@ -26,6 +26,7 @@ export default class JobsCarousel extends React.Component {
                 this.setState({
                     studentId: student.StudentId
                 });
+                //הפעלת הפונקציה שמביאה את המשרות המתאימות לסטודנט לפי 3 תנאים
                 this.fetchJobsFromServer();
             }
         });
@@ -46,7 +47,7 @@ export default class JobsCarousel extends React.Component {
     }
     
 
-//העיצוב של הקרוסלה 
+//התפריט למעבר בין הדפים
     static navigationOptions = ({navigation}) => {
         return {
             headerTransparent: true,
@@ -91,7 +92,8 @@ export default class JobsCarousel extends React.Component {
     render() {
         return (
         <SafeAreaView style={styles.container}>
-            <TouchableHighlight
+          
+            <TouchableHighlight //כפתור חץ לצד ימין מעדכן את האינדקס לאחד פחות
                 onPress={
                     () => { this.carousel._snapToItem(this.state.activeIndex-1)}
                 }>
@@ -99,7 +101,8 @@ export default class JobsCarousel extends React.Component {
             </TouchableHighlight>
 
             <View>
-                <Carousel
+              
+                <Carousel //יצירת קומפוננטה מסוג קרוסלה והעברת הנתונים לתכונות הקרוסלה 
                     ref={ref => this.carousel = ref}
                     data={this.state.JobsList}
                     sliderWidth={250}
@@ -109,7 +112,7 @@ export default class JobsCarousel extends React.Component {
                 />
             </View>
 
-            <TouchableHighlight            
+            <TouchableHighlight //כפתור חץ שמאלי מעדכן את האינדקס לפלוס אחד           
                 onPress={
                     () => { this.carousel._snapToItem(this.state.activeIndex+1)}
                 }>
@@ -123,6 +126,7 @@ export default class JobsCarousel extends React.Component {
     }
 }
 
+//עיצובים של העמוד
 const styles = StyleSheet.create({
   container: {
     flex: 1,

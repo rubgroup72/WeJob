@@ -23,7 +23,8 @@ export default class SubCategory extends React.Component{
         selectedSubCategoryList: [],
         selectedCategoryName: ''
     }
-
+//כל רכיב באפליקציה מנווט על ידי נויגטור של לדף המתאים לפי פרופס
+//השורה הבאה מפעילה פונקציה שמעדכנת את מחזור חיי הניווט ומפעילה פונקציות לשמירת נתונים
     this.props.navigation.addListener('willFocus', this.loadComponent);
   }
 
@@ -48,7 +49,8 @@ export default class SubCategory extends React.Component{
     });
 }
 
-//הבאת השמות של התת קטגוריות מהדטא בייס
+// הבאת השמות של התת קטגוריות מהדטא בייס
+//הבאת השמות שלהתי קטגוריות שבחר הסטודנט
 fetchSubCategoryCodeFromServer = () => {
     const httpClient = axios.create();
     httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
@@ -56,6 +58,7 @@ fetchSubCategoryCodeFromServer = () => {
     httpClient.get(url)
     .then((response) => {
         this.setState({ 
+            
             subCategoriesList: response.data.AllTagsList, 
             loadingVisible: false,
             selectedSubCategoryList: response.data.StudentTagsList
