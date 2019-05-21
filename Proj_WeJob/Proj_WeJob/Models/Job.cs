@@ -27,12 +27,13 @@ namespace Proj_WeJob.Models.DAL
         public List<String> ArraySkill { get; set; }
         public List<String> ArraySubCategory { get; set; }
         public List<string> JobTitlesList { get; set; }
-
+        public int AmountSend { get; set; }
+        public string CategoryName { get; set; }
         //constructor
         public Job(int JobNo,string JobName, string JobDescription, string Requirements,
             int CompanyCompanyNo, string MailForCV, DateTime OpenDate, DateTime ToDate,
             string JobStatusStatusName, string Link, List<String> ArrayLanguage, List<String> ArraySkill, List<String> ArraySubCategory,
-            string Location,string Status, int CategoryNo, List <string> JobTitlesList)
+            string Location,string Status, int CategoryNo, List <string> JobTitlesList,int AmountSend, string CategoryName)
         {
             this.CompanyCompanyNo = CompanyCompanyNo;
             this.JobNo = JobNo;
@@ -52,6 +53,8 @@ namespace Proj_WeJob.Models.DAL
             this.ArraySkill = ArraySkill;
             this.ArraySubCategory = ArraySubCategory;
             this.JobTitlesList = JobTitlesList;
+            this.AmountSend = AmountSend;
+            this.CategoryName = CategoryName;
         }
 
         public Job()
@@ -88,6 +91,16 @@ namespace Proj_WeJob.Models.DAL
         {
             DBservices db = new DBservices();
             return db.GetAmountJobsGood("DBConnectionString");
+        }
+        public int GetAmountJobsBad()
+        {
+            DBservices db = new DBservices();
+            return db.GetAmountJobsBad("DBConnectionString");
+        }
+       public List<Job> GetPopularJobs()
+        {
+            DBservices db = new DBservices();
+            return db.GetPopularJobs("DBConnectionString");
         }
         //לאפליקציה - מביאה משרות לפי מספר קטגוריה
         public List<Job> GetListJobNames(int CategoryNo)

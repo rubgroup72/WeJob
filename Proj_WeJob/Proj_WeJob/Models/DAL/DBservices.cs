@@ -1605,13 +1605,9 @@ namespace Proj_WeJob.Models.DAL
 
                 while (dr.Read())
                 {   // Read till the end of the data into a row
-
                     AmountJobsGood += 1;
-
                 }
-
                 return AmountJobsGood;
-
             }
             catch (Exception ex)
             {
@@ -1630,7 +1626,7 @@ namespace Proj_WeJob.Models.DAL
         public int GetAmountJobsBad(string conString)
         {
             SqlConnection con = null;
-            int AmountJobsGood = 0;
+            int AmountJobsBad = 0;
             try
             {
                 con = connect(conString); // create a connection to the database using the connection String defined in the web config file
@@ -1643,13 +1639,57 @@ namespace Proj_WeJob.Models.DAL
 
                 while (dr.Read())
                 {   // Read till the end of the data into a row
+                    AmountJobsBad += 1;
+                }
+                return AmountJobsBad;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
 
-                    AmountJobsGood += 1;
+        public List<Job> GetPopularJobs(string conString)
+        {
+            SqlConnection con = null;
+            List<Job> lsc = new List<Job>();
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
 
+                String selectSTR = "SELECT *"+
+                                        "FROM bgroup72_prod.dbo.Job as j1 left join bgroup72_prod.dbo.Category as c on j1.CategoryNo=c.CategoryNo" +
+                                        " WHERE(AmountSend) in "+
+                                        "(SELECT MAX(AmountSend) FROM bgroup72_prod.dbo.Job as j2 " +
+                                        "GROUP BY CategoryNo)";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Job sc = new Job
+                    {
+                        JobNo = Convert.ToInt32(dr["JobNo"]),
+                        JobName = Convert.ToString(dr["JobName"]),
+                        Requirements= Convert.ToString(dr["Requirements"]),
+                        JobDescription = Convert.ToString(dr["JobDescription"]),
+                        AmountSend =Convert.ToInt32(dr["AmountSend"]),
+                        CategoryName =Convert.ToString(dr["CategoryName"]),
+                    };
+                    lsc.Add(sc);
                 }
 
-                return AmountJobsGood;
-
+                return lsc;
             }
             catch (Exception ex)
             {
