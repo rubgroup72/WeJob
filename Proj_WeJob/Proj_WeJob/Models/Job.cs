@@ -109,6 +109,12 @@ namespace Proj_WeJob.Models.DAL
             return dbs.GetListJobNames(CategoryNo);
         }
 
+        public List<Job> GetHotJobsByCategoryNo(string CategoryNo)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetHotJobsByCategoryNo(CategoryNo);
+        }
+
         //לאפליקציה - מביאה משרות לפי תגיות נבחרות ושמות של משרות
         public List<Job> GetListOfJobs(string studentId)
         {

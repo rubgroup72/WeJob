@@ -1,108 +1,104 @@
-﻿<?php include('server.php') ?>
+﻿<!DOCTYPE html>
 
-<!DOCTYPE html>
-
-<html lang="en">
+<html lang="he">
 
 <head>
-
     <meta charset="utf-8">
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--לאייקונים-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <meta name="description" content="">
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <script type="text/javascript">
+        $("#btnLogin").click(function (event) {
 
-    <meta name="author" content="">
+            //Fetch form to apply custom Bootstrap validation
+            var form = $("#formLogin")
 
-    <title>SB Admin - Start Bootstrap Template</title>
+            if (form[0].checkValidity() === false) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
 
-    <!-- Bootstrap core CSS-->
+            form.addClass('was-validated');
+              $("#formLogin").submit(f1);
+        });
+         function f1() {
+                funLogIn();
+                return false; // the return false will prevent the form from being submitted
+                // hence the page will not reload
+        }
+        function funLogIn() {
+            if ($("#pwd1").val() == '123456') {
+                window.location.href = 'HomePage1.html';
+            }
+            else {
+                alert("הסיסמה שגויה"):
+            }
 
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom fonts for this template-->
-
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- Custom styles for this template-->
-
-    <link href="css/sb-admin.css" rel="stylesheet">
-
+        }
+    </script>
+    <style>
+        body {
+            background-color:#f7f7f7;
+        }
+    </style>
 </head>
 
-<body class="bg-dark">
+<body>
+    <center>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center text-white mb-4"> <img src="images/logoWeJob.png" width="200" height="50" /></h2>
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
 
-    <div class="container">
+                        <!-- form card login -->
+                        <div class="card rounded-0">
+                        <div class="card-header">
+                        <h3 class="mb-0">התחברות</h3>
+                        </div>
+                        <div class="card-body">
 
-        <div class="card card-login mx-auto mt-5">
-
-            <div class="card-header">Login</div>
-
-            <div class="card-body">
-
-                <form method="post" action="login.php">
-
-                    <?php include('errors.php'); ?>
-
-                    <div class="form-group">
-
-                        <label for="exampleInputEmail1">Username</label>
-
-                        <input class="form-control" type="text" name="username">
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label for="exampleInputPassword1">Password</label>
-
-                        <input class="form-control" type="password" name="password">
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <div class="form-check">
-
-                            <label class="form-check-label">
-
-                                <input class="form-check-input" type="checkbox"> Remember Password
-                            </label>
+                            <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
+                                <div class="form-group">
+                                    <label>סיסמה</label>
+                                    <input type="password" class="form-control form-control-lg rounded-0" id="pwd1" required="" autocomplete="new-password">
+                                </div>
+                                <div>
+                                    <!--<label class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description small text-dark">Remember me on this computer</span>
+        </label>-->
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="btnLogin">התחבר</button>
+                            </form>
 
                         </div>
+                        <!--/card-block-->
+                        </div>
+                        <!-- /form card login -->
 
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-block" name="login_user">Login</button>
-
-                </form>
-
-                <div class="text-center">
-
-                    <a class="d-block small mt-3" href="register.php">Register an Account</a>
-
-                    <!-- <a class="d-block small" href="forgot-password.php">Forgot Password?</a>-->
 
                 </div>
+                <!--/row-->
 
             </div>
-
+            <!--/col-->
         </div>
-
+        <!--/row-->
     </div>
-
-    <!-- Bootstrap core JavaScript-->
-
-    <script src="vendor/jquery/jquery.min.js"></script>
-
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
+    <!--/container--></center>
 </body>
 
 </html>

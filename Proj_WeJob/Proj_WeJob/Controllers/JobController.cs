@@ -23,6 +23,13 @@ namespace Proj_WeJob.Controllers
             return j.GetListJobsOfDistributor(companyNo);
         }
         [HttpGet]
+        [Route("api/HotJobsByCategoryNo")]
+        public IEnumerable<Job> get(string CategoryNo)
+        {
+            Job j = new Job();
+            return j.GetHotJobsByCategoryNo(CategoryNo);
+        }
+        [HttpGet]
         [Route("api/Job")]
         public Job Get(string JobNo)
         {

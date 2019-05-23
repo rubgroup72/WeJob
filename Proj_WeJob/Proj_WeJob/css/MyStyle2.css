@@ -8,7 +8,9 @@
     font-family: Calibri,Gisha, 'Trebuchet MS', sans-serif;
    
 }
-
+div.dataTables_wrapper {
+    direction: rtl;
+}
 .card-header h2 {
     font-weight: bold;
 }
