@@ -8,6 +8,10 @@
     font-family: Calibri,Gisha, 'Trebuchet MS', sans-serif;
    
 }
+#divlogin{
+    width:50%;
+    margin-right:25%;
+}
 div.dataTables_wrapper {
     direction: rtl;
 }

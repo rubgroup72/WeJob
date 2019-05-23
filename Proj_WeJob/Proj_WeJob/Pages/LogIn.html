@@ -13,92 +13,75 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <link href="../css/MyStyle2.css" rel="stylesheet" />
     <script src="../Scripts/ajaxCalls.js"></script>
     <script type="text/javascript">
-        $("#btnLogin").click(function (event) {
-
-            //Fetch form to apply custom Bootstrap validation
-            var form = $("#formLogin")
-
-            if (form[0].checkValidity() === false) {
-                event.preventDefault()
-                event.stopPropagation()
-            }
-
-            form.addClass('was-validated');
-              $("#formLogin").submit(f1);
+        $(document).ready(function () {
+            $("#pForm").submit(f1);
         });
-         function f1() {
-                funLogIn();
-                return false; // the return false will prevent the form from being submitted
-                // hence the page will not reload
+        function f1() {
+            funLogIn();
+            return false; // the return false will prevent the form from being submitted
+            // hence the page will not reload
         }
         function funLogIn() {
-            if ($("#pwd1").val() == '123456') {
+            if ($("#PAS").val() == '123456') {
                 window.location.href = 'HomePage1.html';
             }
             else {
-                alert("הסיסמה שגויה"):
+                Swal.fire({
+                    type: 'error',
+                    title: 'שגיאה',
+                    text: 'הסיסמה לא נכונה!',
+                    footer: '<a href>Why do I have this issue?</a>'
+                })
             }
-
         }
     </script>
     <style>
         body {
-            background-color:#f7f7f7;
+            background-color: #f7f7f7;
         }
     </style>
 </head>
 
 <body>
-    <center>
-    <div class="container py-5">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 class="text-center text-white mb-4"> <img src="images/logoWeJob.png" width="200" height="50" /></h2>
-                <div class="row">
-                    <div class="col-md-6 mx-auto">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light " style="background-color:#F2F2F0;">
+        <a class="navbar-brand" href="#">  <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                        <!-- form card login -->
-                        <div class="card rounded-0">
-                        <div class="card-header">
-                        <h3 class="mb-0">התחברות</h3>
-                        </div>
-                        <div class="card-body">
+    </nav>
+    <div class="container" dir="rtl" id="Div">
 
-                            <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
-                                <div class="form-group">
-                                    <label>סיסמה</label>
-                                    <input type="password" class="form-control form-control-lg rounded-0" id="pwd1" required="" autocomplete="new-password">
-                                </div>
-                                <div>
-                                    <!--<label class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input">
-            <span class="custom-control-indicator"></span>
-            <span class="custom-control-description small text-dark">Remember me on this computer</span>
-        </label>-->
-                                </div>
-                                <button type="submit" class="btn btn-primary" id="btnLogin">התחבר</button>
-                            </form>
-
-                        </div>
-                        <!--/card-block-->
-                        </div>
-                        <!-- /form card login -->
-
-                    </div>
-
-
+        <div class="card text-center" id="divlogin">
+            <div class="card-header" style="color:#072247">
+                <div class="col-xs-12">
+                    <h2>התחברות למערכת</h2>
                 </div>
-                <!--/row-->
+            </div>
+            <div class="card-body col-xs-12">
+                <form id="pForm" dir="rtl" class="was-validated">
+                            <div class="form-group col-xs-12">
+                                <label for="exampleFormControlInput1">סיסמה </label>
+                                <small><span class="glyphicon glyphicon-starup small" style="color:red"></span></small>
+                                <input type="password" class="form-control" id="PAS" required>
+                            </div>                   
+                    <div class="col-auto my-1">
+                        <button type="submit" class="btn btn-success" id="view">התחבר</button>
+                    </div>
+                </form>
 
             </div>
-            <!--/col-->
+            <div class="card-footer text-muted">
+                <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt="">
+            </div>
         </div>
-        <!--/row-->
+
     </div>
-    <!--/container--></center>
+
 </body>
 
 </html>

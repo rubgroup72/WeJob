@@ -1401,7 +1401,7 @@ namespace Proj_WeJob.Models.DAL
             {
                 con = connect(conString); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT * FROM Category_SubCategory as csc left join SubCategory as sc on csc.SubCategorySubCategoryNo= sc.SubCategoryNo where CategoryCategoryNo='" + CategoryNo+"'";
+                String selectSTR = "SELECT * FROM Hot_Tags where CategoryNo='" + CategoryNo+"'";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -1412,7 +1412,7 @@ namespace Proj_WeJob.Models.DAL
                     SubCategory sc = new SubCategory
                     {
                         SubCategoryNo = Convert.ToInt32(dr["SubCategoryNo"]),
-                        SubCategoryName = Convert.ToString(dr["SubCategoryName"])
+                        TagName = Convert.ToString(dr["TagName"])
                     };
                     lsc.Add(sc);
                 }
@@ -1453,7 +1453,7 @@ namespace Proj_WeJob.Models.DAL
                     SubCategory sc = new SubCategory
                     {
                         SubCategoryNo = Convert.ToInt32(dr["SubCategoryNo"]),
-                        SubCategoryName = Convert.ToString(dr["SubCategoryName"])
+                        TagName = Convert.ToString(dr["SubCategoryName"])
                     };
                     lsc.Add(sc);
                 }

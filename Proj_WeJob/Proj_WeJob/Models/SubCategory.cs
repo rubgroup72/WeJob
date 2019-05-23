@@ -6,7 +6,7 @@ namespace Proj_WeJob.Models
     public class SubCategory
     {
         public int SubCategoryNo { get; set; }
-        public string SubCategoryName { get; set; }
+        public string TagName { get; set; }
 
         public SubCategory()
         {
@@ -15,7 +15,7 @@ namespace Proj_WeJob.Models
         public SubCategory(int SubCategoryNo, string SubCategoryName)
         {
             this.SubCategoryNo = SubCategoryNo;
-            this.SubCategoryName = SubCategoryName;
+            this.TagName = SubCategoryName;
         }
         // פונקציה שמחזירה רשימה של תתי קטגוריות 
         public List<SubCategory> ReadSubCategories(string CategoryNo)

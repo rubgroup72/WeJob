@@ -14,15 +14,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
 
     <script>
 
         $(document).ready(function () {
-             document.getElementById("cotart").innerHTML = "כרטיס משרה לחברת  " + localStorage.getItem("NameCompany");
+            document.getElementById("cotart").innerHTML = "כרטיס משרה לחברת  " + localStorage.getItem("NameCompany");
             if (localStorage.getItem("whatFun") == "edit" || localStorage.getItem("whatFun") == "view") {
-                 uri = "../api/Job?JobNo=" + localStorage.getItem("JobNo");
+                uri = "../api/Job?JobNo=" + localStorage.getItem("JobNo");
                 console.log(uri);
                 ajaxCall("Get", uri, "", getSuccess, error);
                 //צריך להוסיף פקודת אגקס להבאת תחומי עניין, שפות וכישורים שנבחרו למשרה
@@ -32,11 +32,11 @@
                 //ajaxCall("GET", "../api/Interst", "", successGetInterst, error);
                 ajaxCall("GET", "../api/Language", "", successGetLanguage, error);
                 ajaxCall("GET", "../api/Skill", "", successGetSkill, error);
-            } 
-                $("#pForm").submit(f1);
+            }
+            $("#pForm").submit(f1);
         });
 
-          //בעת לחיצה על כפתור הכנס נגיע לפונקצית הוספת מפיץ
+        //בעת לחיצה על כפתור הכנס נגיע לפונקצית הוספת מפיץ
         function SaveJob() {
             //get all hobbies from DB
             localStorage.setItem("JobName", $("#JobName").val());
@@ -60,107 +60,107 @@
             });
 
         }
-             
-                //Job = { // Note that the name of the fields must be identical to the names of the properties of the object in the server
-                //    CompanyCompanyNo: localStorage.getItem("CompanyNo"),
-                //    JobName: $("#JobName").val(),
-                //    JobDescription: $("#JobDescription").val(),
-                //    Requirements: $("#Requirements").val(),
-                //    MailForCV: $("#MailForCV").val(),
-                //    OpenDate: Date.now(),
-                //    ToDate: Date.now(),
-                //    Link: $("#Link").val(),
-                //    Location: $("#location").val(),
-                //    Status: $("#status").val(),
-                //    ArrayIntrests: $("#exampleFormControlSelect2").val(),
-                //    ArrayLanguage: $("#exampleFormControlSelect3").val(),
-                //    ArraySkill: $("#exampleFormControlSelect4").val(),
-                //}
-                ////פקודת אגקס להכנסת משרה
-                //ajaxCall("POST", "../api/JobNew", JSON.stringify(Job), success, error);
-            
-            function f1() {
-                SaveJob();
-                return false; // the return false will prevent the form from being submitted
-                // hence the page will not reload
-            }
-            
-              
-          
-            //סוף פונקציות להכנסת משרה
 
-            // this function is activated in case of a success of intersts
-            //function successGetInterst(Interstdata) {
-            //    interst = Interstdata;
-            //    try {
-            //        str = "<label for='exampleFormControlSelect2'>תחומי עניין</label>";
-            //        str += "<select multiple class='form-control' id='exampleFormControlSelect2'>";
-            //        for (var i = 0; i < Interstdata.length; i++) {
-            //            str += "<option value='" + interst[i].Name + "'>" + interst[i].Name + '</option >';
-            //        }
-            //        str += " </select>";
-            //        document.getElementById("intersts").innerHTML = str;
-            //    }
-            //    catch (err) {
-            //        alert(err);
-            //    }
-            //}
-            // this function is activated in case of a success of language
-            function successGetLanguage(Languagedata) {
-                language = Languagedata;
-                try {
-                    str = "<label for='exampleFormControlSelect3'>שפות</label>";
-                    str += "<select multiple class='form-control' id='exampleFormControlSelect3'>";
-                    for (var i = 0; i < Languagedata.length; i++) {
-                        str += "<option value='" + language[i].Name + "'>" + language[i].Name + '</option >';
-                    }
-                    str += " </select>";
-                    document.getElementById("languages").innerHTML = str;
-                }
-                catch (err) {
-                    alert(err);
-                }
-            }
-            // this function is activated in case of a success of skill
-            function successGetSkill(Skilldata) {
-                skill = Skilldata;
-                try {
-                    str = "<label for='exampleFormControlSelect4'>כישורים</label>";
-                    str += "<select multiple class='form-control' id='exampleFormControlSelect4'>";
-                    for (var i = 0; i < Skilldata.length; i++) {
-                        console.log(skill[i].SkillNo);
-                        str += "<option value='" + skill[i].SkillNo + "'>" + skill[i].Name + '</option >';
-                    }
-                    str += " </select>";
-                    document.getElementById("skills").innerHTML = str;
-                }
-                catch (err) {
-                    alert(err);
-                }
-            }
-            function getSuccess(dataJob) {
-                if (localStorage.getItem("whatFun") == "view") {
-                    document.getElementById("JobName").disabled=true;
-                    document.getElementById("MailForCV").disabled = true;
-                    document.getElementById("Requirements").disabled = true;
-                      document.getElementById("location").disabled=true;
-                    document.getElementById("JobDescription").disabled=true;
-                    document.getElementById("Link").disabled=true;
-                    document.getElementById("status").disabled = true;
-                  document.getElementById("view").remove();
-                }
-                document.getElementById("JobName").value = dataJob.JobName;
-                document.getElementById("MailForCV").value = dataJob.MailForCV;
-                document.getElementById("JobDescription").value = dataJob.JobDescription;
-                document.getElementById("Link").value = dataJob.Link;
-                document.getElementById("status").value = dataJob.Status;
-                document.getElementById("Requirements").value = dataJob.Link;
-                document.getElementById("location").value = dataJob.Status;
+        //Job = { // Note that the name of the fields must be identical to the names of the properties of the object in the server
+        //    CompanyCompanyNo: localStorage.getItem("CompanyNo"),
+        //    JobName: $("#JobName").val(),
+        //    JobDescription: $("#JobDescription").val(),
+        //    Requirements: $("#Requirements").val(),
+        //    MailForCV: $("#MailForCV").val(),
+        //    OpenDate: Date.now(),
+        //    ToDate: Date.now(),
+        //    Link: $("#Link").val(),
+        //    Location: $("#location").val(),
+        //    Status: $("#status").val(),
+        //    ArrayIntrests: $("#exampleFormControlSelect2").val(),
+        //    ArrayLanguage: $("#exampleFormControlSelect3").val(),
+        //    ArraySkill: $("#exampleFormControlSelect4").val(),
+        //}
+        ////פקודת אגקס להכנסת משרה
+        //ajaxCall("POST", "../api/JobNew", JSON.stringify(Job), success, error);
 
-                localStorage.removeItem('whatFun');
-                
+        function f1() {
+            SaveJob();
+            return false; // the return false will prevent the form from being submitted
+            // hence the page will not reload
         }
-           function error(err) {
+
+
+
+        //סוף פונקציות להכנסת משרה
+
+        // this function is activated in case of a success of intersts
+        //function successGetInterst(Interstdata) {
+        //    interst = Interstdata;
+        //    try {
+        //        str = "<label for='exampleFormControlSelect2'>תחומי עניין</label>";
+        //        str += "<select multiple class='form-control' id='exampleFormControlSelect2'>";
+        //        for (var i = 0; i < Interstdata.length; i++) {
+        //            str += "<option value='" + interst[i].Name + "'>" + interst[i].Name + '</option >';
+        //        }
+        //        str += " </select>";
+        //        document.getElementById("intersts").innerHTML = str;
+        //    }
+        //    catch (err) {
+        //        alert(err);
+        //    }
+        //}
+        // this function is activated in case of a success of language
+        function successGetLanguage(Languagedata) {
+            language = Languagedata;
+            try {
+                str = "<label for='exampleFormControlSelect3'>שפות</label>";
+                str += "<select multiple class='form-control' id='exampleFormControlSelect3'>";
+                for (var i = 0; i < Languagedata.length; i++) {
+                    str += "<option value='" + language[i].Name + "'>" + language[i].Name + '</option >';
+                }
+                str += " </select>";
+                document.getElementById("languages").innerHTML = str;
+            }
+            catch (err) {
+                alert(err);
+            }
+        }
+        // this function is activated in case of a success of skill
+        function successGetSkill(Skilldata) {
+            skill = Skilldata;
+            try {
+                str = "<label for='exampleFormControlSelect4'>כישורים</label>";
+                str += "<select multiple class='form-control' id='exampleFormControlSelect4'>";
+                for (var i = 0; i < Skilldata.length; i++) {
+                    console.log(skill[i].SkillNo);
+                    str += "<option value='" + skill[i].SkillNo + "'>" + skill[i].Name + '</option >';
+                }
+                str += " </select>";
+                document.getElementById("skills").innerHTML = str;
+            }
+            catch (err) {
+                alert(err);
+            }
+        }
+        function getSuccess(dataJob) {
+            if (localStorage.getItem("whatFun") == "view") {
+                document.getElementById("JobName").disabled = true;
+                document.getElementById("MailForCV").disabled = true;
+                document.getElementById("Requirements").disabled = true;
+                document.getElementById("location").disabled = true;
+                document.getElementById("JobDescription").disabled = true;
+                document.getElementById("Link").disabled = true;
+                document.getElementById("status").disabled = true;
+                document.getElementById("view").remove();
+            }
+            document.getElementById("JobName").value = dataJob.JobName;
+            document.getElementById("MailForCV").value = dataJob.MailForCV;
+            document.getElementById("JobDescription").value = dataJob.JobDescription;
+            document.getElementById("Link").value = dataJob.Link;
+            document.getElementById("status").value = dataJob.Status;
+            document.getElementById("Requirements").value = dataJob.Link;
+            document.getElementById("location").value = dataJob.Status;
+
+            localStorage.removeItem('whatFun');
+
+        }
+        function error(err) {
             err = JSON.parse(err.responseText);
             Swal.fire({
                 type: 'error',

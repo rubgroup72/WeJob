@@ -14,26 +14,23 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
 
 
     <script src="../Scripts/ajaxCalls.js"></script>
     <script>
-
+     
         $(document).ready(function () {
-             document.getElementById("cotart").innerHTML = "התאמת תתי קטגוריות למשרה " + localStorage.getItem("JobName");
+            document.getElementById("cotart").innerHTML = "התאמת תתי קטגוריות למשרה " + localStorage.getItem("JobName");
             localStorage.removeItem("SubCats");
+            localStorage.removeItem("ArraySubCategory");
             $("#pForm").submit(f1);
             ajaxCall("Get", "../api/Categorys", "", successGetCategory, error);
+            
         });
-        function SubCategoryFunction() {
-            uri = "../api/SubCategory?CategoryNo=" + $("#Select1").val();
-            ajaxCall("GET", uri, "", successGetSubCategory, error);
-        }
-        function getSubCatFromSearch() {
-            uri = "../api/SubCategorySearch?Search=" + $("#search").val() + "&CategoryNo=" + $("#Select1").val();
-            ajaxCall("get", uri, "", successGetSubCategory, error);
-        }
+
+      
         // this function is activated in case of a success of category
         function successGetCategory(CategoryData) {
             Category = CategoryData;
@@ -46,82 +43,89 @@
                 }
                 str += " </select>";
                 document.getElementById("category").innerHTML = str;
-                if (localStorage.getItem("SubCats") != null) {
-               document.getElementById("subcategory").innerHTML += '<label>' + localStorage.getItem("SubCats") + ', </label>';
-
-                }
             }
             catch (err) {
                 alert(err);
             }
         }
-
-        // this function is activated in case of a success of category
+          //פונקציה שמפעילה פקודת אגקס להבאת תתי קטגוריות
+        function SubCategoryFunction() {
+            uri = "../api/SubCategory?CategoryNo=" + $("#Select1").val();
+            ajaxCall("GET", uri, "", successGetSubCategory, error);
+        }
+        //פונקציה שמציגה את התת קטגוריה שנכנסה לאינפוט חיפוש
+        function getSubCatFromSearch(Search) {   
+            for (var i = 11; i < SubCategory.length; i++) {
+                if (SubCategory[i].TagName == Search) {
+                    str = '<hr>';
+                    str += '<input type="checkbox" name="fancy-checkbox-primary-custom-icons" id="fancy-checkbox-primary-custom-icons" value="' + SubCategory[i].SubCategoryNo + '" autocomplete="off" onchange=changeListSubCat(this,' + SubCategory[i].SubCategoryNo+ ')>';
+                str += '<label for="fancy-checkbox-primary-custom-icons" class="[ btn btn-default active ]">' +Search + '</label>';
+                document.getElementById("subcategory").innerHTML += str;
+                }
+            }
+    }
+        // this function is activated in case of a success of SubCategory
         function successGetSubCategory(SubCategoryData) {
             localStorage.setItem("CategoryNo", $("#Select1").val());
             SubCategory = SubCategoryData;
             try {
-                
+                j = 0;
+                str = '<center>';
+                str += '<h4 class="card-title">בחר תת קטגוריה</h4>';
                 str = '<label for="exampleFormControlInput1">חיפוש תת קטגוריה</label>';
-                str += '<input type="text" class="form-control" id="search" onchange=getSubCatFromSearch() />';   
-                str += "<select class='form-control' required multiple id='exampleFormControlSelect2'>";
-                str += "<option value='בחר'  disabled selected>בחר</option>";
+                //str += '<input type="text" class="form-control" id="search" onchange=getSubCatFromSearch(this.text,' + SubCategoryData + ')/>';
+                str += '<input type="text" class="form-control" name="srch" id="search" list="datalist1"  onchange=getSubCatFromSearch(this.value)>';
+                str += '<datalist id="datalist1">';
                 for (var i = 0; i < SubCategoryData.length; i++) {
-                    str += "<option class='selectCat' value='" + SubCategory[i].SubCategoryNo + "'  onclick=labelSubCat(this.text,"+SubCategory[i].SubCategoryNo+")> " + SubCategory[i].SubCategoryName + '</option >';
-                }
-                str += " </select>";
-                if (localStorage.getItem("SubCats") == null) {
-                    document.getElementById("subcategory").innerHTML = str;
-                }
-                else {
-                    // Get the existing data
-            var existing = localStorage.getItem('SubCats');
-            // If no existing data, create an array
-            // Otherwise, convert the localStorage string to an array
-                    existing = existing ? existing.split(',') : [];
-                      str1 = '<div class="form-group">';
-                    for (var i = 0; i < existing.length; i++) {
-                        str1 += '<input type="checkbox" name="fancy-checkbox-primary-custom-icons" id="fancy-checkbox-primary-custom-icons" value="' + existing[i] + '" autocomplete="off" checked onchange=changeListSubCat(this)>';
-                 str1 += '<label for="fancy-checkbox-primary-custom-icons" class="[ btn btn-default active ]">' + existing[i] + '</label>';
-                    }
-            str1 += '</div>';
-                    document.getElementById("subcategory").innerHTML = str + str1;
-                }
-
+                    str += '<option data-id="'+SubCategory[i].SubCategoryNo+'" value="'+SubCategory[i].TagName+'" >';
             }
-           
+                str += '</datalist>';
+                str += '<hr>';
+                for (var i = 0; i < 15; i++) {
+                    if (j == 3) {
+                        str += '<hr>';
+                        j = 0;
+                    }
+                    else {
+                        str += '<input type="checkbox" name="fancy-checkbox-primary-custom-icons" id="fancy-checkbox-primary-custom-icons" value="' + SubCategory[i].SubCategoryNo + '" autocomplete="off" onchange=changeListSubCat(this,' + SubCategory[i].SubCategoryNo + ')>';
+                        str += '<label for="fancy-checkbox-primary-custom-icons" class="[ btn btn-default active ]">' + SubCategory[i].TagName + '</label>';
+                        j++;
+                    }
+                }
+                str += '</center>';
+                document.getElementById("subcategory").innerHTML = str;
+            }
             catch (err) {
                 alert(err);
             }
         }
-
-        function labelSubCat(subcat,subCatNo) {
-          // Get the existing data
-            var existing = localStorage.getItem('SubCats');
-            // If no existing data, create an array
-            // Otherwise, convert the localStorage string to an array
-            existing = existing ? existing.split(',') : [];
-            // Add new data to localStorage Array
-            existing.push(subcat);
-            // Save back to localStorage
-            localStorage.setItem('SubCats', existing.toString());
-
-             // Get the existing data
+        //פונקציה שמעדכנת את הרשימה לפי הבחירה
+        function changeListSubCat(subcatCheckOrNot, subcatNo) {
+            // Get the existing data
             var existingNo = localStorage.getItem('ArraySubCategory');
             // If no existing data, create an array
             // Otherwise, convert the localStorage string to an array
             existingNo = existingNo ? existingNo.split(',') : [];
-            // Add new data to localStorage Array
-            existingNo.push(subCatNo);
-            // Save back to localStorage
-            localStorage.setItem('ArraySubCategory', existingNo.toString());
-
-            str = '<div class="form-group">';
-            str += '<input type="checkbox" name="fancy-checkbox-primary-custom-icons" id="fancy-checkbox-primary-custom-icons" value="' + subcat + '" autocomplete="off" checked onchange=changeListSubCat(this)>';
-            str += '<label for="fancy-checkbox-primary-custom-icons" class="[ btn btn-default active ]">' + subcat + '</label>';
-            str += '</div>';
-            document.getElementById("subcategory").innerHTML += '<label>' + str + '</label>';
+            if (subcatCheckOrNot.checked) {
+                // Add new data to localStorage Array
+                existingNo.push(subcatNo);
+                // Save back to localStorage
+                localStorage.setItem('ArraySubCategory', existingNo.toString());
+            }
+            else {
+                var arrayNewSubCat = [];
+                var j = 0;
+                for (var i = 0; i < existingNo.length; i++) {
+                    if (existingNo[i] == subcatNo) {
+                        continue;
+                    }
+                    arrayNewSubCat[j] = existingNo[i];
+                    j++;
                 }
+                localStorage.setItem('ArraySubCategory', arrayNewSubCat.toString());
+            }
+        }
+
         function error(err) {
             err = JSON.parse(err.responseText);
             Swal.fire({
@@ -130,54 +134,35 @@
                 text: 'משהו לא עובד',
                 footer: err.ExceptionMessage
             });
-            //swal("Error!", err.ExceptionMessage, "error");
         }
-        function changeListSubCat(subcatremove) {
-             // Get the existing data
-            var existing = localStorage.getItem('SubCats');
-            // If no existing data, create an array
-            // Otherwise, convert the localStorage string to an array
-            existing = existing ? existing.split(',') : [];
-            // Add new data to localStorage Array
-            var arrayNewSubCat = [];
-            var j = 0;
-            for (var i = 0; i < existing.length; i++) {
-                if (existing[i] == subcatremove.defaultValue) {
-                    continue;
-                }
-                arrayNewSubCat[j] = existing[i];
-                j++;
+
+
+        function AddJob() {
+            Job = { // Note that the name of the fields must be identical to the names of the properties of the object in the server
+                CompanyCompanyNo: localStorage.getItem("CompanyNo"),
+                JobName: localStorage.getItem("JobName"),
+                JobDescription: localStorage.getItem("JobDescription"),
+                Requirements: localStorage.getItem("Requirements"),
+                MailForCV: localStorage.getItem("MailForCV"),
+                OpenDate: localStorage.getItem("OpenDate"),
+                ToDate: localStorage.getItem("ToDate"),
+                Link: localStorage.getItem("Link"),
+                Location: localStorage.getItem("Location"),
+                Status: localStorage.getItem("Status"),
+                CategoryNo: localStorage.getItem("CategoryNo"),
+                //ArrayIntrests: localStorage.getItem("ArrayIntrests"),
+                ArrayLanguage: localStorage.getItem("ArrayLanguage").split(','),
+                ArraySkill: localStorage.getItem("ArraySkill").split(','),
+                ArraySubCategory: localStorage.getItem("ArraySubCategory").split(','),
             }
-            // Save back to localStorage
-            localStorage.setItem('SubCats', arrayNewSubCat.toString());
+            //פקודת אגקס להכנסת משרה
+            ajaxCall("POST", "../api/JobNew", JSON.stringify(Job), success, error);
         }
-       
-         function AddJob() {
-                Job = { // Note that the name of the fields must be identical to the names of the properties of the object in the server
-                    CompanyCompanyNo: localStorage.getItem("CompanyNo"),
-                    JobName: localStorage.getItem("JobName"),
-                    JobDescription:localStorage.getItem("JobDescription"),
-                    Requirements:localStorage.getItem("Requirements"),
-                    MailForCV: localStorage.getItem("MailForCV"),
-                    OpenDate: localStorage.getItem("OpenDate"),
-                    ToDate: localStorage.getItem("ToDate"),
-                    Link: localStorage.getItem("Link"),
-                    Location:localStorage.getItem("Location"),
-                    Status: localStorage.getItem("Status"),
-                    CategoryNo: localStorage.getItem("CategoryNo"),
-                    //ArrayIntrests: localStorage.getItem("ArrayIntrests"),
-                    ArrayLanguage: localStorage.getItem("ArrayLanguage").split(','),
-                    ArraySkill: localStorage.getItem("ArraySkill").split(','),
-                    ArraySubCategory: localStorage.getItem("ArraySubCategory").split(','),
-                }
-                //פקודת אגקס להכנסת משרה
-                ajaxCall("POST", "../api/JobNew", JSON.stringify(Job), success, error);
-            }
-            function f1() {
-                AddJob();
-                return false; // the return false will prevent the form from being submitted
-                // hence the page will not reload
-            }
+        function f1() {
+            AddJob();
+            return false; // the return false will prevent the form from being submitted
+            // hence the page will not reload
+        }
         function success() {
             Swal.fire({
                 position: 'top-end',
@@ -186,9 +171,9 @@
                 showConfirmButton: false,
                 timer: 1500
             });
-        
+
         }
-    
+
 
     </script>
 
