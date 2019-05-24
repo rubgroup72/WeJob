@@ -20,11 +20,18 @@ namespace Proj_WeJob.Models
         {
         }
 
-        // פונקציה שמחזירה רשימה של תחביבים 
+        // פונקציה שמחזירה רשימה של תת מחלקות לפי קוד מחלקה 
         public List<SubDepartment> GetSubDepartmentList(int departmentCode)
         {
             DBservices dbs = new DBservices();
             return dbs.AllSubDepartments(departmentCode);
+        }
+
+        // פונקציה שמחזירה רשימה של מחלקות 
+        public List<Department> GetListDepartment()
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetListDepartment("DBConnectionString");
         }
 
     }

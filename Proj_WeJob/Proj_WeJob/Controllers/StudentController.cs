@@ -18,7 +18,13 @@ namespace Proj_WeJob.Controllers
             Student s = new Student();
             return s.GetListStudent();
         }
-
+        [HttpGet]
+        [Route("api/Student")]
+        public IEnumerable<Student> GET(string codeDepartment,string SubDepartmentId)
+        {
+            Student s = new Student();
+            return s.GetListStudentFilter(codeDepartment, SubDepartmentId);
+        }
         //הפעלת פונקציה שמחזירה את כל הסטודנטים עם סינון
         [HttpGet]
         [Route("api/StudentProfile")]

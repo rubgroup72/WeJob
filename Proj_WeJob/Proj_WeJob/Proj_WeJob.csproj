@@ -212,6 +212,7 @@
     <Compile Include="Controllers\AppStudentLanguagesController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CitesController.cs" />
+    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\InterstController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\SkillController.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Controllers\DistributorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
+    <Compile Include="Controllers\SubDepartmentController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

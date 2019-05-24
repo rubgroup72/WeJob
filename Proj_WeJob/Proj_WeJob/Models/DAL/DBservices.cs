@@ -393,10 +393,49 @@ namespace Proj_WeJob.Models.DAL
             }
             return command;
         }
+        //פונקציה שמחזירה רשימת סטודנטים קיימים לפי מחלקה ותת מחלקה
+        public List<Student> GetListStudentFilter(string conString, string codeDepartment, string SubDepartmentId)
+        {
+            SqlConnection con = null;
+            List<Student> ld = new List<Student>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+                String selectSTR = "SELECT * FROM Student where DepartmentDepartmentCode="+ codeDepartment+ "and SubDepartmentCode="+ SubDepartmentId;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Student d = new Student
+                    {
+                       StudentId= Convert.ToInt32(dr["StudentId"]),
+                        FirstName=Convert.ToString(dr["FirstName"]),
+                        LastName= Convert.ToString(dr["LastName"]),
+                        Email=Convert.ToString(dr["Email"]),
+                        CellPhone=Convert.ToString(dr["CellPhone"]),
+                        Gender = Convert.ToString(dr["gender"]),
+                    };
+                    ld.Add(d);
+                }
 
+                return ld;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
 
         //+++++פונקציה שמחזיה רשימה של מפיצים ללא סינון
-
         public List<Distributor> GetListDistributor(string conString)
         {
             SqlConnection con = null;
@@ -1391,6 +1430,46 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+        //פונקציה שמחזירה מחלקות
+        public List<Department> GetListDepartment(string conString)
+        {
+            SqlConnection con = null;
+            List<Department> lp = new List<Department>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Department";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Department la = new Department
+                    {
+                        DepartmentCode = Convert.ToInt32(dr["DepartmentCode"]),
+                        DepartmentName = Convert.ToString(dr["DepartmentName"])
+                    };
+                    lp.Add(la);
+                }
+
+                return lp;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
 
         // פונקציה שמחזירה רשימה של תתי קטגוריות לפי הקטגוריה שנבחרה
         public List<SubCategory> GetListSubCategories(string conString, string CategoryNo)
@@ -1432,7 +1511,49 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-        
+
+        //פונקציה שמחזירה את התתי מחלקות לפי קוד מחלקה
+        public List<SubDepartment> GetListSubDepartment(string conString, string DepartmentCode)
+        {
+            SqlConnection con = null;
+            List<SubDepartment> lsc = new List<SubDepartment>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Department_SubDepartment where DepartmentCode='" + DepartmentCode + "'";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    SubDepartment sc = new SubDepartment
+                    {
+                        SubDepartmentId = Convert.ToInt32(dr["SubDepartmentId"]),
+                        SubDepartmentName = Convert.ToString(dr["SubDepartmentName"])
+                    };
+                    lsc.Add(sc);
+                }
+
+                return lsc;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+
         // פונקציה שמחזירה רשימה של תתי קטגוריות עבור החיפוש ולפי אותה הקטגוריה שנבחרה 
         public List<SubCategory> GetListSubCategoriesForSearch(string conString,string search, string CategoryNo)
         {

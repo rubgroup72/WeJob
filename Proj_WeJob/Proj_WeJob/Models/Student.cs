@@ -54,7 +54,13 @@ namespace Proj_WeJob.Models.DAL
             return dbs.GetListStudent("DBConnectionString");
         }
 
-        //הצגת סטודנטים עם סינון
+        //הצגת סטודנטים לפי מחלקה ותת מחלקה
+        public List<Student> GetListStudentFilter(string codeDepartment, string SubDepartmentId)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetListStudentFilter("DBConnectionString", codeDepartment, SubDepartmentId);
+        }
+
         public List<Student> GetListStudent(string StudentId)
         {
             DBservices dbs = new DBservices();

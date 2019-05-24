@@ -12,7 +12,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
     <link href="../css/MyStyle2.css" rel="stylesheet" />
-    <link rel="stylesheet" href="sweetalert2.min.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -21,29 +20,57 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <!--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-    <script src="sweetalert2.all.min.js"></script>
-    <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
-    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
-    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7.1.0/dist/promise.min.js"></script>
-
-    <script src="sweetalert2.min.js"></script>
-
+  
     <script src="../Scripts/ajaxCalls.js"></script>
 
 
     <script>
         $(document).ready(function () {
-            // once the document is ready we fetch a list of distributors from the server
-            ajaxCall("GET", "../api/Students", "", getSuccess, error);
-            //buttonEvents();
-            
-                
+            $("#StudentsTable").hide();
+            ajaxCall("GET", "../api/Departments", "", getSuccessD, error);         
         });
+        function getSuccessD(datadepartment) {
+                str = "<label for='exampleFormControlSelect2'>מחלקה</label>";
+                str += "<select required class='form-control' id='Select1' onchange=getSubDepartment(this.value)> ";
+                str += "<option value='בחר'  disabled selected>בחר</option> ";
+                for (var i = 0; i < datadepartment.length; i++) {
+                    str += "<option class='selectCat' value='" + datadepartment[i].DepartmentCode + "'>" + datadepartment[i].DepartmentName + '</option >';
+                }
+                str += " </select>";
+                document.getElementById("Department").innerHTML =str;
+        }
+        function getSubDepartment(codeDepartment) {
+            uri = "../api/SubDepartments?codeDepartment=" + codeDepartment;
+            ajaxCall("GET", uri, "", getSuccessSD, error);   
+        }
+        function getSuccessSD(dataSubDepartment) {
+            try {
+                dataSD = dataSubDepartment;
+                str = "<label for='exampleFormControlSelect3'>תת מחלקה</label>";
+                str += "<select required class='form-control' id='Select2' onchange=renderTable()> ";
+                str += "<option value='בחר'  disabled selected>בחר</option> ";
+                for (var i = 0; i < dataSD.length; i++) {
+                    str += "<option class='selectCat' value='" + dataSubDepartment[i].SubDepartmentId + "'>" + dataSubDepartment[i].SubDepartmentName + '</option >';
+                }
+                str += " </select>";
+                document.getElementById("SubDepartment").innerHTML = str;
+            }
+               catch (err) {
+                alert(err);
+            }
+        }
+        function renderTable() {
+            $("#StudentsTable").show();
+            uri = "../api/Student?codeDepartment=" + $("#Select1").val() + "&SubDepartmentId=" + $("#Select2").val();
+            ajaxCall("GET", uri, "", getSuccess, error);
+            tbl.destroy();
+
+        }
         // this function is activated in case of a success
         function getSuccess(Studentsdata) {
-            Students = Studentsdata; // keep the Students array in a global variable;
-            try {
-                tbl = $('#StudentsTable').DataTable({
+            Students = Studentsdata;
+            try {                 
+      tbl = $('#StudentsTable').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"
                     },
@@ -51,6 +78,8 @@
                     "autoWidth": false,
                     dom: "Bfrtip",
                     pageLength: 4,
+                    retrieve: true,
+        paging: false,
                     columns: [
                          {
                              "className": 'view',
@@ -97,19 +126,17 @@
                               data: "Email",
                               title: "דוא'ל"
                           },
-                             {
-                                 "className": 'DepartmentName',
-                                 data: "DepartmentName",
-                                 title: "מחלקה"
-                             },
-
-                  
-                       
-                    
+                              {
+                              "className": 'Email',
+                              data: "Gender",
+                              title: "דוא'ל"
+                          },
 
                     ]
                 });
                 buttonEvents();
+
+             
             }
 
             catch (err) {
@@ -233,24 +260,32 @@
              <div class="card-body col-xs-12">
 
                  <form id="pForm">
-                     <div class="table-responsive">
-                         <table id="StudentsTable" class="display nowrap">
+                     <div class="row">
+                         <div class="col-xs-12 col-md-6" id="Department">
 
-                             <thead>
+                         </div>
+                         <div class="col-xs-12 col-md-6" id="SubDepartment">
 
-                                 <tr>
-                                     <th></th>
-                                     <th></th>
-                                     <th>StudentId</th>
-                                     <th>FirstName</th>
-                                     <th>LastName</th>
-                                     <th>CellPhone</th>
-                                     <th>Email</th>
-                                     <th>DepartmentName</th>
+                         </div>
+                     </div>
+                     <div class="row">
+                         <div class="table-responsive">
+                             <table id="StudentsTable" class="display nowrap">
+                                 <thead>
+                                     <tr>
+                                         <th></th>
+                                         <th></th>
+                                         <th>StudentId</th>
+                                         <th>FirstName</th>
+                                         <th>LastName</th>
+                                         <th>CellPhone</th>
+                                         <th>Email</th>
+                                         <th>Gender</th>
 
-                                 </tr>
-                             </thead>
-                         </table>
+                                     </tr>
+                                 </thead>
+                             </table>
+                         </div>
                      </div>
                  </form>
              </div>
