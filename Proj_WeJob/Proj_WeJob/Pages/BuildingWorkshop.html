@@ -1,0 +1,240 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--לאייקונים-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../css/MyStyle2.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+
+
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <script>
+        $(document).ready(function () {
+            localStorage.clear();
+             $("#pForm").submit(f1);
+        });
+        function SaveWorkShop() {
+            //כותרת
+            localStorage.setItem("TextHeader", $("#hed").val());
+            localStorage.setItem("ColorHeader", $("#ColorHeader").val());
+            localStorage.setItem("FontSizeHeader", $("#fontSizeHed").val());
+            localStorage.setItem("FontFaimilyHeader", $("#fontFimailyHed").val());
+            //כותרת משנה
+             localStorage.setItem("TextSubHeader", $("#Subhed").val());
+            localStorage.setItem("ColorSubHeader", $("#ColorSubHed").val());
+            localStorage.setItem("FontSizeSubHeader", $("#fontSizeSubHed").val());
+            localStorage.setItem("FontFaimilySubHeader", $("#fontFimailySubHed").val());
+            //גוף ההודעה
+             localStorage.setItem("TextBody", $("#body").val());
+            localStorage.setItem("ColorBody", $("#ColorBody").val());
+            localStorage.setItem("FontSizeBody", $("#fontSizeBody").val());
+            localStorage.setItem("FontFaimilyBody", $("#fontFimailyBody").val());
+            //תחתית הדף
+             localStorage.setItem("TextDownPage", $("#DownPage").val());
+            localStorage.setItem("ColorDownPage", $("#ColorDownPage").val());
+            localStorage.setItem("FontSizeDownPage", $("#fontSizeDownPage").val());
+            localStorage.setItem("FontFaimilyDownPage", $("#fontFimailyDownPage").val());
+             Swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'הנתונים נשמרו בהצלחה',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+        function f1() {
+            SaveWorkShop();
+            return false; // the return false will prevent the form from being submitted
+            // hence the page will not reload
+        }
+/**/</script>
+</head>
+<body>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light " style="background-color:#F2F2F0;">
+        <a class="navbar-brand" href="#">  <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end " id="navbarTogglerDemo02">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        הגדרות מערכת
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">מועמדים</a>
+                        <a class="dropdown-item" href="#">משרות</a>
+                        <a class="dropdown-item" href="#">מחלקות</a>
+                        <a class="dropdown-item" href="#">תחומי עניין</a>
+                        <a class="dropdown-item" href="#">שפות</a>
+                        <a class="dropdown-item" href="#">כישורים</a>
+                        <a class="dropdown-item" href="#">קטגוריות</a>
+                        <a class="dropdown-item" href="#">תתי קטגוריות</a>
+
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="">דוחות</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">סדנאות</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="ListOfJobDistributors.html">מעסיקים ומשרות</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="ListOfStudentAndGraduates.html">מועמדים</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="HomePage.html">דף הבית</a>
+                </li>
+
+            </ul>
+            <!--<form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>-->
+        </div>
+    </nav>
+
+    <div class="container" dir="rtl">
+
+        <div class="card text-center">
+            <div class="card-header" style="color:#072247">
+                <div class="col-xs-12">
+                    <a href="#" class="btn btn-light btn-lg " style="float:right">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                    <h2>עיצוב קמפיין</h2>
+                </div>
+
+            </div>
+            <div class="card-body col-xs-12">
+                <form id="pForm" dir="rtl" class="was-validated">
+                    <div class="form-group  col-xs-12">
+                        <label for="exampleFormControlInput1">כותרת</label>
+                        <input type="text" class="form-control" rows="2" id="hed">
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleFormControlInput2">צבע</label>
+                            <input type="color" class="form-control" id="ColorHeader" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">
+                        </div>
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleFormControlInput3">גודל גופן</label>
+                            <input type="number" class="form-control" id="fontSizeHed">
+
+                        </div>
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleFormControlInput4">גופן</label>
+                            <input class="form-control" id="fontFimailyHed" list="fontFimiliy">
+                            <datalist id="fontFimiliy">
+                                <option value="Calibri">
+                                <option value="Gisha">
+                                <option value="serif">
+                                <option value="sans-serif">
+                                <option value="Arial">
+                                <option value="Arial Narrow">
+                                <option value="Franklin Gothic Medium">
+                                <option value="Times New Roman">
+                                <option value="Times">
+                                <option value="Segoe UI">
+                                <option value="Tahoma">
+                                <option value="Geneva">
+                            </datalist>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group  col-xs-12">
+                        <label for="exampleFormControlInput1">כותרת משנה</label>
+                        <input type="text" class="form-control" rows="2" id="Subhed">
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleFormControlInput2">צבע</label>
+                            <input type="color" class="form-control" id="ColorSubHed" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">
+                        </div>
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleFormControlInput3">גודל גופן</label>
+                            <input type="number" class="form-control" id="fontSizeSubHed">
+
+                        </div>
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleFormControlInput4">גופן</label>
+                            <input class="form-control" id="fontFimailySubHed" list="fontFimiliy">
+
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group  col-xs-12">
+                        <label for="exampleFormControlInput1">גוף ההודעה</label>
+                        <input type="text" class="form-control" rows="2" id="body">
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleFormControlInput2">צבע</label>
+                            <input type="color" class="form-control" id="ColorBody" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">
+                        </div>
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleFormControlInput3">גודל גופן</label>
+                            <input type="number" class="form-control" id="fontSizeBody">
+
+                        </div>
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleFormControlInput4">גופן</label>
+                            <input class="form-control" id="fontFimailyBody" list="fontFimiliy">
+
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group  col-xs-12">
+                        <label for="exampleFormControlInput1">תחתית ההודעה</label>
+                        <input type="text" class="form-control" rows="2" id="DownPage">
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleFormControlInput2">צבע</label>
+                            <input type="color" class="form-control" id="ColorDownPage" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">
+                        </div>
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleFormControlInput3">גודל גופן</label>
+                            <input type="number" class="form-control" id="fontSizeDownPage">
+
+                        </div>
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleFormControlInput4">גופן</label>
+                            <input class="form-control" id="fontFimailyDownPage" list="fontFimiliy">
+
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="col-auto my-1">
+                        <button type="submit" class="btn btn-primary" id="view">שמור</button>
+                        <a href="BuildingWorkshop2.html" class="btn btn-outline-primary">הבא</a>
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="card-footer text-muted">
+                <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt="">
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

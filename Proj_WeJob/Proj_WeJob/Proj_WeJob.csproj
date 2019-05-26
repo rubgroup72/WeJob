@@ -273,9 +273,12 @@
     <Content Include="images\icons\favicon.ico" />
     <Content Include="images\img-01.png" />
     <Content Include="js\main.js" />
+    <Content Include="Pages\BuildingWorkshop.html" />
     <Content Include="Pages\HomePage.html" />
     <Content Include="Pages\HomePage1.html" />
     <Content Include="Pages\HtmlPage1.html" />
+    <Content Include="Pages\BuildingWorkshop2.html" />
+    <Content Include="Pages\HtmlPage3.html" />
     <Content Include="Pages\images\dddd.png" />
     <Content Include="Pages\images\logoWeJob.png" />
     <Content Include="Pages\MatchingSubCategories.html" />
