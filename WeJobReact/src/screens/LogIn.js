@@ -8,9 +8,8 @@ import {
     StyleSheet,
     KeyboardAvoidingView,
     ImageBackground,
-    AsyncStorage,
 } from 'react-native';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import colors from '../styles/colors';
 import InputField from '../components/form/InputField';
 import RoundedButton from '../components/buttons/RoundedButton';

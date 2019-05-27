@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import colors from '../styles/colors';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ImageBackground, KeyboardAvoidingView, AsyncStorage} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ImageBackground, KeyboardAvoidingView } from 'react-native';
 import SearchInput, { createFilter } from 'react-native-search-filter';
 import NextArrowButton from '../components/buttons/NextArrowButton';
 import RoundedButton from '../components/buttons/RoundedButton';
 import Global from '../global';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 //import Loader from '../components/Loader';
 

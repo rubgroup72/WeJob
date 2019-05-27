@@ -124,6 +124,22 @@ namespace Proj_WeJob.Models.DAL
         public void UpdateStudentLanguages()
         {
             DBservices dbs = new DBservices();
+            var langList = new List<string>();
+            for (var i = 0; i < LanguagesList.Count(); ++i)
+            {
+                var lang = LanguagesList[i];
+                if (lang == null || String.IsNullOrEmpty(lang.Name))
+                    continue;
+                if (langList.Contains(lang.Name))
+                {
+                    LanguagesList[i].Name = "";
+                    LanguagesList[i].Degree = 0;
+                }
+                else
+                {
+                    langList.Add(LanguagesList[i].Name);
+                }
+            }
             dbs.UpdateStudentLanguages(StudentId, LanguagesList);
         }
 

@@ -139,10 +139,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/28/2019 22:16:23</publishTime>
     </File>
     <File Include="bin/Proj_WeJob.dll">
-      <publishTime>04/30/2019 22:58:47</publishTime>
+      <publishTime>05/14/2019 23:34:19</publishTime>
     </File>
     <File Include="bin/Proj_WeJob.pdb">
-      <publishTime>04/30/2019 22:58:47</publishTime>
+      <publishTime>05/14/2019 23:34:19</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>04/28/2019 22:16:22</publishTime>
@@ -347,6 +347,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/Site.css">
       <publishTime>04/28/2019 22:16:12</publishTime>
+    </File>
+    <File Include="css/forHomePage.css">
+      <publishTime>05/09/2019 17:19:29</publishTime>
     </File>
     <File Include="css/main.css">
       <publishTime>04/28/2019 22:16:13</publishTime>
@@ -618,6 +621,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Pages/HomePage.html">
       <publishTime>04/28/2019 22:16:13</publishTime>
     </File>
+    <File Include="Pages/HomePage1.html">
+      <publishTime>05/14/2019 23:14:50</publishTime>
+    </File>
+    <File Include="Pages/HtmlPage1.html">
+      <publishTime>05/14/2019 23:14:50</publishTime>
+    </File>
     <File Include="Pages/images/dddd.png">
       <publishTime>04/28/2019 22:16:13</publishTime>
     </File>
@@ -628,7 +637,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/28/2019 22:16:13</publishTime>
     </File>
     <File Include="Pages/InsertJob.html">
-      <publishTime>04/28/2019 22:16:13</publishTime>
+      <publishTime>05/14/2019 23:14:50</publishTime>
     </File>
     <File Include="Pages/ListOfJobDistributors.html">
       <publishTime>04/28/2019 22:16:13</publishTime>
@@ -640,10 +649,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/28/2019 22:16:13</publishTime>
     </File>
     <File Include="Pages/LogIn.html">
-      <publishTime>04/28/2019 22:16:13</publishTime>
+      <publishTime>05/09/2019 17:19:29</publishTime>
     </File>
     <File Include="Pages/MatchingSubCategories.html">
-      <publishTime>04/28/2019 22:16:13</publishTime>
+      <publishTime>05/14/2019 23:14:50</publishTime>
     </File>
     <File Include="Pages/StudentProfile.html">
       <publishTime>04/28/2019 22:16:13</publishTime>
@@ -811,7 +820,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/28/2019 22:16:13</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/30/2019 22:58:48</publishTime>
+      <publishTime>05/14/2019 23:34:19</publishTime>
     </File>
   </ItemGroup>
 </Project>
