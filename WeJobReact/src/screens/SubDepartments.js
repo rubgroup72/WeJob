@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import colors from '../styles/colors';
-import {StyleSheet, Text, View, Image, Button, ScrollView, AsyncStorage,
+import {StyleSheet, Text, View, Image, Button, ScrollView,
     KeyboardAvoidingView, TouchableOpacity, ImageBackground  } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import axios from 'axios';
@@ -9,6 +9,7 @@ import NextArrowButton from '../components/buttons/NextArrowButton';
 import Global from '../global';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import RoundedButton from '../components/buttons/RoundedButton';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class Register extends React.Component{
     
@@ -21,9 +22,11 @@ export default class Register extends React.Component{
             selectedSubDepartment: 0,
             email:'',
         };
+
+        this.props.navigation.addListener('willFocus', this.loadComponent);
       }
 
-    componentWillMount() {
+    loadComponent = () => {
         AsyncStorage.getItem(Global.USER_SELECTED_DEPARTMENT_CODE).then((departmentCode) => {
             this.setState({ selectedDepartment: departmentCode });
             this.fetchSubDepartmentCodeFromServer();

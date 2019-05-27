@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import colors from '../styles/colors';
 import InlineImage from '../components/InlineImage'
-import {StyleSheet, Text, View, Image, Button, ImageBackground, AsyncStorage } from 'react-native';
+import {StyleSheet, Text, View, Image, Button, ImageBackground } from 'react-native';
 import RoundedButton from '../components/buttons/RoundedButton';
 import NavBarButton from '../components/buttons/NavBarButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import Global from '../global';
 import { LoginManager } from 'react-native-fbsdk';
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class LoggedOut extends React.Component{
 
@@ -25,7 +25,7 @@ export default class LoggedOut extends React.Component{
 //נשמור בזיכרון הלוקאלי את הטוקן של ההתחברות לפייסבוק
     handleFacebookLogin = () => {
         // const navigationObj = this.props.navigation;
-        const fetchFacebookUserData = this.props.fetchFacebookUserData;
+        const fetchFacebook = this.props.fetchFacebookUserData;
         LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
           function (result) {
             if (result.isCancelled) {
@@ -35,7 +35,7 @@ export default class LoggedOut extends React.Component{
                 (data) => {
                     AsyncStorage.setItem(Global.FACEBOOK_TOKEN_STRING, data.accessToken.toString());
                     // navigationObj.navigate('Main');
-                    fetchFacebookUserData(data.accessToken.toString());
+                    fetchFacebook(data.accessToken.toString());
                     // this.props.navigation.navigate('Main');
                 })
             }

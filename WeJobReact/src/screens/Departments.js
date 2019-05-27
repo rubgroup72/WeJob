@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import colors from '../styles/colors';
 import {StyleSheet, Text, View, Image, Button, ScrollView,
-    KeyboardAvoidingView, TouchableOpacity, ImageBackground, AsyncStorage  } from 'react-native';
+    KeyboardAvoidingView, TouchableOpacity, ImageBackground  } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import InputField from '../components/form/InputField'
@@ -10,6 +10,7 @@ import Loader from '../components/Loader';
 import NextArrowButton from '../components/buttons/NextArrowButton';
 import Global from '../global';
 import { DrawerActions } from 'react-navigation';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class Department extends React.Component{
@@ -138,65 +139,31 @@ export default class Department extends React.Component{
     }
 
     render(){
-        var marine = <Icon name ="anchor" 
-        color='white'
-        size={85}
-        type="entypo"/>
+        var marine = <Icon name ="anchor" color='white' size={85} type="entypo"/>
         if (this.state.marineSciences === true) {
-            marine = <Icon name ="anchor" 
-            color='rgba(0, 0, 0, 0.38)'
-            size={85}
-            type="entypo"/>;
+            marine = <Icon name ="anchor" color='rgba(0, 0, 0, 0.38)' size={85} type="entypo"/>;
         }
 
-        var cogs = <Icon name ="cogs"
-        color='white'
-        size={85}
-        type="entypo"/>
+        var cogs = <Icon name ="cogs" color='white' size={85} type="entypo"/>
         if (this.state.engineering === true) {
-            cogs = <Icon name ="cogs" 
-            color='rgba(0, 0, 0, 0.38)'
-            size={85}
-            type="entypo"/>;
+            cogs = <Icon name ="cogs" color='rgba(0, 0, 0, 0.38)' size={85} type="entypo"/>;
         }
 
-        var suitcase = <Icon name ="suitcase"
-        color='white'
-        size={85}
-        style={{ marginLeft: 15 }}
-        type="entypo"/>
+        var suitcase = <Icon name ="suitcase" color='white' size={85} type="entypo" style={styles.departmentStyle} />
         if (this.state.aconomicsAndBusiness === true) {
-            suitcase = <Icon name ="suitcase" 
-            color='rgba(0, 0, 0, 0.38)'
-            size={85}
-            style={{ marginLeft: 15 }}
-            type="entypo"/>;
+            suitcase = <Icon name ="suitcase" color='rgba(0, 0, 0, 0.38)' size={85} type="entypo"/>;
         }
 
 
-        var users = <Icon name ="users"
-        color='white'
-        style={{ marginLeft: 15 }}
-        size={85}
-        type="entypo"/>
+        var users = <Icon name ="users" color='white' size={85} type="entypo" style={styles.departmentStyle}/>
         if (this.state.socialAndCommunitySciences === true) {
-            users = <Icon name ="users" 
-            color='rgba(0, 0, 0, 0.38)'
-            size={85}
-            style={{ marginLeft: 15 }}
-            type="entypo"/>;
+            users = <Icon name ="users"  color='rgba(0, 0, 0, 0.38)' size={85} type="entypo"/>;
         }
 
 
-        var graduate = <Icon name ="graduation-cap"
-        color='white'
-        size={85}
-        type="entypo"/>
+        var graduate = <Icon name ="graduation-cap" color='white' size={85} type="entypo"/>
         if (this.state.graduate === true) {
-            graduate = <Icon name ="graduation-cap" 
-            color='rgba(0, 0, 0, 0.38)'
-            size={85}
-            type="entypo"/>;
+            graduate = <Icon name ="graduation-cap" color='rgba(0, 0, 0, 0.38)' size={85} type="entypo"/>;
         }
        
         return (
@@ -308,5 +275,8 @@ const styles = StyleSheet.create({
         height: '100%',
         flex: 1 
 },
+    departmentStyle: {
+        marginRight: 18,
+    }
 
 });

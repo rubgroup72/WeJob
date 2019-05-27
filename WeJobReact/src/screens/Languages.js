@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import colors from '../styles/colors';
 import {StyleSheet, Text, View, Image, Button, ScrollView,
-    KeyboardAvoidingView, TouchableOpacity, ImageBackground, AsyncStorage  } from 'react-native';
+    KeyboardAvoidingView, TouchableOpacity, ImageBackground  } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import axios from 'axios';
@@ -11,7 +11,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import Global from '../global';
 import { DrawerActions } from 'react-navigation';
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class Register extends React.Component{
@@ -29,6 +29,8 @@ export default class Register extends React.Component{
             thirdDegree: 0,
             studentId: '',
         };
+
+        this.props.navigation.addListener('willFocus', this.loadComponent);
       }
 
       
@@ -49,7 +51,7 @@ export default class Register extends React.Component{
     //     }
     //   }
 
-      componentWillMount() {
+    loadComponent = () => {
         this.setState({
             loadingVisible: true
         });

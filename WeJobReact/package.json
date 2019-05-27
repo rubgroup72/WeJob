@@ -8,9 +8,11 @@
     "android": "react-native run-android"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.4.1",
     "axios": "^0.18.0",
     "react": "16.6.3",
     "react-native": "^0.59.8",
+    "react-native-cards": "^1.1.4",
     "react-native-document-picker": "^2.3.0",
     "react-native-fbsdk": "^0.8.0",
     "react-native-fs": "^2.13.3",
