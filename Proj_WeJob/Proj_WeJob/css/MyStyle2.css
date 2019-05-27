@@ -8,6 +8,7 @@
     font-family: Calibri,Gisha, 'Trebuchet MS', sans-serif;
    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
+
 #divlogin{
     width:50%;
     margin-right:25%;
@@ -23,9 +24,13 @@ div.dataTables_wrapper {
 #StudentsTable{
     width:100%;
 }
+.divViewCom {
+    background-color: white;
+}
+
 
 .container {
-    width: 70%;
+    width: 80%;
     height: 100%;
     margin-top: 100px;
     border-radius: 5px;

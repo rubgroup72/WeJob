@@ -222,6 +222,7 @@
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\SubDepartmentController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\WorkShopController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -240,6 +241,7 @@
     <Compile Include="Models\SubCategory.cs" />
     <Compile Include="Models\SubDepartment.cs" />
     <Compile Include="Models\Tags.cs" />
+    <Compile Include="Models\WorkShop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -277,10 +279,11 @@
     <Content Include="Pages\HomePage.html" />
     <Content Include="Pages\HomePage1.html" />
     <Content Include="Pages\HtmlPage1.html" />
-    <Content Include="Pages\BuildingWorkshop2.html" />
+    <Content Include="Pages\HtmlPage2.html" />
     <Content Include="Pages\HtmlPage3.html" />
     <Content Include="Pages\images\dddd.png" />
     <Content Include="Pages\images\logoWeJob.png" />
+    <Content Include="Pages\ListOfWorkShops.html" />
     <Content Include="Pages\MatchingSubCategories.html" />
     <Content Include="Pages\StudentProfile.html" />
     <Content Include="Pages\ListOfStudentAndGraduates.html" />

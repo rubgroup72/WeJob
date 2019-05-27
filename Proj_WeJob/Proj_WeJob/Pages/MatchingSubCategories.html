@@ -55,7 +55,7 @@
         }
         //פונקציה שמציגה את התת קטגוריה שנכנסה לאינפוט חיפוש
         function getSubCatFromSearch(Search) {   
-            for (var i = 11; i < SubCategory.length; i++) {
+            for (var i = 15; i < SubCategory.length; i++) {
                 if (SubCategory[i].TagName == Search) {
                     str = '<hr>';
                     str += '<input type="checkbox" name="fancy-checkbox-primary-custom-icons" id="fancy-checkbox-primary-custom-icons" value="' + SubCategory[i].SubCategoryNo + '" autocomplete="off" onchange=changeListSubCat(this,' + SubCategory[i].SubCategoryNo+ ')>';
@@ -86,11 +86,9 @@
                         str += '<hr>';
                         j = 0;
                     }
-                    else {
                         str += '<input type="checkbox" name="fancy-checkbox-primary-custom-icons" id="fancy-checkbox-primary-custom-icons" value="' + SubCategory[i].SubCategoryNo + '" autocomplete="off" onchange=changeListSubCat(this,' + SubCategory[i].SubCategoryNo + ')>';
                         str += '<label for="fancy-checkbox-primary-custom-icons" class="[ btn btn-default active ]">' + SubCategory[i].TagName + '</label>';
-                        j++;
-                    }
+                        j++; 
                 }
                 str += '</center>';
                 document.getElementById("subcategory").innerHTML = str;
