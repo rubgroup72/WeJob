@@ -24,6 +24,10 @@
     <script src="../Scripts/ajaxCalls.js"></script>
 
 
+  <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!student sub category , language.studnet  , Job.student-->
+
+
+
     <script>
         $(document).ready(function () {
             $("#StudentsTable").hide();
@@ -100,11 +104,8 @@
                                 return deleteBtn;
                             },
                         },
-                        {
-                            "className": 'StudentId',
-                            data: "StudentId",
-                            title: "ת.ז"
-                        },
+                      
+                     
                         {
                             "className": 'FirstName',
                             data: "FirstName",
@@ -272,10 +273,10 @@
                          <div class="table-responsive">
                              <table id="StudentsTable" class="display nowrap">
                                  <thead>
-                                     <tr>
+                                     <tr>                                        
+                                        
                                          <th></th>
                                          <th></th>
-                                         <th>StudentId</th>
                                          <th>FirstName</th>
                                          <th>LastName</th>
                                          <th>CellPhone</th>
