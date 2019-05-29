@@ -255,6 +255,7 @@
     <Content Include="css\forHomePage.css" />
     <Content Include="css\main.css" />
     <Content Include="css\MyStyle.css" />
+    <Content Include="css\Student profile test.css" />
     <Content Include="css\util.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.css" />
@@ -279,6 +280,7 @@
     <Content Include="Pages\images\dddd.png" />
     <Content Include="Pages\images\logoWeJob.png" />
     <Content Include="Pages\MatchingSubCategories.html" />
+    <Content Include="Pages\StudentProfile - test.html" />
     <Content Include="Pages\StudentProfile.html" />
     <Content Include="Pages\ListOfStudentAndGraduates.html" />
     <Content Include="Pages\InsertDistributor.html" />
