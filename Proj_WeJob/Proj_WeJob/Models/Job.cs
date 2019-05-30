@@ -33,7 +33,8 @@ namespace Proj_WeJob.Models.DAL
         public Job(int JobNo,string JobName, string JobDescription, string Requirements,
             int CompanyCompanyNo, string MailForCV, DateTime OpenDate, DateTime ToDate,
             string JobStatusStatusName, string Link, List<String> ArrayLanguage, List<String> ArraySkill, List<String> ArraySubCategory,
-            string Location,string Status, int CategoryNo, List <string> JobTitlesList,int AmountSend, string CategoryName)
+            string Location,string Status, int CategoryNo, List <string> JobTitlesList,int AmountSend,
+            string CategoryName)
         {
             this.CompanyCompanyNo = CompanyCompanyNo;
             this.JobNo = JobNo;

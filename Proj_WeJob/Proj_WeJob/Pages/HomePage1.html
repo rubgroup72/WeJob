@@ -14,13 +14,12 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
     <link href="../css/MyStyle2.css" rel="stylesheet" />
-    <link rel="stylesheet" href="sweetalert2.min.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
@@ -37,6 +36,8 @@
 
     <script>
         $(document).ready(function () {
+            $("#HotJobTable").hide();
+            $("#Distibutors").hide();
             //הפעלת פקודות אגקס להבאת מידע
             ajaxCall("GET", "../api/AmountDistributors", "", getSuccessAD, error);
             ajaxCall("GET", "../api/AmountStudents", "", getSuccessAS, error);
@@ -44,11 +45,12 @@
             ajaxCall("Get", "../api/AmountJobsBad", "", getSuccessAJB, error);
             ajaxCall("GET", "../api/PopularJobs", "", getSuccessPJ, error);
             ajaxCall("GET", "../api/Categorys", "", getSuccessCategorys, error);
+             ajaxCall("Get", "../api/distributors", "", getSuccessDistributors, error);
             //של התפריט
             $('[data-toggle=offcanvas]').click(function () {
                 $('.row-offcanvas').toggleClass('active');
             });
-
+           
         });
 
         function getSuccessAD(AmountDistributors) {
@@ -104,9 +106,13 @@
         function GetJobHot(categoryNo) {
             uri = "../api/HotJobsByCategoryNo?CategoryNo=" + categoryNo;
             ajaxCall("get", uri, "", getSuccessJBC, error);
+            tbl.destroy();
         }
         function getSuccessJBC(dataJBC) {
+            $("#HotJobTable").show();
+            $("#Distibutors").show();
             try {
+                datajob = dataJBC;
                 tbl = $('#HotJobTable').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"
@@ -117,17 +123,20 @@
                     dom: "Bfrtip",
                     columns: [
                         {
-                            "className": 'JobNo',
-                            data: "JobNo",
-                            title: 'קוד משרה'
-                         },
+                            "className": 'edit',
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": '',
+                            render: function (data, type, row, meta) {
+                                let dataDis = "data-DisId='" + row.CompanyNo + "'";
+                                editBtn = "<span class='editBtn btn btn-success fa fa-edit'" + dataDis + "></span>";
+                                return editBtn;
+                            }
+                        },
+                       
                         {
                             data: "JobName",
                             title: 'שם משרה'
-                        },
-                        {
-                            data: "Status",
-                            title: "סטטוס"
                         },
                         {
                             data: "OpenDate",
@@ -136,11 +145,7 @@
                         {
                             data: "ToDate",
                             title: "עד תאריך"
-                        },
-                       
-                       
-                       
-                       
+                        },                            
                     ]
                 });
             }
@@ -151,6 +156,87 @@
         }
         function error(err) {
             swal("Error: " + err);
+        }
+        function getSuccessDistributors(dataDistributors) {
+            try {
+                data = dataDistributors;
+                str = "<label for='exampleFormControlSelect3'>מעסיק</label>";
+                str += "<select required class='form-control' id='Select2' onchange=renderTable(this)> ";
+                str += "<option value='בחר'  disabled selected>בחר</option> ";
+                for (var i = 0; i < data.length; i++) {
+                    str += "<option class='selectCat' value='" + dataDistributors[i].CompanyNo+"'>" + dataDistributors[i].NameCompany+ '</option >';
+                }
+                str += " </select>";
+                document.getElementById("Distibutors").innerHTML = str;
+            }
+               catch (err) {
+                alert(err);
+            }
+        }
+        function renderTable(dis) {
+            datanew = [];
+            j = 0;
+            for (var i = 0; i < datajob.length; i++) {
+                if (datajob[i].CompanyCompanyNo == dis.value) {
+                    datanew[j] = datajob[i];
+                    j++;
+             }
+            }
+            tbl.destroy();
+            updateListJobHot(datanew);
+        }
+           function updateListJobHot(dataJBC) {
+              try {
+                tbl = $('#HotJobTable').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"
+                    },
+                    data: dataJBC,
+                    "autoWidth": false,
+                    pageLength: 8,
+                    dom: "Bfrtip",
+                    columns: [
+                          {
+                            "className": 'edit',
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": '',
+                            render: function (data, type, row, meta) {
+                                let dataDis = "data-DisId='" + row.CompanyNo + "'";
+                                editBtn = "<span class='editBtn btn btn-success fa fa-edit'" + dataDis + "></span>";
+                                return editBtn;
+                            }
+                        },
+                        {
+                            "className": 'JobNo',
+                            data: "JobNo",
+                            title: 'קוד משרה'
+                         },
+                        {
+                            data: "JobName",
+                            title: 'שם משרה'
+                        },
+                        {
+                            data: "OpenDate",
+                            title: 'תאריך פתיחה'
+                        },
+                        {
+                            data: "ToDate",
+                            title: "עד תאריך"
+                        },                            
+                    ]
+                });
+            }
+
+            catch (err) {
+                alert(err);
+            }
+        }
+  
+        $("#distributorTable").on('click', 'td.edit', function () {
+            var tr = $(this).closest('tr');
+            tr.remove();
+            //להוסיף פקודת אגקס לעדכון הסטטוס של המשרה למשרה רגילה
         }
     </script>
 </head>
@@ -196,10 +282,7 @@
                 </li>
 
             </ul>
-            <!--<form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>-->
+       
         </div>
     </nav>
     <!--<nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary mb-3">
@@ -281,7 +364,7 @@
                                 <div class="rotate">
                                     <i class="glyphicon glyphicon-thumbs-down fa-4x"></i>
                                 </div>
-                                <h6 class="text-uppercase">משרות ללא פוטניצל</h6>
+                                <h6 class="text-uppercase">משרות ללא התעניינות</h6>
 
                             </div>
                         </div>
@@ -321,7 +404,7 @@
                 </div>
                 <hr>
 
-                <h4 style="text-align:center;font-weight: bold;">משרות חמות לפי קטגוריה</h4>
+                <h4 style="text-align:center;font-weight: bold;">צפייה במשרות חמות אופציה להחליף סטטוס </h4>
                 <p class="lead mt-5">
 
                 </p>
@@ -330,12 +413,16 @@
                         <div class="col-lg-9 col-md-8">
                             <div class="table-responsive">
                                 <form id="pForm">
+                                    <center>
+                                        <div class="col-xs-12 col-md-6" id="Distibutors">
+
+                                        </div>
+                                    </center>
                                     <table id="HotJobTable" class="display nowrap" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <td>JobNo</td>
+                                                <td></td>
                                                 <td>JobName</td>
-                                                <td>Status</td>
                                                 <td>OpenDate</td>
                                                 <td>ToDate</td>
                                             </tr>
@@ -351,6 +438,8 @@
                                 <div class="card-body" id="categoryJob">
 
                                 </div>
+                                <hr />
+
                             </div>
                         </div>
                     </div>

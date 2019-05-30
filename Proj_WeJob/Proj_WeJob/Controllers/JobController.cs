@@ -36,13 +36,13 @@ namespace Proj_WeJob.Controllers
             Job j = new Job();
             return j.GetJob(JobNo);
         }
-        //[HttpGet]
-        //[Route("api/AmountJobsGood")]
-        //public int GET()
-        //{
-        //    Job d = new Job();
-        //    return d.GetAmountJobsGood();
-        //}
+        [HttpGet]
+        [Route("api/AmountJobsGood")]
+        public int GET()
+        {
+            Job d = new Job();
+            return d.GetAmountJobsGood();
+        }
         [HttpGet]
         [Route("api/AmountJobsBad")]
         public int Get()
@@ -52,7 +52,7 @@ namespace Proj_WeJob.Controllers
         }
         [HttpGet]
         [Route("api/PopularJobs")]
-        public IEnumerable<Job> GET()
+        public IEnumerable<Job> get()
         {
             Job d = new Job();
             return d.GetPopularJobs();

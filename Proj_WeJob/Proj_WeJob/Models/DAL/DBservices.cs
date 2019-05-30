@@ -1620,6 +1620,7 @@ namespace Proj_WeJob.Models.DAL
                         ToDate = Convert.ToDateTime(dr["ToDate"]),
                         Location = Convert.ToString(dr["Location"]),
                         Status = Convert.ToString(dr["JobStatusStatusName"]),
+                        CompanyCompanyNo = Convert.ToInt32(dr["CompanyCompanyNo"]),
                     };
                     lsc.Add(sc);
                 }
@@ -1854,7 +1855,6 @@ namespace Proj_WeJob.Models.DAL
                     };
                     lsc.Add(sc);
                 }
-
                 return lsc;
             }
             catch (Exception ex)
