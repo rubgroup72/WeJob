@@ -12,7 +12,6 @@ import Loader from '../components/Loader';
 import Global from '../global';
 import AsyncStorage from '@react-native-community/async-storage';
 
-
 export default class Register extends React.Component{
     
     constructor(props) {
@@ -97,7 +96,7 @@ export default class Register extends React.Component{
                  resizeMode='cover' 
                  source={require('../img/blue.jpeg')}>
                  <KeyboardAvoidingView style={styles.wrapper}>
-                <ScrollView  behavior="padding" enabled keyboardShouldPersistTaps='always'>
+                <ScrollView  behavior="padding" keyboardShouldPersistTaps={'always'} enabled>
                     <View style={styles.wrapper}>
                         <View style={styles.welcomeWrapper}>
                             <Text style = {styles.welcomeText}> 
@@ -117,7 +116,7 @@ export default class Register extends React.Component{
                             </TouchableOpacity>
                             <TouchableOpacity activeOpacity = { .5 } onPress={this.genderClicked}>
                                 { femaleImage }
-                                <Text style={{ textAlign: "center", color: 'white', fontSize: 14 }}>נקבה</Text>
+                                <Text style={{ textAlign: "center", color: 'white', fontSize: 14 }}>    נקבה</Text>
                             </TouchableOpacity>
                             </View>
                             <InputField 

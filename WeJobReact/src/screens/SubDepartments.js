@@ -22,9 +22,11 @@ export default class Register extends React.Component{
             selectedSubDepartment: 0,
             email:'',
         };
+
+        this.props.navigation.addListener('willFocus', this.loadComponent);
       }
 
-    componentWillMount() {
+    loadComponent = () => {
         AsyncStorage.getItem(Global.USER_SELECTED_DEPARTMENT_CODE).then((departmentCode) => {
             this.setState({ selectedDepartment: departmentCode });
             this.fetchSubDepartmentCodeFromServer();
@@ -108,7 +110,7 @@ export default class Register extends React.Component{
                  resizeMode='cover' 
                  source={require('../img/blue.jpeg')}>
                  <KeyboardAvoidingView style={styles.wrapper}>
-                <ScrollView  behavior="padding" enabled keyboardShouldPersistTaps='always'>
+                <ScrollView  behavior="padding" enabled>
                     <View style={styles.wrapper}>
                         <View style={styles.welcomeWrapper}>
                         <Text style = {styles.welcomeText}> 

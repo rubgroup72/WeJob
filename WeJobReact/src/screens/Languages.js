@@ -29,6 +29,8 @@ export default class Register extends React.Component{
             thirdDegree: 0,
             studentId: '',
         };
+
+        this.props.navigation.addListener('willFocus', this.loadComponent);
       }
 
       
@@ -49,7 +51,7 @@ export default class Register extends React.Component{
     //     }
     //   }
 
-      componentWillMount() {
+    loadComponent = () => {
         this.setState({
             loadingVisible: true
         });
@@ -185,7 +187,7 @@ export default class Register extends React.Component{
                  resizeMode='cover' 
                  source={require('../img/blue.jpeg')}>
                  <KeyboardAvoidingView style={styles.wrapper}>
-                <ScrollView  behavior="padding" enabled keyboardShouldPersistTaps='always'>
+                <ScrollView  behavior="padding" enabled>
                     <View style={styles.wrapper}>
                         <View style={styles.welcomeWrapper}>
                             <Text style = {styles.welcomeText}> 

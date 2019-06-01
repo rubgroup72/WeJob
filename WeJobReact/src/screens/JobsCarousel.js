@@ -1,10 +1,11 @@
 import { DrawerActions } from 'react-navigation';    
 import React from 'react';
-import { StyleSheet,Text, Image, View,SafeAreaView ,TouchableHighlight } from 'react-native';
+import { StyleSheet,Text, Image, View,SafeAreaView ,TouchableHighlight, ScrollView, ImageBackground} from 'react-native';
 import axios from 'axios';
 import Global from '../global';
-import AsyncStorage from '@react-native-community/async-storage';
+import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-cards';
 import Carousel from 'react-native-snap-carousel';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class JobsCarousel extends React.Component {
  
@@ -51,22 +52,15 @@ export default class JobsCarousel extends React.Component {
     static navigationOptions = ({navigation}) => {
         return {
             headerTransparent: true,
-            headerTintColor: colors.green01,
+            headerStyle: {backgroundColor:'#3c3c3c'},
             headerRight: (
-
-                <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
+                <TouchableOpacity  onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
                     <Icon name="bars" size={30} color= {colors.white} />
                 </TouchableOpacity>
-            //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
+
             ),
-            //title: 'WeJob1',
-            // headerLeft: (
-            //     <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
-            //         <Icon name="bars" size={30} color= {colors.white} />
-            //     </TouchableOpacity>
-            // ),
         }
-      }
+        }
 ///לכל פריט בקרוסלה נציג את הנתונים הבאים
     _renderItem = ({item,index}) => {
         return (
@@ -80,48 +74,92 @@ export default class JobsCarousel extends React.Component {
                 <Text style={{ color: 'white', margin: 6 }}>{item.JobDescription}</Text>
                 </View>
              </View>
-            // <View style={{flex:1,justifyContent:'center',alignItems:'center'}}> 
-            //     <Image
-            //         source={require('../assets/usericon.png')}
-            //         />
-            //     <Text style={{color:'#fff'}} >{item.JobName}</Text>
-            // </View>
         )
     }
 
     render() {
         return (
-        <SafeAreaView style={styles.container}>
-          
-            <TouchableHighlight //כפתור חץ לצד ימין מעדכן את האינדקס לאחד פחות
-                onPress={
-                    () => { this.carousel._snapToItem(this.state.activeIndex-1)}
-                }>
-                <Image source={require('../assets/rightarrow.png')}/>
-            </TouchableHighlight>
+        <ImageBackground style={ styles.imgBackground }
+            resizeMode='cover' 
+            source={require('../img/blue.jpeg')}>
+            <ScrollView> 
+                <Card>
+                    <CardImage 
+                    source={{uri: 'http://bit.ly/2GfzooV'}} 
+                    title="Top 10 South African beaches"
+                    />
+                    <CardTitle
+                    subtitle="Number 6"
+                    />
+                    <CardContent text="Clifton, Western Cape" />
+                    <CardAction 
+                    separator={true} 
+                    inColumn={false}>
+                    <CardButton
+                        onPress={() => {}}
+                        title="Share"
+                        color="#FEB557"
+                    />
+                    <CardButton
+                        onPress={() => {}}
+                        title="Explore"
+                        color="#FEB557"
+                    />
+                    </CardAction>
+                </Card>
+                <Card>
+                    <CardImage 
+                    source={{uri: 'http://bit.ly/2GfzooV'}} 
+                    title="Top 10 South African beaches"
+                    />
+                    <CardTitle
+                    subtitle="Number 6"
+                    />
+                    <CardContent text="Clifton, Western Cape" />
+                    <CardAction 
+                    separator={true} 
+                    inColumn={false}>
+                    <CardButton
+                        onPress={() => {}}
+                        title="Share"
+                        color="#FEB557"
+                    />
+                    <CardButton
+                        onPress={() => {}}
+                        title="Explore"
+                        color="#FEB557"
+                    />
+                    </CardAction>
+                </Card>
+                </ScrollView>
+             </ImageBackground>
+        // <SafeAreaView style={styles.container}>   
+        //     <TouchableHighlight //כפתור חץ לצד ימין מעדכן את האינדקס לאחד פחות
+        //         onPress={
+        //             () => { this.carousel._snapToItem(this.state.activeIndex-1)}
+        //         }>
+        //         <Image source={require('../assets/rightarrow.png')}/>
+        //     </TouchableHighlight>
 
-            <View>
+        //     <View>
               
-                <Carousel //יצירת קומפוננטה מסוג קרוסלה והעברת הנתונים לתכונות הקרוסלה 
-                    ref={ref => this.carousel = ref}
-                    data={this.state.JobsList}
-                    sliderWidth={250}
-                    itemWidth={250}
-                    renderItem={this._renderItem}
-                    onSnapToItem = { index => this.setState({activeIndex:index}) }
-                />
-            </View>
+        //         <Carousel //יצירת קומפוננטה מסוג קרוסלה והעברת הנתונים לתכונות הקרוסלה 
+        //             ref={ref => this.carousel = ref}
+        //             data={this.state.JobsList}
+        //             sliderWidth={250}
+        //             itemWidth={250}
+        //             renderItem={this._renderItem}
+        //             onSnapToItem = { index => this.setState({activeIndex:index}) }
+        //         />
+        //     </View>
 
-            <TouchableHighlight //כפתור חץ שמאלי מעדכן את האינדקס לפלוס אחד           
-                onPress={
-                    () => { this.carousel._snapToItem(this.state.activeIndex+1)}
-                }>
-                <Image source={require('../assets/leftarrow.png')}/>                
-            </TouchableHighlight>
-
-           
-
-        </SafeAreaView>
+        //     <TouchableHighlight //כפתור חץ שמאלי מעדכן את האינדקס לפלוס אחד           
+        //         onPress={
+        //             () => { this.carousel._snapToItem(this.state.activeIndex+1)}
+        //         }>
+        //         <Image source={require('../assets/leftarrow.png')}/>                
+        //     </TouchableHighlight>
+        // </SafeAreaView>
         );
     }
 }
@@ -135,5 +173,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  imgBackground: {
+    width: '100%',
+    height: '100%',
+    flex: 1,
+},
 });
 

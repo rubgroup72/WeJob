@@ -7,9 +7,8 @@ import RoundedButton from '../components/buttons/RoundedButton';
 import Global from '../global';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
 //import Loader from '../components/Loader';
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class SubCategory extends React.Component{
@@ -169,7 +168,7 @@ handleNextButtonClicked = () => {
         resizeMode='cover' 
         source={require('../img/blue.jpeg')}>
         <KeyboardAvoidingView style={styles.wrapper}>
-                <ScrollView  behavior="padding" enabled keyboardShouldPersistTaps='always'>
+                <ScrollView  behavior="padding" enabled>
                     <View style={styles.wrapper}>
                         <View style={styles.welcomeWrapper}>
                         <Text style = {styles.welcomeText}> 
@@ -185,7 +184,7 @@ handleNextButtonClicked = () => {
                             placeholder="חפש..."
                             placeholderTextColor = {colors.white01}
                             />
-                            <ScrollView keyboardShouldPersistTaps='always'>
+                            <ScrollView>
                                 <Table borderStyle={{borderColor: 'transparent'}}>
                                     <Rows data={tableRows} textStyle={styles.text}/>
                                 </Table>

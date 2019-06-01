@@ -47,7 +47,7 @@ export default class Main extends React.Component{
             // headerRight: (
             //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
             // ),
-           // title: 'WeJob',
+            title: 'WeJob',
             headerLeft: headerLeftInternal,
         }
       }

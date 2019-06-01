@@ -25,7 +25,7 @@ export default class LoggedOut extends React.Component{
 //נשמור בזיכרון הלוקאלי את הטוקן של ההתחברות לפייסבוק
     handleFacebookLogin = () => {
         // const navigationObj = this.props.navigation;
-        const fetchFacebookUserData = this.props.fetchFacebookUserData;
+        const fetchFacebook = this.props.fetchFacebookUserData;
         LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
           function (result) {
             if (result.isCancelled) {
@@ -35,7 +35,7 @@ export default class LoggedOut extends React.Component{
                 (data) => {
                     AsyncStorage.setItem(Global.FACEBOOK_TOKEN_STRING, data.accessToken.toString());
                     // navigationObj.navigate('Main');
-                    fetchFacebookUserData(data.accessToken.toString());
+                    fetchFacebook(data.accessToken.toString());
                     // this.props.navigation.navigate('Main');
                 })
             }
