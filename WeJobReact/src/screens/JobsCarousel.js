@@ -116,7 +116,13 @@ export default class JobsCarousel extends React.Component {
                     </Card>
                 </Swipeout>;
     }
+    _getEmptyJobsListScreen = () => {
+        return <Text>אין משרות מתאימות לך כרגע.. מומלץ למלא דפי הרשמה</Text>
+    }
     _getJobsList = () => {
+        if (this.state.JobsList.length === 0) {
+            return this._getEmptyJobsListScreen();
+        }
         var ret = [];
         for (var i = 0; i < this.state.JobsList.length; ++i) {
             var j = this.state.JobsList[i];
@@ -128,13 +134,16 @@ export default class JobsCarousel extends React.Component {
     render() {
         var jobsList = this._getJobsList();
         return (
-        <ImageBackground style={ styles.imgBackground }
-            resizeMode='cover' 
-            source={require('../img/blue.jpeg')}>
-            <ScrollView> 
-                { jobsList }
-            </ScrollView>
-             </ImageBackground>
+            <View style={styles.main}>
+
+                <ImageBackground style={ styles.imgBackground }
+                    resizeMode='cover' 
+                    source={require('../img/blue.jpeg')}>
+                    <ScrollView style={styles.scrollViewStyle}> 
+                        { jobsList }
+                    </ScrollView>
+                    </ImageBackground>
+            </View>
         // <SafeAreaView style={styles.container}>   
         //     <TouchableHighlight //כפתור חץ לצד ימין מעדכן את האינדקס לאחד פחות
         //         onPress={
@@ -177,8 +186,14 @@ const styles = StyleSheet.create({
   },
   imgBackground: {
     width: '100%',
-    height: '100%',
+    height: '110%',
     flex: 1,
+    paddingTop: 50,
 },
+scrollViewStyle: {
+},
+main: {
+    flex: 1   
+   }
 });
 

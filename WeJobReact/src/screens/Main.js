@@ -41,13 +41,17 @@ export default class Main extends React.Component{
             <Icon name="bars" size={30} color= {colors.white} />
             </TouchableOpacity>);
         }
+        var title = '';
+        if (params.shouldShow) {
+            title = 'משרות מומלצות עבורך';
+        }
         return {
             headerTransparent: true,
             headerTintColor: colors.green01,
             // headerRight: (
             //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
             // ),
-            title: 'WeJob',
+            title: title,
             headerLeft: headerLeftInternal,
         }
       }
@@ -67,8 +71,9 @@ export default class Main extends React.Component{
             }
           });
         // אם היוזר נמצא בדף ההתחברות, ננסה לחבר אותו לפי הפרטים ששמורים לנו ממקודם
-          if (this.state.userLoggedOut) 
+          if (this.state.userLoggedOut) {
               this.tryLogin();
+          }
           else  {
             // In case the user have been logged out from another screen  
             AsyncStorage.getItem(Global.IS_USER_LOGGED_IN).then((res) => {
@@ -81,6 +86,7 @@ export default class Main extends React.Component{
                         student: null,
                         isDemoUser: false,
                     });
+                    this.props.navigation.setParams({ shouldShow: false });
                 }
             });
           }
