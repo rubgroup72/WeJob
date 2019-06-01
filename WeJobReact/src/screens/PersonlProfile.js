@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import RoundedButton from '../components/buttons/RoundedButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../styles/colors';
-import {StyleSheet, Text, View, Image, Button, ScrollView, AsyncStorage, KeyboardAvoidingView, TouchableOpacity, ImageBackground  } from 'react-native';
+import {StyleSheet, Text, View, Image, Button, ScrollView, KeyboardAvoidingView, TouchableOpacity, ImageBackground  } from 'react-native';
 import NavBarButton from '../components/buttons/NavBarButton';
 import axios from 'axios';
 import Loader from '../components/Loader';
@@ -13,6 +13,7 @@ import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import { LoginManager } from 'react-native-fbsdk';
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class PersonalProfile extends React.Component{
 

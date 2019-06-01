@@ -62,6 +62,7 @@
 		4744413D933A4CE9A696A04A /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E79FD154F443C091C66B07 /* libReactNativeNavigation.a */; };
 		EF947FCCB36D4864BA052771 /* ReactNativeNavigationTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = E6409D0476C64B66960793AE /* ReactNativeNavigationTests.xctest */; };
 		66E34494DC28433FB7415F9E /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27D276D5408A46D9AF051111 /* libRNFS.a */; };
+		F5E87B9729CE468AA44D215C /* libRNCAsyncStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B426E437B2BA4763901761F5 /* libRNCAsyncStorage.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -398,6 +399,8 @@
 		E6409D0476C64B66960793AE /* ReactNativeNavigationTests.xctest */ = {isa = PBXFileReference; name = "ReactNativeNavigationTests.xctest"; path = "ReactNativeNavigationTests.xctest"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.cfbundle; explicitFileType = undefined; includeInIndex = 0; };
 		A55A5121A35B4238983127C3 /* RNFS.xcodeproj */ = {isa = PBXFileReference; name = "RNFS.xcodeproj"; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		27D276D5408A46D9AF051111 /* libRNFS.a */ = {isa = PBXFileReference; name = "libRNFS.a"; path = "libRNFS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		0AD4321F86634309A6CF2D0A /* RNCAsyncStorage.xcodeproj */ = {isa = PBXFileReference; name = "RNCAsyncStorage.xcodeproj"; path = "../node_modules/@react-native-community/async-storage/ios/RNCAsyncStorage.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		B426E437B2BA4763901761F5 /* libRNCAsyncStorage.a */ = {isa = PBXFileReference; name = "libRNCAsyncStorage.a"; path = "libRNCAsyncStorage.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -433,6 +436,7 @@
 				4744413D933A4CE9A696A04A /* libReactNativeNavigation.a in Frameworks */,
 				EF947FCCB36D4864BA052771 /* ReactNativeNavigationTests.xctest in Resources */,
 				66E34494DC28433FB7415F9E /* libRNFS.a in Frameworks */,
+				F5E87B9729CE468AA44D215C /* libRNCAsyncStorage.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,6 +633,7 @@
 				7ADDCBAC155F4047A51E0ACA /* RCTFBSDK.xcodeproj */,
 				D84DB4AA466445BF80EFF940 /* ReactNativeNavigation.xcodeproj */,
 				A55A5121A35B4238983127C3 /* RNFS.xcodeproj */,
+				0AD4321F86634309A6CF2D0A /* RNCAsyncStorage.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1303,6 +1308,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1312,6 +1318,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 			};
 			name = Debug;
@@ -1341,6 +1348,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1350,6 +1358,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 			};
 			name = Release;
@@ -1378,6 +1387,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 			};
 			name = Debug;
@@ -1405,6 +1415,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 			};
 			name = Release;
@@ -1442,6 +1453,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1451,6 +1463,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 			};
 			name = Debug;
@@ -1488,6 +1501,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1497,6 +1511,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 			};
 			name = Release;
@@ -1533,6 +1548,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1542,6 +1558,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 			};
 			name = Debug;
@@ -1578,6 +1595,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1587,6 +1605,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios - Copy - Copy\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-navigation\lib\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
+					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 				);
 			};
 			name = Release;

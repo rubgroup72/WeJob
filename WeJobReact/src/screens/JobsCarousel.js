@@ -1,9 +1,9 @@
 import { DrawerActions } from 'react-navigation';    
 import React from 'react';
-import { StyleSheet,Text, Image, View,SafeAreaView ,TouchableHighlight, AsyncStorage} from 'react-native';
+import { StyleSheet,Text, Image, View,SafeAreaView ,TouchableHighlight } from 'react-native';
 import axios from 'axios';
 import Global from '../global';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import Carousel from 'react-native-snap-carousel';
 
 export default class JobsCarousel extends React.Component {

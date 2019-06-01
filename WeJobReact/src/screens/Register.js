@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import colors from '../styles/colors';
 import {StyleSheet, Text, View, Image, Button, ScrollView,
-    KeyboardAvoidingView, TouchableOpacity, ImageBackground, AsyncStorage  } from 'react-native';
+    KeyboardAvoidingView, TouchableOpacity, ImageBackground  } from 'react-native';
 import RoundedButton from '../components/buttons/RoundedButton';
 import NavBarButton from '../components/buttons/NavBarButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,6 +10,7 @@ import InputField from '../components/form/InputField'
 import axios from 'axios';
 import Loader from '../components/Loader';
 import Global from '../global';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class Register extends React.Component{

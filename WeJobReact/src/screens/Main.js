@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import colors from '../styles/colors';
 import LoggedOut from './LoggedOut';
 import NavBarButton from '../components/buttons/NavBarButton';
-import { StyleSheet, TouchableOpacity, Text, View, Image, Button, AsyncStorage, DrawerLayoutAndroid, I18nManager } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, Image, Button, DrawerLayoutAndroid, I18nManager } from 'react-native';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import { DrawerActions } from 'react-navigation';
 import RoundedButton from '../components/buttons/RoundedButton';
@@ -11,6 +11,7 @@ import JobsCarousel from './JobsCarousel';
 import Global from '../global';
 import axios from 'axios';
 import Department from './Departments';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class Main extends React.Component{
 

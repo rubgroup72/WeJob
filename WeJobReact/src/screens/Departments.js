@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import colors from '../styles/colors';
 import {StyleSheet, Text, View, Image, Button, ScrollView,
-    KeyboardAvoidingView, TouchableOpacity, ImageBackground, AsyncStorage  } from 'react-native';
+    KeyboardAvoidingView, TouchableOpacity, ImageBackground  } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import InputField from '../components/form/InputField'
@@ -10,6 +10,7 @@ import Loader from '../components/Loader';
 import NextArrowButton from '../components/buttons/NextArrowButton';
 import Global from '../global';
 import { DrawerActions } from 'react-navigation';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class Department extends React.Component{
