@@ -77,61 +77,40 @@ export default class JobsCarousel extends React.Component {
         )
     }
 
+    _renderJob = (job, index) => {
+        return <Card key={index}>
+                    <CardImage 
+                    source={{uri: 'http://bit.ly/2GfzooV'}} 
+                    title={job.JobName}
+                    />
+                    <CardTitle
+                    subtitle={job.CompanyCompanyNo}
+                    />
+                    <CardContent text={job.JobDescription} />
+                    <CardAction separator={true} inColumn={false}>
+                    <CardButton onPress={() => {}} title="Share" color="#FEB557" />
+                    <CardButton onPress={() => {}} title="Explore" color="#FEB557" />
+                    </CardAction>
+                </Card>;
+    }
+    _getJobsList = () => {
+        var ret = [];
+        for (var i = 0; i < this.state.JobsList.length; ++i) {
+            var j = this.state.JobsList[i];
+            ret.push(this._renderJob(j, i));
+        }
+        return ret;
+    }
+
     render() {
+        var jobsList = this._getJobsList();
         return (
         <ImageBackground style={ styles.imgBackground }
             resizeMode='cover' 
             source={require('../img/blue.jpeg')}>
             <ScrollView> 
-                <Card>
-                    <CardImage 
-                    source={{uri: 'http://bit.ly/2GfzooV'}} 
-                    title="Top 10 South African beaches"
-                    />
-                    <CardTitle
-                    subtitle="Number 6"
-                    />
-                    <CardContent text="Clifton, Western Cape" />
-                    <CardAction 
-                    separator={true} 
-                    inColumn={false}>
-                    <CardButton
-                        onPress={() => {}}
-                        title="Share"
-                        color="#FEB557"
-                    />
-                    <CardButton
-                        onPress={() => {}}
-                        title="Explore"
-                        color="#FEB557"
-                    />
-                    </CardAction>
-                </Card>
-                <Card>
-                    <CardImage 
-                    source={{uri: 'http://bit.ly/2GfzooV'}} 
-                    title="Top 10 South African beaches"
-                    />
-                    <CardTitle
-                    subtitle="Number 6"
-                    />
-                    <CardContent text="Clifton, Western Cape" />
-                    <CardAction 
-                    separator={true} 
-                    inColumn={false}>
-                    <CardButton
-                        onPress={() => {}}
-                        title="Share"
-                        color="#FEB557"
-                    />
-                    <CardButton
-                        onPress={() => {}}
-                        title="Explore"
-                        color="#FEB557"
-                    />
-                    </CardAction>
-                </Card>
-                </ScrollView>
+                { jobsList }
+            </ScrollView>
              </ImageBackground>
         // <SafeAreaView style={styles.container}>   
         //     <TouchableHighlight //כפתור חץ לצד ימין מעדכן את האינדקס לאחד פחות
