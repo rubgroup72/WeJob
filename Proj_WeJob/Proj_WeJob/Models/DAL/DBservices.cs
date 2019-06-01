@@ -1991,6 +1991,9 @@ namespace Proj_WeJob.Models.DAL
             SqlConnection con = null;
             //int intStudentId = Convert.ToInt32(studentId);
             List<Job> lsc = new List<Job>();
+            if (String.IsNullOrEmpty(studentId))
+                return lsc;
+
             try
             {
                 con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file

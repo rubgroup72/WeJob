@@ -1,6 +1,6 @@
 import { DrawerActions } from 'react-navigation';    
 import React from 'react';
-import { StyleSheet,Text, Image, View,SafeAreaView ,TouchableHighlight, ScrollView, ImageBackground, I18nManager} from 'react-native';
+import { StyleSheet,Text, Image, View,Dimensions, Platform, ScrollView, ImageBackground, Modal, TouchableHighlight, Alert, I18nManager} from 'react-native';
 import axios from 'axios';
 import Global from '../global';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-cards';
@@ -18,6 +18,8 @@ export default class JobsCarousel extends React.Component {
             studentId: '',
             activeIndex:0,
             JobsList: [],
+            isModalVisible: false,
+            selectedJob: null,
         }
 
     }
@@ -110,7 +112,12 @@ export default class JobsCarousel extends React.Component {
                         />
                         <CardContent text={job.JobDescription} />
                         <CardAction separator={true} inColumn={false}>
-                        <CardButton onPress={() => {}} title="Share" color="#FEB557" />
+                        <CardButton onPress={() => { 
+                            this.setState({ 
+                                isModalVisible: true,
+                                selectedJob: job,
+                            });
+                            }} title="Share" color="#FEB557" />
                         <CardButton onPress={() => {}} title="Explore" color="#FEB557" />
                         </CardAction>
                     </Card>
@@ -130,8 +137,31 @@ export default class JobsCarousel extends React.Component {
         }
         return ret;
     }
+    _getModalForJob = () => {
+        var modalTitle = '', modalDescription = '';
+        if (this.state.selectedJob !== null && this.state.selectedJob !== undefined) {
+            modalTitle = this.state.selectedJob.JobName;
+            modalDescription = this.state.selectedJob.JobDescription;
+        }
+        return <View style={{marginTop: 22}}>
+                <View>
+                    <Text> { modalTitle }</Text>
+                    <Text> { modalDescription }</Text>
+                    <TouchableHighlight
+                        onPress={() => { this.setState({ isModalVisible: false}); }}>
+                        <Text>Hide Modal</Text>
+                    </TouchableHighlight>
+                </View>
+            </View>;
+    }
 
     render() {
+
+        const deviceWidth = Dimensions.get("window").width;
+        const deviceHeight = Platform.OS === "ios"
+            ? Dimensions.get("window").height
+            : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
+            
         var jobsList = this._getJobsList();
         return (
             <View style={styles.main}>
@@ -142,7 +172,20 @@ export default class JobsCarousel extends React.Component {
                     <ScrollView style={styles.scrollViewStyle}> 
                         { jobsList }
                     </ScrollView>
-                    </ImageBackground>
+
+                    
+                </ImageBackground>
+
+                <Modal
+                        animationType="slide"
+                        transparent={false}
+                        visible={this.state.isModalVisible}
+                        onRequestClose={() => {
+                            Alert.alert('Modal has been closed.');
+                        }}>
+                            { this._getModalForJob() }
+                        </Modal>
+                
             </View>
         // <SafeAreaView style={styles.container}>   
         //     <TouchableHighlight //כפתור חץ לצד ימין מעדכן את האינדקס לאחד פחות
