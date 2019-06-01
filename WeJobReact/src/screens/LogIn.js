@@ -71,7 +71,7 @@ class LogIn extends Component {
                  resizeMode='cover' 
                  source={require('../img/blue.jpeg')}>
                  <KeyboardAvoidingView style={styles.wrapper}>
-                <ScrollView  behavior="padding" enabled>
+                <ScrollView  behavior="padding" enabled keyboardShouldPersistTaps='always'>
                  <View style = {styles.scrolViewWrapper}>
                     <Text style = {styles.logInHeader}>התחבר</Text>
                     <InputField 

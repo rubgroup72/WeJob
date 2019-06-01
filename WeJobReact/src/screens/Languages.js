@@ -185,7 +185,7 @@ export default class Register extends React.Component{
                  resizeMode='cover' 
                  source={require('../img/blue.jpeg')}>
                  <KeyboardAvoidingView style={styles.wrapper}>
-                <ScrollView  behavior="padding" enabled>
+                <ScrollView  behavior="padding" enabled keyboardShouldPersistTaps='always'>
                     <View style={styles.wrapper}>
                         <View style={styles.welcomeWrapper}>
                             <Text style = {styles.welcomeText}> 
