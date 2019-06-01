@@ -1,16 +1,19 @@
 import { DrawerActions } from 'react-navigation';    
 import React from 'react';
-import { StyleSheet,Text, Image, View,SafeAreaView ,TouchableHighlight, ScrollView, ImageBackground} from 'react-native';
+import { StyleSheet,Text, Image, View,SafeAreaView ,TouchableHighlight, ScrollView, ImageBackground, I18nManager} from 'react-native';
 import axios from 'axios';
 import Global from '../global';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-cards';
 import Carousel from 'react-native-snap-carousel';
 import AsyncStorage from '@react-native-community/async-storage';
+import Swipeout from 'react-native-swipeout';
 
 export default class JobsCarousel extends React.Component {
  
     constructor(props){
         super(props);
+        I18nManager.forceRTL(true);
+        I18nManager.isRTL = true;
         this.state = {
             studentId: '',
             activeIndex:0,
@@ -78,20 +81,40 @@ export default class JobsCarousel extends React.Component {
     }
 
     _renderJob = (job, index) => {
-        return <Card key={index}>
-                    <CardImage 
-                    source={{uri: 'http://bit.ly/2GfzooV'}} 
-                    title={job.JobName}
-                    />
-                    <CardTitle
-                    subtitle={job.CompanyCompanyNo}
-                    />
-                    <CardContent text={job.JobDescription} />
-                    <CardAction separator={true} inColumn={false}>
-                    <CardButton onPress={() => {}} title="Share" color="#FEB557" />
-                    <CardButton onPress={() => {}} title="Explore" color="#FEB557" />
-                    </CardAction>
-                </Card>;
+        let swipeBtns = [{
+            text: 'מחיקה',
+            backgroundColor: 'red',
+            underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
+            onPress: () => { 
+                var jobToRemove = this.state.JobsList[index];
+                var newJobList = this.state.JobsList;
+                newJobList.splice(index, 1); 
+                this.setState({ JobsList: newJobList });
+                // Update server
+                const httpClient = axios.create();
+                httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
+                var url = Global.BASE_URL +'AppStudentRemoveJobController?studentId=' + this.state.studentId + '&jobNo=' + jobToRemove.JobNo;
+                httpClient.get(url);
+            }
+        }];
+        return  <Swipeout left={swipeBtns} key={index}
+                    autoClose={true}
+                    backgroundColor= 'transparent'>
+                    <Card >
+                        <CardImage 
+                        source={{uri: 'http://bit.ly/2GfzooV'}} 
+                        title={job.JobName}
+                        />
+                        <CardTitle
+                        subtitle={job.CompanyCompanyNo}
+                        />
+                        <CardContent text={job.JobDescription} />
+                        <CardAction separator={true} inColumn={false}>
+                        <CardButton onPress={() => {}} title="Share" color="#FEB557" />
+                        <CardButton onPress={() => {}} title="Explore" color="#FEB557" />
+                        </CardAction>
+                    </Card>
+                </Swipeout>;
     }
     _getJobsList = () => {
         var ret = [];
