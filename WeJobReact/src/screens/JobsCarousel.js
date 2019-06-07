@@ -1,12 +1,13 @@
 import { DrawerActions } from 'react-navigation';    
 import React from 'react';
-import { StyleSheet,Text, Image, View,Dimensions, Platform, ScrollView, ImageBackground, Modal, TouchableHighlight, Alert, I18nManager} from 'react-native';
+import { StyleSheet,Text, Image, View, Platform, ScrollView, ImageBackground, Modal, TouchableHighlight, Alert, I18nManager} from 'react-native';
 import axios from 'axios';
 import Global from '../global';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-cards';
 import Carousel from 'react-native-snap-carousel';
 import AsyncStorage from '@react-native-community/async-storage';
 import Swipeout from 'react-native-swipeout';
+import Loader from '../components/Loader';
 
 export default class JobsCarousel extends React.Component {
  
@@ -20,6 +21,7 @@ export default class JobsCarousel extends React.Component {
             JobsList: [],
             isModalVisible: false,
             selectedJob: null,
+            loadingVisible: true,
         }
 
     }
@@ -34,6 +36,8 @@ export default class JobsCarousel extends React.Component {
                 });
                 //הפעלת הפונקציה שמביאה את המשרות המתאימות לסטודנט לפי 3 תנאים
                 this.fetchJobsFromServer();
+            } else {
+                this.setState({ loadingVisible: false });
             }
         });
     }
@@ -156,12 +160,6 @@ export default class JobsCarousel extends React.Component {
     }
 
     render() {
-
-        const deviceWidth = Dimensions.get("window").width;
-        const deviceHeight = Platform.OS === "ios"
-            ? Dimensions.get("window").height
-            : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
-            
         var jobsList = this._getJobsList();
         return (
             <View style={styles.main}>
@@ -184,7 +182,11 @@ export default class JobsCarousel extends React.Component {
                             Alert.alert('Modal has been closed.');
                         }}>
                             { this._getModalForJob() }
-                        </Modal>
+                </Modal>
+
+                <Loader
+                modalVisible={this.state.loadingVisible}
+                animationType="fade" />  
                 
             </View>
         // <SafeAreaView style={styles.container}>   
