@@ -67,9 +67,9 @@ namespace Proj_WeJob.Models.DAL
             }
         }
         //פונקציה שמייצרת אובייקט של סטודנט
-        private Student CreateStudentFromSqlDataReader(SqlDataReader dr)
+        private Student CreateStudentFromSqlDataReader(SqlDataReader dr, bool includeCV = false)
         {
-            return new Student
+            var s = new Student
                         (
                         Convert.ToInt32(dr["StudentID"]),
                         Convert.ToString(dr["FirstName"]),
@@ -83,6 +83,9 @@ namespace Proj_WeJob.Models.DAL
                         GetIntFromSqlDataReader(dr, "SubDepartmentCode"),
                         Convert.ToString(dr["CV_Name"])
                         );
+            if (includeCV)
+                s.CVFile = Convert.ToString(dr["CV_File"]);
+            return s;
         }
         ///+++++++++הוספת מפיץ חדש++++++++++++++++++
         public int InsertDistibutor(Distributor distributor)
@@ -742,7 +745,7 @@ namespace Proj_WeJob.Models.DAL
         }
 
         //פונקציה שמחזירה את פרטי סטודנט ספציפי    
-        public List<Student> GetListStudent(string conString, string StudentId)
+        public List<Student> GetListStudent(string conString, string StudentId, bool includeCV = false)
         {
             SqlConnection con = null;
             List<Student> student = new List<Student>();
@@ -757,7 +760,7 @@ namespace Proj_WeJob.Models.DAL
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
                 while (dr.Read())
                 {   // Read till the end of the data into a row
-                    student.Add(CreateStudentFromSqlDataReader(dr));
+                    student.Add(CreateStudentFromSqlDataReader(dr, includeCV));
                 }
 
                 return student;

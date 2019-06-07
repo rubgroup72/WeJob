@@ -172,5 +172,13 @@ namespace Proj_WeJob.Models.DAL
             return 0;
         }
 
+        public KeyValuePair<string, string> GetCV()
+        {
+            DBservices dbs = new DBservices();
+            var s = dbs.GetListStudent("DBConnectionString", StudentId.ToString(), true).FirstOrDefault();
+            if (s == null)
+                return new KeyValuePair<string, string>();
+            return new KeyValuePair<string, string>(s.CVName, s.CVFile);
+        }
     }
 }

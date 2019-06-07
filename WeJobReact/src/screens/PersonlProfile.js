@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import RoundedButton from '../components/buttons/RoundedButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../styles/colors';
-import {StyleSheet, Text, View, Image, Button, ScrollView, KeyboardAvoidingView, TouchableOpacity, ImageBackground  } from 'react-native';
+import {StyleSheet, Text, View, Image, Button, ScrollView, KeyboardAvoidingView, TouchableOpacity, ImageBackground, Linking  } from 'react-native';
 import NavBarButton from '../components/buttons/NavBarButton';
 import axios from 'axios';
 import Loader from '../components/Loader';
@@ -61,12 +61,16 @@ export default class PersonalProfile extends React.Component{
                             CVName: res.fileName
                         })
                         .then((response) => {
-                            this.setState({ loadingVisible: false });
+                            this.setState({ 
+                                loadingVisible: false,
+                                cvName: res.fileName
+                            });
                             alert ('התעדכן בהצלחה');
                         })
                         .catch((error) => {
                             this.setState({ loadingVisible: false });
-                            alert (error.response.status);
+                            // alert (error.response.status);
+                            alert ("לא נבחר קובץ");
                         });
                     })
                     .catch(error => alert('FS-error', error));
@@ -180,6 +184,18 @@ export default class PersonalProfile extends React.Component{
             </TouchableOpacity>
         </View>;
     }
+    downloadCV = () => {
+        url = Global.BASE_URL +'AppStudentGetCV?studentId=' + this.state.studentId;
+        Linking.openURL(url);
+    }
+    getCV = () => {
+        if (this.state.cvName !== undefined && this.state.cvName !== null && this.state.cvName !== '') {
+            return <TouchableOpacity activeOpacity = { .5 } onPress={this.downloadCV}>
+                    <Text style={{color: colors.white, textDecorationLine: 'underline'}}>{this.state.cvName}</Text>
+                   </TouchableOpacity>;
+        }
+        return <Text style={{color: colors.white}} >  העלאת קובץ קורות חיים </Text>
+    }
     render(){
         const {navigate} = this.props.navigation;
         return (
@@ -249,10 +265,7 @@ export default class PersonalProfile extends React.Component{
                             style={{textAlign: "left"}}
                             text = "העלאת קורות חיים"
                             onPress={() => { this.uploadCVButtonClicked() }} />
-                            <Text
-                            style={{color: colors.white}}
-                            >  העלאת קובץ קורות חיים
-                            </Text>
+                            { this.getCV() }
                             </View>
                             <RoundedButton
                             text = 'עדכון פרטים'
