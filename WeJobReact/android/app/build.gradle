@@ -76,6 +76,8 @@ project.ext.react = [
     entryFile: "index.js"
 ]
 
+apply plugin: 'io.fabric'
+
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**
@@ -144,6 +146,8 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'com.facebook.android:facebook-android-sdk:4.41.0'
     implementation project(':react-native-fbsdk')
+    implementation project(':react-native-fabric')
+
 }
 
 // Run this once to be able to run the application with BUCK

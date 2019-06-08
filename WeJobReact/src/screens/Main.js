@@ -12,6 +12,7 @@ import Global from '../global';
 import axios from 'axios';
 import Department from './Departments';
 import AsyncStorage from '@react-native-community/async-storage';
+import { Crashlytics, Answers } from 'react-native-fabric';
 
 export default class Main extends React.Component{
 
@@ -30,6 +31,7 @@ export default class Main extends React.Component{
         }
         this.props.navigation.addListener('willFocus', this.loadComponent);
 
+        Crashlytics.setString('test', 'my test');
     }
 
     //הגדרות של הניווט
@@ -181,6 +183,7 @@ export default class Main extends React.Component{
          AsyncStorage.setItem(Global.ASYNC_STORAGE_STUDEMT, JSON.stringify(student));
          AsyncStorage.setItem(Global.USER_EMAIL, student.Email);
          AsyncStorage.setItem(Global.IS_USER_LOGGED_IN, "true");
+         Answers.logLogin(student.Email, true);
          this.props.navigation.setParams({ shouldShow: true });
     }
     //פונקציה שמסמנת שהסטודנט התנתק מפייסבוק

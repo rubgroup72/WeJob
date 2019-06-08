@@ -2,6 +2,7 @@ package com.wejobreact;
 
 import android.app.Application;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.react.ReactApplication;
 import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
@@ -18,8 +19,10 @@ import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.appevents.AppEventsLogger;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.Arrays;
 import java.util.List;
+import com.smixx.fabric.FabricPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -44,7 +47,8 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactNativeDocumentPicker(),
             new VectorIconsPackage(),
             new RNGestureHandlerPackage(),
-            new FBSDKPackage(mCallbackManager)
+            new FBSDKPackage(mCallbackManager),
+            new FabricPackage()
       );
     }
 
@@ -62,6 +66,7 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
+    Fabric.with(this, new Crashlytics());
     SoLoader.init(this, /* native exopackage */ false);
     AppEventsLogger.activateApp(this);
   }

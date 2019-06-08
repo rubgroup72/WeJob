@@ -6,6 +6,8 @@ import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 import android.content.Intent;
 import com.facebook.react.modules.i18nmanager.I18nUtil;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 public class MainActivity extends ReactActivity {
 
     /**
@@ -21,6 +23,7 @@ public class MainActivity extends ReactActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         MainApplication.getCallbackManager().onActivityResult(requestCode, resultCode, data);
+        Fabric.with(this, new Crashlytics());
     }
 
     @Override
