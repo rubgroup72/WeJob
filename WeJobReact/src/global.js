@@ -9,5 +9,6 @@ export default {
     IS_USER_LOGGED_IN: 'UserLoggedIn',
     USER_SELECTED_CATEGORY_CODE: 'SelectedCategoryCode',
     USER_SELECTED_CATEGORY_NAME: 'SelectedCategoryName',
-    IS_JUST_REGISTERED: 'IsJustRegistered'
+    IS_JUST_REGISTERED: 'IsJustRegistered',
+    FCM_TOKEN: 'fcmToken'
 }

@@ -4,6 +4,9 @@ import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.rnfs.RNFSPackage;
@@ -41,6 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFirebasePackage(),
             new ExtraDimensionsPackage(),
             new AsyncStoragePackage(),
             new RNFSPackage(),
@@ -48,7 +52,9 @@ public class MainApplication extends Application implements ReactApplication {
             new VectorIconsPackage(),
             new RNGestureHandlerPackage(),
             new FBSDKPackage(mCallbackManager),
-            new FabricPackage()
+            new FabricPackage(),
+            new RNFirebaseMessagingPackage(),
+            new RNFirebaseNotificationsPackage()
       );
     }
 

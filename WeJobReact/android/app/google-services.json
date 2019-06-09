@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1054634063230",
+    "firebase_url": "https://wejobreactnative.firebaseio.com",
+    "project_id": "wejobreactnative",
+    "storage_bucket": "wejobreactnative.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054634063230:android:7caa128125e06c80",
+        "android_client_info": {
+          "package_name": "com.wejobreact"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1054634063230-jfc3cn6aocqaretejeoeuood5t7crds5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARH3Aj4Jf571MXXS0a4OveH1ROZyuJ79U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1054634063230-jfc3cn6aocqaretejeoeuood5t7crds5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

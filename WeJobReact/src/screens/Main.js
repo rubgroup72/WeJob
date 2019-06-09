@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import colors from '../styles/colors';
 import LoggedOut from './LoggedOut';
 import NavBarButton from '../components/buttons/NavBarButton';
-import { StyleSheet, TouchableOpacity, Text, View, Image, Button, DrawerLayoutAndroid, I18nManager } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, Image, Button, DrawerLayoutAndroid, I18nManager, Alert } from 'react-native';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import { DrawerActions } from 'react-navigation';
 import RoundedButton from '../components/buttons/RoundedButton';
@@ -13,6 +13,7 @@ import axios from 'axios';
 import Department from './Departments';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Crashlytics, Answers } from 'react-native-fabric';
+import firebase from 'react-native-firebase';
 
 export default class Main extends React.Component{
 
@@ -28,6 +29,7 @@ export default class Main extends React.Component{
             isDemoUser: false,
             isFirstFetch: false,
             navigateToDepartment: false,
+            fcmToken: ''
         }
         this.props.navigation.addListener('willFocus', this.loadComponent);
 
@@ -57,6 +59,91 @@ export default class Main extends React.Component{
             headerLeft: headerLeftInternal,
         }
       }
+
+      async componentDidMount() {
+        this.checkPermission();
+        this.createNotificationListeners();
+      }
+
+      componentWillUnmount() {
+        // this.notificationListener();
+        // this.notificationOpenedListener();
+      }
+      async createNotificationListeners() {
+        /*
+        * Triggered when a particular notification has been received in foreground
+        * */
+        this.notificationListener = firebase.notifications().onNotification((notification) => {
+            const { title, body } = notification;
+            this.showAlert(title, body);
+        });
+      
+        /*
+        * If your app is in background, you can listen for when a notification is clicked / tapped / opened as follows:
+        * */
+        this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
+            const { title, body } = notificationOpen.notification;
+            this.showAlert(title, body);
+        });
+      
+        /*
+        * If your app is closed, you can check if it was opened by a notification being clicked / tapped / opened as follows:
+        * */
+        const notificationOpen = await firebase.notifications().getInitialNotification();
+        if (notificationOpen) {
+            const { title, body } = notificationOpen.notification;
+            this.showAlert(title, body);
+        }
+        /*
+        * Triggered for data only payload in foreground
+        * */
+        this.messageListener = firebase.messaging().onMessage((message) => {
+          //process data message
+          console.log(JSON.stringify(message));
+        });
+      }
+      
+      showAlert(title, body) {
+        // Alert.alert(
+        //   title, body,
+        //   [
+        //       { text: 'OK', onPress: () => console.log('OK Pressed') },
+        //   ],
+        //   { cancelable: false },
+        // );
+      }
+      async checkPermission() {
+        const enabled = await firebase.messaging().hasPermission();
+        if (enabled) {
+            this.getToken();
+        } else {
+            this.requestPermission();
+        }
+      }
+      async getToken() {
+        let fcmToken = await AsyncStorage.getItem('fcmToken');
+        if (!fcmToken) {
+            fcmToken = await firebase.messaging().getToken();
+            if (fcmToken) {
+                // user has a device token
+                await AsyncStorage.setItem(Global.FCM_TOKEN, fcmToken);
+                this.setState({ fcmToken: fcmToken });
+            }
+        } else {
+            this.setState({ fcmToken: fcmToken });
+        }
+      }
+      async requestPermission() {
+            try {
+                await firebase.messaging().requestPermission();
+                // User has authorised
+                this.getToken();
+            } catch (error) {
+                // User has rejected permissions
+                console.log('permission rejected');
+            }
+        }
+  
 
       //קופוננטה שמתבצעת בכל פעם שהדף נטען
       loadComponent = () => {
@@ -183,7 +270,13 @@ export default class Main extends React.Component{
          AsyncStorage.setItem(Global.ASYNC_STORAGE_STUDEMT, JSON.stringify(student));
          AsyncStorage.setItem(Global.USER_EMAIL, student.Email);
          AsyncStorage.setItem(Global.IS_USER_LOGGED_IN, "true");
+         
          Answers.logLogin(student.Email, true);
+  
+         const httpClient = axios.create();
+         httpClient.defaults.timeout = 15000;
+         httpClient.get(Global.BASE_URL + "AppRegisterDeviceID?email=" + student.Email + "&fcmToken=" + this.state.fcmToken);
+
          this.props.navigation.setParams({ shouldShow: true });
     }
     //פונקציה שמסמנת שהסטודנט התנתק מפייסבוק
