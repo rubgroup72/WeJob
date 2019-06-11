@@ -77,6 +77,11 @@ namespace Proj_WeJob.Models.DAL
             return (num1 & num2 & num4 & num5);
             //return (num1 & num5);
         }
+        public int updateStatusJob(int jobNo)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.updateStatusJob( jobNo);
+        }
         //החזרת משרות של מפיץ ספציפי
         public List<Job> GetListJobsOfDistributor(string companyNo)
         {

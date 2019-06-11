@@ -88,10 +88,22 @@
                             title: 'שם משרה'
                         },
                         {
+                            render: function (data, type, row, meta) {
+                               if(type === 'display'){
+                                    data = data.substr(0, 10);
+                                 }
+                                 return data;
+                            },
                             data: "OpenDate",
                             title: 'תאריך פתיחה'
                         },
                         {
+                            render: function (data, type, row, meta) {
+                               if(type === 'display'){
+                                    data = data.substr(0, 10);
+                                 }
+                                 return data;
+                            },
                             data: "ToDate",
                             title: "עד תאריך"
                         },

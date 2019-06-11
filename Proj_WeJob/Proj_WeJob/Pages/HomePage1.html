@@ -106,7 +106,7 @@
         function GetJobHot(categoryNo) {
             uri = "../api/HotJobsByCategoryNo?CategoryNo=" + categoryNo;
             ajaxCall("get", uri, "", getSuccessJBC, error);
-            tbl.destroy();
+            //tbl.destroy();
         }
         function getSuccessJBC(dataJBC) {
             $("#HotJobTable").show();
@@ -129,20 +129,31 @@
                             "defaultContent": '',
                             render: function (data, type, row, meta) {
                                 let dataDis = "data-DisId='" + row.CompanyNo + "'";
-                                editBtn = "<span class='editBtn btn btn-success fa fa-edit'" + dataDis + "></span>";
+                                editBtn = "<span class='editBtn btn btn-danger '" + dataDis + ">שנה סטטוס לרגילה</span>";
                                 return editBtn;
                             }
                         },
-                       
                         {
                             data: "JobName",
                             title: 'שם משרה'
                         },
                         {
+                             render: function (data, type, row, meta) {
+                               if(type === 'display'){
+                                    data = data.substr(0, 10);
+                                 }
+                                 return data;
+                            },
                             data: "OpenDate",
                             title: 'תאריך פתיחה'
                         },
                         {
+                             render: function (data, type, row, meta) {
+                               if(type === 'display'){
+                                    data = data.substr(0, 10);
+                                 }
+                                 return data;
+                            },
                             data: "ToDate",
                             title: "עד תאריך"
                         },                            
@@ -162,7 +173,7 @@
                 data = dataDistributors;
                 str = "<label for='exampleFormControlSelect3'>מעסיק</label>";
                 str += "<select required class='form-control' id='Select2' onchange=renderTable(this)> ";
-                str += "<option value='בחר'  disabled selected>בחר</option> ";
+                str += "<option value='סנן לפי מעסיק'  disabled selected>בחר</option> ";
                 for (var i = 0; i < data.length; i++) {
                     str += "<option class='selectCat' value='" + dataDistributors[i].CompanyNo+"'>" + dataDistributors[i].NameCompany+ '</option >';
                 }
@@ -203,41 +214,57 @@
                             "defaultContent": '',
                             render: function (data, type, row, meta) {
                                 let dataDis = "data-DisId='" + row.CompanyNo + "'";
-                                editBtn = "<span class='editBtn btn btn-success fa fa-edit'" + dataDis + "></span>";
+                                //fa fa-edit
+                                editBtn = "<span class='editBtn btn btn-danger '" + dataDis + ">שנה סטטוס לרגילה</span>";
                                 return editBtn;
                             }
                         },
-                        {
-                            "className": 'JobNo',
-                            data: "JobNo",
-                            title: 'קוד משרה'
-                         },
                         {
                             data: "JobName",
                             title: 'שם משרה'
                         },
                         {
+                             render: function (data, type, row, meta) {
+                               if(type === 'display'){
+                                    data = data.substr(0, 10);
+                                 }
+                                 return data;
+                            },
                             data: "OpenDate",
                             title: 'תאריך פתיחה'
                         },
                         {
+                             render: function (data, type, row, meta) {
+                               if(type === 'display'){
+                                    data = data.substr(0, 10);
+                                 }
+                                 return data;
+                            },
                             data: "ToDate",
                             title: "עד תאריך"
                         },                            
                     ]
                 });
+                   $("#HotJobTable").on('click', 'td.edit', function () {
+                    var tr = $(this).closest('tr');
+                       tr.remove();
+                       ajaxCall("put", "../api/updateStatusJobToRagila", this.JobNo, success, error);
+                    //להוסיף פקודת אגקס לעדכון הסטטוס של המשרה למשרה רגילה
+        });
             }
 
             catch (err) {
                 alert(err);
             }
         }
-  
-        $("#distributorTable").on('click', 'td.edit', function () {
-            var tr = $(this).closest('tr');
-            tr.remove();
-            //להוסיף פקודת אגקס לעדכון הסטטוס של המשרה למשרה רגילה
+         function success() {
+                swal("עודכן סטטוס משרה למשרה רגילה", "Great Job", "success");
+                //window.location.href = 'ListOfJobDistributors.html';
+            }
+    function error(err) {
+            swal("Error: " + err);
         }
+       
     </script>
 </head>
 <body>
@@ -404,12 +431,12 @@
                 </div>
                 <hr>
 
-                <h4 style="text-align:center;font-weight: bold;">צפייה במשרות חמות אופציה להחליף סטטוס </h4>
+                <h4 style="text-align:center;font-weight: bold;">משרות חמות</h4>
                 <p class="lead mt-5">
 
                 </p>
                 <div class="card-body col-xs-12">
-                    <div class="row my-4">
+                    <div class="row">
                         <div class="col-lg-9 col-md-8">
                             <div class="table-responsive">
                                 <form id="pForm">

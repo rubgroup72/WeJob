@@ -15,6 +15,13 @@ namespace Proj_WeJob.Controllers
         {
             j.InsertJob();
         }
+        [HttpPut]
+        [Route("api/updateStatusJobToRagila")]
+        public void put(int jobNo)
+        {
+            Job j = new Job();
+            j.updateStatusJob(jobNo);
+        }
         [HttpGet]
         [Route("api/Jobs")]
         public IEnumerable<Job> GET(string companyNo)

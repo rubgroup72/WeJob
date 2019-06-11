@@ -396,6 +396,44 @@ namespace Proj_WeJob.Models.DAL
             }
             return command;
         }
+        public int updateStatusJob(int jobNo)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            String cStr = "UPDATE Job SET JobStatusStatusName = 'רגילה' WHERE JobNo = '"+jobNo+"' ";
+            cmd = CreateCommand(cStr, con);             // create the command
+            try
+            {
+                int numEffected = Convert.ToInt32(cmd.ExecuteScalar());
+                //int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+        }
+      
+
         //פונקציה שמחזירה רשימת סטודנטים קיימים לפי מחלקה ותת מחלקה
         public List<Student> GetListStudentFilter(string conString, string codeDepartment, string SubDepartmentId)
         {
