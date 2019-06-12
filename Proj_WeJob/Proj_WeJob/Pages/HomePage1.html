@@ -111,8 +111,8 @@
         function getSuccessJBC(dataJBC) {
             $("#HotJobTable").show();
             $("#Distibutors").show();
-            try {
                 datajob = dataJBC;
+            try {         
                 tbl = $('#HotJobTable').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"
@@ -132,6 +132,11 @@
                                 editBtn = "<span class='editBtn btn btn-danger '" + dataDis + ">שנה סטטוס לרגילה</span>";
                                 return editBtn;
                             }
+                        },
+                        {
+                            "className": 'JobNo',
+                            data: "JobNo",
+                            title: 'קוד משרה'
                         },
                         {
                             data: "JobName",
@@ -159,15 +164,28 @@
                         },                            
                     ]
                 });
+                   $("#HotJobTable").on('click', 'td.edit', function () {
+                        var tr = $(this).closest('tr');
+                        jobno = tr[0].getElementsByClassName("JobNo")[0].innerHTML;
+                        for (var i = 0; i < datajob.length; i++) {
+                            if (datajob[i].JobNo == jobno) {
+                                job = {
+                                    JobNo: jobno,
+                                    JobStatusStatusName:"רגילה",
+                                }
+                                console.log(JSON.stringify(job))
+                              ajaxCall("PUT", "../api/updateStatus", JSON.stringify(job), success, error);
+                            }
+                        }
+                        return false;
+        });
             }
 
             catch (err) {
                 alert(err);
             }
         }
-        function error(err) {
-            swal("Error: " + err);
-        }
+
         function getSuccessDistributors(dataDistributors) {
             try {
                 data = dataDistributors;
@@ -219,6 +237,10 @@
                                 return editBtn;
                             }
                         },
+                         {
+                            data: "JobNo",
+                            title: 'קוד משרה'
+                        },
                         {
                             data: "JobName",
                             title: 'שם משרה'
@@ -245,21 +267,43 @@
                         },                            
                     ]
                 });
-                   $("#HotJobTable").on('click', 'td.edit', function () {
-                    var tr = $(this).closest('tr');
-                       tr.remove();
-                       ajaxCall("put", "../api/updateStatusJobToRagila", this.JobNo, success, error);
-                    //להוסיף פקודת אגקס לעדכון הסטטוס של המשרה למשרה רגילה
+                     $("#HotJobTable").on('click', 'td.edit', function () {
+                        var tr = $(this).closest('tr');
+                        jobno = tr[0].getElementsByClassName("JobNo")[0].innerHTML;
+                        for (var i = 0; i < datajob.length; i++) {
+                            if (datajob[i].JobNo == jobno) {
+                              job = {
+                                    JobNo: jobno,
+                                    JobStatusStatusName:"רגילה",
+                                }
+                                console.log(JSON.stringify(job))
+                                ajaxCall("PUT", "../api/updateStatus", JSON.stringify(job), success, error);
+                            }
+                        }
+                        return false;
         });
+           
             }
 
             catch (err) {
-                alert(err);
+              err = JSON.parse(err.responseText);
+              Swal.fire({
+                  type: 'error',
+                  title: 'שגיאה ',
+                  text: 'משהו לא עובד',
+                  footer:  err.ExceptionMessage
+                })
             }
         }
-         function success() {
-                swal("עודכן סטטוס משרה למשרה רגילה", "Great Job", "success");
-                //window.location.href = 'ListOfJobDistributors.html';
+          
+        function success() {
+            var tr = $(this).closest('tr');
+            tr.remove();
+             Swal.fire(
+                      'עודכן!',
+                      'סטטוס משרה עודכנה לרגילה',
+                      'success'
+                      )
             }
     function error(err) {
             swal("Error: " + err);
@@ -449,6 +493,7 @@
                                         <thead>
                                             <tr>
                                                 <td></td>
+                                                <td>JobNo</td>
                                                 <td>JobName</td>
                                                 <td>OpenDate</td>
                                                 <td>ToDate</td>

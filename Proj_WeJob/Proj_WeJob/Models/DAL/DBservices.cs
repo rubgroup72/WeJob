@@ -396,7 +396,7 @@ namespace Proj_WeJob.Models.DAL
             }
             return command;
         }
-        public int updateStatusJob(int jobNo)
+        public int updateStatusJob(Job j)
         {
             SqlConnection con;
             SqlCommand cmd;
@@ -409,7 +409,7 @@ namespace Proj_WeJob.Models.DAL
                 // write to log
                 throw (ex);
             }
-            String cStr = "UPDATE Job SET JobStatusStatusName = 'רגילה' WHERE JobNo = '"+jobNo+"' ";
+            String cStr = "UPDATE Job SET JobStatusStatusName = '"+j.JobStatusStatusName+"' WHERE JobNo = '"+j.JobNo+"' ";
             cmd = CreateCommand(cStr, con);             // create the command
             try
             {
