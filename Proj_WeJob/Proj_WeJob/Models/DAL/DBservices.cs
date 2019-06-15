@@ -1390,6 +1390,81 @@ namespace Proj_WeJob.Models.DAL
             }
         }
 
+        public List<Tags> GetStudentSelectedTags(string studentId)
+        {
+            SqlConnection con = null;
+            List<Tags> lp = new List<Tags>();
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+                String selectSTR = "SELECT * FROM [Student_SubCategory] Where StudentId = " + studentId;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Tags la = new Tags
+                    {
+                        SubCategoryNo = Convert.ToInt32(dr["SubCategoryNo"]),
+                    };
+                    lp.Add(la);
+                }
+
+                return lp;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+        public List<Tags> GetTagsByJobId(int jobId)
+        {
+            SqlConnection con = null;
+            List<Tags> lp = new List<Tags>();
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+                String selectSTR = "SELECT * FROM [SubCategory_Job] Where [JobJobNo] = " + jobId;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Tags la = new Tags
+                    {
+                        SubCategoryNo = Convert.ToInt32(dr["SubCategorySubCategoryNo"]),
+                    };
+                    lp.Add(la);
+                }
+
+                return lp;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+
         //פונקציה שמחזירה רשימה של תגיות 
         public List<Tags> GetListTags(int CategoryCode)
         {

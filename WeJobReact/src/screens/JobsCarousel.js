@@ -142,6 +142,10 @@ export default class JobsCarousel extends React.Component {
     }
 
     _renderJob = (job, index) => {
+        var backgroundImage = require('../../images/jobBackground.jpg')
+        if (job.IsFromSmartAlgo) {
+            backgroundImage = require('../../images/jobBackgroundWithRibbon.jpg')
+        }
         let swipeBtns = [{
             text: 'מחיקה',
             backgroundColor: 'red',
@@ -164,10 +168,11 @@ export default class JobsCarousel extends React.Component {
                     <Card >
                         <CardImage
                         style={{color:'#FEB557'}}
-                        source={{uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh1DIggEo5Xc6SWxVjmkJQ6719wE1KIDQ76g6ArzABkyJMsdpWLQ'}}
+                        source={backgroundImage}
                         title={job.JobName} 
                         />
                         <CardTitle
+                        style={{textAlign: 'right'}}
                         subtitle={job.CompanyName}
                         />
                         <CardContent text={job.JobDescription} />

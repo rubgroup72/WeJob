@@ -34,6 +34,7 @@ namespace Proj_WeJob.Models.DAL
         public string ContactName { get; set; }
         public int ContactPhone { get; set; }
         public string ContactMail { get; set; }
+        public bool IsFromSmartAlgo { get; set; }
 
         //constructor
         public Job(int JobNo,string JobName, string JobDescription, string Requirements,
@@ -138,7 +139,22 @@ namespace Proj_WeJob.Models.DAL
         public List<Job> GetListOfJobs(string studentId)
         {
             DBservices dbs = new DBservices();
-            return dbs.GetListOfJobs(studentId);
+            var retList = dbs.GetListOfJobs(studentId);
+            var studentTags = dbs.GetStudentSelectedTags(studentId).Select(i => i.SubCategoryNo);
+
+            foreach (var job in retList)
+            {
+                var jobTags = dbs.GetTagsByJobId(job.JobNo).Select(i => i.SubCategoryNo);
+                foreach (var t in jobTags)
+                {
+                    if (studentTags.Contains(t))
+                    {
+                        job.IsFromSmartAlgo = true;
+                        break;
+                    }
+                }
+            }
+            return retList;
         }
 
 
