@@ -29,12 +29,18 @@ namespace Proj_WeJob.Models.DAL
         public List<string> JobTitlesList { get; set; }
         public int AmountSend { get; set; }
         public string CategoryName { get; set; }
+        public int CompanyNo { get; set; }
+        public string CompanyName { get; set; }
+        public string ContactName { get; set; }
+        public int ContactPhone { get; set; }
+        public string ContactMail { get; set; }
+
         //constructor
         public Job(int JobNo,string JobName, string JobDescription, string Requirements,
             int CompanyCompanyNo, string MailForCV, DateTime OpenDate, DateTime ToDate,
             string JobStatusStatusName, string Link, List<String> ArrayLanguage, List<String> ArraySkill, List<String> ArraySubCategory,
             string Location,string Status, int CategoryNo, List <string> JobTitlesList,int AmountSend,
-            string CategoryName)
+            string CategoryName, int CompanyNo, string CompanyName, string ContactName, int ContactPhone, string ContactMail)
         {
             this.CompanyCompanyNo = CompanyCompanyNo;
             this.JobNo = JobNo;
@@ -56,6 +62,13 @@ namespace Proj_WeJob.Models.DAL
             this.JobTitlesList = JobTitlesList;
             this.AmountSend = AmountSend;
             this.CategoryName = CategoryName;
+            this.CompanyNo = CompanyNo;
+            this.CompanyName = CompanyName;
+            this.ContactName = ContactName;
+            this.ContactPhone = ContactPhone;
+            this.ContactMail = ContactMail;
+
+
         }
 
         public Job()

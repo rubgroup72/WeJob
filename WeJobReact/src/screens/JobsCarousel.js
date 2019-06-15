@@ -1,6 +1,6 @@
 import { DrawerActions } from 'react-navigation';    
 import React from 'react';
-import { StyleSheet,Text, Image, View, Platform, ScrollView, ImageBackground, Modal, TouchableHighlight, Alert, I18nManager} from 'react-native';
+import { StyleSheet,Text, Image, View, Platform, ScrollView, ImageBackground, Modal, TouchableHighlight, Alert, I18nManager, KeyboardAvoidingView} from 'react-native';
 import axios from 'axios';
 import Global from '../global';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-cards';
@@ -111,12 +111,13 @@ export default class JobsCarousel extends React.Component {
                     autoClose={true}
                     backgroundColor= 'transparent'>
                     <Card >
-                        <CardImage 
-                        source={{uri: 'http://bit.ly/2GfzooV'}} 
-                        title={job.JobName}
+                        <CardImage
+                        style={{color:'#FEB557'}}
+                        source={{uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh1DIggEo5Xc6SWxVjmkJQ6719wE1KIDQ76g6ArzABkyJMsdpWLQ'}}
+                        title={job.JobName} 
                         />
                         <CardTitle
-                        subtitle={job.CompanyCompanyNo}
+                        subtitle={job.CompanyName}
                         />
                         <CardContent text={job.JobDescription} />
                         <CardAction separator={true} inColumn={false}>
@@ -155,54 +156,42 @@ export default class JobsCarousel extends React.Component {
             Requirements = this.state.selectedJob.Requirements;
             OpenDate = this.state.selectedJob.OpenDate;
         }
-        return <View style={{backgroundColor:'#9DD9D2'}}>
-                <View>
-                    <View>
-                    <TouchableHighlight
-                        onPress={() => { this.setState({ isModalVisible: false}); }}>
-                        <Icon name="close" size={30} style={{paddingLeft: 10, paddingTop:10}}></Icon>
-                    </TouchableHighlight>
-                    <Text
-                    style={{fontSize: 30, textAlign:"center", marginBottom:20}}
-                    > 
-                    { modalTitle }</Text>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                        <Icon name="map-marker" size={30} style={{paddingRight:20}} />
-                        <Text style={{fontSize: 20, paddingRight:5}}>{ location }</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                        <Icon name="calendar" size={25} style={{paddingRight:20, paddingTop: 5}} />
-                        <Text style={{fontSize: 20, paddingRight:5}}>{ OpenDate }</Text>
-                    </View>
-                    </View>
-                    <View style={{backgroundColor:'#FFF8F0'}}>
-                        <Text
-                        style={{fontSize: 30 , paddingRight:20, paddingBottom:10}}
-                        >תיאור:</Text>
-                        <Text
-                        style={{fontSize: 20 , paddingRight:20, paddingBottom:10}}
-                        > { modalDescription }</Text>
-                        <Text
-                        style={{fontSize: 30 , paddingRight:20, paddingBottom:10}}
-                        >דרישות תפקיד:</Text>
-                        <Text
-                        style={{fontSize: 20 , paddingRight:20, paddingBottom:10}}
-                        > { Requirements }</Text>
+        //הדף שך פרטי משרה
+        return <ScrollView behavior="padding" enabled keyboardShouldPersistTaps='always' style={styles.wrapper}>
+                <View >
+                <TouchableHighlight
+                            onPress={() => { this.setState({ isModalVisible: false}); }}>
+                            <Icon name="close" size={30} style={{paddingLeft: 10, paddingTop:10}}></Icon>
+                        </TouchableHighlight>
+                        <Text style={{fontSize: 30, textAlign:"center", marginBottom:20}}> { modalTitle }</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+                            <Icon name="map-marker" size={30} style={{paddingRight:20}} />
+                            <Text style={{fontSize: 20, paddingRight:5}}>{ location }</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+                            <Icon name="calendar" size={25} style={{paddingRight:20, paddingTop: 5}} />
+                            <Text style={{fontSize: 20, paddingRight:5}}>{ OpenDate }</Text>
+                        </View>
+                     <View style={{backgroundColor:'#FFF8F0'}}>
+                        <Text style={{fontSize: 30 , paddingRight:20, paddingBottom:10}}>תיאור:</Text>
+                        <Text style={{fontSize: 20 , paddingRight:20, paddingBottom:10}}> { modalDescription }</Text>
+                        <Text style={{fontSize: 30 , paddingRight:20, paddingBottom:10}}>דרישות תפקיד:</Text>
+                        <Text style={{fontSize: 20 , paddingRight:20, paddingBottom:10}}> { Requirements }</Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
                             <Icon name="star" size={30} style={{paddingRight:20}} />
                             <Icon name="trash" size={30} style={{paddingRight:20}} />
-                        </View>
-                        <RoundedButton
+                       </View>
+                     </View>
+                     <RoundedButton
                             text = 'שלח קורות חיים  '
                             textColor = "#FFF8F0"
                             background= "#FF8811"
-                            style={{position:'absolute', buttom:0}}
+                            //style={{position:'absolute', buttom:0 ,top: 0}}
                             //icon={<Icon name="facebook" size={20} />}
-                            //handleOnPress={}
+                            handleOnPress={() => {}}
                             />
-                    </View>
-                </View>
-            </View>;
+                </View>     
+             </ScrollView>;
     }
 
     render() {
@@ -286,11 +275,22 @@ scrollViewStyle: {
 main: {
     flex: 1   
    },
-facebookButtonIcon: {
-    color: colors.green01,
-    position: 'relative',
-    left: 20,
-    zIndex: 8,
+   wrapper: {
+    display: 'flex',
+    flex: 1,
+    backgroundColor: '#9DD9D2',
+},
+scrolViewWrapper:{
+    marginTop: 70,
+    flex: 1,
+    marginLeft: 20,
+    marginRight: 20,
+},
+ScrollView: {
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingTop: 20,
+    flex: 1,
 },
 });
 

@@ -2039,7 +2039,9 @@ namespace Proj_WeJob.Models.DAL
             {
                 con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
                 String selectSTR =
-                "select * from [bgroup72_prod].[dbo].[Job] where job.JobNo in " +
+                "select * from [bgroup72_prod].[dbo].[Job] " +
+                "left join Company C on Job.CompanyCompanyNo = C.CompanyNo " +
+                "where job.JobNo in " +
                 "(select SJ.JobJobNo from[bgroup72_prod].[dbo].[SubCategory_Job] SJ " +
                 "where SubCategorySubCategoryNo in " +
                 "(select SubCategoryNo from[bgroup72_prod].[dbo].[SubCategory] " +
@@ -2074,6 +2076,10 @@ namespace Proj_WeJob.Models.DAL
                         JobStatusStatusName = Convert.ToString(dr["JobStatusStatusName"]),
                         Link = Convert.ToString(dr["JobStatusStatusName"]),
                         CategoryNo = Convert.ToInt32(dr["CategoryNo"]),
+                        CompanyName = Convert.ToString(dr["CompanyName"]),
+                        ContactName = Convert.ToString(dr["ContactName"]),
+                        ContactPhone = Convert.ToInt32(dr["ContactPhone"]),
+                        ContactMail = Convert.ToString(dr["ContactMail"]),
                     };
                     lsc.Add(sc);
                 }
