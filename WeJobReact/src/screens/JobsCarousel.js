@@ -151,23 +151,21 @@ export default class JobsCarousel extends React.Component {
         if (job.IsFromSmartAlgo) {
             backgroundImage = require('../../images/jobBackgroundWithRibbon.jpg')
         }
+
+        var heartType = 'heart-o';
+        var heartColor = '#999999';
+        if (job.StudentJobStatus === 'save' || job.StudentJobStatus === 'save and cv') {
+            heartType = 'heart';
+            heartColor = 'red';
+        }
+
         let swipeBtns = [{
             text: 'מחיקה',
             backgroundColor: 'red',
             underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
             onPress: () => { 
                 var jobToRemove = this.state.JobsList[index];
-                var newJobList = this.state.JobsList;
-                newJobList.splice(index, 1); 
-                this.setState({ JobsList: newJobList });
-                // Update server
-                const httpClient = axios.create();
-                httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
-                httpClient.post(Global.BASE_URL +'AppStudnetJobStatus', {
-                    StudentId: this.state.studentId,
-                    JobId: jobToRemove.JobNo,
-                    Status: 'delete'
-                });
+                this._removeJob(jobToRemove);
             }
         }];
         return  <Swipeout left={swipeBtns} key={index}
@@ -192,7 +190,7 @@ export default class JobsCarousel extends React.Component {
                             });
                             }}
                             title="פרטי משרה" color="#FEB557" />
-                        <Icon name="heart-o" size={26}  onPress={() => {}}  color="#FEB557"/>                       
+                        <Icon name={heartType} size={26}  onPress={() => {}}  color={heartColor} />                       
                         </CardAction>
                     </Card>
                 </Swipeout>;
@@ -282,8 +280,31 @@ export default class JobsCarousel extends React.Component {
         }
         return ret;
     }
+
+    _removeJob = (jobToRemove) => {
+        var newJobList = this.state.JobsList;
+        var index = 0;
+        for (var i = 0; i < newJobList.length; ++i) {
+            if (newJobList[i].JobNo === jobToRemove.JobNo) {
+                index = i;
+                break;
+            }
+        }
+        newJobList.splice(index, 1); 
+        // Update server
+        const httpClient = axios.create();
+        httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
+        httpClient.post(Global.BASE_URL +'AppStudnetJobStatus', {
+            StudentId: this.state.studentId,
+            JobId: jobToRemove.JobNo,
+            Status: 'delete'
+        });
+        this.setState({ JobsList: newJobList, isModalVisible: false });
+    }
     _getModalForJob = () => {
         var modalTitle = '', modalDescription = '', location ='', Requirements= '', OpenDate ='', ContactMail='', ContactPhone='', ContactName='', JobStatusStatusName='';
+        var starColor = 'black';
+        var starFill = 'star-o';
         if (this.state.selectedJob !== null && this.state.selectedJob !== undefined) {
             modalTitle = this.state.selectedJob.JobName;
             modalDescription = this.state.selectedJob.JobDescription;
@@ -294,6 +315,12 @@ export default class JobsCarousel extends React.Component {
             ContactPhone = this.state.selectedJob.ContactPhone;
             ContactName = this.state.selectedJob.ContactName;
             JobStatusStatusName = this.state.selectedJob.JobStatusStatusName;
+
+            if (this.state.selectedJob.StudentJobStatus === "save" ||
+                this.state.selectedJob.StudentJobStatus === "save and cv") {
+                starColor = 'yellow';
+                starFill = 'star';
+            }
         }
         //הדף שך פרטי משרה
         return <ImageBackground style={ styles.jobImgBackground } 
@@ -336,8 +363,65 @@ export default class JobsCarousel extends React.Component {
                             <Text style={{fontSize: 20, paddingRight:5}}>{ ContactPhone }</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                            <Icon name="star-o" size={40} style={{paddingLeft:20, paddingTop:20, paddingBottom:20}} />
-                            <Icon name="trash-o" size={40} style={{paddingLeft:20, paddingTop:20, paddingBottom:20}} />
+                        <Button
+                                type="clear"
+                                containerStyle={{marginTop: 10}}
+                                icon={
+                                    <Icon
+                                      name={starFill}
+                                      size={40}
+                                      color={starColor}
+                                    />
+                                }
+                                onPress={() => {
+                                    var job = this.state.selectedJob;
+                                    if (job.StudentJobStatus === "send cv") {
+                                        job.StudentJobStatus = "save and cv";
+                                    } else if (job.StudentJobStatus === "save and cv") {
+                                        job.StudentJobStatus = "send cv";
+                                    } else if (job.StudentJobStatus === "save") {
+                                        job.StudentJobStatus = "new";
+                                    } else if (job.StudentJobStatus === "new") {
+                                        job.StudentJobStatus = "save";
+                                    }
+                                    
+                                    var jobsList = this.state.JobsList;
+                                    for (var i = 0; i < jobsList.length; ++i) {
+                                        if (jobsList[i].JobNo === job.JobNo) {
+                                            jobsList[i].StudentJobStatus = job.StudentJobStatus;
+                                            break;
+                                        }
+                                    }
+
+                                    // Mark
+                                    const httpClient = axios.create();
+                                    httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
+                                    httpClient.post(Global.BASE_URL +'AppStudnetJobStatus', {
+                                        StudentId: this.state.studentId,
+                                        JobId: job.JobNo,
+                                        Status: job.StudentJobStatus
+                                    });
+                                    this.setState({ JobsList: jobsList, selectedJob: job });
+                                }}
+                            />
+                            <Button
+                                type="clear"
+                                containerStyle={{marginTop: 10}}
+                                icon={
+                                    <Icon
+                                      name="trash-o"
+                                      size={40}
+                                      color={'black'}
+                                    />
+                                }
+                                onPress={() => {
+                                    var jobToRemove = this.state.selectedJob;
+                                    Alert.alert("מחיקת משרה", "האם ברצונך למחוק את המשרה ?", 
+                                        [{ text: "כן", onPress: () => this._removeJob(jobToRemove)},
+                                        { text: "לא", onPress: () => {}}],
+                                    );
+                                }}
+                            />
                        </View>
                        <RoundedButton
                             text = 'שלח קורות חיים  '
