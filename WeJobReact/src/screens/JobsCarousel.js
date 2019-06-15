@@ -355,7 +355,7 @@ export default class JobsCarousel extends React.Component {
         //הדף שך פרטי משרה
         return <ImageBackground style={ styles.jobImgBackground } 
                 resizeMode='cover' 
-                source={require('../img/lightBlue.png')}>
+                source={require('../../images/lightBlue.jpg')}>
                 <ScrollView behavior="padding" enabled keyboardShouldPersistTaps='always' style={styles.wrapper}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <View style={{paddingTop:10, flexDirection: 'row', justifyContent: 'flex-start' }}>

@@ -48,7 +48,7 @@ export default class Main extends React.Component{
             </TouchableOpacity>);
         }
         var title = '';
-        if (params.shouldShow) {
+        if (params.shouldShowTitle) {
             title = 'משרות מומלצות עבורך';
         }
         return {
@@ -159,6 +159,7 @@ export default class Main extends React.Component{
                 if (this.state.navigateToDepartment) {
                     this.setState({ navigateToDepartment: false });
                 }
+                this.props.navigation.setParams({ shouldShowTitle: !this.state.userLoggedOut });
             }
           });
         // אם היוזר נמצא בדף ההתחברות, ננסה לחבר אותו לפי הפרטים ששמורים לנו ממקודם
@@ -177,7 +178,7 @@ export default class Main extends React.Component{
                         student: null,
                         isDemoUser: false,
                     });
-                    this.props.navigation.setParams({ shouldShow: false });
+                    this.props.navigation.setParams({ shouldShow: false, shouldShowTitle: false });
                 }
             });
           }
@@ -288,7 +289,7 @@ export default class Main extends React.Component{
          httpClient.defaults.timeout = 15000;
          httpClient.get(Global.BASE_URL + "AppRegisterDeviceID?email=" + student.Email + "&fcmToken=" + this.state.fcmToken);
 
-         this.props.navigation.setParams({ shouldShow: true });
+        this.props.navigation.setParams({ shouldShow: true, shouldShowTitle: !this.state.navigateToDepartment });
     }
     //פונקציה שמסמנת שהסטודנט התנתק מפייסבוק
     logoutFacebook = () => {
