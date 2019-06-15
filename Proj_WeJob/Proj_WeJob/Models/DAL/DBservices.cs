@@ -432,7 +432,48 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-      
+
+        //פונקציה שמחזירה רשימת סדנאות
+        public List<WorkShop> GetListWorkShop(string conString)
+        {
+            SqlConnection con = null;
+            List<WorkShop> ld = new List<WorkShop>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+                String selectSTR = "SELECT * FROM WorkShop";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    WorkShop d = new WorkShop
+                    {
+                        WorkShopCode = Convert.ToInt32(dr["WorkShopCode"]),
+                        WorkShopName = Convert.ToString(dr["WorkShopName"]),
+                        Date = Convert.ToDateTime(dr["Date"]),
+                        MaxParticipants = Convert.ToInt32(dr["MaxParticipants"]),
+                        MinParticipants = Convert.ToInt32(dr["MinParticipants"]),
+                        NoOfRegisters = Convert.ToInt32(dr["NoOfRegisters"]),
+                    };
+                    ld.Add(d);
+                }
+
+                return ld;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
 
         //פונקציה שמחזירה רשימת סטודנטים קיימים לפי מחלקה ותת מחלקה
         public List<Student> GetListStudentFilter(string conString, string codeDepartment, string SubDepartmentId)
