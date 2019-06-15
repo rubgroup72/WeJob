@@ -53,7 +53,7 @@ export default class Main extends React.Component{
         }
         return {
             headerTransparent: true,
-            headerTintColor: colors.green01,
+            headerTintColor: colors.white,
             // headerRight: (
             //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
             // ),

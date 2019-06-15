@@ -593,7 +593,10 @@ namespace Proj_WeJob.Models.DAL
                 return null;
 
             // Calc new studentId
-            var studentId = currentStudentList.Count() + 1;
+            var studentId = 1;
+            if (currentStudentList.Count() > 0)
+                studentId = currentStudentList.Max(i => i.StudentId) + 1;
+
             try
             {
                 con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file

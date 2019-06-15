@@ -333,8 +333,8 @@ export default class JobsCarousel extends React.Component {
     }
     _getModalForJob = () => {
         var modalTitle = '', modalDescription = '', location ='', Requirements= '', OpenDate ='', ContactMail='', ContactPhone='', ContactName='', JobStatusStatusName='';
-        var starColor = 'black';
-        var starFill = 'star-o';
+        var starColor = 'grey';
+        var starFill = 'heart-o';
         if (this.state.selectedJob !== null && this.state.selectedJob !== undefined) {
             modalTitle = this.state.selectedJob.JobName;
             modalDescription = this.state.selectedJob.JobDescription;
@@ -348,8 +348,8 @@ export default class JobsCarousel extends React.Component {
 
             if (this.state.selectedJob.StudentJobStatus === "save" ||
                 this.state.selectedJob.StudentJobStatus === "save and cv") {
-                starColor = 'yellow';
-                starFill = 'star';
+                starColor = 'red';
+                starFill = 'heart';
             }
         }
         //הדף שך פרטי משרה
