@@ -8,6 +8,12 @@ namespace Proj_WeJob.Models.DAL
 {
     public class Job
     {
+        public static string JOB_STATUS_NEW = "new";
+        public static string JOB_STATUS_DELETE = "delete";
+        public static string JOB_STATUS_SAVED = "save";
+        public static string JOB_STATUS_SAVED_AND_SENT_CV = "save and cv";
+        public static string JOB_STATUS_SENT_CV = "send cv";
+
         //Propeties 
         public int JobNo { get; set; }
         public string JobName { get; set; }
@@ -35,6 +41,8 @@ namespace Proj_WeJob.Models.DAL
         public int ContactPhone { get; set; }
         public string ContactMail { get; set; }
         public bool IsFromSmartAlgo { get; set; }
+        public bool IsSaved { get; set; }
+        public String StudentJobStatus { get; set; }
 
         //constructor
         public Job(int JobNo,string JobName, string JobDescription, string Requirements,
@@ -140,9 +148,39 @@ namespace Proj_WeJob.Models.DAL
         {
             DBservices dbs = new DBservices();
             var retList = dbs.GetListOfJobs(studentId);
+            var jobNoList = retList.Select(i => i.JobNo).ToList();
             var studentTags = dbs.GetStudentSelectedTags(studentId).Select(i => i.SubCategoryNo);
             var studentDirectJobs = dbs.GetStudentDirectJobs(studentId);
+            var studentJobStatus = dbs.GetStudentJobStatus(studentId, jobNoList);
 
+            var newJobs = new List<int>();
+            foreach (var job in jobNoList)
+            {
+                var mainJob = retList.First(i => i.JobNo == job);
+                if (!studentJobStatus.ContainsKey(job))
+                {
+                    newJobs.Add(job);
+                    mainJob.StudentJobStatus = JOB_STATUS_NEW;
+                    continue;
+                }
+                mainJob.StudentJobStatus = studentJobStatus[job];
+                if (studentJobStatus[job] == JOB_STATUS_DELETE || studentJobStatus[job] == JOB_STATUS_SENT_CV || studentJobStatus[job] == JOB_STATUS_SAVED_AND_SENT_CV)
+                {
+                    retList.Remove(retList.First(i => i.JobNo == job));
+                    continue;
+                }
+                if (studentJobStatus[job] == JOB_STATUS_SAVED)
+                {
+                    retList.First(i => i.JobNo == job).IsSaved = true;
+                }
+            }
+
+            if (newJobs.Count() > 0)
+            {
+                dbs.AddNewStudentJobStatus(studentId, newJobs);
+            }
+
+            // IsFromAlgo
             foreach (var job in retList)
             {
                 if (studentDirectJobs.Contains(job.JobNo))
@@ -165,7 +203,29 @@ namespace Proj_WeJob.Models.DAL
             }
             return retList;
         }
+        public string UpdateStudentJob(string studnetId, string jobId, string status)
+        {
+            if (status != JOB_STATUS_DELETE && status != JOB_STATUS_NEW && status != JOB_STATUS_SAVED &&
+                status != JOB_STATUS_SAVED_AND_SENT_CV && status != JOB_STATUS_SENT_CV)
+                return "Invliad status";
+            DBservices dbs = new DBservices();
 
+            if (status == JOB_STATUS_SENT_CV || status == JOB_STATUS_SAVED_AND_SENT_CV)
+            {
+                var t = new Student();
+                var student = t.GetListStudent(studnetId).First();
+                if (String.IsNullOrEmpty(student.CVName))
+                {
+                    return "No cv";
+                }
+            }
+
+            dbs.UpdateStudentJobStatus(studnetId, jobId, status);
+
+            // TODO - send CV
+
+            return "";
+        }
 
     }
 }

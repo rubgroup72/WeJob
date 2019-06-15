@@ -2278,5 +2278,102 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+
+        public void AddNewStudentJobStatus(string studentId, List<int> jobNoList)
+        {
+            SqlConnection con = null;
+            if (jobNoList.Count == 0)
+                return;
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+                String selectSTR = "INSERT INTO [Student_Returned_Jobs] VALUES ";
+                for (var i = 0; i < jobNoList.Count; ++i)
+                {
+                    selectSTR += "(" + studentId + "," + jobNoList[i] + ",'" + Job.JOB_STATUS_NEW + "')" + ((i == jobNoList.Count - 1) ? "" : ",");
+                }
+                selectSTR += ";";
+
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+        public void UpdateStudentJobStatus(string studentId, string jobId, string status)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+                String selectSTR = "Update [Student_Returned_Jobs] Set JobStatus = '" + status + "' Where StudentID = " + studentId + " and JobID = " + jobId;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+        public Dictionary<int, string> GetStudentJobStatus(string studentId, List<int> jobNoList)
+        {
+            SqlConnection con = null;
+            if (jobNoList.Count == 0)
+                return new Dictionary<int, string>();
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+                String selectSTR = "SELECT * FROM [Student_Returned_Jobs] Where StudentId = " + studentId + " and jobId in (";
+                for (var i = 0; i < jobNoList.Count; ++i)
+                {
+                    selectSTR += jobNoList[i] + ((i == jobNoList.Count - 1) ? "" : ",");
+                }
+                selectSTR += ");";
+
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+                var dict = new Dictionary<int, string>();
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    dict.Add(Convert.ToInt32(dr["JobID"]), Convert.ToString(dr["JobStatus"]));
+                }
+
+                return dict;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
+
     }
 }

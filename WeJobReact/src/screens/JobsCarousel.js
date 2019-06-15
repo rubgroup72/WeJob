@@ -12,7 +12,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../styles/colors';
 import RoundedButton from '../components/buttons/RoundedButton';
 import { CheckBox, ButtonGroup, Button } from 'react-native-elements'
-
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+import RNFS from 'react-native-fs';
 export default class JobsCarousel extends React.Component {
  
     constructor(props){
@@ -162,8 +163,11 @@ export default class JobsCarousel extends React.Component {
                 // Update server
                 const httpClient = axios.create();
                 httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
-                var url = Global.BASE_URL +'AppStudentRemoveJobController?studentId=' + this.state.studentId + '&jobNo=' + jobToRemove.JobNo;
-                httpClient.get(url);
+                httpClient.post(Global.BASE_URL +'AppStudnetJobStatus', {
+                    StudentId: this.state.studentId,
+                    JobId: jobToRemove.JobNo,
+                    Status: 'delete'
+                });
             }
         }];
         return  <Swipeout left={swipeBtns} key={index}
@@ -340,11 +344,86 @@ export default class JobsCarousel extends React.Component {
                             textColor = "#FFF8F0"
                             background= "#FF8811"
                             //icon={<Icon name="facebook" size={20} />}
-                            handleOnPress={() => {}}
+                            handleOnPress={this._sendCV}
                             /> 
                      </View>      
              </ScrollView>
              </ImageBackground>;
+    }
+
+    uploadCVButtonClicked = () => {
+        DocumentPicker.show({
+            filetype: [DocumentPickerUtil.allFiles()],
+          },(error,res) => {
+              if (error !== undefined && error !== null) {
+                // alert (error);
+                alert ('לא נבחר קובץ');
+                return;
+              } else {
+                if (res.type !== 'application/pdf') {
+                    // TODO - support word too
+                      alert ('קבצים נתמכים מסוג pdf/word');
+                      return;
+                }
+
+                this.setState({ loadingVisible: true });
+                RNFS.readFile(res.uri, 'base64')
+                    .then(result => {
+                        const httpClient = axios.create();
+                        httpClient.defaults.timeout = 15000;
+                        httpClient.post(Global.BASE_URL + 'Students', { 
+                            StudentId: this.state.studentId,
+                            CVFile: result,
+                            CVName: res.fileName
+                        })
+                        .then((response) => {
+                            this.setState({ 
+                                loadingVisible: false,
+                            });
+                            this._sendCV();
+                        })
+                        .catch((error) => {
+                            this.setState({ loadingVisible: false });
+                            // alert (error.response.status);
+                            alert ("לא נבחר קובץ");
+                        });
+                    })
+                    .catch(error => alert ('לא נבחר קובץ'));
+              }
+          });
+    }
+    _sendCV = () => {
+        this.setState({ loadingVisible: true });
+        var jobToRemove = this.state.selectedJob;
+        const httpClient = axios.create();
+        httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
+        httpClient.post(Global.BASE_URL +'AppStudnetJobStatus', {
+            StudentId: this.state.studentId,
+            JobId: jobToRemove.JobNo,
+            Status: jobToRemove.StudentJobStatus === "save" ? "save and cv" : "send cv",
+        }).then((response) => {
+            this.setState({ loadingVisible: false });
+            if (response.data === "No cv") {
+                Alert.alert("חסרים קורות חיים", "נדרש להעלות קורות חיים", 
+                    [{ text: "העלה כעת", onPress: () => this.uploadCVButtonClicked()},
+                    { text: "מאוחר יותר", onPress: () => {}}],
+                );
+            } else {
+                Alert.alert("קורות החיים הוגשו למשרה בהצלחה");
+                var newJobList = this.state.JobsList;
+                var index = 0;
+                for (var i = 0; i < this.state.JobsList.length; ++i) {
+                    if (this.state.JobsList[i].JobNo === jobToRemove.JobNo) {
+                        index = i;
+                        break;
+                    }
+                }
+                newJobList.splice(index, 1); 
+                this.setState({ JobsList: newJobList, isModalVisible: false });
+            }
+        }).catch((error) => {
+            this.setState({ loadingVisible: false });
+        })
     }
 
     _getCurrentSearchList = () => {
