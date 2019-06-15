@@ -209,6 +209,7 @@
     <Compile Include="Controllers\AppSendPushNotificationController.cs" />
     <Compile Include="Controllers\AppStudentGetCVControllerController.cs" />
     <Compile Include="Controllers\AppStudentRemoveJobController.cs" />
+    <Compile Include="Controllers\AppStudnetJobStatusController.cs" />
     <Compile Include="Controllers\AppSubCategoryController.cs" />
     <Compile Include="Controllers\AppLoginController.cs" />
     <Compile Include="Controllers\AppPersonalInfoController.cs" />

@@ -8,6 +8,12 @@ namespace Proj_WeJob.Models.DAL
 {
     public class Job
     {
+        public static string JOB_STATUS_NEW = "new";
+        public static string JOB_STATUS_DELETE = "delete";
+        public static string JOB_STATUS_SAVED = "save";
+        public static string JOB_STATUS_SAVED_AND_SENT_CV = "save and cv";
+        public static string JOB_STATUS_SENT_CV = "send cv";
+
         //Propeties 
         public int JobNo { get; set; }
         public string JobName { get; set; }
@@ -29,12 +35,21 @@ namespace Proj_WeJob.Models.DAL
         public List<string> JobTitlesList { get; set; }
         public int AmountSend { get; set; }
         public string CategoryName { get; set; }
+        public int CompanyNo { get; set; }
+        public string CompanyName { get; set; }
+        public string ContactName { get; set; }
+        public int ContactPhone { get; set; }
+        public string ContactMail { get; set; }
+        public bool IsFromSmartAlgo { get; set; }
+        public bool IsSaved { get; set; }
+        public String StudentJobStatus { get; set; }
+
         //constructor
         public Job(int JobNo,string JobName, string JobDescription, string Requirements,
             int CompanyCompanyNo, string MailForCV, DateTime OpenDate, DateTime ToDate,
             string JobStatusStatusName, string Link, List<String> ArrayLanguage, List<String> ArraySkill, List<String> ArraySubCategory,
             string Location,string Status, int CategoryNo, List <string> JobTitlesList,int AmountSend,
-            string CategoryName)
+            string CategoryName, int CompanyNo, string CompanyName, string ContactName, int ContactPhone, string ContactMail)
         {
             this.CompanyCompanyNo = CompanyCompanyNo;
             this.JobNo = JobNo;
@@ -56,6 +71,13 @@ namespace Proj_WeJob.Models.DAL
             this.JobTitlesList = JobTitlesList;
             this.AmountSend = AmountSend;
             this.CategoryName = CategoryName;
+            this.CompanyNo = CompanyNo;
+            this.CompanyName = CompanyName;
+            this.ContactName = ContactName;
+            this.ContactPhone = ContactPhone;
+            this.ContactMail = ContactMail;
+
+
         }
 
         public Job()
@@ -125,9 +147,85 @@ namespace Proj_WeJob.Models.DAL
         public List<Job> GetListOfJobs(string studentId)
         {
             DBservices dbs = new DBservices();
-            return dbs.GetListOfJobs(studentId);
-        }
+            var retList = dbs.GetListOfJobs(studentId);
+            var jobNoList = retList.Select(i => i.JobNo).ToList();
+            var studentTags = dbs.GetStudentSelectedTags(studentId).Select(i => i.SubCategoryNo);
+            var studentDirectJobs = dbs.GetStudentDirectJobs(studentId);
+            var studentJobStatus = dbs.GetStudentJobStatus(studentId, jobNoList);
 
+            var newJobs = new List<int>();
+            foreach (var job in jobNoList)
+            {
+                var mainJob = retList.First(i => i.JobNo == job);
+                if (!studentJobStatus.ContainsKey(job))
+                {
+                    newJobs.Add(job);
+                    mainJob.StudentJobStatus = JOB_STATUS_NEW;
+                    continue;
+                }
+                mainJob.StudentJobStatus = studentJobStatus[job];
+                if (studentJobStatus[job] == JOB_STATUS_DELETE || studentJobStatus[job] == JOB_STATUS_SENT_CV || studentJobStatus[job] == JOB_STATUS_SAVED_AND_SENT_CV)
+                {
+                    retList.Remove(retList.First(i => i.JobNo == job));
+                    continue;
+                }
+                if (studentJobStatus[job] == JOB_STATUS_SAVED)
+                {
+                    retList.First(i => i.JobNo == job).IsSaved = true;
+                }
+            }
+
+            if (newJobs.Count() > 0)
+            {
+                dbs.AddNewStudentJobStatus(studentId, newJobs);
+            }
+
+            // IsFromAlgo
+            foreach (var job in retList)
+            {
+                if (studentDirectJobs.Contains(job.JobNo))
+                {
+                    job.IsFromSmartAlgo = false;
+                    continue;
+                }
+
+                bool hasAtLeastOneTag = false;
+                var jobTags = dbs.GetTagsByJobId(job.JobNo).Select(i => i.SubCategoryNo);
+                foreach (var t in jobTags)
+                {
+                    if (studentTags.Contains(t))
+                    {
+                        hasAtLeastOneTag = true;
+                        break;
+                    }
+                }
+                job.IsFromSmartAlgo = !hasAtLeastOneTag;
+            }
+            return retList;
+        }
+        public string UpdateStudentJob(string studnetId, string jobId, string status)
+        {
+            if (status != JOB_STATUS_DELETE && status != JOB_STATUS_NEW && status != JOB_STATUS_SAVED &&
+                status != JOB_STATUS_SAVED_AND_SENT_CV && status != JOB_STATUS_SENT_CV)
+                return "Invliad status";
+            DBservices dbs = new DBservices();
+
+            if (status == JOB_STATUS_SENT_CV || status == JOB_STATUS_SAVED_AND_SENT_CV)
+            {
+                var t = new Student();
+                var student = t.GetListStudent(studnetId).First();
+                if (String.IsNullOrEmpty(student.CVName))
+                {
+                    return "No cv";
+                }
+            }
+
+            dbs.UpdateStudentJobStatus(studnetId, jobId, status);
+
+            // TODO - send CV
+
+            return "";
+        }
 
     }
 }
