@@ -298,12 +298,12 @@
           
         function success() {
             var tr = $(this).closest('tr');
-            tr.remove();
              Swal.fire(
                       'עודכן!',
                       'סטטוס משרה עודכנה לרגילה',
-                      'success'
-                      )
+                 'success'       
+            )
+            tr.remove();
             }
     function error(err) {
             swal("Error: " + err);
