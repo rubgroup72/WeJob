@@ -14,6 +14,8 @@ import RoundedButton from '../components/buttons/RoundedButton';
 import { CheckBox, ButtonGroup, Button } from 'react-native-elements'
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
+import Moment from 'moment';
+
 export default class JobsCarousel extends React.Component {
  
     constructor(props){
@@ -338,7 +340,7 @@ export default class JobsCarousel extends React.Component {
             modalDescription = this.state.selectedJob.JobDescription;
             location = this.state.selectedJob.Location;
             Requirements = this.state.selectedJob.Requirements;
-            OpenDate = this.state.selectedJob.OpenDate;
+            OpenDate = Moment(this.state.selectedJob.OpenDate).format('YYYY/MM/DD');
             ContactMail = this.state.selectedJob.ContactMail;
             ContactPhone = this.state.selectedJob.ContactPhone;
             ContactName = this.state.selectedJob.ContactName;

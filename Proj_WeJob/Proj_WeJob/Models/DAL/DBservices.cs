@@ -2188,6 +2188,8 @@ namespace Proj_WeJob.Models.DAL
                         ContactName = Convert.ToString(dr["ContactName"]),
                         ContactPhone = Convert.ToInt32(dr["ContactPhone"]),
                         ContactMail = Convert.ToString(dr["ContactMail"]),
+                        OpenDate = Convert.ToDateTime(dr["OpenDate"]),
+                        ToDate = Convert.ToDateTime(dr["ToDate"])
                     };
                     lsc.Add(sc);
                 }
