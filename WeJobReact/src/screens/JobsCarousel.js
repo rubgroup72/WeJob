@@ -188,7 +188,7 @@ export default class JobsCarousel extends React.Component {
                             });
                             }}
                             title="פרטי משרה" color="#FEB557" />
-                        <Icon name="heart" size={26} style={{ flexDirection: 'row', justifyContent: 'flex-end' }} onPress={() => {}}  color="#FEB557" />
+                        <Icon name="heart-o" size={26}  onPress={() => {}}  color="#FEB557"/>                       
                         </CardAction>
                     </Card>
                 </Swipeout>;
@@ -279,47 +279,72 @@ export default class JobsCarousel extends React.Component {
         return ret;
     }
     _getModalForJob = () => {
-        var modalTitle = '', modalDescription = '', location ='', Requirements= '', OpenDate ='';
+        var modalTitle = '', modalDescription = '', location ='', Requirements= '', OpenDate ='', ContactMail='', ContactPhone='', ContactName='', JobStatusStatusName='';
         if (this.state.selectedJob !== null && this.state.selectedJob !== undefined) {
             modalTitle = this.state.selectedJob.JobName;
             modalDescription = this.state.selectedJob.JobDescription;
             location = this.state.selectedJob.Location;
             Requirements = this.state.selectedJob.Requirements;
             OpenDate = this.state.selectedJob.OpenDate;
+            ContactMail = this.state.selectedJob.ContactMail;
+            ContactPhone = this.state.selectedJob.ContactPhone;
+            ContactName = this.state.selectedJob.ContactName;
+            JobStatusStatusName = this.state.selectedJob.JobStatusStatusName;
         }
         //הדף שך פרטי משרה
-        return <ScrollView behavior="padding" enabled keyboardShouldPersistTaps='always' style={styles.wrapper}>
-                <TouchableHighlight
-                            onPress={() => { this.setState({ isModalVisible: false}); }}>
-                            <Icon name="close" size={30} style={{paddingLeft: 10, paddingTop:10}}></Icon>
-                        </TouchableHighlight>
-                        <Text style={{fontSize: 30, textAlign:"center", marginBottom:20}}> { modalTitle }</Text>
+        return <ImageBackground style={ styles.jobImgBackground } 
+                resizeMode='cover' 
+                source={require('../img/lightBlue.png')}>
+                <ScrollView behavior="padding" enabled keyboardShouldPersistTaps='always' style={styles.wrapper}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View style={{paddingTop:10, flexDirection: 'row', justifyContent: 'flex-start' }}>
+                            <Icon name="fire" size={30} style={{paddingRight:20, color:'#FF8811'}} />
+                            <Text style={{fontSize: 20, paddingRight:5, paddingTop:7}}>{ JobStatusStatusName }</Text>
+                        </View> 
+                        <Icon name="close" size={30} style={{paddingLeft: 10, paddingTop:10}}
+                        onPress={() => { this.setState({ isModalVisible: false}); }}></Icon>
+                    </View>
+                        <Text style={{fontSize: 36, textAlign:"left", marginBottom:20,  color:'#FF8811'}}> { modalTitle }</Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                            <Icon name="map-marker" size={30} style={{paddingRight:20}} />
+                            <Icon name="map-marker" size={30} style={{paddingRight:20, color:'#FF8811'}} />
                             <Text style={{fontSize: 20, paddingRight:5}}>{ location }</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                            <Icon name="calendar" size={25} style={{paddingRight:20, paddingTop: 5}} />
-                            <Text style={{fontSize: 20, paddingRight:5}}>{ OpenDate }</Text>
+                            <Icon name="calendar" size={25} style={{paddingRight:20, paddingTop: 5, paddingBottom: 5 ,color:'#FF8811'}} />
+                            <Text style={{fontSize: 20, paddingRight:5, paddingTop:7}}>{ OpenDate }</Text>
                         </View>
-                     <View style={{backgroundColor:'#FFF8F0'}}>
-                        <Text style={{fontSize: 30 , paddingRight:20, paddingBottom:10}}>תיאור:</Text>
+                     <View >
+                        <Text style={{fontSize: 25 , paddingRight:20, paddingBottom:10}}>תיאור:</Text>
                         <Text style={{fontSize: 20 , paddingRight:20, paddingBottom:10}}> { modalDescription }</Text>
-                        <Text style={{fontSize: 30 , paddingRight:20, paddingBottom:10}}>דרישות תפקיד:</Text>
+                        <Text style={{fontSize: 25 , paddingRight:20, paddingBottom:10}}>דרישות תפקיד:</Text>
                         <Text style={{fontSize: 20 , paddingRight:20, paddingBottom:10}}> { Requirements }</Text>
+                        <Text style={{fontSize: 25 , paddingRight:20, paddingBottom:10}}>פרטים נוספים:</Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                            <Icon name="star" size={30} style={{paddingRight:20, paddingTop:40}} />
-                            <Icon name="trash" size={30} style={{paddingRight:20, paddingTop:40}} />
+                            <Icon name="user" size={25} style={{paddingRight:20, paddingTop: 5}} />
+                            <Text style={{fontSize: 20, paddingRight:5}}>{ ContactName }</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+                            <Icon name="at" size={25} style={{paddingRight:20, paddingTop: 5}} />
+                            <Text style={{fontSize: 20, paddingRight:5}}>{ ContactMail }</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+                            <Icon name="phone" size={25} style={{paddingRight:20, paddingTop: 5}} />
+                            <Text style={{fontSize: 20, paddingRight:5}}>{ ContactPhone }</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                            <Icon name="star-o" size={40} style={{paddingLeft:20, paddingTop:20, paddingBottom:20}} />
+                            <Icon name="trash-o" size={40} style={{paddingLeft:20, paddingTop:20, paddingBottom:20}} />
                        </View>
-                     </View>
-                <RoundedButton
+                       <RoundedButton
                             text = 'שלח קורות חיים  '
                             textColor = "#FFF8F0"
                             background= "#FF8811"
                             //icon={<Icon name="facebook" size={20} />}
                             handleOnPress={() => {}}
-                            />     
-             </ScrollView>;
+                            /> 
+                     </View>      
+             </ScrollView>
+             </ImageBackground>;
     }
 
     _getCurrentSearchList = () => {
@@ -551,6 +576,11 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 50,
 },
+jobImgBackground: {
+    width: '100%',
+    height: '110%',
+    flex: 1,
+},
 scrollViewStyle: {
     flex: 1,
 },
@@ -582,7 +612,7 @@ main: {
    wrapper: {
     display: 'flex',
     flex: 1,
-    backgroundColor: '#9DD9D2',
+    //backgroundColor: '#9DD9D2',
 },
 scrolViewWrapper:{
     marginTop: 70,
