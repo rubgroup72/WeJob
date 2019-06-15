@@ -156,7 +156,7 @@ export default class JobsCarousel extends React.Component {
         var heartColor = '#999999';
         if (job.StudentJobStatus === 'save' || job.StudentJobStatus === 'save and cv') {
             heartType = 'heart';
-            heartColor = 'red';
+            heartColor = 'red'; 
         }
 
         let swipeBtns = [{
@@ -190,7 +190,7 @@ export default class JobsCarousel extends React.Component {
                             });
                             }}
                             title="פרטי משרה" color="#FEB557" />
-                        <Icon name={heartType} size={26}  onPress={() => {}}  color={heartColor} />                       
+                        <Icon name={heartType} size={26}  onPress={this._saveJob.bind(this, job)}  color={heartColor} />                       
                         </CardAction>
                     </Card>
                 </Swipeout>;
@@ -301,6 +301,34 @@ export default class JobsCarousel extends React.Component {
         });
         this.setState({ JobsList: newJobList, isModalVisible: false });
     }
+    _saveJob = (job) => {
+        if (job.StudentJobStatus === "send cv") {
+            job.StudentJobStatus = "save and cv";
+        } else if (job.StudentJobStatus === "save and cv") {
+            job.StudentJobStatus = "send cv";
+        } else if (job.StudentJobStatus === "save") {
+            job.StudentJobStatus = "new";
+        } else if (job.StudentJobStatus === "new") {
+            job.StudentJobStatus = "save";
+        }
+        
+        var jobsList = this.state.JobsList;
+        for (var i = 0; i < jobsList.length; ++i) {
+            if (jobsList[i].JobNo === job.JobNo) {
+                jobsList[i].StudentJobStatus = job.StudentJobStatus;
+                break;
+            }
+        }
+
+        const httpClient = axios.create();
+        httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
+        httpClient.post(Global.BASE_URL +'AppStudnetJobStatus', {
+            StudentId: this.state.studentId,
+            JobId: job.JobNo,
+            Status: job.StudentJobStatus
+        });
+        this.setState({ JobsList: jobsList, selectedJob: job });
+    }
     _getModalForJob = () => {
         var modalTitle = '', modalDescription = '', location ='', Requirements= '', OpenDate ='', ContactMail='', ContactPhone='', ContactName='', JobStatusStatusName='';
         var starColor = 'black';
@@ -375,33 +403,7 @@ export default class JobsCarousel extends React.Component {
                                 }
                                 onPress={() => {
                                     var job = this.state.selectedJob;
-                                    if (job.StudentJobStatus === "send cv") {
-                                        job.StudentJobStatus = "save and cv";
-                                    } else if (job.StudentJobStatus === "save and cv") {
-                                        job.StudentJobStatus = "send cv";
-                                    } else if (job.StudentJobStatus === "save") {
-                                        job.StudentJobStatus = "new";
-                                    } else if (job.StudentJobStatus === "new") {
-                                        job.StudentJobStatus = "save";
-                                    }
-                                    
-                                    var jobsList = this.state.JobsList;
-                                    for (var i = 0; i < jobsList.length; ++i) {
-                                        if (jobsList[i].JobNo === job.JobNo) {
-                                            jobsList[i].StudentJobStatus = job.StudentJobStatus;
-                                            break;
-                                        }
-                                    }
-
-                                    // Mark
-                                    const httpClient = axios.create();
-                                    httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
-                                    httpClient.post(Global.BASE_URL +'AppStudnetJobStatus', {
-                                        StudentId: this.state.studentId,
-                                        JobId: job.JobNo,
-                                        Status: job.StudentJobStatus
-                                    });
-                                    this.setState({ JobsList: jobsList, selectedJob: job });
+                                    this._saveJob(job);
                                 }}
                             />
                             <Button
@@ -411,7 +413,6 @@ export default class JobsCarousel extends React.Component {
                                     <Icon
                                       name="trash-o"
                                       size={40}
-                                      color={'black'}
                                     />
                                 }
                                 onPress={() => {
