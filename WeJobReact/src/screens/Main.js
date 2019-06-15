@@ -14,6 +14,7 @@ import Department from './Departments';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Crashlytics, Answers } from 'react-native-fabric';
 import firebase from 'react-native-firebase';
+import { BarIndicator} from 'react-native-indicators';
 
 export default class Main extends React.Component{
 
@@ -29,7 +30,8 @@ export default class Main extends React.Component{
             isDemoUser: false,
             isFirstFetch: false,
             navigateToDepartment: false,
-            fcmToken: ''
+            fcmToken: '',
+            tryAutomaticLogin: 0,
         }
         this.props.navigation.addListener('willFocus', this.loadComponent);
 
@@ -192,15 +194,20 @@ export default class Main extends React.Component{
     }
     //ננסה לחבר את היוזר באחת האופציות ששמורות לנו במידה והתחבר מקודם
     tryLogin = () => {
+        this.setState({ tryAutomaticLogin: 2 });
         AsyncStorage.getItem(Global.FACEBOOK_TOKEN_STRING).then((token) => {
             if (token !== null) {
                 // Check what happend with facebook
                 this.fetchFacebookUserData(token);
+            } else {
+                this.setState({ tryAutomaticLogin: this.state.tryAutomaticLogin - 1 });
             }
         });
         AsyncStorage.getItem(Global.USER_EMAIL).then((email) => {
             if (email !== null) {
                 this.fetchStudentDataByEmail(email);
+            } else {
+                this.setState({ tryAutomaticLogin: this.state.tryAutomaticLogin - 1 });
             }
         });
     }
@@ -214,10 +221,11 @@ export default class Main extends React.Component{
                         this.loginFinished('email', response.data);
                     } else {
                         alert('An error has occured1');
+                        this.setState({ tryAutomaticLogin: this.state.tryAutomaticLogin - 1 });
                     }
                 })
                 .catch((error) => {
-                    this.setState({ loadingVisible: false });
+                    this.setState({ tryAutomaticLogin: this.state.tryAutomaticLogin - 1 });
                     alert (error);
                 });
     }
@@ -233,7 +241,8 @@ export default class Main extends React.Component{
                 this.fetchStudentDataFromFacebook(user.email, user.name, token);//מושכים נתונים מהשרת בעזרת האימייל שקיבלנו מפייסבוק
             })
             .catch((exc) => {
-                alert(exc)
+                this.setState({ tryAutomaticLogin: this.state.tryAutomaticLogin - 1 });
+                alert(exc);
             });
         }
         
@@ -251,10 +260,11 @@ export default class Main extends React.Component{
                         this.loginFinished('facebook', response.data);
                     } else {
                         alert('An error has occured2');
+                        this.setState({ tryAutomaticLogin: this.state.tryAutomaticLogin - 1 });
                     }
                 })
                 .catch((error) => {
-                    this.setState({ loadingVisible: false });
+                    this.setState({ tryAutomaticLogin: this.state.tryAutomaticLogin - 1 });
                     alert (error);
                 });
     }
@@ -266,6 +276,7 @@ export default class Main extends React.Component{
             loginWithGoogle: (loginProvider === 'google'),
             loginWithEmail: (loginProvider === 'email'),
             student: student,
+            tryAutomaticLogin: 0,
          });
          AsyncStorage.setItem(Global.ASYNC_STORAGE_STUDEMT, JSON.stringify(student));
          AsyncStorage.setItem(Global.USER_EMAIL, student.Email);
@@ -291,6 +302,11 @@ export default class Main extends React.Component{
 
     //איזה מסך נרצה להציג לסטודנט
     getScreenToShow = () => {
+
+        if (this.state.tryAutomaticLogin > 0) {
+            return <BarIndicator count={5} color='orange' />
+        }
+
         //כאשר האפליקציה עולה זהו הדף הראשון אליו נגיע באופן דיפולטיבי
         // ונעביר לדף את הנתונים של המשתמש ואת הטוקן של הפייסבוק
         //אם הדגל של ניתוק דולק

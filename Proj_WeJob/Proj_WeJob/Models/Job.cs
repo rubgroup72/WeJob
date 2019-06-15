@@ -141,18 +141,27 @@ namespace Proj_WeJob.Models.DAL
             DBservices dbs = new DBservices();
             var retList = dbs.GetListOfJobs(studentId);
             var studentTags = dbs.GetStudentSelectedTags(studentId).Select(i => i.SubCategoryNo);
+            var studentDirectJobs = dbs.GetStudentDirectJobs(studentId);
 
             foreach (var job in retList)
             {
+                if (studentDirectJobs.Contains(job.JobNo))
+                {
+                    job.IsFromSmartAlgo = false;
+                    continue;
+                }
+
+                bool hasAtLeastOneTag = false;
                 var jobTags = dbs.GetTagsByJobId(job.JobNo).Select(i => i.SubCategoryNo);
                 foreach (var t in jobTags)
                 {
                     if (studentTags.Contains(t))
                     {
-                        job.IsFromSmartAlgo = true;
+                        hasAtLeastOneTag = true;
                         break;
                     }
                 }
+                job.IsFromSmartAlgo = !hasAtLeastOneTag;
             }
             return retList;
         }

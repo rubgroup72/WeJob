@@ -36,9 +36,13 @@ export default class JobsCarousel extends React.Component {
             jobTitleSearchAmount: 0,
         }
 
+        this.props.navigation.addListener('willFocus', this.loadComponent);
     }
 //ברגע שהדף סיים להיטען יתבצע מה שכתוב בפונקציה 
     componentWillMount() {
+        this.loadComponent();
+    }
+    loadComponent = () => {
         //  הבאת אובייקט סטודנט מהזיכרון הלוקאלי והשמת המספר האישי שלו במשתנה
         AsyncStorage.getItem(Global.ASYNC_STORAGE_STUDEMT).then((jsonStudent) => {
             if (jsonStudent !== null) {
@@ -285,7 +289,6 @@ export default class JobsCarousel extends React.Component {
         }
         //הדף שך פרטי משרה
         return <ScrollView behavior="padding" enabled keyboardShouldPersistTaps='always' style={styles.wrapper}>
-                <View >
                 <TouchableHighlight
                             onPress={() => { this.setState({ isModalVisible: false}); }}>
                             <Icon name="close" size={30} style={{paddingLeft: 10, paddingTop:10}}></Icon>
@@ -305,19 +308,17 @@ export default class JobsCarousel extends React.Component {
                         <Text style={{fontSize: 30 , paddingRight:20, paddingBottom:10}}>דרישות תפקיד:</Text>
                         <Text style={{fontSize: 20 , paddingRight:20, paddingBottom:10}}> { Requirements }</Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                            <Icon name="star" size={30} style={{paddingRight:20}} />
-                            <Icon name="trash" size={30} style={{paddingRight:20}} />
+                            <Icon name="star" size={30} style={{paddingRight:20, paddingTop:40}} />
+                            <Icon name="trash" size={30} style={{paddingRight:20, paddingTop:40}} />
                        </View>
                      </View>
-                     <RoundedButton
+                <RoundedButton
                             text = 'שלח קורות חיים  '
                             textColor = "#FFF8F0"
                             background= "#FF8811"
-                            //style={{position:'absolute', buttom:0 ,top: 0}}
                             //icon={<Icon name="facebook" size={20} />}
                             handleOnPress={() => {}}
-                            />
-                </View>     
+                            />     
              </ScrollView>;
     }
 
