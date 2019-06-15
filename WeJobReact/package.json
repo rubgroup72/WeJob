@@ -10,10 +10,12 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.4.2",
     "axios": "^0.18.0",
+    "opencollective-postinstall": "^2.0.2",
     "react": "16.6.3",
     "react-native": "^0.59.8",
     "react-native-cards": "^1.1.4",
     "react-native-document-picker": "^2.3.0",
+    "react-native-elements": "^1.1.0",
     "react-native-extra-dimensions-android": "^1.2.5",
     "react-native-fabric": "^0.5.2",
     "react-native-fbsdk": "^0.8.0",
@@ -28,7 +30,7 @@
     "react-native-snap-carousel": "^3.7.5",
     "react-native-swipeout": "^2.3.6",
     "react-native-table-component": "^1.2.0",
-    "react-native-vector-icons": "^6.3.0",
+    "react-native-vector-icons": "^6.5.0",
     "react-navigation": "^3.3.2"
   },
   "devDependencies": {
