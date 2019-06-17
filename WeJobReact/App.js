@@ -39,8 +39,9 @@ const profileStack = createStackNavigator({
     headerTintColor: '#333333',
     headerTitleStyle: {
         fontWeight: 'bold',
-        color: '#ffffff'
-    }
+        color: '#ffffff',
+    },
+    
 }
 });
 
@@ -88,16 +89,16 @@ const JobStack = createStackNavigator({
 
 //השמות של המחסניות איך שהן יופיעו בתפריט ההמבורגר הנפתח
 const drawerNav = createDrawerNavigator({
-  'דף הבית': { screen: MainStack, },
+  'דף הבית': { screen: MainStack },
   'עדכון פרופיל': { screen: profileStack },
-  'דפי הרשמה': { screen: DepartmentsStack, },
-  'מסכי חיפוש משרה': {screen: JobStack },
+  'פרטים אישיים': { screen: DepartmentsStack, },
+  'העדפות משרה': {screen: JobStack },
 }, {
     initialRouteName: 'דף הבית',
     drawerPosition: 'right',
     drawerOpenRoute: 'DrawerRightOpen', 
     drawerCloseRoute: 'DrawerRightClose', 
-    drawerToggleRoute: 'DrawerRightToggle',
+    drawerToggleRoute: 'DrawerRightToggle'
     
 });
 

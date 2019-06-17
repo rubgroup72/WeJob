@@ -164,11 +164,11 @@ namespace Proj_WeJob.Models.DAL
                     continue;
                 }
                 mainJob.StudentJobStatus = studentJobStatus[job];
-                if (studentJobStatus[job] == JOB_STATUS_DELETE || studentJobStatus[job] == JOB_STATUS_SENT_CV || studentJobStatus[job] == JOB_STATUS_SAVED_AND_SENT_CV)
-                {
-                    retList.Remove(retList.First(i => i.JobNo == job));
-                    continue;
-                }
+                //if (studentJobStatus[job] == JOB_STATUS_DELETE || studentJobStatus[job] == JOB_STATUS_SENT_CV || studentJobStatus[job] == JOB_STATUS_SAVED_AND_SENT_CV)
+                //{
+                //    retList.Remove(retList.First(i => i.JobNo == job));
+                //    continue;
+                //}
                 if (studentJobStatus[job] == JOB_STATUS_SAVED)
                 {
                     retList.First(i => i.JobNo == job).IsSaved = true;

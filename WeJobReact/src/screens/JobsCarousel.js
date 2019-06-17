@@ -15,6 +15,7 @@ import { CheckBox, ButtonGroup, Button } from 'react-native-elements'
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
 import Moment from 'moment';
+import BottomNavigation, { FullTab } from 'react-native-material-bottom-navigation';
 
 export default class JobsCarousel extends React.Component {
  
@@ -37,6 +38,7 @@ export default class JobsCarousel extends React.Component {
             companySearchAmount: 0,
             locationSearchAmount: 0,
             jobTitleSearchAmount: 0,
+            activeTab: 0,
         }
 
         this.props.navigation.addListener('willFocus', this.loadComponent);
@@ -278,6 +280,14 @@ export default class JobsCarousel extends React.Component {
             var j = this.state.JobsList[i];
             if (!this._checkIfJobFilter(j))
                 continue;
+            
+            if (this.state.activeTab === 0 && !(j.StudentJobStatus === 'new' || j.StudentJobStatus === 'save'))
+                continue;
+            if (this.state.activeTab === 1 && !(j.StudentJobStatus === 'save'))
+                continue;
+            if (this.state.activeTab === 2 && !(j.StudentJobStatus === 'send cv' || j.StudentJobStatus === 'save and cv'))
+                continue;
+            
             ret.push(this._renderJob(j, i));
         }
         return ret;
@@ -505,7 +515,9 @@ export default class JobsCarousel extends React.Component {
                         break;
                     }
                 }
-                newJobList.splice(index, 1); 
+                // newJobList.splice(index, 1); 
+                var prevStatus = newJobList[index].StudentJobStatus;
+                newJobList[index].StudentJobStatus = prevStatus === 'new' ? 'send cv' : 'save and cv';  
                 this.setState({ JobsList: newJobList, isModalVisible: false });
             }
         }).catch((error) => {
@@ -666,6 +678,44 @@ export default class JobsCarousel extends React.Component {
         return filterBy === '' ? empty : ('מפלטר לפי: ' + filterBy);
     }
 
+    tabs = [
+        {
+          key: 0,
+          icon: 'search',
+          label: 'כל המשרות',
+          barColor: '#325e89',
+          pressColor: 'transparent',       
+        },
+        {
+          key: 1,
+          icon: 'heart-o',
+          label: 'מועדפים',
+          barColor: '#127b8d',
+          pressColor: 'transparent',
+          //pressColor: 'rgba(255, 255, 255, 0.16)'
+        },
+        {
+          key: 2,
+          icon: 'send-o',
+          label: 'משרות שפניתי',
+          barColor: '#39a78e',
+          pressColor: 'transparent',
+          //pressColor: 'rgba(255, 255, 255, 0.16)'
+        }
+      ];
+
+      renderIcon = icon => ({ isActive }) => (
+        <Icon size={24} color="white" name={icon} />
+      )
+      renderTab = ({ tab, isActive }) => (
+        <FullTab
+          isActive={isActive}
+          key={tab.key}
+          label={tab.label}
+          renderIcon={this.renderIcon(tab.icon)}
+        />
+      )
+
     render() {
         var jobsList = this._getJobsList();
         var filterText = this._getFilterText();
@@ -721,6 +771,12 @@ export default class JobsCarousel extends React.Component {
                 <Loader
                 modalVisible={this.state.loadingVisible}
                 animationType="fade" />  
+
+                <BottomNavigation
+                    onTabPress={newTab => this.setState({ activeTab: newTab.key })}
+                    renderTab={this.renderTab}
+                    tabs={this.tabs}
+                />
                 
             </View>
         );
@@ -753,6 +809,7 @@ scrollViewStyle: {
 searchViewStyle: {
     marginRight: 7,
     marginLeft: 7,
+    marginBottom: 7,
     borderColor: '#d6d7da',
     borderRadius: 4,
     borderWidth: 0.5,
