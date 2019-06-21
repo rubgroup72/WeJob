@@ -180,5 +180,13 @@ namespace Proj_WeJob.Models.DAL
                 return new KeyValuePair<string, string>();
             return new KeyValuePair<string, string>(s.CVName, s.CVFile);
         }
+        public void RegisterStudentDeviceId(string studentId, bool register, string token)
+        {
+            Student s = GetListStudent(studentId).FirstOrDefault();
+            if (s == null)
+                return;
+            DBservices dbs = new DBservices();
+            dbs.RegisterStudentDevice(studentId, register, token);
+        }
     }
 }

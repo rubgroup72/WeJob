@@ -66,9 +66,6 @@ export default class Department extends React.Component{
         return {
             headerTransparent: true,
             headerTintColor: colors.green01,
-            // headerRight: (
-            //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
-            // ),
             title: 'מחלקות',
             headerLeft: (
                 <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >

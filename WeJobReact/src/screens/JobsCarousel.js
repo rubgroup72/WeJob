@@ -122,18 +122,19 @@ export default class JobsCarousel extends React.Component {
     
 
 //התפריט למעבר בין הדפים
-    static navigationOptions = ({navigation}) => {
-        return {
-            headerTransparent: true,
-            headerStyle: {backgroundColor:'#3c3c3c'},
-            headerRight: (
-                <TouchableOpacity  onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
-                    <Icon name="bars" size={30} color= {colors.white} />
-                </TouchableOpacity>
-
-            ),
-        }
-        }
+static navigationOptions = ({navigation}) => {
+    const { params = {} } = navigation.state;
+    var headerLeftInternal = (<TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
+        <Icon name="bars" size={30} color= {colors.white} />
+        </TouchableOpacity>);
+    var title = 'משרות מומלצות עבורך';
+    return {
+        headerTransparent: true,
+        headerTintColor: colors.white,
+        title: title,
+        headerLeft: headerLeftInternal,
+    }
+  }
 ///לכל פריט בקרוסלה נציג את הנתונים הבאים
     _renderItem = ({item,index}) => {
         return (

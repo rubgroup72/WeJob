@@ -18,7 +18,6 @@ namespace Proj_WeJob.Controllers
         [HttpGet]
         public void Get(string title, string body)
         {
-            PushNotification.SendPushNotification(title, body);
         }
     }
 }

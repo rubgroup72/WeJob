@@ -87,6 +87,12 @@ export default class PersonalProfile extends React.Component{
         AsyncStorage.setItem(Global.USER_SELECTED_DEPARTMENT_CODE, '');
         AsyncStorage.setItem(Global.USER_SELECTED_CATEGORY_CODE, '');
         AsyncStorage.setItem(Global.USER_SELECTED_CATEGORY_NAME, '');
+
+        const httpClient = axios.create();
+         httpClient.defaults.timeout = 15000;
+
+         httpClient.get(Global.BASE_URL + "AppRegisterDeviceIDController?studentId=" + this.state.studentId + "&register=0&fcmToken=''");
+
         this.props.navigation.navigate('Main');
     }
     loadComponent = () => {
