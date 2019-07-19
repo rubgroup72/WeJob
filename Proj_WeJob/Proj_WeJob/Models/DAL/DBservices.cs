@@ -518,6 +518,10 @@ namespace Proj_WeJob.Models.DAL
             }
         }
 
+        public List<Distributor> GetListDistributor()
+        {
+            return GetListDistributor(connectionString);
+        }
         //+++++פונקציה שמחזיה רשימה של מפיצים ללא סינון
         public List<Distributor> GetListDistributor(string conString)
         {
@@ -2426,7 +2430,7 @@ namespace Proj_WeJob.Models.DAL
         {
             lock (locker)
             {
-                var currentToken = GetStudentDeviceId(studentId);
+                var currentToken = GetStudentDeviceId(new List<string>() { studentId }).FirstOrDefault();
                 if (currentToken == fcmToken && register)
                     return;
                 DeActivateOldDevice(studentId, fcmToken);
@@ -2435,22 +2439,28 @@ namespace Proj_WeJob.Models.DAL
             }
             
         }
-        public string GetStudentDeviceId(string studentId)
+        public List<string> GetStudentDeviceId(List<string> studentIdList)
         {
             SqlConnection con = null;
             try
             {
                 con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT * FROM [StudentAppDevice] Where StudentId = " + studentId + " and IsActive = 1";
+                String selectSTR = "SELECT * FROM [StudentAppDevice] Where IsActive = 1 and StudentId in (";
+                foreach (var s in studentIdList)
+                    selectSTR += s + ",";
+                selectSTR = selectSTR.Remove(selectSTR.Length - 1);
+                selectSTR += ");";
+
+                List<string> retList = new List<string>();
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
                 while (dr.Read())
                 {
-                    return Convert.ToString(dr["Token"]);
+                    retList.Add(Convert.ToString(dr["Token"]));
                 }
 
-                return null;
+                return retList;
             }
             catch (Exception ex)
             {
