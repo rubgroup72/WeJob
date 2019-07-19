@@ -125,6 +125,20 @@ export default class PersonalProfile extends React.Component{
     }
 
     onSubmitPress = () => {
+        var message = '';
+        if (this.state.firstName === '') {
+            message = 'שם פרטי חסר';
+        } else if (this.state.lastName === '') {
+            message = 'שם משפחה חסר';
+        } else if (this.state.phoneNumber === '') {
+            message = 'מספר פלאפון חסר';
+        }
+
+        if (message !== '') {
+            alert (message);
+            return;
+        }
+
         this.setState({
             loadingVisible: true
         })

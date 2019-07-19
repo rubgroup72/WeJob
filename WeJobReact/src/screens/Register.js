@@ -32,6 +32,26 @@ export default class Register extends React.Component{
       }
 
     onRegisterPress = () => {
+        var message = '';
+        if (this.state.email === '' || this.state.email.indexOf('@') === -1) {
+            message = 'איימיל חסר / לא תקין';
+        } else if (this.state.password.length < 6) {
+            message = 'סיסמא חייבת להכיל לפחות 6 ספרות';
+        } else if (this.state.firstName === '') {
+            message = 'שם פרטי חסר';
+        } else if (this.state.lastName === '') {
+            message = 'שם משפחה חסר';
+        } else if (this.state.phoneNumber === '') {
+            message = 'מספר פלאפון חסר';
+        } else if (this.state.gender === '') {
+            message = 'יש לבחור מין';
+        }
+
+        if (message !== '') {
+            alert (message);
+            return;
+        }
+
         this.setState({
             loadingVisible: true
         })
