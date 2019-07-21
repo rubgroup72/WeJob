@@ -18,6 +18,7 @@ namespace Proj_WeJob.Controllers
             Student s = new Student();
             return s.GetListStudent();
         }
+        // הפעלת פונקציה שמחזירה את כל הסטודנטים עם סינון של מחלקה ותת מחלקה
         [HttpGet]
         [Route("api/Student")]
         public IEnumerable<Student> GET(string codeDepartment,string SubDepartmentId)
@@ -25,7 +26,7 @@ namespace Proj_WeJob.Controllers
             Student s = new Student();
             return s.GetListStudentFilter(codeDepartment, SubDepartmentId);
         }
-        //הפעלת פונקציה שמחזירה את כל הסטודנטים עם סינון
+       //פונקציה שמחזירה סטודנט ספציפי על פי תעודת סטודנט
         [HttpGet]
         [Route("api/StudentProfile")]
         public IEnumerable<Student> Get(string StudentId)

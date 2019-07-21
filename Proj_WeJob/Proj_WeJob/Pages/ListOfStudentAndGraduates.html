@@ -22,12 +22,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   
     <script src="../Scripts/ajaxCalls.js"></script>
-
-
-  <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!student sub category , language.studnet  , Job.student-->
-
-
-
     <script>
         $(document).ready(function () {
             $("#StudentsTable").hide();
@@ -104,8 +98,11 @@
                                 return deleteBtn;
                             },
                         },
-                      
-                     
+                       {
+                            "className": 'StudentId',
+                            data: "StudentId",
+                            title: "תז"
+                        }, 
                         {
                             "className": 'FirstName',
                             data: "FirstName",
@@ -135,25 +132,19 @@
 
                     ]
                 });
-                buttonEvents();
-
-             
+                buttonEvents();             
             }
 
             catch (err) {
                 alert(err);
             }
-        }
-      
-
+        }      
         // this function is activated in case of a failure
         function error(err) {
             alert("Error: " + err);
         }
-
         // wire all the buttons to their functions
-        function buttonEvents() {
-            
+        function buttonEvents() {           
             $('#StudentsTable').on('click', 'td.delete', function () {
                 var tr = $(this).closest('tr');
                 Swal.fire({
@@ -177,12 +168,10 @@
                 localStorage.clear();
                 var tr = $(this).closest('tr');
                 localStorage.setItem("StudentId", tr[0].getElementsByClassName("StudentId")[0].innerHTML);
-                localStorage.setItem("FirstName", tr[0].getElementsByClassName("FirstName")[0].innerHTML);
-                localStorage.setItem("LastName", tr[0].getElementsByClassName("LastName")[0].innerHTML);
-                window.location.href = 'StudentProfile.html';
+                //localStorage.setItem("FirstName", tr[0].getElementsByClassName("FirstName")[0].innerHTML);
+                //localStorage.setItem("LastName", tr[0].getElementsByClassName("LastName")[0].innerHTML);
+                window.location.href = 'StudentProfile - test.html';
             });
-
-
         }
         function DeleteSuccess() {
             Swal.fire(
