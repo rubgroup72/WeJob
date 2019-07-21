@@ -66,9 +66,6 @@ export default class Department extends React.Component{
         return {
             headerTransparent: true,
             headerTintColor: colors.green01,
-            // headerRight: (
-            //     <NavBarButton handleButtonPress={() => navigation.navigate('LogIn')} location="left" color={colors.white} text="  לצפיי2ה במשרות ללא הרשמה" />
-            // ),
             title: 'מחלקות',
             headerLeft: (
                 <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
@@ -151,13 +148,13 @@ export default class Department extends React.Component{
 
         var suitcase = <Icon name ="suitcase" color='white' size={85} type="entypo" style={styles.departmentStyle} />
         if (this.state.aconomicsAndBusiness === true) {
-            suitcase = <Icon name ="suitcase" color='rgba(0, 0, 0, 0.38)' size={85} type="entypo"/>;
+            suitcase = <Icon name ="suitcase" color='rgba(0, 0, 0, 0.38)' size={85} type="entypo" style={styles.departmentStyle}/>;
         }
 
 
         var users = <Icon name ="users" color='white' size={85} type="entypo" style={styles.departmentStyle}/>
         if (this.state.socialAndCommunitySciences === true) {
-            users = <Icon name ="users"  color='rgba(0, 0, 0, 0.38)' size={85} type="entypo"/>;
+            users = <Icon name ="users"  color='rgba(0, 0, 0, 0.38)' size={85} type="entypo" style={styles.departmentStyle}/>;
         }
 
 

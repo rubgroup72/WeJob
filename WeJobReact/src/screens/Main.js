@@ -271,7 +271,17 @@ export default class Main extends React.Component{
     }
     //פוקנציה שמופעלת כאשר תהליך ההתחברות עם כל אופציית התחברות הסתיים
     loginFinished = (loginProvider, student) => {
-        this.setState({ 
+        AsyncStorage.setItem(Global.ASYNC_STORAGE_STUDEMT, JSON.stringify(student));
+        AsyncStorage.setItem(Global.USER_EMAIL, student.Email);
+        AsyncStorage.setItem(Global.IS_USER_LOGGED_IN, "true");
+        
+        Answers.logLogin(student.Email, true);
+  
+         const httpClient = axios.create();
+         httpClient.defaults.timeout = 15000;
+         httpClient.get(Global.BASE_URL + "AppRegisterDeviceIDController?studentId=" + student.StudentId + "&register=1&fcmToken=" + this.state.fcmToken);
+
+         this.setState({ 
             userLoggedOut: false, 
             loginWithFacebook: (loginProvider === 'facebook'),
             loginWithGoogle: (loginProvider === 'google'),
@@ -279,15 +289,6 @@ export default class Main extends React.Component{
             student: student,
             tryAutomaticLogin: 0,
          });
-         AsyncStorage.setItem(Global.ASYNC_STORAGE_STUDEMT, JSON.stringify(student));
-         AsyncStorage.setItem(Global.USER_EMAIL, student.Email);
-         AsyncStorage.setItem(Global.IS_USER_LOGGED_IN, "true");
-         
-         Answers.logLogin(student.Email, true);
-  
-         const httpClient = axios.create();
-         httpClient.defaults.timeout = 15000;
-         httpClient.get(Global.BASE_URL + "AppRegisterDeviceID?email=" + student.Email + "&fcmToken=" + this.state.fcmToken);
 
         this.props.navigation.setParams({ shouldShow: true, shouldShowTitle: !this.state.navigateToDepartment });
     }
@@ -323,7 +324,9 @@ export default class Main extends React.Component{
         }
         //אחרת תעביר לקרוסלת משרות
         //var string = this.state.student.email + ' ' + this.state.student.name;
-        return <JobsCarousel navigation={this.props.navigation} />;
+        this.props.navigation.navigate('JobsCarousel');
+        return null;
+        // return <JobsCarousel navigation={this.props.navigation} />;
     }
     
     render() {

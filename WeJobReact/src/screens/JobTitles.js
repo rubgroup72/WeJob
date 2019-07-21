@@ -127,7 +127,6 @@ handleNextButtonClicked = () => {
     )
     .then((response) => {
         this.setState({ loadingVisible: false });
-        alert ('GOOD JOB! May the odds be ever in your favor');
         this.props.navigation.navigate('Main');
     })
     .catch((error) => {

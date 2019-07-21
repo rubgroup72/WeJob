@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import colors from '../styles/colors';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ImageBackground, KeyboardAvoidingView, } from 'react-native';
 import SearchInput, { createFilter } from 'react-native-search-filter';
 import NextArrowButton from '../components/buttons/NextArrowButton';
@@ -8,6 +9,8 @@ import Global from '../global';
 import axios from 'axios';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import AsyncStorage from '@react-native-community/async-storage';
+import { DrawerActions } from 'react-navigation';
+
 
 //import Loader from '../components/Loader';
 
@@ -90,12 +93,16 @@ handleNextButtonClicked = () => {
     this.props.navigation.navigate('SubCategory');
 }
 
-
-  static navigationOptions = ({ navigation }) => {
-    const { state } = navigation
+static navigationOptions = ({navigation}) => {
     return {
-      headerTransparent: true,
-      headerTintColor: colors.white,
+        headerTransparent: true,
+        headerTintColor: colors.green01,
+        title: 'קטגוריות',
+        headerLeft: (
+            <TouchableOpacity style={styles.menu} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} >
+                <Icon name="bars" size={30} color= {colors.white} />
+            </TouchableOpacity>
+        ),
     }
   }
 
@@ -183,9 +190,7 @@ welcomeText: {
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 10
 },
-text: {
 
-},
 nextButton: {
     alignItems: 'center',
     // left: 20,

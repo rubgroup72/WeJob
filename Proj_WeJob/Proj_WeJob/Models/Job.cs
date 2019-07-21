@@ -96,6 +96,9 @@ namespace Proj_WeJob.Models.DAL
             //int num3 = dbs.Insert_JobInterst(this, num1);
             int num4 = dbs.Insert_JobLanguage(this, num1);
             int num5 = dbs.Insert_JobSubCategory(this, num1);
+
+            SendPushNotification(this, num1);
+
             return (num1 & num2 & num4 & num5);
             //return (num1 & num5);
         }
@@ -164,11 +167,11 @@ namespace Proj_WeJob.Models.DAL
                     continue;
                 }
                 mainJob.StudentJobStatus = studentJobStatus[job];
-                if (studentJobStatus[job] == JOB_STATUS_DELETE || studentJobStatus[job] == JOB_STATUS_SENT_CV || studentJobStatus[job] == JOB_STATUS_SAVED_AND_SENT_CV)
-                {
-                    retList.Remove(retList.First(i => i.JobNo == job));
-                    continue;
-                }
+                //if (studentJobStatus[job] == JOB_STATUS_DELETE || studentJobStatus[job] == JOB_STATUS_SENT_CV || studentJobStatus[job] == JOB_STATUS_SAVED_AND_SENT_CV)
+                //{
+                //    retList.Remove(retList.First(i => i.JobNo == job));
+                //    continue;
+                //}
                 if (studentJobStatus[job] == JOB_STATUS_SAVED)
                 {
                     retList.First(i => i.JobNo == job).IsSaved = true;
@@ -225,6 +228,33 @@ namespace Proj_WeJob.Models.DAL
             // TODO - send CV
 
             return "";
+        }
+
+        public void SendPushNotification(Job newJob, int jobId)
+        {
+            Student s = new Student();
+            var relevantStudentList = new List<String>();
+            foreach (Student student in s.GetListStudent())
+            {
+                var studentJobsList = GetListOfJobs(student.StudentId.ToString());
+                if (studentJobsList.Any(i => i.JobNo == jobId))
+                {
+                    relevantStudentList.Add(student.StudentId.ToString());
+                }
+            }
+
+            if (relevantStudentList.Count() > 0)
+            {
+                DBservices dbs = new DBservices();
+                var companiesList = dbs.GetListDistributor();
+                var companyName = companiesList.FirstOrDefault(i => i.CompanyNo == newJob.CompanyCompanyNo)?.NameCompany;
+                var title = "משרה חדשה";
+                var body = String.Format("{0} מחפשת {1}.. חשבנו שזה עשוי לעניין אותך", companyName, newJob.JobName);
+                foreach (var token in dbs.GetStudentDeviceId(relevantStudentList))
+                {
+                    PushNotification.SendPushNotification(title, body, token);
+                }
+            }
         }
 
     }

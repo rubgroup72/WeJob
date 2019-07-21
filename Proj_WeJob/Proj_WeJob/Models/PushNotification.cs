@@ -48,18 +48,12 @@ namespace Proj_WeJob.Models
                     using (Stream dataStreamResponse = tResponse.GetResponseStream())
                     {
                         if (dataStreamResponse != null) using (StreamReader tReader = new StreamReader(dataStreamResponse))
-                            {
-                                String sResponseFromServer = tReader.ReadToEnd();
-                            }
+                        {
+                            String sResponseFromServer = tReader.ReadToEnd();
+                        }
                     }
                 }
             }
-        }
-
-        // DELETE THIS FUNCTION !!
-        public static void SendPushNotification(string title, string body)
-        {
-            SendPushNotification(title, body, AppRegisterDeviceIDController.FCMToken);
         }
     }
 }
