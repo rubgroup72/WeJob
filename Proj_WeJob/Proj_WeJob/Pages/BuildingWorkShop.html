@@ -173,7 +173,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="#">מועמדים</a>
-                        <a class="dropdown-item" href="#">משרות</a>
+                        <a class="dropdown-item" href="#">ארכיון משרות</a>
                         <a class="dropdown-item" href="#">מחלקות</a>
                         <a class="dropdown-item" href="#">תחומי עניין</a>
                         <a class="dropdown-item" href="#">שפות</a>
@@ -187,7 +187,7 @@
                     <a class="nav-link " href="">דוחות</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">סדנאות</a>
+                    <a class="nav-link" href="ListOfWorkShop.html">סדנאות</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="ListOfJobDistributors.html">מעסיקים ומשרות</a>
@@ -196,14 +196,10 @@
                     <a class="nav-link" href="ListOfStudentAndGraduates.html">מועמדים</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="HomePage.html">דף הבית</a>
+                    <a class="nav-link" href="HomePage1.html">דף הבית</a>
                 </li>
 
             </ul>
-            <!--<form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>-->
         </div>
     </nav>
 
@@ -216,144 +212,144 @@
                     <a href="#" class="btn btn-light btn-lg " style="float:right">
                         <span class="glyphicon glyphicon-chevron-right"></span>
                     </a>
-                    <!--להמשיך מפה--> 
+                    <!--להמשיך מפה-->
                     <h2>עיצוב פוסטר לסדנה</h2>
                 </div>
 
             </div>
-      
-                            <div class="card-body col-xs-12">
-                                <form id="pForm" dir="rtl" class="was-validated">
-                                    <div class="row">
-                                        <div class="form-group  col-xs-12 col-md-6">
-                                            <label for="exampleFormControlInput1">כותרת</label>
-                                            <textarea class="form-control" rows="3" id="hed"></textarea>
-                                            <div class="row">
-                                                <div class="form-group col-xs-12 col-md-4">
-                                                    <label for="exampleFormControlInput2">צבע</label>
-                                                    <input type="color" class="form-control" id="ColorHeader" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">
-                                                </div>
-                                                <div class="form-group col-xs-12 col-md-4">
-                                                    <label for="exampleFormControlInput3">גודל גופן</label>
-                                                    <input type="number" class="form-control" id="fontSizeHed">
+
+            <div class="card-body col-xs-12">
+                <form id="pForm" dir="rtl" class="was-validated">
+                    <div class="row">
+                        <div class="form-group  col-xs-12 col-md-6">
+                            <label for="exampleFormControlInput1">כותרת</label>
+                            <textarea class="form-control" rows="3" id="hed"></textarea>
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-md-4">
+                                    <label for="exampleFormControlInput2">צבע</label>
+                                    <input type="color" class="form-control" id="ColorHeader" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">
+                                </div>
+                                <div class="form-group col-xs-12 col-md-4">
+                                    <label for="exampleFormControlInput3">גודל גופן</label>
+                                    <input type="number" class="form-control" id="fontSizeHed">
 
 
-                                                </div>
-                                                <div class="form-group col-xs-12 col-md-4">
-                                                    <label for="exampleFormControlInput4">גופן</label>
-                                                    <input class="form-control" id="fontFimailyHed" list="fontFimiliy">
-                                                    <datalist id="fontFimiliy">
-                                                        <option value="Calibri">
-                                                        <option value="Gisha">
-                                                        <option value="serif">
-                                                        <option value="sans-serif">
-                                                        <option value="Arial">
-                                                        <option value="Arial Narrow">
-                                                        <option value="Franklin Gothic Medium">
-                                                        <option value="Times New Roman">
-                                                        <option value="Times">
-                                                        <option value="Segoe UI">
-                                                        <option value="Tahoma">
-                                                        <option value="Geneva">
-                                                    </datalist>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group  col-xs-12 col-md-6">
-                                            <label for="exampleFormControlInput1">כותרת משנה</label>
-                                            <textarea class="form-control" rows="3" id="Subhed"></textarea>
-                                            <div class="row">
-                                                <div class="form-group col-xs-12 col-md-4">
-                                                    <label for="exampleFormControlInput2">צבע</label>
-                                                    <input type="color" class="form-control" id="ColorSubHed" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">
-                                                </div>
-                                                <div class="form-group col-xs-12 col-md-4">
-                                                    <label for="exampleFormControlInput3">גודל גופן</label>
-                                                    <input type="number" class="form-control" id="fontSizeSubHed">
+                                </div>
+                                <div class="form-group col-xs-12 col-md-4">
+                                    <label for="exampleFormControlInput4">גופן</label>
+                                    <input class="form-control" id="fontFimailyHed" list="fontFimiliy">
+                                    <datalist id="fontFimiliy">
+                                        <option value="Calibri">
+                                        <option value="Gisha">
+                                        <option value="serif">
+                                        <option value="sans-serif">
+                                        <option value="Arial">
+                                        <option value="Arial Narrow">
+                                        <option value="Franklin Gothic Medium">
+                                        <option value="Times New Roman">
+                                        <option value="Times">
+                                        <option value="Segoe UI">
+                                        <option value="Tahoma">
+                                        <option value="Geneva">
+                                    </datalist>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group  col-xs-12 col-md-6">
+                            <label for="exampleFormControlInput1">כותרת משנה</label>
+                            <textarea class="form-control" rows="3" id="Subhed"></textarea>
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-md-4">
+                                    <label for="exampleFormControlInput2">צבע</label>
+                                    <input type="color" class="form-control" id="ColorSubHed" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">
+                                </div>
+                                <div class="form-group col-xs-12 col-md-4">
+                                    <label for="exampleFormControlInput3">גודל גופן</label>
+                                    <input type="number" class="form-control" id="fontSizeSubHed">
 
-                                                </div>
-                                                <div class="form-group col-xs-12 col-md-4">
-                                                    <label for="exampleFormControlInput4">גופן</label>
-                                                    <input class="form-control" id="fontFimailySubHed" list="fontFimiliy">
+                                </div>
+                                <div class="form-group col-xs-12 col-md-4">
+                                    <label for="exampleFormControlInput4">גופן</label>
+                                    <input class="form-control" id="fontFimailySubHed" list="fontFimiliy">
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                                    <hr />
-                                    <div class="row">
-                                        <div class="form-group  col-xs-12 col-md-6">
-                                            <label for="exampleFormControlInput1">גוף ההודעה</label>
-                                            <textarea class="form-control" rows="3" id="body"></textarea>
-                                            <div class="row">
-                                                <div class="form-group col-xs-12 col-md-4">
-                                                    <label for="exampleFormControlInput2">צבע</label>
-                                                    <input type="color" class="form-control" id="ColorBody" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">
-                                                </div>
-                                                <div class="form-group col-xs-12 col-md-4">
-                                                    <label for="exampleFormControlInput3">גודל גופן</label>
-                                                    <input type="number" class="form-control" id="fontSizeBody">
+                    <hr />
+                    <div class="row">
+                        <div class="form-group  col-xs-12 col-md-6">
+                            <label for="exampleFormControlInput1">גוף ההודעה</label>
+                            <textarea class="form-control" rows="3" id="body"></textarea>
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-md-4">
+                                    <label for="exampleFormControlInput2">צבע</label>
+                                    <input type="color" class="form-control" id="ColorBody" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">
+                                </div>
+                                <div class="form-group col-xs-12 col-md-4">
+                                    <label for="exampleFormControlInput3">גודל גופן</label>
+                                    <input type="number" class="form-control" id="fontSizeBody">
 
-                                                </div>
-                                                <div class="form-group col-xs-12 col-md-4">
-                                                    <label for="exampleFormControlInput4">גופן</label>
-                                                    <input class="form-control" id="fontFimailyBody" list="fontFimiliy">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group  col-xs-12 col-md-6">
-                                            <label for="exampleFormControlInput1">תחתית ההודעה</label>
-                                            <textarea class="form-control" rows="3" id="DownPage"></textarea>
-                                            <div class="row">
-                                                <div class="form-group col-xs-12 col-md-4">
-                                                    <label for="exampleFormControlInput2">צבע</label>
-                                                    <input type="color" class="form-control" id="ColorDownPage" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">
-                                                </div>
-                                                <div class="form-group col-xs-12 col-md-4">
-                                                    <label for="exampleFormControlInput3">גודל גופן</label>
-                                                    <input type="number" class="form-control" id="fontSizeDownPage">
-                                                </div>
-                                                <div class="form-group col-xs-12 col-md-4">
-                                                    <label for="exampleFormControlInput4">גופן</label>
-                                                    <input class="form-control" id="fontFimailyDownPage" list="fontFimiliy">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr />
-                                    <div class=" row">
-                                    <div class="col-md-6">
-                                    <label for="exampleFormControlInput1">צבע רקע</label>
-                                    <input type="color" class="form-control" id="backgroundC" onchange="        clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">
-                                    </div>
-                                    <div class="col-md-6">
-                                    <label for="exampleFormControlInput1">תמונות לוגו</label>
-                                    <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="imgFile" accept="image/gif, image/jpeg, image/png" onchange="        readURL(this);">
-                                    <label class="custom-file-label" for="inputGroupFile01">בחר תמונה</label>
-                                    </div>
-                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 col-md-4">
+                                    <label for="exampleFormControlInput4">גופן</label>
+                                    <input class="form-control" id="fontFimailyBody" list="fontFimiliy">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group  col-xs-12 col-md-6">
+                            <label for="exampleFormControlInput1">תחתית ההודעה</label>
+                            <textarea class="form-control" rows="3" id="DownPage"></textarea>
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-md-4">
+                                    <label for="exampleFormControlInput2">צבע</label>
+                                    <input type="color" class="form-control" id="ColorDownPage" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">
+                                </div>
+                                <div class="form-group col-xs-12 col-md-4">
+                                    <label for="exampleFormControlInput3">גודל גופן</label>
+                                    <input type="number" class="form-control" id="fontSizeDownPage">
+                                </div>
+                                <div class="form-group col-xs-12 col-md-4">
+                                    <label for="exampleFormControlInput4">גופן</label>
+                                    <input class="form-control" id="fontFimailyDownPage" list="fontFimiliy">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class=" row">
+                        <div class="col-md-6">
+                            <label for="exampleFormControlInput1">צבע רקע</label>
+                            <input type="color" class="form-control" id="backgroundC" onchange="        clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="exampleFormControlInput1">תמונות לוגו</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="imgFile" accept="image/gif, image/jpeg, image/png" onchange="        readURL(this);">
+                                <label class="custom-file-label" for="inputGroupFile01">בחר תמונה</label>
+                            </div>
+                        </div>
 
-                                    </div>
-                                    <hr />
-                                    <div class="col-xs-12" id="id=" html-content-holder divViewCom" style="border-style: solid;background-color:white; height:800px">
-                                    <img id="blah" src="#" alt="your image" style="width:60px;height:60px; float:left;" />
-                                    <div id="Vhed"></div>
-                                    <div id="VSubhed"></div>
-                                    <div id="Vbody"></div>
-                                    <div id="VdownPage"></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-auto my-1">
-                                        <input id="btn-Preview-Image" type="button" value="Preview" />
-                                        <!--<button type="submit" class="btn btn-primary" id="view">שמור פוסטר</button>-->
-                                        <a id="btn-Convert-Html2Image" href="#">Download</a>
-                                        </div>
-                                        </div>
-                                    </div>
+                    </div>
+                    <hr />
+                    <div class="col-xs-12" id="id=" html-content-holder divViewCom" style="border-style: solid;background-color:white; height:800px">
+                        <img id="blah" src="#" alt="your image" style="width:60px;height:60px; float:left;" />
+                        <div id="Vhed"></div>
+                        <div id="VSubhed"></div>
+                        <div id="Vbody"></div>
+                        <div id="VdownPage"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto my-1">
+                            <input id="btn-Preview-Image" type="button" value="Preview" />
+                            <!--<button type="submit" class="btn btn-primary" id="view">שמור פוסטר</button>-->
+                            <a id="btn-Convert-Html2Image" href="#">Download</a>
+                        </div>
+                    </div>
+            </div>
 
-                                </form>
+            </form>
         </div>
 
         <div class="card-footer text-muted">

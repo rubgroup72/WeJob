@@ -61,34 +61,11 @@
 
         }
 
-        //Job = { // Note that the name of the fields must be identical to the names of the properties of the object in the server
-        //    CompanyCompanyNo: localStorage.getItem("CompanyNo"),
-        //    JobName: $("#JobName").val(),
-        //    JobDescription: $("#JobDescription").val(),
-        //    Requirements: $("#Requirements").val(),
-        //    MailForCV: $("#MailForCV").val(),
-        //    OpenDate: Date.now(),
-        //    ToDate: Date.now(),
-        //    Link: $("#Link").val(),
-        //    Location: $("#location").val(),
-        //    Status: $("#status").val(),
-        //    ArrayIntrests: $("#exampleFormControlSelect2").val(),
-        //    ArrayLanguage: $("#exampleFormControlSelect3").val(),
-        //    ArraySkill: $("#exampleFormControlSelect4").val(),
-        //}
-        ////פקודת אגקס להכנסת משרה
-        //ajaxCall("POST", "../api/JobNew", JSON.stringify(Job), success, error);
-
         function f1() {
             SaveJob();
             return false; // the return false will prevent the form from being submitted
             // hence the page will not reload
         }
-
-
-
-        //סוף פונקציות להכנסת משרה
-
         // this function is activated in case of a success of intersts
         //function successGetInterst(Interstdata) {
         //    interst = Interstdata;
@@ -136,6 +113,15 @@
             }
             catch (err) {
                 alert(err);
+            }
+        }
+        function maxLengthCheck(object,who) {
+            str = object.length;
+            if (who == 1) {
+                document.getElementById("maxChar1").innerHTML = "255/" + str;
+            }
+            else {
+                document.getElementById("maxChar2").innerHTML = "255/" + str;
             }
         }
         function getSuccess(dataJob) {
@@ -253,13 +239,15 @@
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="exampleFormControlTextarea1">תיאור משרה</label>
+                        <label id="maxChar1" style="color:#ff0000; float:left; background-color:#F2F2F0;  font-weight: bold; font-family:sans-serif;font-size:15px;"></label>
                         <small><span class="glyphicon glyphicon-starup small" style="color:red"></span></small>
-                        <textarea class="form-control" id="JobDescription" rows="3" required></textarea>
+                        <textarea class="form-control" id="JobDescription" rows="4" oninput="maxLengthCheck(this.value,1)" maxlength="255" required></textarea>
                     </div>
                     <div class="form-group  col-xs-12">
                         <label for="exampleFormControlTextarea1">דרישות תפקיד</label>
+                        <label id="maxChar2" style="color:#ff0000; float:left; background-color:#F2F2F0;  font-weight: bold; font-family:sans-serif;font-size:15px;"></label>
                         <small><span class="glyphicon glyphicon-starup small" style="color:red"></span></small>
-                        <textarea class="form-control" id="Requirements" rows="3" required></textarea>
+                        <textarea class="form-control" id="Requirements" rows="4" oninput="maxLengthCheck(this.value,2)" maxlength="255" required></textarea>
                     </div>
                     <div class="row">
                         <div class="form-group  col-xs-12 col-md-4">
