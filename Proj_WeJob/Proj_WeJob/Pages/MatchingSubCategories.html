@@ -29,8 +29,7 @@
             ajaxCall("Get", "../api/Categorys", "", successGetCategory, error);
             
         });
-
-      
+  
         // this function is activated in case of a success of category
         function successGetCategory(CategoryData) {
             Category = CategoryData;
@@ -54,15 +53,21 @@
             ajaxCall("GET", uri, "", successGetSubCategory, error);
         }
         //פונקציה שמציגה את התת קטגוריה שנכנסה לאינפוט חיפוש
-        function getSubCatFromSearch(Search) {   
-            for (var i = 11; i < SubCategory.length; i++) {
+        function getSubCatFromSearch(Search) {  
+            for (var i = 15; i < SubCategory.length; i++) {
                 if (SubCategory[i].TagName == Search) {
                     str = '<hr>';
-                    str += '<input type="checkbox" name="fancy-checkbox-primary-custom-icons" id="fancy-checkbox-primary-custom-icons" value="' + SubCategory[i].SubCategoryNo + '" autocomplete="off" onchange=changeListSubCat(this,' + SubCategory[i].SubCategoryNo+ ')>';
+                    str += '<input type="checkbox" name="fancy-checkbox-primary-custom-icons" id="'+SubCategory[i].SubCategoryNo+'" value="' + SubCategory[i].SubCategoryNo + '" autocomplete="off" onchange=changeListSubCat(this,' + SubCategory[i].SubCategoryNo+ ')>';
                 str += '<label for="fancy-checkbox-primary-custom-icons" class="[ btn btn-default active ]">' +Search + '</label>';
                 document.getElementById("subcategory").innerHTML += str;
                 }
             }
+            Sub = localStorage.getItem("ArraySubCategory");
+            arraySub = Sub.split(",");
+            for (var i = 0; i < arraySub.length; i++) {
+                   document.getElementById(arraySub[i]).checked = true;  
+            }
+        
     }
         // this function is activated in case of a success of SubCategory
         function successGetSubCategory(SubCategoryData) {
@@ -76,22 +81,20 @@
                 //str += '<input type="text" class="form-control" id="search" onchange=getSubCatFromSearch(this.text,' + SubCategoryData + ')/>';
                 str += '<input type="text" class="form-control" name="srch" id="search" list="datalist1"  onchange=getSubCatFromSearch(this.value)>';
                 str += '<datalist id="datalist1">';
-                for (var i = 0; i < SubCategoryData.length; i++) {
+                for (var i = 15; i < SubCategoryData.length; i++) {
                     str += '<option data-id="'+SubCategory[i].SubCategoryNo+'" value="'+SubCategory[i].TagName+'" >';
             }
                 str += '</datalist>';
                 str += '<hr>';
-                for (var i = 0; i < 15; i++) {
-                    if (j == 3) {
+                for (var i = 0; i <15; i++) {
+                    if (j ==3) {
                         str += '<hr>';
                         j = 0;
                     }
-                    else {
-                        str += '<input type="checkbox" name="fancy-checkbox-primary-custom-icons" id="fancy-checkbox-primary-custom-icons" value="' + SubCategory[i].SubCategoryNo + '" autocomplete="off" onchange=changeListSubCat(this,' + SubCategory[i].SubCategoryNo + ')>';
+                        str += '<input type="checkbox" name="fancy-checkbox-primary-custom-icons" id="'+SubCategory[i].SubCategoryNo+'" value="' + SubCategory[i].SubCategoryNo + '" autocomplete="off" onchange=changeListSubCat(this,' + SubCategory[i].SubCategoryNo + ')>';
                         str += '<label for="fancy-checkbox-primary-custom-icons" class="[ btn btn-default active ]">' + SubCategory[i].TagName + '</label>';
-                        j++;
-                    }
-                }
+                        j++;        
+                } 
                 str += '</center>';
                 document.getElementById("subcategory").innerHTML = str;
             }
@@ -125,17 +128,6 @@
                 localStorage.setItem('ArraySubCategory', arrayNewSubCat.toString());
             }
         }
-
-        function error(err) {
-            err = JSON.parse(err.responseText);
-            Swal.fire({
-                type: 'error',
-                title: 'שגיאה ',
-                text: 'משהו לא עובד',
-                footer: err.ExceptionMessage
-            });
-        }
-
 
         function AddJob() {
             Job = { // Note that the name of the fields must be identical to the names of the properties of the object in the server
@@ -173,7 +165,16 @@
             });
 
         }
-
+        
+        function error(err) {
+            err = JSON.parse(err.responseText);
+            Swal.fire({
+                type: 'error',
+                title: 'שגיאה ',
+                text: 'משהו לא עובד',
+                footer: err.ExceptionMessage
+            });
+        }
 
     </script>
 
@@ -196,7 +197,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="#">מועמדים</a>
-                        <a class="dropdown-item" href="#">משרות</a>
+                        <a class="dropdown-item" href="#">ארכיון משרות</a>
                         <a class="dropdown-item" href="#">מחלקות</a>
                         <a class="dropdown-item" href="#">תחומי עניין</a>
                         <a class="dropdown-item" href="#">שפות</a>
@@ -213,13 +214,13 @@
                     <a class="nav-link" href="ListOfWorkShop.html">סדנאות</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="ListOfDistributors.html">מעסיקים ומשרות</a>
+                    <a class="nav-link" href="ListOfJobDistributors.html">מעסיקים ומשרות</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">מועמדים</a>
+                    <a class="nav-link" href="ListOfStudentAndGraduates.html">מועמדים</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">דף הבית</a>
+                    <a class="nav-link" href="HomePage1.html">דף הבית</a>
                 </li>
 
             </ul>
