@@ -95,13 +95,11 @@ namespace Proj_WeJob.Models.DAL
             int num2 = dbs.Insert_JobSkill(this, num1);
             //int num3 = dbs.Insert_JobInterst(this, num1);
             int num4 = dbs.Insert_JobLanguage(this, num1);
-            int num5 = dbs.Insert_JobSubCategory(this, num1);
-
-            SendPushNotification(this, num1);
-
-            return (num1 & num2 & num4 & num5);
-            //return (num1 & num5);
+            int num5 = dbs.Insert_JobSubCategory(this, num1); 
+            SendPushNotification(this, num1);          
+             return num1 & num2 & num4 & num5);
         }
+        
         public int updateStatusJob()
         {
             DBservices dbs = new DBservices();
