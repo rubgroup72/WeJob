@@ -61,5 +61,12 @@ namespace Proj_WeJob.Controllers
             Job d = new Job();
             return d.GetPopularJobs();
         }
+        [HttpGet]
+        [Route("api/reportJobs")]
+        public List<Job> GEt()
+        {
+            Job j = new Job();
+            return j.GetreportJobs();
+        }
     }
 }

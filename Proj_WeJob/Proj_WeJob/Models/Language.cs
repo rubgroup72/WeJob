@@ -32,5 +32,10 @@ namespace Proj_WeJob.Models.DAL
             DBservices dbs = new DBservices();
             return dbs.GetListLanguage("DBConnectionString");
         }
+        public List<Language> GetListLangByIdStudent(string StudentId)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetStudentLanguages(int.Parse(StudentId));
+        }
     }
 }

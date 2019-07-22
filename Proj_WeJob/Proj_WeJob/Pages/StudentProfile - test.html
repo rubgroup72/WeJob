@@ -18,9 +18,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
     <link href="../css/MyStyle2.css" rel="stylesheet" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>-->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <!--<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>-->
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
@@ -33,18 +33,70 @@
             localStorage.removeItem('whatFun');
             //document.getElementById("cotart").innerHTML = "שם סטודנט " + localStorage.getItem("FirstName") + localStorage.getItem("LastName");
             // once the document is ready we fetch a student from the server
-            uri = "../api/StudentProfile?StudentId=" + localStorage.getItem("StudentId");
-            //console.log(uri);
-            ajaxCall("GET", uri, "", getSuccess, error);
+            id=localStorage.getItem("StudentId")
+            uri = "../api/StudentProfile?StudentId=" + id;
+            ajaxCall("GET", uri, "", getSuccessDetails, error);
+             ajaxCall("GET","../api/lang?StudentId=" + id , "", getSuccessLang, error);
         });
-        function getSuccess(studentdata) {
+        function getSuccessDetails(studentdata) {
             data = studentdata;
             console.log(data);
-            str = '<h5>' + data.FirstName + " " + data.LastName + '</h5>';
-            str += '<h6>' + data.CellPhone + ' </h6>';
-            str += '<h6>' + data.Email + ' </h6>';
-            str += '<h6>' + data.Gender + ' </h6>';
-            document.getElementById("head").innerHTML += str;
+            str ='<div class="row">';
+            str+='<div class="col-md-6">';
+            str += '<label>' + data[0].FirstName + " " + data[0].LastName + '</label>';
+            str += '</div>';
+            str += '<div class="col-md-6">';
+            str += '<p>שם מלא</p>';
+            str += '</div>';
+            str += '</div>';
+            str += '<div class="row">';
+            str += '<div class="col-md-6">';
+            str += '<label>'+data[0].CellPhone+'</label>';
+            str += '</div>';
+            str += '<div class="col-md-6">';
+            str += '<p>טלפון</p>';
+            str += '</div>';
+            str += '</div>';
+            str += '<div class="row">';
+            str += '<div class="col-md-6">';
+            str += '<label>'+ data[0].Email +'</label>';
+            str += '</div>';
+            str += '<div class="col-md-6">';
+            str += '<p>דואל</p>';
+            str += '</div>';
+            str += '</div>';
+            str += '<div class="row">';
+            str += '<div class="col-md-6">';
+            str += '<label>'+ data[0].Gender+'</label>';
+            str += '</div>';
+            str += '<div class="col-md-6">';
+            str += '<p>מגדר</p>';
+            str += '</div>';
+            str += '</div>';
+            document.getElementById("details").innerHTML= str;
+        }
+        function getSuccessLang(langugedata) {
+            dataLang = langugedata;
+            str ='<div class="row">';
+            str += '<div class="col-md-4">';
+            if (dataLang[0].Degree == 0) {
+                str += '<label>רמה נמוכה</label>';
+            }
+            else if (dataLang[0].Degree == 1) {
+                str += '<label>רמה בינונית</label>';
+            }
+            else {
+                str += '<label>רמה גבוהה</label>';
+            }
+            str += '</div>';
+            str += '<div class="col-md-4">';
+            str += '<label>' + dataLang[0].Name + '</label>';
+            str += '</div>';
+              str += '<div class="col-md-4">';
+            str += '<p>שפה 1</p>';
+            str += '</div>';
+            str += '</div>';
+               document.getElementById("lang").innerHTML= str;
         }
         function error(err) {
             err = JSON.parse(err.responseText);
@@ -85,7 +137,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="">דוחות</a>
+                    <a class="nav-link " href="report1.html">דוחות</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="ListOfWorkShop.html">סדנאות</a>
@@ -139,50 +191,19 @@
                 <div class="col-md-8">
                     <div class="tab-content profile-tab" id="myTabContent">
                         <!--טאב ראשון- פרטים אישיים-->
-                        <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="home-tab">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label></label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>שם מלא</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label></label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>טלפון</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label></label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>דואל</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label></label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>מגדר</p>
-                                </div>
-                            </div>
+                        <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="home-tab" style="margin-left:80px;margin-top:-80px">
+                          
                         </div>
                         <!--טאב שני- שפות-->
-                        <div class="tab-pane fade" id="lang" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade" id="lang" role="tabpanel" aria-labelledby="profile-tab" style="margin-left:80px;margin-top:-80px">
 
                         </div>
                         <!--טאב שלישי- כישורים -->
-                        <div class="tab-pane fade" id="skils" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade" id="skils" role="tabpanel" aria-labelledby="profile-tab" style="margin-left:80px;margin-top:-80px">
 
                         </div>
                         <!--טאב רביעי-תחומי עניין-->
-                        <div class="tab-pane fade" id="interst" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade" id="interst" role="tabpanel" aria-labelledby="profile-tab" style="margin-left:80px;margin-top:-80px">
 
                         </div>
                     </div>

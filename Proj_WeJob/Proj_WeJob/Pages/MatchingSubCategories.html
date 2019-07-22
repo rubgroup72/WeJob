@@ -148,14 +148,14 @@
                 ArraySubCategory: localStorage.getItem("ArraySubCategory").split(','),
             }
             //פקודת אגקס להכנסת משרה
-            ajaxCall("POST", "../api/JobNew", JSON.stringify(Job), success, error);
+            ajaxCall("POST", "../api/JobNew", JSON.stringify(Job), successInsert, error);
         }
         function f1() {
             AddJob();
             return false; // the return false will prevent the form from being submitted
             // hence the page will not reload
         }
-        function success() {
+        function successInsert() {
             Swal.fire({
                 position: 'top-end',
                 type: 'success',
@@ -208,7 +208,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="">דוחות</a>
+                    <a class="nav-link " href="report1.html">דוחות</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="ListOfWorkShop.html">סדנאות</a>

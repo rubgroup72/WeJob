@@ -1,8 +1,8 @@
-﻿
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>List Of WorkShop</title>
+    <meta charset="utf-8" />
+    <title>report1</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1, shrink-to-fit=no">
 
@@ -22,100 +22,87 @@
     <!--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
-
-    <script>$(document).ready(function () {
+    
+    <script>
+        $(document).ready(function () {
             localStorage.clear();
-            ajaxCall("GET", "../api/WorkShops", "", success, error);
+            ajaxCall("GEt", "../api/reportJobs", "", success, error);
         });
         // this function is activated in case of a success
-        function success(WorkShopsdata) {
+        function success(jobsdata) {
             try {
-                tbl = $('#WorkShopTable').DataTable({
+                tbl = $('#amountSendToJob').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"
                     },
-                    data: WorkShopsdata,
-                    "autoWidth": false,
-                    pageLength: 4,
+                    data: jobsdata,
+                    //"autoWidth": false,
+                    //pageLength: 4,
                     dom: "Bfrtip",
+                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                     columns: [
                         {
-                            "className": 'build',
-                            "orderable": false,
-                            "data": null,
-                            "defaultContent": '',
-                            render: function (data, type, row, meta) {
-                                let dataDis = "data-DisId='" + row.WorkShopCode + "'";
-                                buildBtn = "<span class='viewBtn btn btn-info fa fa-building" + dataDis + "> עיצוב פוסטר</span>";
-                                return buildBtn;
-                            }
-                        },
-                           {
-                            "className": 'WorkShopCode',
-                            data: "WorkShopCode",
-                            title: "מספר סדנא"
+                            "className": 'JobNo',
+                            data: "JobNo",
+                            title: 'קוד משרה'
                         },
                         {
-                            "className": 'WorkShopName',
-                            data: "WorkShopName",
-                            title: "שם סדנא"
+                            "className": 'JobName',
+                            data: "JobName",
+                            title: 'שם משרה'
                         },
                         {
-                            "className": 'Date',
-                            data: "Date",
-                            title: "תאריך"
+                            "className": 'CompanyName',
+                            data: "CompanyName",
+                            title: 'שם חברה'
                         },
                         {
-                            "className": 'MaxParticipants',
-                            data: "MaxParticipants",
-                            title: "מקסימום מקומות"
+                            "className": 'AmountSend',
+                            data: "AmountSend",
+                            title: "כמות שולחים"
                         },
-                        {
-                            "className": 'MinParticipants',
-                            data: "MinParticipants",
-                            title: 'מינימום פתיחת סדנא'
-                        },
-                        {
-                            "className": 'NoOfRegisters',
-                            data: "NoOfRegisters",
-                            title: 'כמות רשומים'
-                        }
+
                     ]
                 });
-                buttonEvents();
             }
 
             catch (err) {
                 alert(err);
             }
         }
-           function error(err) {
+        function error(err) {
             err = JSON.parse(err.responseText);
-              Swal.fire({
-                  type: 'error',
-                  title: 'שגיאה ',
-                  text: 'משהו לא עובד',
-                  footer:  err.ExceptionMessage
-                })
+            Swal.fire({
+                type: 'error',
+                title: 'שגיאה ',
+                text: 'משהו לא עובד',
+                footer: err.ExceptionMessage
+            })
             //swal("Error!", err.ExceptionMessage, "error");
         }
+                                            //function exportF(elem) {
+                                            //  var table = document.getElementById("amountSendToJob");
+                                            //  var html = table.outerHTML;
+                                            //  var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url
+                                            //  elem.setAttribute("href", url);
+                                            //  elem.setAttribute("download", "export.xls"); // Choose the file name
+                                            //  return false;
+                                            //}
 
-        // wire all the buttons to their functions
-        function buttonEvents() {
-            // Add event listener for opening and closing details
-            $("#WorkShopTable").on('click', 'td.build', function () {
-                 var tr = $(this).closest('tr');
-                localStorage.setItem("WorkShopCode", tr[0].getElementsByClassName("WorkShopCode")[0].innerHTML);
-                window.location.href = 'BuildingWorkshop.html';
-            });
 
-        }</script>
+/**/</script>
 </head>
-
-
 <body>
-    <!--תפריט-->
     <nav class="navbar fixed-top navbar-expand-lg navbar-light " style="background-color:#F2F2F0;">
         <a class="navbar-brand" href="#">  <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,7 +117,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="#">מועמדים</a>
-                        <a class="dropdown-item" href="#">ארכיון משרות</a>
+                        <a class="dropdown-item" href="#">משרות</a>
                         <a class="dropdown-item" href="#">מחלקות</a>
                         <a class="dropdown-item" href="#">תחומי עניין</a>
                         <a class="dropdown-item" href="#">שפות</a>
@@ -144,7 +131,7 @@
                     <a class="nav-link " href="report1.html">דוחות</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="ListOfWorkShop.html">סדנאות</a>
+                    <a class="nav-link" href="">סדנאות</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="ListOfJobDistributors.html">מעסיקים ומשרות</a>
@@ -153,20 +140,19 @@
                     <a class="nav-link" href="ListOfStudentAndGraduates.html">מועמדים</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="HomePage1.html">דף הבית</a>
+                    <a class="nav-link" href="HomePage.html">דף הבית</a>
                 </li>
 
             </ul>
+
         </div>
     </nav>
-
     <div class="container" dir="rtl">
 
         <div class="card text-center">
             <div class="card-header" style="color:#072247">
                 <div class="col-xs-12">
-                    <a href="#" class="btn btn-info" style="float:left"><span class="glyphicon glyphicon-plus"></span> הוספת סדנא חדשה</a>
-                    <h2>סדנאות</h2>
+                    <h2>דוח 1- כמות המועמדים ששלחו קורות חיים למשרה</h2>
                 </div>
             </div>
 
@@ -174,16 +160,14 @@
 
                 <form id="pForm">
                     <div class="table-responsive">
-                        <table id="WorkShopTable" class="display nowrap" style="width:100%">
+                        <table id="amountSendToJob" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <td>WorkShopCode</td>
-                                    <td>WorkShopName</td>
-                                    <td>Date</td>
-                                    <td>MaxParticipants</td>
-                                    <td>MinParticipants</td>
-                                    <td>NoOfRegisters</td>
+                                   
+                                    <td>JobNo</td>
+                                    <td>JobName</td>
+                                    <td>CompanyName</td>
+                                    <td>CountSendCsv</td>
                                 </tr>
                             </thead>
                         </table>
@@ -197,7 +181,5 @@
         </div>
 
     </div>
-
-
 </body>
 </html>

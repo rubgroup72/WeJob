@@ -139,7 +139,6 @@ namespace Proj_WeJob.Models.DAL
             return command;
         }
         ///++++++++++סיום הוספת משתמש+++++++++++
-
         ///+++++++++הוספת משרה++++++++++++++++++
         public int InsertJob(Job job)
         {
@@ -182,8 +181,8 @@ namespace Proj_WeJob.Models.DAL
             String command;
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
-            sb.AppendFormat("Values('{0}','{1}','{2}',{3},'{4}','{5}','{6}','{7}','{8}','{9}',{10})", job.JobName, job.JobDescription, job.Requirements, Convert.ToInt32(job.CompanyCompanyNo), job.Location,job.MailForCV ,job.OpenDate, job.ToDate,job.Status,job.Link,job.CategoryNo);
-            String prefix = "INSERT INTO Job " + "(JobName,JobDescription,Requirements,CompanyCompanyNo,Location,MailForCV,OpenDate,ToDate,JobStatusStatusName,Link,CategoryNo) ";
+            sb.AppendFormat("Values('{0}','{1}','{2}',{3},'{4}','{5}','{6}','{7}','{8}','{9}',{10},{11})", job.JobName, job.JobDescription, job.Requirements, Convert.ToInt32(job.CompanyCompanyNo), job.Location,job.MailForCV ,job.OpenDate, job.ToDate,job.Status,job.Link,job.CategoryNo,0);
+            String prefix = "INSERT INTO Job " + "(JobName,JobDescription,Requirements,CompanyCompanyNo,Location,MailForCV,OpenDate,ToDate,JobStatusStatusName,Link,CategoryNo,AmountSend) ";
             command = prefix + sb.ToString();
             command += "; SELECT SCOPE_IDENTITY()";
             return command;
@@ -294,7 +293,6 @@ namespace Proj_WeJob.Models.DAL
             return command;
         }
         //++++++++++++סיום הוספת שפות למשרה +++++++++
-
         ///+++++++++הוספת כישורים למשרה++++++++++
         public int Insert_JobSkill(Job job, int id)
         {
@@ -346,7 +344,6 @@ namespace Proj_WeJob.Models.DAL
             return command;
         }
         //++++++++++++סיום הוספת שפות למשרה +++++++++
-
         //הוספת תתי קטגוריות למשרה
         public int Insert_JobSubCategory(Job job, int id)
         {
@@ -433,7 +430,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //פונקציה שמחזירה רשימת סדנאות
         public List<WorkShop> GetListWorkShop(string conString)
         {
@@ -475,7 +471,49 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+        // פונקציה שמחזירה רשימה של שמות משרות עם כמות המועמדים ששלחו למשרה קורות חיים עם שם החברה
+        public List<Job> GetreportJobs(string conString)
+        {
+            SqlConnection con = null;
+            List<Job> ld = new List<Job>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+                String selectSTR = "SELECT * FROM Job left join Company on Job.CompanyCompanyNo=Company.CompanyNo";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Job d = new Job
+                    {
+                        JobNo= Convert.ToInt32(dr["JobNo"]),
+                        JobName = Convert.ToString(dr["JobName"]),
+                        AmountSend = Convert.ToInt32(dr["AmountSend"]),
+                        CompanyName = Convert.ToString(dr["CompanyName"]),
+                    };
+                    if (Convert.ToString(d.AmountSend) == "NULL")
+                    {
+                        d.AmountSend = 0;
+                    }
+                    ld.Add(d);
+                }
 
+                return ld;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
         //פונקציה שמחזירה רשימת סטודנטים קיימים לפי מחלקה ותת מחלקה
         public List<Student> GetListStudentFilter(string conString, string codeDepartment, string SubDepartmentId)
         {
@@ -517,7 +555,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         public List<Distributor> GetListDistributor()
         {
             return GetListDistributor(connectionString);
@@ -563,7 +600,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-     
         //+++++פונקציה שמחזיה רשימה של סטודנטים ללא סינון
         public List<Student> GetListStudent(string conString)
         {
@@ -596,7 +632,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //++++ פונקציית התחברות מאפליקציה לבסיס הנתונים
         public Student AppLogin(String email, String password)
         {
@@ -627,7 +662,6 @@ namespace Proj_WeJob.Models.DAL
             }
             return null;
         }
-
         //פונקציית הרשמה של סטודנט חדש
         public Student Register(String email, String firstName, String lastName, String phoneNumber, String password, String gender)
         {
@@ -666,7 +700,6 @@ namespace Proj_WeJob.Models.DAL
             }
             return AppLogin(email, password);
         }
-
         //פונקציה שמחזירה רשימה של שפות 
         public List<Language> GetListLanguage(string conString)
         {
@@ -706,7 +739,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //פונקציה שמחזירה רשימה של תחומי עניין 
         public List<Interst> GetListInterst(string conString)
         {
@@ -746,7 +778,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //פונקציה שמחזירה רשימה של כישורים 
         public List<Skill> GetListSkill(string conString)
         {
@@ -830,7 +861,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //פונקציה שמחזירה את פרטי סטודנט ספציפי    
         public List<Student> GetListStudent(string conString, string StudentId, bool includeCV = false)
         {
@@ -866,9 +896,7 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //פונקציה שמחזירה את פרטי משרה מסוימת
-
         public Job GetJob(string conString, string JobNo)
         {
             SqlConnection con = null;
@@ -918,7 +946,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //פונקציה שמעדכנת פרטי מפיץ לאחר שינוי
         public int UpdateDistributer(Distributor distributor)
         {
@@ -1001,7 +1028,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //מחיקת סטודנט
         public int deleteStudent(string StudentId)
         {
@@ -1038,7 +1064,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //התחברות עם פייסבוק
         public Student FacebookLogin(String email, String firstName, String lastName, String password)
         {
@@ -1049,7 +1074,6 @@ namespace Proj_WeJob.Models.DAL
             password = "";
             return Register(email, firstName, lastName, "", password, "");
         }
-
         //עדכון פרטי סטודנט בהינתן אימייל
         public int UpdateStudentDataByEmail(String email, Student s)
         {
@@ -1110,7 +1134,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //פונקציה שמביאה את כל המחלקות
         public List<Department> AllDepartments()
         {
@@ -1154,7 +1177,6 @@ namespace Proj_WeJob.Models.DAL
             }
 
         }
-
         //פונקציה שמביאה את כל התתי המחלקות
         public List<SubDepartment> AllSubDepartments(int DepartmentCode)
         {
@@ -1198,7 +1220,6 @@ namespace Proj_WeJob.Models.DAL
             }
 
         }
-
         //עדכון מחלקה ותת מחלקה לסטודנט
         public int UpdateStudentDeapartmentAndSubDepartment(String email, int departmentCode, int subDepartmentCode)
         {
@@ -1229,7 +1250,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //פונקציה שמביאה את השפות של הסטודנט
         public List<Language> GetStudentLanguages(int studentId)
         {
@@ -1271,14 +1291,12 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //פונקציית עדכון שפות סטודנט
         public void UpdateStudentLanguages(int studentId, List<Language> languages)
         {
             RemoveStudentLanguages(studentId);
             AddStudentLanguages(studentId, languages);
         }
-
         //  פונקציות עזר לשפות
         private void RemoveStudentLanguages(int studentId)
         {
@@ -1355,7 +1373,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //פונקציית עדכון תגיות סטודנט
         public void UpdateStudentSubCategories(int studentId, List<Tags> tags)
         {
@@ -1987,7 +2004,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         public int GetAmountJobsBad(string conString)
         {
             SqlConnection con = null;
@@ -2021,7 +2037,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         public List<Job> GetPopularJobs(string conString)
         {
             SqlConnection con = null;
@@ -2068,7 +2083,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //פונקציית עדכון תגיות סטודנט
         public void UpdateStudentTempJobs(int studentId, List<Job> jobTitles)
         {
@@ -2151,7 +2165,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //פונקציית עדכון קורות חיים בדטא בייס
         public int UpdateCV(int StudentId, string CVFile, string CVName)
         {
@@ -2182,7 +2195,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //הבאת משרות רלוונטיות לפי תגיות נבחרות ושמות של משרות
         public List<Job> GetListOfJobs(string studentId)
         {
@@ -2258,7 +2270,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //פוקנציה שמחזירה את התגיות שנבחרו ע"י סטודנט כדי לסמן אותן באפליקציה
         public List<int> GetSelectedSubCategories(int studentId)
         {
@@ -2294,7 +2305,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         //פונקציה שמחזירה את הקטגוריה שנבחרה ע"י הסטודנט כדי לסמן באפליקציה
         public int GetStudentSelectedCategory(int subCategory)
         {
@@ -2329,7 +2339,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         public void AddNewStudentJobStatus(string studentId, List<int> jobNoList)
         {
             SqlConnection con = null;
@@ -2425,7 +2434,6 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
         public void RegisterStudentDevice(string studentId, bool register, string fcmToken)
         {
             lock (locker)

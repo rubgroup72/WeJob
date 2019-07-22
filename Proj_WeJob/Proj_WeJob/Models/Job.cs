@@ -145,6 +145,11 @@ namespace Proj_WeJob.Models.DAL
             DBservices dbs = new DBservices();
             return dbs.GetHotJobsByCategoryNo(CategoryNo);
         }
+        public List<Job> GetreportJobs()
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetreportJobs("DBConnectionString");
+        }
 
         //לאפליקציה - מביאה משרות לפי תגיות נבחרות ושמות של משרות
         public List<Job> GetListOfJobs(string studentId)

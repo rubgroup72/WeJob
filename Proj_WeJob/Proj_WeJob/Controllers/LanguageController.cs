@@ -15,5 +15,12 @@ namespace Proj_WeJob.Controllers
             Language la = new Language();
             return la.ReadLanguage();
         }
+        [HttpGet]
+        [Route("api/lang")]
+        public IEnumerable<Language> Get(string StudentId)
+        {
+            Language l = new Language();
+            return l.GetListLangByIdStudent(StudentId);
+        }
     }
 }
