@@ -181,8 +181,8 @@ namespace Proj_WeJob.Models.DAL
             String command;
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
-            sb.AppendFormat("Values('{0}','{1}','{2}',{3},'{4}','{5}','{6}','{7}','{8}','{9}',{10},{11})", job.JobName, job.JobDescription, job.Requirements, Convert.ToInt32(job.CompanyCompanyNo), job.Location,job.MailForCV ,job.OpenDate, job.ToDate,job.Status,job.Link,job.CategoryNo,0);
-            String prefix = "INSERT INTO Job " + "(JobName,JobDescription,Requirements,CompanyCompanyNo,Location,MailForCV,OpenDate,ToDate,JobStatusStatusName,Link,CategoryNo,AmountSend) ";
+            sb.AppendFormat("Values('{0}','{1}','{2}',{3},'{4}','{5}','{6}','{7}','{8}',{9},{10},{11},'{12}')", job.JobName, job.JobDescription, job.Requirements, Convert.ToInt32(job.CompanyCompanyNo), job.Location,job.MailForCV ,job.OpenDate, job.ToDate,job.Link,job.CategoryNo,0,0, job.Status);
+            String prefix = "INSERT INTO Job " + "(JobName,JobDescription,Requirements,CompanyCompanyNo,Location,MailForCV,OpenDate,ToDate,Link,CategoryNo,AmountSend,IsDeleted,JobStatusStatusName) ";
             command = prefix + sb.ToString();
             command += "; SELECT SCOPE_IDENTITY()";
             return command;
@@ -394,6 +394,7 @@ namespace Proj_WeJob.Models.DAL
             }
             return command;
         }
+        //פונקציה שמעדכנת סטטוס מקרה מחמה לרגילה
         public int updateStatusJob(Job j)
         {
             SqlConnection con;
@@ -408,6 +409,43 @@ namespace Proj_WeJob.Models.DAL
                 throw (ex);
             }
             String cStr = "UPDATE Job SET JobStatusStatusName = '"+j.JobStatusStatusName+"' WHERE JobNo = '"+j.JobNo+"' ";
+            cmd = CreateCommand(cStr, con);             // create the command
+            try
+            {
+                int numEffected = Convert.ToInt32(cmd.ExecuteScalar());
+                //int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+        }
+        //פונקציה שמעדכנת שדה בוליאני לנמחק 
+        public int updateIsDeleted(Job j)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            String cStr = "UPDATE Job SET IsDeleted = '1' WHERE JobNo = '" + j.JobNo + "' ";
             cmd = CreateCommand(cStr, con);             // create the command
             try
             {
@@ -826,7 +864,7 @@ namespace Proj_WeJob.Models.DAL
             try
             {
                 con = connect(conString); // create a connection to the database using the connection String defined in the web config file
-                String selectSTR = "SELECT * FROM Job where Job.CompanyCompanyNo='" + companyNo+"'";
+                String selectSTR = "SELECT * FROM Job where Job.CompanyCompanyNo='" + companyNo+ "' and  IsDeleted!=1";
                 //LEFT JOIN JobStatus ON Job.JobStatusStatusName = JobStatus.StatusName
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 

@@ -145,7 +145,12 @@
             });
             $("#JobsOfdistributorTable").on('click', 'td.delete', function () {
    
-                var tr = $(this).closest('tr');
+                 var tr = $(this).closest('tr');
+                jobno = tr[0].getElementsByClassName("JobNo")[0].innerHTML;
+                console.log(jobno);
+                 job = {
+                   JobNo: jobno,                    
+                 }
                 Swal.fire({
                   title: '?אתה בטוח',
                   text: "!לא תוכל לבטל זאת",
@@ -156,8 +161,8 @@
                   confirmButtonText: '!כן,מחק'
                 }).then((result) => {
                     if (result.value) {
-                        // Delete a car from the server
-                        //ajaxCall("DELETE", "../api/Dis?companyNo="+tr[0].getElementsByClassName("CompanyNo")[0].innerHTML, "", SuccessD, errorUorD);
+                        // Update Status to Deleted
+                        ajaxCall("put", "../api/IsDeleted", JSON.stringify(job), SuccessD, errorUorD);
                       tr.remove();
                   }
                 })
@@ -176,7 +181,7 @@
         function SuccessD() {
               Swal.fire(
                       'נמחק!',
-                      'פרטי המפיץ נמחקו',
+                      'המשרה נמחקה',
                       'success'
                       )
         }

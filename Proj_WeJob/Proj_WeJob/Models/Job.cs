@@ -42,6 +42,7 @@ namespace Proj_WeJob.Models.DAL
         public string ContactMail { get; set; }
         public bool IsFromSmartAlgo { get; set; }
         public bool IsSaved { get; set; }
+        public bool IsDeleted { get; set; }
         public String StudentJobStatus { get; set; }
 
         //constructor
@@ -49,7 +50,7 @@ namespace Proj_WeJob.Models.DAL
             int CompanyCompanyNo, string MailForCV, DateTime OpenDate, DateTime ToDate,
             string JobStatusStatusName, string Link, List<String> ArrayLanguage, List<String> ArraySkill, List<String> ArraySubCategory,
             string Location,string Status, int CategoryNo, List <string> JobTitlesList,int AmountSend,
-            string CategoryName, int CompanyNo, string CompanyName, string ContactName, int ContactPhone, string ContactMail)
+            string CategoryName, int CompanyNo, string CompanyName, string ContactName, int ContactPhone, string ContactMail,bool IsDeleted)
         {
             this.CompanyCompanyNo = CompanyCompanyNo;
             this.JobNo = JobNo;
@@ -76,8 +77,7 @@ namespace Proj_WeJob.Models.DAL
             this.ContactName = ContactName;
             this.ContactPhone = ContactPhone;
             this.ContactMail = ContactMail;
-
-
+            this.IsDeleted = IsDeleted;
         }
 
         public Job()
@@ -106,6 +106,11 @@ namespace Proj_WeJob.Models.DAL
         {
             DBservices dbs = new DBservices();
             return dbs.updateStatusJob(this);
+        }
+        public int updateIsDeleted()
+        {
+            DBservices dbs = new DBservices();
+            return dbs.updateIsDeleted(this);
         }
         //החזרת משרות של מפיץ ספציפי
         public List<Job> GetListJobsOfDistributor(string companyNo)

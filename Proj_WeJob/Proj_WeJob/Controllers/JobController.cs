@@ -18,6 +18,9 @@ namespace Proj_WeJob.Controllers
         [HttpPut]
         [Route("api/updateStatus")]
         public void PUT([FromBody]Job j) => j.updateStatusJob();
+        [HttpPut]
+        [Route("api/IsDeleted")]
+        public void put([FromBody]Job j) => j.updateIsDeleted();
 
         [HttpGet]
         [Route("api/Jobs")]
