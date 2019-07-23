@@ -36,7 +36,8 @@
             id=localStorage.getItem("StudentId")
             uri = "../api/StudentProfile?StudentId=" + id;
             ajaxCall("GET", uri, "", getSuccessDetails, error);
-             ajaxCall("GET","../api/lang?StudentId=" + id , "", getSuccessLang, error);
+            ajaxCall("GET", "../api/lang?StudentId=" + id, "", getSuccessLang, error);
+            ajaxCall("GET", "../api/jobsSendAndSave?StudentId=" + id, "", getSuccessjob, error);
         });
         function getSuccessDetails(studentdata) {
             data = studentdata;
@@ -77,12 +78,17 @@
         }
         function getSuccessLang(langugedata) {
             dataLang = langugedata;
-            str ='<div class="row">';
+            str = "";
+            if (dataLang == null) {
+                document.getElementById("lang").innerHTML = "לא הוכנסו שפות ידועות";
+            } else {
+                for (var i = 0; i <dataLang.length; i++) {
+                     str +='<div class="row">';
             str += '<div class="col-md-4">';
-            if (dataLang[0].Degree == 0) {
+            if (dataLang[i].Degree == 0) {
                 str += '<label>רמה נמוכה</label>';
             }
-            else if (dataLang[0].Degree == 1) {
+            else if (dataLang[i].Degree == 1) {
                 str += '<label>רמה בינונית</label>';
             }
             else {
@@ -90,13 +96,41 @@
             }
             str += '</div>';
             str += '<div class="col-md-4">';
-            str += '<label>' + dataLang[0].Name + '</label>';
+            str += '<label>' + dataLang[i].Name + '</label>';
             str += '</div>';
               str += '<div class="col-md-4">';
-            str += '<p>שפה 1</p>';
+            str += '<p>'+(i+1)+'שפה </p>';
             str += '</div>';
             str += '</div>';
+                }
+            }
                document.getElementById("lang").innerHTML= str;
+        }
+        function getSuccessjob(jobdata) {
+            data = jobdata;
+            str = "";
+            console.log(data);
+            str += '<table>';
+            str += '<tr>';
+            str += '<th>קוד משרה</th>';
+            str += '<th>שם משרה</th>';
+            str += '<th>כמות מתעניינים</th>';
+            str += '<th>קטגוריית משרה</th>';
+            str += '<th>סטטוס משרה</th>';
+             str += '<th>סטטוס סטודנט למשרה</th>';
+            str += '</tr>';
+            for (var i = 0; i < data.length; i++) { 
+                str += '<tr>';
+                str += '<td>'+ data[i].JobNo+'</td>';
+                str += '<td>'+data[i].JobName+'</td>';
+                str += '<td>'+data[i].AmountSend+'</td>';
+                str += '<td>'+data[i].CategoryName+'</td>';
+                str += '<td>'+data[i].Status+'</td>';
+                str += '<td>'+data[i].StatusForStudent+'</td>';
+                str += '</tr>';
+            }
+            str += '</table>';
+            document.getElementById("Job").innerHTML= str;
         }
         function error(err) {
             err = JSON.parse(err.responseText);
@@ -156,66 +190,84 @@
 
     <!------ Include the above in your HEAD tag ---------->
     <div class="container emp-profile">
-        <form method="post">
-            <div class="row">
-                <!--טאבים-->
-                <div class="col-md-8">
-                    <div class="profile-head ">
-                        <p class="proile-rating">RANKINGS : <span>8/10</span></p>
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link" id="lang-tab" data-toggle="tab" href="#lang" role="tab" aria-controls="profile" aria-selected="false">שפות ידועות</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" id="skils-tab" data-toggle="tab" href="#skils" role="tab" aria-controls="profile" aria-selected="false">כישורים</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="interst-tab" data-toggle="tab" href="#interst" role="tab" aria-controls="profile" aria-selected="false">תחומי עניין</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="home" aria-selected="true">פרטים אישיים</a>
-                            </li>
-                        </ul>
-                    </div>
+        <div class="card text-center">
+            <div class="card-header" style="color:#072247">
+                <div class="col-xs-12">
+                    <a href="ListOfStudentAndGraduates.html" class="btn btn-light btn-lg " style="float:right">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>   
                 </div>
-                <!--תמונה-->
-                <div class="col-md-4">
-                    <div class="profile-img" id="profileImg">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
+
+            </div>
+            <div class="card-body col-xs-12">
+                <form method="post">
+                    <div class="row">
+                        <!--טאבים-->
+                        <div class="col-md-8">
+                            <div class="profile-head ">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">                              
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="lang-tab" data-toggle="tab" href="#Job" role="tab" aria-controls="profile" aria-selected="false">משרות</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="lang-tab" data-toggle="tab" href="#lang" role="tab" aria-controls="profile" aria-selected="false">שפות ידועות</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="skils-tab" data-toggle="tab" href="#skils" role="tab" aria-controls="profile" aria-selected="false">כישורים</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="interst-tab" data-toggle="tab" href="#interst" role="tab" aria-controls="profile" aria-selected="false">תחומי עניין</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="home" aria-selected="true">פרטים אישיים</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--תמונה-->
+                        <div class="col-md-4">
+                            <div class="profile-img" id="profileImg">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
+                            </div>
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="tab-content profile-tab" id="myTabContent">
+                                <!--טאב ראשון- פרטים אישיים-->
+                                <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="home-tab" style="margin-left:80px;margin-top:-80px">
+
+                                </div>
+                                <!--טאב שני- שפות-->
+                                <div class="tab-pane fade" id="lang" role="tabpanel" aria-labelledby="profile-tab" style="margin-left:80px;margin-top:-80px">
+
+                                </div>
+                                <!--טאב שלישי- כישורים -->
+                                <div class="tab-pane fade" id="skils" role="tabpanel" aria-labelledby="profile-tab" style="margin-left:80px;margin-top:-80px">
+
+                                </div>
+                                <!--טאב רביעי-תחומי עניין-->
+                                <div class="tab-pane fade" id="interst" role="tabpanel" aria-labelledby="profile-tab" style="margin-left:80px;margin-top:-80px">
+
+                                </div>
+                                <!-- טאב רביעי-משרות שאהב ושלח להם קורות חיים-->
+                                <div class="tab-pane fade" id="Job" role="tabpanel" aria-labelledby="profile-tab" style="margin-left:80px;margin-top:-80px">
+
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="profile-work">
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="card-footer text-muted">
+                    <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt="">
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="tab-content profile-tab" id="myTabContent">
-                        <!--טאב ראשון- פרטים אישיים-->
-                        <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="home-tab" style="margin-left:80px;margin-top:-80px">
-
-                        </div>
-                        <!--טאב שני- שפות-->
-                        <div class="tab-pane fade" id="lang" role="tabpanel" aria-labelledby="profile-tab" style="margin-left:80px;margin-top:-80px">
-
-                        </div>
-                        <!--טאב שלישי- כישורים -->
-                        <div class="tab-pane fade" id="skils" role="tabpanel" aria-labelledby="profile-tab" style="margin-left:80px;margin-top:-80px">
-
-                        </div>
-                        <!--טאב רביעי-תחומי עניין-->
-                        <div class="tab-pane fade" id="interst" role="tabpanel" aria-labelledby="profile-tab" style="margin-left:80px;margin-top:-80px">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="profile-work">
-
-                    </div>
-                </div>
-            </div>
-        </form>
-        <div class="card-footer text-muted">
-            <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt="">
         </div>
     </div>
 </body>

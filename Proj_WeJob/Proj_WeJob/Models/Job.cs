@@ -44,13 +44,14 @@ namespace Proj_WeJob.Models.DAL
         public bool IsSaved { get; set; }
         public bool IsDeleted { get; set; }
         public String StudentJobStatus { get; set; }
+        public string StatusForStudent { get; set; }
 
         //constructor
         public Job(int JobNo,string JobName, string JobDescription, string Requirements,
             int CompanyCompanyNo, string MailForCV, DateTime OpenDate, DateTime ToDate,
             string JobStatusStatusName, string Link, List<String> ArrayLanguage, List<String> ArraySkill, List<String> ArraySubCategory,
             string Location,string Status, int CategoryNo, List <string> JobTitlesList,int AmountSend,
-            string CategoryName, int CompanyNo, string CompanyName, string ContactName, int ContactPhone, string ContactMail,bool IsDeleted)
+            string CategoryName, int CompanyNo, string CompanyName, string ContactName, int ContactPhone, string ContactMail,bool IsDeleted, string StatusForStudent)
         {
             this.CompanyCompanyNo = CompanyCompanyNo;
             this.JobNo = JobNo;
@@ -78,6 +79,7 @@ namespace Proj_WeJob.Models.DAL
             this.ContactPhone = ContactPhone;
             this.ContactMail = ContactMail;
             this.IsDeleted = IsDeleted;
+            this.StatusForStudent = StatusForStudent;
         }
 
         public Job()
@@ -135,6 +137,11 @@ namespace Proj_WeJob.Models.DAL
         {
             DBservices db = new DBservices();
             return db.GetPopularJobs("DBConnectionString");
+        }
+        public List<Job> GetJobSaveAndSend(string id)
+        {
+            DBservices db = new DBservices();
+            return db.GetJobSaveAndSend("DBConnectionString", id);
         }
         //לאפליקציה - מביאה משרות לפי מספר קטגוריה
         public List<Job> GetListJobNames(int CategoryNo)

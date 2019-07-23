@@ -78,5 +78,13 @@ namespace Proj_WeJob.Controllers
             Job j = new Job();
             return j.GetreportJobs();
         }
+        [HttpGet]
+        [Route("api/jobsSendAndSave")]
+        public IEnumerable<Job> GeT(string id)
+        {
+            Job d = new Job();
+            return d.GetJobSaveAndSend(id);
+        }
     }
+
 }

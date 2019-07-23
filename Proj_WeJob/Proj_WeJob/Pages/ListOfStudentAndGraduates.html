@@ -61,7 +61,7 @@
             $("#StudentsTable").show();
             uri = "../api/Student?codeDepartment=" + $("#Select1").val() + "&SubDepartmentId=" + $("#Select2").val();
             ajaxCall("GET", uri, "", getSuccess, error);
-            tbl.destroy();
+         
 
         }
         // this function is activated in case of a success
