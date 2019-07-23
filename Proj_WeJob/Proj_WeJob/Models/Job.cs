@@ -43,15 +43,15 @@ namespace Proj_WeJob.Models.DAL
         public bool IsFromSmartAlgo { get; set; }
         public bool IsSaved { get; set; }
         public bool IsDeleted { get; set; }
-        public String StudentJobStatus { get; set; }
-        public string StatusForStudent { get; set; }
+        public string StudentJobStatus { get; set; }
+       
 
         //constructor
         public Job(int JobNo,string JobName, string JobDescription, string Requirements,
             int CompanyCompanyNo, string MailForCV, DateTime OpenDate, DateTime ToDate,
             string JobStatusStatusName, string Link, List<String> ArrayLanguage, List<String> ArraySkill, List<String> ArraySubCategory,
             string Location,string Status, int CategoryNo, List <string> JobTitlesList,int AmountSend,
-            string CategoryName, int CompanyNo, string CompanyName, string ContactName, int ContactPhone, string ContactMail,bool IsDeleted, string StatusForStudent)
+            string CategoryName, int CompanyNo, string CompanyName, string ContactName, int ContactPhone, string ContactMail,bool IsDeleted, string StudentJobStatus)
         {
             this.CompanyCompanyNo = CompanyCompanyNo;
             this.JobNo = JobNo;
@@ -79,7 +79,7 @@ namespace Proj_WeJob.Models.DAL
             this.ContactPhone = ContactPhone;
             this.ContactMail = ContactMail;
             this.IsDeleted = IsDeleted;
-            this.StatusForStudent = StatusForStudent;
+            this.StudentJobStatus = StudentJobStatus;
         }
 
         public Job()

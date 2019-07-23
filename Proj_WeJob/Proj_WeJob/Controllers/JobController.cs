@@ -80,10 +80,10 @@ namespace Proj_WeJob.Controllers
         }
         [HttpGet]
         [Route("api/jobsSendAndSave")]
-        public IEnumerable<Job> GeT(string id)
+        public IEnumerable<Job> GeT(string StudentId)
         {
             Job d = new Job();
-            return d.GetJobSaveAndSend(id);
+            return d.GetJobSaveAndSend(StudentId);
         }
     }
 

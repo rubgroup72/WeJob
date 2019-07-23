@@ -2172,11 +2172,11 @@ namespace Proj_WeJob.Models.DAL
             List<Job> lsc = new List<Job>();
             try
             {
-                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
 
                 String selectSTR = "SELECT *" +
-                                        "FROM bgroup72_prod.dbo.Job as j1 left join bgroup72_prod.dbo.Student_Returned_Jobs as srj on j1.JobNo=srj.JobID" +
-                                        " WHERE srj.StudentID='"+ID+"'";
+                                        "FROM bgroup72_prod.dbo.Job as j1 left join bgroup72_prod.dbo.Student_Returned_Jobs as srj on j1.JobNo=srj.JobID left join bgroup72_prod.dbo.Category c on c.CategoryNo=j1.CategoryNo" +
+                                        " WHERE srj.StudentID="+ID+" and IsDeleted!=1";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -2190,8 +2190,8 @@ namespace Proj_WeJob.Models.DAL
                         JobName = Convert.ToString(dr["JobName"]),
                         AmountSend = Convert.ToInt32(dr["AmountSend"]),
                         CategoryName = Convert.ToString(dr["CategoryName"]),
-                        Status = Convert.ToString(dr["Status"]),
-                        StatusForStudent= Convert.ToString(dr["JobStatus"]),
+                        Status = Convert.ToString(dr["JobStatusStatusName"]),
+                        StudentJobStatus = Convert.ToString(dr["JobStatus"]),
                     };
                     lsc.Add(sc);
                 }

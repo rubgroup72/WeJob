@@ -10,30 +10,23 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link href="../css/Student profile test" rel="stylesheet" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!--לאייקונים-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
     <link href="../css/MyStyle2.css" rel="stylesheet" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>-->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <!--<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>-->
-    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
     <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
     <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
     <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7.1.0/dist/promise.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <script>
         $(document).ready(function () {
             localStorage.removeItem('whatFun');
             //document.getElementById("cotart").innerHTML = "שם סטודנט " + localStorage.getItem("FirstName") + localStorage.getItem("LastName");
             // once the document is ready we fetch a student from the server
-            id=localStorage.getItem("StudentId")
+            id = localStorage.getItem("StudentId")
             uri = "../api/StudentProfile?StudentId=" + id;
             ajaxCall("GET", uri, "", getSuccessDetails, error);
             ajaxCall("GET", "../api/lang?StudentId=" + id, "", getSuccessLang, error);
@@ -42,8 +35,8 @@
         function getSuccessDetails(studentdata) {
             data = studentdata;
             console.log(data);
-            str ='<div class="row">';
-            str+='<div class="col-md-6">';
+            str = '<div class="row">';
+            str += '<div class="col-md-6">';
             str += '<label>' + data[0].FirstName + " " + data[0].LastName + '</label>';
             str += '</div>';
             str += '<div class="col-md-6">';
@@ -52,7 +45,7 @@
             str += '</div>';
             str += '<div class="row">';
             str += '<div class="col-md-6">';
-            str += '<label>'+data[0].CellPhone+'</label>';
+            str += '<label>' + data[0].CellPhone + '</label>';
             str += '</div>';
             str += '<div class="col-md-6">';
             str += '<p>טלפון</p>';
@@ -60,7 +53,7 @@
             str += '</div>';
             str += '<div class="row">';
             str += '<div class="col-md-6">';
-            str += '<label>'+ data[0].Email +'</label>';
+            str += '<label>' + data[0].Email + '</label>';
             str += '</div>';
             str += '<div class="col-md-6">';
             str += '<p>דואל</p>';
@@ -68,13 +61,13 @@
             str += '</div>';
             str += '<div class="row">';
             str += '<div class="col-md-6">';
-            str += '<label>'+ data[0].Gender+'</label>';
+            str += '<label>' + data[0].Gender + '</label>';
             str += '</div>';
             str += '<div class="col-md-6">';
             str += '<p>מגדר</p>';
             str += '</div>';
             str += '</div>';
-            document.getElementById("details").innerHTML= str;
+            document.getElementById("details").innerHTML = str;
         }
         function getSuccessLang(langugedata) {
             dataLang = langugedata;
@@ -82,29 +75,29 @@
             if (dataLang == null) {
                 document.getElementById("lang").innerHTML = "לא הוכנסו שפות ידועות";
             } else {
-                for (var i = 0; i <dataLang.length; i++) {
-                     str +='<div class="row">';
-            str += '<div class="col-md-4">';
-            if (dataLang[i].Degree == 0) {
-                str += '<label>רמה נמוכה</label>';
-            }
-            else if (dataLang[i].Degree == 1) {
-                str += '<label>רמה בינונית</label>';
-            }
-            else {
-                str += '<label>רמה גבוהה</label>';
-            }
-            str += '</div>';
-            str += '<div class="col-md-4">';
-            str += '<label>' + dataLang[i].Name + '</label>';
-            str += '</div>';
-              str += '<div class="col-md-4">';
-            str += '<p>'+(i+1)+'שפה </p>';
-            str += '</div>';
-            str += '</div>';
+                for (var i = 0; i < dataLang.length; i++) {
+                    str += '<div class="row">';
+                    str += '<div class="col-md-4">';
+                    if (dataLang[i].Degree == 0) {
+                        str += '<label>רמה נמוכה</label>';
+                    }
+                    else if (dataLang[i].Degree == 1) {
+                        str += '<label>רמה בינונית</label>';
+                    }
+                    else {
+                        str += '<label>רמה גבוהה</label>';
+                    }
+                    str += '</div>';
+                    str += '<div class="col-md-4">';
+                    str += '<label>' + dataLang[i].Name + '</label>';
+                    str += '</div>';
+                    str += '<div class="col-md-4">';
+                    str += '<p>' + (i + 1) + 'שפה </p>';
+                    str += '</div>';
+                    str += '</div>';
                 }
             }
-               document.getElementById("lang").innerHTML= str;
+            document.getElementById("lang").innerHTML = str;
         }
         function getSuccessjob(jobdata) {
             data = jobdata;
@@ -112,26 +105,41 @@
             console.log(data);
             str += '<table>';
             str += '<tr>';
-            str += '<th>קוד משרה</th>';
-            str += '<th>שם משרה</th>';
-            str += '<th>כמות מתעניינים</th>';
-            str += '<th>קטגוריית משרה</th>';
+            str += '<th>סטטוס סטודנט למשרה</th>';
             str += '<th>סטטוס משרה</th>';
-             str += '<th>סטטוס סטודנט למשרה</th>';
+            str += '<th>קטגוריית משרה</th>';
+            str += '<th>כמות מתעניינים</th>';
+            str += '<th>שם משרה</th>';
+            str += '<th>קוד משרה</th>'; 
             str += '</tr>';
-            for (var i = 0; i < data.length; i++) { 
+            for (var i = 0; i < data.length; i++) {
                 str += '<tr>';
-                str += '<td>'+ data[i].JobNo+'</td>';
-                str += '<td>'+data[i].JobName+'</td>';
-                str += '<td>'+data[i].AmountSend+'</td>';
-                str += '<td>'+data[i].CategoryName+'</td>';
-                str += '<td>'+data[i].Status+'</td>';
-                str += '<td>'+data[i].StatusForStudent+'</td>';
+                if (data[i].StudentJobStatus == 'new') {
+                   str += '<td><img class="imgstatusjob" src="https://cdn4.iconfinder.com/data/icons/flat-color-sale-tag-set/512/Accounts_label_promotion_sale_tag_6-512.png" alt="×ª××× × ×§×©××¨×"/><!--EndFragment--></td>';
+                }
+                else if (data[i].StudentJobStatus =='save') {
+                     str += '<td><img class="imgstatusjob" src="../images/save.png"/></td>';
+
+                }
+                else if (data[i].StudentJobStatus =='send cv') {
+                      str += '<td><img class="imgstatusjob" src="http://rexel.co.in/wp-content/uploads/2015/04/send-cv.png"/></td>';
+                }
+                 else if (data[i].StudentJobStatus =='save and send cv') {
+                    str += '<td><img class="imgstatusjob" src="../images/save.png"/></td>';
+                    str += '<td><img class="imgstatusjob" src="http://rexel.co.in/wp-content/uploads/2015/04/send-cv.png"/></td>';
+                }
+               
+                str += '<td>' + data[i].Status + '</td>';
+                 str += '<td>'+data[i].CategoryName+'</td>';
+                str += '<td>' + data[i].AmountSend + '</td>';
+                str += '<td>' + data[i].JobName + '</td>';
+                str += '<td>' + data[i].JobNo + '</td>'; 
                 str += '</tr>';
             }
             str += '</table>';
-            document.getElementById("Job").innerHTML= str;
+            document.getElementById("Job").innerHTML = str;
         }
+
         function error(err) {
             err = JSON.parse(err.responseText);
             Swal.fire({
@@ -139,7 +147,7 @@
                 title: 'שגיאה ',
                 text: 'משהו לא עובד',
                 footer: err.ExceptionMessage
-            })
+            });
         }
     </script>
 
@@ -195,9 +203,10 @@
                 <div class="col-xs-12">
                     <a href="ListOfStudentAndGraduates.html" class="btn btn-light btn-lg " style="float:right">
                         <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>   
+                    </a>
                 </div>
-
+            
+         
             </div>
             <div class="card-body col-xs-12">
                 <form method="post">
@@ -208,6 +217,7 @@
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">                              
                                     <li class="nav-item">
                                         <a class="nav-link" id="lang-tab" data-toggle="tab" href="#Job" role="tab" aria-controls="profile" aria-selected="false">משרות</a>
+                                    
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="lang-tab" data-toggle="tab" href="#lang" role="tab" aria-controls="profile" aria-selected="false">שפות ידועות</a>
@@ -253,6 +263,7 @@
                                 <!-- טאב רביעי-משרות שאהב ושלח להם קורות חיים-->
                                 <div class="tab-pane fade" id="Job" role="tabpanel" aria-labelledby="profile-tab" style="margin-left:80px;margin-top:-80px">
 
+                                 
                                 </div>
                                
                             </div>

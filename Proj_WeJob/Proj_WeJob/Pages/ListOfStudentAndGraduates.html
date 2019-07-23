@@ -61,8 +61,7 @@
             $("#StudentsTable").show();
             uri = "../api/Student?codeDepartment=" + $("#Select1").val() + "&SubDepartmentId=" + $("#Select2").val();
             ajaxCall("GET", uri, "", getSuccess, error);
-         
-
+          tbl.destroy();
         }
         // this function is activated in case of a success
         function getSuccess(Studentsdata) {
@@ -264,12 +263,12 @@
 
                                         <th></th>
                                         <th></th>
+                                        <th>StudentId</th>
                                         <th>FirstName</th>
                                         <th>LastName</th>
                                         <th>CellPhone</th>
                                         <th>Email</th>
                                         <th>Gender</th>
-
                                     </tr>
                                 </thead>
                             </table>
