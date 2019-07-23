@@ -305,8 +305,15 @@
             )
             tr.remove();
             }
-    function error(err) {
-            swal("Error: " + err);
+       function error(err) {
+            err = JSON.parse(err.responseText);
+              Swal.fire({
+                  type: 'error',
+                  title: 'שגיאה ',
+                  text: 'משהו לא עובד',
+                  footer:  err.ExceptionMessage
+                })
+            //swal("Error!", err.ExceptionMessage, "error");
         }
        
     </script>
@@ -325,10 +332,8 @@
                         הגדרות מערכת
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">מועמדים</a>
-                        <a class="dropdown-item" href="#">ארכיון משרות</a>
+                        <a class="dropdown-item" href="HistoryJobsDeleted.html">ארכיון משרות</a>
                         <a class="dropdown-item" href="#">מחלקות</a>
-                        <a class="dropdown-item" href="#">תחומי עניין</a>
                         <a class="dropdown-item" href="#">שפות</a>
                         <a class="dropdown-item" href="#">כישורים</a>
                         <a class="dropdown-item" href="#">קטגוריות</a>

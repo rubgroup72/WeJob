@@ -1893,7 +1893,51 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+        //פונקציה שמחזירה את כל המשרות שנמחקו
+        public List<Job> getHistory()
+        {
+            SqlConnection con = null;
+            List<Job> lsc = new List<Job>();
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
 
+                String selectSTR = "SELECT * FROM Job where IsDeleted='1'";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Job sc = new Job
+                    {
+                        JobNo = Convert.ToInt32(dr["JobNo"]),
+                        JobName = Convert.ToString(dr["JobName"]),
+                        OpenDate = Convert.ToDateTime(dr["OpenDate"]),
+                        ToDate = Convert.ToDateTime(dr["ToDate"]),
+                        Location = Convert.ToString(dr["Location"]),
+                        Status = Convert.ToString(dr["JobStatusStatusName"]),
+                        CompanyCompanyNo = Convert.ToInt32(dr["CompanyCompanyNo"]),
+                    };
+                    lsc.Add(sc);
+                }
+
+                return lsc;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
         //פונקציה שמחזירה שמות של משרות עבור קטגוריה נתונה
         public List<Job> GetListJobNames (int CategoryNo )
         {
@@ -2248,7 +2292,7 @@ namespace Proj_WeJob.Models.DAL
                 String selectSTR =
                 "select * from [bgroup72_prod].[dbo].[Job] " +
                 "left join Company C on Job.CompanyCompanyNo = C.CompanyNo " +
-                "where job.JobNo in " +
+                "where [bgroup72_prod].[dbo].[Job].[IsDeleted]!=1 and job.JobNo in " +
                 "(select SJ.JobJobNo from[bgroup72_prod].[dbo].[SubCategory_Job] SJ " +
                 "where SubCategorySubCategoryNo in " +
                 "(select SubCategoryNo from[bgroup72_prod].[dbo].[SubCategory] " +

@@ -37,6 +37,13 @@ namespace Proj_WeJob.Controllers
             return j.GetHotJobsByCategoryNo(CategoryNo);
         }
         [HttpGet]
+        [Route("api/HistoryJob")]
+        public IEnumerable<Job> get()
+        {
+            Job j = new Job();
+            return j.getHistory();
+        }
+        [HttpGet]
         [Route("api/Job")]
         public Job Get(string JobNo)
         {
@@ -59,7 +66,7 @@ namespace Proj_WeJob.Controllers
         }
         [HttpGet]
         [Route("api/PopularJobs")]
-        public IEnumerable<Job> get()
+        public IEnumerable<Job> GeT()
         {
             Job d = new Job();
             return d.GetPopularJobs();

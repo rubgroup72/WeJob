@@ -283,6 +283,7 @@
     <Content Include="images\img-01.png" />
     <Content Include="js\main.js" />
     <Content Include="Pages\BuildingWorkShop.html" />
+    <Content Include="Pages\HistoryJobsDeleted.html" />
     <Content Include="Pages\HomePage.html" />
     <Content Include="Pages\HomePage1.html" />
     <Content Include="Pages\images\dddd.png" />

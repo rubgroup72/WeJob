@@ -148,6 +148,11 @@ namespace Proj_WeJob.Models.DAL
             DBservices dbs = new DBservices();
             return dbs.GetHotJobsByCategoryNo(CategoryNo);
         }
+        public List<Job> getHistory()
+        {
+            DBservices dbs = new DBservices();
+            return dbs.getHistory();
+        }
         public List<Job> GetreportJobs()
         {
             DBservices dbs = new DBservices();

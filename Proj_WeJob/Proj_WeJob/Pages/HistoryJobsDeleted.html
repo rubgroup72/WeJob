@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>report1</title>
+    <title>History Jobs</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1, shrink-to-fit=no">
 
@@ -22,6 +22,7 @@
     <!--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
+
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
@@ -32,22 +33,23 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
-    
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
-            localStorage.clear();
-            ajaxCall("GEt", "../api/reportJobs", "", success, error);
+            $("#HistoryJobs").hide();
+            ajaxCall("Get", "../api/distributors", "", getSuccessDistributors, error);
+            ajaxCall("GeT", "../api/HistoryJob", "", getSuccessJ, error);
         });
-        // this function is activated in case of a success
-        function success(jobsdata) {
+        function getSuccessJ(dataJBC) {
+            $("#HistoryJobs").show();
+            datajob = dataJBC;
             try {
-                tbl = $('#amountSendToJob').DataTable({
+                tbl = $('#HistoryJobs').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"
                     },
-                    data: jobsdata,
-                    //"autoWidth": false,
-                    //pageLength: 4,
+                    data: dataJBC,
+                    "autoWidth": false,
+                    pageLength: 8,
                     dom: "Bfrtip",
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                     columns: [
@@ -57,27 +59,117 @@
                             title: 'קוד משרה'
                         },
                         {
-                            "className": 'JobName',
                             data: "JobName",
                             title: 'שם משרה'
                         },
                         {
-                            "className": 'CompanyName',
-                            data: "CompanyName",
-                            title: 'שם חברה'
+                            render: function (data, type, row, meta) {
+                                if (type === 'display') {
+                                    data = data.substr(0, 10);
+                                }
+                                return data;
+                            },
+                            data: "OpenDate",
+                            title: 'תאריך פתיחה'
                         },
                         {
-                            "className": 'AmountSend',
-                            data: "AmountSend",
-                            title: "כמות שולחים"
+                            render: function (data, type, row, meta) {
+                                if (type === 'display') {
+                                    data = data.substr(0, 10);
+                                }
+                                return data;
+                            },
+                            data: "ToDate",
+                            title: "עד תאריך"
                         },
-
                     ]
                 });
             }
 
             catch (err) {
                 alert(err);
+            }
+        }
+        function getSuccessDistributors(dataDistributors) {
+            try {
+                data = dataDistributors;
+                str = "<label for='exampleFormControlSelect3'>מעסיק</label>";
+                str += "<select required class='form-control' id='Select2' onchange=renderTable(this)> ";
+                str += "<option value='סנן לפי מעסיק'  disabled selected>בחר</option> ";
+                for (var i = 0; i < data.length; i++) {
+                    str += "<option class='selectCat' value='" + dataDistributors[i].CompanyNo + "'>" + dataDistributors[i].NameCompany + '</option >';
+                }
+                str += " </select>";
+                str += "</br><hr>";
+                document.getElementById("Distibutors").innerHTML = str;
+            }
+            catch (err) {
+                alert(err);
+            }
+        }
+        function renderTable(dis) {
+            datanew = [];
+            j = 0;
+            for (var i = 0; i < datajob.length; i++) {
+                if (datajob[i].CompanyCompanyNo == dis.value) {
+                    datanew[j] = datajob[i];
+                    j++;
+                }
+            }
+            tbl.destroy();
+            updateListJob(datanew);
+        }
+        function updateListJob(dataJBC) {
+            try {
+                tbl = $('#HistoryJobs').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Hebrew.json"
+                    },
+                    data: dataJBC,
+                    "autoWidth": false,
+                    pageLength: 8,
+                    dom: "Bfrtip",
+                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                    columns: [
+                        {
+                            data: "JobNo",
+                            title: 'קוד משרה'
+                        },
+                        {
+                            data: "JobName",
+                            title: 'שם משרה'
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                if (type === 'display') {
+                                    data = data.substr(0, 10);
+                                }
+                                return data;
+                            },
+                            data: "OpenDate",
+                            title: 'תאריך פתיחה'
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                if (type === 'display') {
+                                    data = data.substr(0, 10);
+                                }
+                                return data;
+                            },
+                            data: "ToDate",
+                            title: "עד תאריך"
+                        },
+                    ]
+                });
+            }
+            catch (err) {
+                err = JSON.parse(err.responseText);
+                Swal.fire({
+                    type: 'error',
+                    title: 'שגיאה ',
+                    text: 'משהו לא עובד',
+                    footer: err.ExceptionMessage
+                })
             }
         }
         function error(err) {
@@ -90,17 +182,7 @@
             })
             //swal("Error!", err.ExceptionMessage, "error");
         }
-                                            //function exportF(elem) {
-                                            //  var table = document.getElementById("amountSendToJob");
-                                            //  var html = table.outerHTML;
-                                            //  var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url
-                                            //  elem.setAttribute("href", url);
-                                            //  elem.setAttribute("download", "export.xls"); // Choose the file name
-                                            //  return false;
-                                            //}
-
-
-/**/</script>
+    </script>
 </head>
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-light " style="background-color:#F2F2F0;">
@@ -150,34 +232,36 @@
         <div class="card text-center">
             <div class="card-header" style="color:#072247">
                 <div class="col-xs-12">
-                    <h2>דוח 1- כמות המועמדים ששלחו קורות חיים למשרה</h2>
+                    <h2>ארכיון משרות</h2>
                 </div>
             </div>
 
             <div class="card-body col-xs-12">
+              
+                        <div class="table-responsive">
+                            <form id="pForm">
+                                <center>
+                                    <div class="col-xs-12 col-md-6" id="Distibutors">
 
-                <form id="pForm">
-                    <div class="table-responsive">
-                        <table id="amountSendToJob" class="display nowrap" style="width:100%">
-                            <thead>
-                                <tr>
+                                    </div>
+                                </center>
+                                <table id="HistoryJobs" class="display nowrap" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <td>JobNo</td>
+                                            <td>JobName</td>
+                                            <td>OpenDate</td>
+                                            <td>ToDate</td>
+                                        </tr>
+                                    </thead>
+                                </table>
 
-                                    <td>JobNo</td>
-                                    <td>JobName</td>
-                                    <td>CompanyName</td>
-                                    <td>CountSendCsv</td>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </form>
+                            </form>
+                        </div>
+                    
             </div>
 
-            <div class="card-footer text-muted">
-                <img src="images/logoWeJob.png" width="130" height="35" class="d-inline-block align-top" alt="">
-            </div>
         </div>
-
     </div>
 </body>
 </html>
