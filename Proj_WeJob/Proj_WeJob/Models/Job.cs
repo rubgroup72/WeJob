@@ -97,7 +97,7 @@ namespace Proj_WeJob.Models.DAL
             int num4 = dbs.Insert_JobLanguage(this, num1);
             int num5 = dbs.Insert_JobSubCategory(this, num1); 
             SendPushNotification(this, num1);          
-             return num1 & num2 & num4 & num5);
+             return num1 & num2 & num4 & num5;
         }
         
         public int updateStatusJob()
