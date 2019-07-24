@@ -20,7 +20,12 @@ export default class Main extends React.Component{
 
     constructor(props) {
         super(props);
+
+        if (!I18nManager.isRTL) {
+            I18nManager.forceRTL(true);
+        }
         I18nManager.forceRTL(true);// מנג'ר שאחראי על תווים וכיוונים שמגדיר לקרוא את המסך מימין לשמאל
+
         this.state = {
             userLoggedOut: true,
             loginWithFacebook: false,
