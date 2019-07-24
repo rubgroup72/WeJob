@@ -25,6 +25,7 @@ namespace Proj_WeJob.Models.DAL
         public List <Job> JobTitlesList { get; set; }
         public string CVName { get; set; }
         public string CVFile { get; set; }
+        public string SubCategoryName { get; set; }
 
         //constructor
         public Student(int _studentId, string _firstName, string _lastName, string _cellPhone, string _email, string _gender, string _departmentName, string _subDepartmentName, int _departmentCode, int _subDepartmentCode, String _cvName)
@@ -40,6 +41,7 @@ namespace Proj_WeJob.Models.DAL
             this.DepartmentCode = _departmentCode;
             this.SubDepartmentCode = _subDepartmentCode;
             this.CVName = _cvName;
+
         }
 
         public Student()
@@ -187,6 +189,11 @@ namespace Proj_WeJob.Models.DAL
                 return;
             DBservices dbs = new DBservices();
             dbs.RegisterStudentDevice(studentId, register, token);
+        }
+        public List<Student> GetTagsforStudent(string id)
+        {
+            DBservices db = new DBservices();
+            return db.GetTagsforStudent("DBConnectionString", id);
         }
     }
 }

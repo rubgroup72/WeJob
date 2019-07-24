@@ -44,7 +44,7 @@ namespace Proj_WeJob.Models.DAL
         public bool IsSaved { get; set; }
         public bool IsDeleted { get; set; }
         public string StudentJobStatus { get; set; }
-       
+        public string SubCategory { get; set; }
 
         //constructor
         public Job(int JobNo,string JobName, string JobDescription, string Requirements,
@@ -80,6 +80,7 @@ namespace Proj_WeJob.Models.DAL
             this.ContactMail = ContactMail;
             this.IsDeleted = IsDeleted;
             this.StudentJobStatus = StudentJobStatus;
+            
         }
 
         public Job()
@@ -143,6 +144,7 @@ namespace Proj_WeJob.Models.DAL
             DBservices db = new DBservices();
             return db.GetJobSaveAndSend("DBConnectionString", id);
         }
+     
         //לאפליקציה - מביאה משרות לפי מספר קטגוריה
         public List<Job> GetListJobNames(int CategoryNo)
         {

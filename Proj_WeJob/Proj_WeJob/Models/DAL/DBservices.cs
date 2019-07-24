@@ -2210,6 +2210,43 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+        public List<Student> GetTagsforStudent(string conString, string ID)
+        {
+            SqlConnection con = null;
+            List<Student> lsc = new List<Student>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM bgroup72_prod.dbo.Student_SubCategory as ss left join bgroup72_prod.dbo.SubCategory as sc on ss.SubCategoryNo=sc.SubCategoryNo where ss.StudentId=" + ID;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Student sc = new Student
+                    {
+                        SubCategoryName = Convert.ToString(dr["SubCategoryName"]),
+                    };
+                    lsc.Add(sc);
+                }
+                return lsc;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
         //פונקציית עדכון תגיות סטודנט
         public void UpdateStudentTempJobs(int studentId, List<Job> jobTitles)
         {

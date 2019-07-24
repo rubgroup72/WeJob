@@ -85,6 +85,7 @@ namespace Proj_WeJob.Controllers
             Job d = new Job();
             return d.GetJobSaveAndSend(StudentId);
         }
+      
     }
 
 }

@@ -66,5 +66,12 @@ namespace Proj_WeJob.Controllers
             Student d = new Student();
             return d.GetAmountStudents();
         }
+        [HttpGet]
+        [Route("api/tags")]
+        public IEnumerable<Student> GET(string StudentId)
+        {
+            Student d = new Student();
+            return d.GetTagsforStudent(StudentId);
+        }
     }
 }

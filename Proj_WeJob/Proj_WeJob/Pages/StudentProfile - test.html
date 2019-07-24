@@ -35,6 +35,7 @@
             ajaxCall("GET", uri, "", getSuccessDetails, error);
             ajaxCall("GET", "../api/lang?StudentId=" + id, "", getSuccessLang, error);
             ajaxCall("GET", "../api/jobsSendAndSave?StudentId=" + id, "", getSuccessjob, error);
+            ajaxCall("GET", "../api/tags?StudentId=" + id, "", getSuccesstags, error);
         });
         function getSuccessDetails(studentdata) {
             data = studentdata;
@@ -76,8 +77,8 @@
         function getSuccessLang(langugedata) {
             dataLang = langugedata;
             str = "";
-            if (dataLang == null) {
-                document.getElementById("lang").innerHTML = "לא הוכנסו שפות ידועות";
+            if (dataLang.length ==0) {
+                document.getElementById("lang").innerHTML = "<h3>לא קיימות שפות ידועות</h3>";
             } else {
                 for (var i = 0; i < dataLang.length; i++) {
                     str += '<div class="row">';
@@ -100,8 +101,29 @@
                     str += '</div>';
                     str += '</div>';
                 }
+                document.getElementById("lang").innerHTML = str;
             }
-            document.getElementById("lang").innerHTML = str;
+          
+        }
+         function getSuccesstags(tagsdata) {
+            data1= tagsdata;
+            str = "";
+            if (data1.length ==0) {
+                document.getElementById("interst").innerHTML = "<h3>לא קיימים תחומי עניין</h3>";
+            } else {
+                for (var i = 0; i < data1.length; i++) {
+                    str += '<div class="row">';
+                    str += '<div class="col-md-4">';
+                    str += '<label>' + data1[i].SubCategoryName + '</label>';
+                    str += '</div>';
+                    str += '<div class="col-md-4">';
+                    str += '<p>' + (i + 1) + 'תת קטגוריה  </p>';
+                    str += '</div>';
+                    str += '</div>';
+                }
+                document.getElementById("interst").innerHTML = str;
+            }
+          
         }
         function getSuccessjob(jobdata) {
             data = jobdata;
