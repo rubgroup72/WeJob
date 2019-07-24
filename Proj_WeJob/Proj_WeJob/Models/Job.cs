@@ -243,13 +243,19 @@ namespace Proj_WeJob.Models.DAL
                 {
                     return "No cv";
                 }
+
+                IncreaseJobCounter(jobId);
+                // TODO - send CV
             }
 
             dbs.UpdateStudentJobStatus(studnetId, jobId, status);
-
-            // TODO - send CV
-
             return "";
+        }
+
+        private void IncreaseJobCounter(string jobId)
+        {
+            DBservices dbs = new DBservices();
+            dbs.IncreaseJobCvSendAmount(jobId);
         }
 
         public void SendPushNotification(Job newJob, int jobId)

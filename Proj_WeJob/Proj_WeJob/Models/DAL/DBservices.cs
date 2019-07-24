@@ -2536,6 +2536,28 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+        public void IncreaseJobCvSendAmount(string jobId)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
+                String selectSTR = "UPDATE[Job] SET[AmountSend] = [AmountSend] + 1 WHERE JobNo = " + jobId;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
         public void UpdateStudentJobStatus(string studentId, string jobId, string status)
         {
             SqlConnection con = null;
