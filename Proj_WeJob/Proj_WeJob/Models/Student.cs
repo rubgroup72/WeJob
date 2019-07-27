@@ -50,9 +50,11 @@ namespace Proj_WeJob.Models.DAL
 
 
         //הצגת כל סטודנטים ללא סינון
-        public List<Student> GetListStudent()
+        public List<Student> GetListStudent(bool? isActive = null)
         {
             DBservices dbs = new DBservices();
+            if (isActive.HasValue)
+                return dbs.GetListStudent("DBConnectionString", isActive.Value);
             return dbs.GetListStudent("DBConnectionString");
         }
 

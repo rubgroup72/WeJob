@@ -670,6 +670,37 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
+        public List<Student> GetListStudent(string conString, bool isActive)
+        {
+            SqlConnection con = null;
+            List<Student> ld = new List<Student>();
+            try
+            {
+                con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+                String selectSTR = "SELECT * FROM Student S Left Join Department D on S.DepartmentDepartmentCode = D.DepartmentCode Left Join Department_SubDepartment SD on S.SubDepartmentCode = SD.SubDepartmentId Where IsActive = " + (isActive ? "1" : "0");
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    ld.Add(CreateStudentFromSqlDataReader(dr));
+                }
+
+                return ld;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+        }
         //++++ פונקציית התחברות מאפליקציה לבסיס הנתונים
         public Student AppLogin(String email, String password)
         {
@@ -718,8 +749,8 @@ namespace Proj_WeJob.Models.DAL
             try
             {
                 con = connect(connectionString); // create a connection to the database using the connection String defined in the web config file
-                String selectSTR = "Insert Into Student (StudentId, FirstName,LastName,Email,CellPhone,Password,Gender) Values";
-                selectSTR += String.Format("({0},'{1}','{2}','{3}','{4}','{5}','{6}')", 
+                String selectSTR = "Insert Into Student (StudentId, FirstName,LastName,Email,CellPhone,Password,Gender, IsActive) Values";
+                selectSTR += String.Format("({0},'{1}','{2}','{3}','{4}','{5}','{6}', 1)", 
                     studentId, firstName, lastName, email, phoneNumber, password, gender);
                 var cmd = CreateCommand(selectSTR, con);
                 cmd.ExecuteNonQuery();

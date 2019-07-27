@@ -98,9 +98,12 @@ namespace Proj_WeJob.Models.DAL
             int num2 = dbs.Insert_JobSkill(this, num1);
             //int num3 = dbs.Insert_JobInterst(this, num1);
             int num4 = dbs.Insert_JobLanguage(this, num1);
-            int num5 = dbs.Insert_JobSubCategory(this, num1); 
-            SendPushNotification(this, num1);          
-             return num1 & num2 & num4 & num5;
+            int num5 = dbs.Insert_JobSubCategory(this, num1);
+
+            System.Web.Hosting.HostingEnvironment.QueueBackgroundWorkItem(ct => SendPushNotification(this, num1));
+            // SendPushNotification(this, num1);          
+
+            return num1 & num2 & num4 & num5;
         }
         
         public int updateStatusJob()
@@ -262,7 +265,8 @@ namespace Proj_WeJob.Models.DAL
         {
             Student s = new Student();
             var relevantStudentList = new List<String>();
-            foreach (Student student in s.GetListStudent())
+            var studentList = s.GetListStudent(true);
+            foreach (Student student in studentList)
             {
                 var studentJobsList = GetListOfJobs(student.StudentId.ToString());
                 if (studentJobsList.Any(i => i.JobNo == jobId))
@@ -284,6 +288,5 @@ namespace Proj_WeJob.Models.DAL
                 }
             }
         }
-
     }
 }
