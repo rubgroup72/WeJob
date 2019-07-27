@@ -28,6 +28,7 @@ export default class Register extends React.Component{
             secondDegree: 0,
             thirdDegree: 0,
             studentId: '',
+            showRadio: false,
         };
 
         this.props.navigation.addListener('willFocus', this.loadComponent);
@@ -55,25 +56,7 @@ export default class Register extends React.Component{
         this.setState({
             loadingVisible: true
         });
-        //קריאה לדטא בייס 
-        const httpClient = axios.create();
-        httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
-        httpClient.get( Global.BASE_URL +'language')
-        //במידה וחוזר מידע שומר בתכונה 
-        .then((response) => {
-            this.setState({ loadingVisible: false });
-            var temp = [];
-            for (var i = 0; i < response.data.length; ++i) {
-                temp.push({ value: response.data[i].Name });
-            }
-            this.setState({ data: temp });
-            this.fetchStudentLanguages();
-        })
-        .catch((error) => {
-            this.setState({ loadingVisible: false });
-            alert (error.response.status);
-        });
-//הבאת התז של הסטודנט מהזיכרון הלוקל
+        //הבאת התז של הסטודנט מהזיכרון הלוקל
         AsyncStorage.getItem(Global.ASYNC_STORAGE_STUDEMT).then((jsonStudent) => {
             if (jsonStudent !== null) {
                 var student = JSON.parse(jsonStudent);
@@ -82,12 +65,40 @@ export default class Register extends React.Component{
                 });
             }
         });
+        this.getStudentLanguages();
+    }
+    getStudentLanguages = () => {
+        //קריאה לדטא בייס 
+        AsyncStorage.getItem(Global.LANGUAGES_LIST).then((list) => {
+            if (list !== null) {
+                this.setState({ data: JSON.parse(list)});
+                this.fetchStudentLanguages();
+            } else {
+                const httpClient = axios.create();
+                httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
+                httpClient.get(Global.BASE_URL + 'language')
+                //במידה וחוזר מידע שומר בתכונה 
+                .then((response) => {
+                    this.setState({ loadingVisible: false });
+                    var temp = [];
+                    for (var i = 0; i < response.data.length; ++i) {
+                        temp.push({ value: response.data[i].Name });
+                    }
+                    this.setState({ data: temp });
+                    this.fetchStudentLanguages();
+                })
+                .catch((error) => {
+                    this.setState({ loadingVisible: false });
+                    alert (error.response.status);
+                });
+            }
+        });
     }
     //הבאת השפות שהסטודנט בחר והשמתם בתכונות של הקומפוננטה
     fetchStudentLanguages = () => {
         const httpClient = axios.create();
         httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
-        httpClient.get( Global.BASE_URL +'AppStudentLanguagesController?studentId=' + this.state.studentId)
+        httpClient.get(Global.BASE_URL +'AppStudentLanguagesController?studentId=' + this.state.studentId)
         .then((response) => {
             this.setState({ loadingVisible: false });
             var firstLanguage = '';
@@ -115,6 +126,7 @@ export default class Register extends React.Component{
                 firstDegree: firstDegree,
                 secondDegree: secondDegree,
                 thirdDegree: thirdDegree,
+                showRadio: true,
             });
         })
         .catch((error) => {
@@ -177,11 +189,12 @@ export default class Register extends React.Component{
     
 
     render(){
-          var radio_props = [
+          const radio_props = [
             {label:  ' בסיסי ', value: 0, },
             {label: ' בינוני ', value: 1 },
             {label: ' שפת אם ', value: 2 }
           ];
+         
         return (
             <ImageBackground style={ styles.imgBackground } 
                  resizeMode='cover' 
@@ -205,15 +218,18 @@ export default class Register extends React.Component{
                              baseColor="rgba(255, 255, 255, 1)" //for initial text color
                              />
                              
-                             <RadioForm //כמו כפתור רדיו 
-                             radio_props={radio_props}
-                             initial={this.state.firstDegree}
-                             onPress={(value) => { this.langDegreeChanged(0, value); }}
-                             buttonColor= {'#FFFFFF'}
-                             labelColor={'#FFFFFF'}
-                             selectedButtonColor={'#FFFFFF'}
-                             selectedLabelColor=   {'#FFFFFF'}                  
-                             />
+                             { this.state.showRadio &&
+                                <RadioForm //כמו כפתור רדיו 
+                                radio_props={radio_props}
+                                initial={this.state.firstDegree}
+                                onPress={(value) => { this.langDegreeChanged(0, value); }}
+                                buttonColor= {'#FFFFFF'}
+                                labelColor={'#FFFFFF'}
+                                selectedButtonColor={'#FFFFFF'}
+                                selectedLabelColor=   {'#FFFFFF'}                  
+                                />  
+                             }
+                             
 
                             </View>
                             <View style = {styles.iconsStyle}>
@@ -226,7 +242,8 @@ export default class Register extends React.Component{
                              style = {{color: 'white'}} //for changed text color
                              baseColor="rgba(255, 255, 255, 1)" //for initial text color
                              />
-                             <RadioForm
+                             { this.state.showRadio &&
+                              <RadioForm
                              radio_props={radio_props}
                              initial={this.state.secondDegree}
                              onPress={(value) => { this.langDegreeChanged(1, value); }}
@@ -235,6 +252,7 @@ export default class Register extends React.Component{
                              selectedButtonColor={'#FFFFFF'}
                              selectedLabelColor=   {'#FFFFFF'} 
                              />
+                             }
                             </View>
                             <View style = {styles.iconsStyle}>
                             <Dropdown
@@ -246,6 +264,7 @@ export default class Register extends React.Component{
                              style = {{color: 'white'}} //for changed text color
                              baseColor="rgba(255, 255, 255, 1)" //for initial text color
                              />
+                             { this.state.showRadio &&
                              <RadioForm
                              radio_props={radio_props}
                              initial={this.state.thirdDegree}
@@ -254,7 +273,8 @@ export default class Register extends React.Component{
                              labelColor={'#FFFFFF'}
                              selectedButtonColor={'#FFFFFF'}
                              selectedLabelColor=   {'#FFFFFF'} 
-                             />
+                             /> 
+                             }
                             </View>
                             <View style = {styles.nextButton}>
                                 <NextArrowButton

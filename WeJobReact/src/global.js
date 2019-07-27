@@ -1,6 +1,6 @@
 //קובץ שמטרתו שמירת קבועים בקוד
 export default {
-    BASE_URL: 'http://10.0.2.2:53411/api/', // 'https://proj.ruppin.ac.il/bgroup72/prod/api/',//הכתובת של השרת http://10.0.2.2:53411/api/
+    BASE_URL: 'https://proj.ruppin.ac.il/bgroup72/prod/api/', // 'http://10.0.2.2:53411/api/',
     FACEBOOK_TOKEN_STRING: 'FacebookToken',// שומר את הטוקן של ההתחברות לפייסבוק
     USER_EMAIL: 'UserEmail',// שומר את האימייל של הסטודנט שהתחבר
     DEFUALT_REQUEST_TIMEOUT_MS: 15000,
@@ -10,5 +10,6 @@ export default {
     USER_SELECTED_CATEGORY_CODE: 'SelectedCategoryCode',
     USER_SELECTED_CATEGORY_NAME: 'SelectedCategoryName',
     IS_JUST_REGISTERED: 'IsJustRegistered',
-    FCM_TOKEN: 'fcmToken'
+    FCM_TOKEN: 'fcmToken',
+    LANGUAGES_LIST: 'LanguagesList'
 }

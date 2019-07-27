@@ -34,6 +34,30 @@ export default class Register extends React.Component{
         AsyncStorage.getItem(Global.USER_EMAIL).then((Email) => {
             this.setState({ email: Email });
         }); 
+        this.getStudentLanguages();
+    }
+    getStudentLanguages = () => {
+        //קריאה לדטא בייס 
+        AsyncStorage.getItem(Global.LANGUAGES_LIST).then((list) => {
+            if (list === null) {
+                const httpClient = axios.create();
+                httpClient.defaults.timeout = Global.DEFUALT_REQUEST_TIMEOUT_MS;
+                httpClient.get(Global.BASE_URL + 'language')
+                //במידה וחוזר מידע שומר בתכונה 
+                .then((response) => {
+                    this.setState({ loadingVisible: false });
+                    var temp = [];
+                    for (var i = 0; i < response.data.length; ++i) {
+                        temp.push({ value: response.data[i].Name });
+                    }
+                    AsyncStorage.setItem(Global.LANGUAGES_LIST, JSON.stringify(temp));
+                })
+                .catch((error) => {
+                    this.setState({ loadingVisible: false });
+                    alert (error.response.status);
+                });
+            }
+        });
     }
     
     fetchSubDepartmentCodeFromServer = () => {
