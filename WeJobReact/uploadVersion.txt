@@ -1,0 +1,7 @@
+cd android
+gradlew assembleRelease
+
+
+
+**** Facebook *****
+https://developers.facebook.com/apps/432153914011520/settings/basic/
