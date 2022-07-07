@@ -10,7 +10,7 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.4.2",
     "axios": "^0.18.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "opencollective-postinstall": "^2.0.2",
     "prop-types": "^15.7.2",
     "react": "16.6.3",
